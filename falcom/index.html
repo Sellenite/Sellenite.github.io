@@ -8,13 +8,21 @@
             margin: 0;
         }
 
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
         ul{
             list-style: none;
         }
 
         .container{
             position: relative;
-            margin: 20px auto;
+            left: 50%;
+            top: 50%;
+            margin-left: -480px;
+            margin-top: -272px;
             width: 960px;
             height: 544px;
             border: 1px solid #82CEF8;
@@ -158,7 +166,7 @@
                 Switch(-960);
             };
             //重要，这个遍历是用来按小按钮时点亮并切换到对应的位置，index一定要在左右切换和小按钮切换互相公用，不然会有bug
-            for( var i = 0;i < buttons.length;i++){
+            for( var i = 0;i <   buttons.length;i++){
                 buttons[i].onclick = function(){
                     //代码优化，当按钮时激活状态时，再次点击让它不跑以下代码
                     if(this.className == "active"){
