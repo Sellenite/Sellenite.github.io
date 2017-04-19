@@ -87,19 +87,16 @@
 
 
 
-<meta name="description" content="Falcom 2017 日历简单做了个Falcom日历轮播，画面太美
-Falcom 2017 Calendar">
+<meta name="description" content="JS计算时间相减项目有时需要前台自己对时间进行相减和格式化，这里写一个，import就可以用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Falcom 2017 Calendar">
-<meta property="og:url" content="https://sellenite.github.io/2017/03/02/Falcom-Calendar/index.html">
+<meta property="og:title" content="JS计算时间相减">
+<meta property="og:url" content="https://sellenite.github.io/2017/04/19/timeleft/index.html">
 <meta property="og:site_name" content="yuuhei's Home">
-<meta property="og:description" content="Falcom 2017 日历简单做了个Falcom日历轮播，画面太美
-Falcom 2017 Calendar">
-<meta property="og:updated_time" content="2017-03-02T02:28:10.887Z">
+<meta property="og:description" content="JS计算时间相减项目有时需要前台自己对时间进行相减和格式化，这里写一个，import就可以用">
+<meta property="og:updated_time" content="2017-04-19T09:47:33.784Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Falcom 2017 Calendar">
-<meta name="twitter:description" content="Falcom 2017 日历简单做了个Falcom日历轮播，画面太美
-Falcom 2017 Calendar">
+<meta name="twitter:title" content="JS计算时间相减">
+<meta name="twitter:description" content="JS计算时间相减项目有时需要前台自己对时间进行相减和格式化，这里写一个，import就可以用">
 
 
 
@@ -127,13 +124,13 @@ Falcom 2017 Calendar">
 
 
 
-  <link rel="canonical" href="https://sellenite.github.io/2017/03/02/Falcom-Calendar/"/>
+  <link rel="canonical" href="https://sellenite.github.io/2017/04/19/timeleft/"/>
 
 
 
 
 
-  <title> Falcom 2017 Calendar | yuuhei's Home </title>
+  <title> JS计算时间相减 | yuuhei's Home </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -252,7 +249,7 @@ Falcom 2017 Calendar">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/03/02/Falcom-Calendar/">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/04/19/timeleft/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sellenite">
@@ -273,7 +270,7 @@ Falcom 2017 Calendar">
             
             
               
-                Falcom 2017 Calendar
+                JS计算时间相减
               
             
           </h1>
@@ -288,8 +285,8 @@ Falcom 2017 Calendar">
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-02T09:07:01+08:00">
-                2017-03-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T17:43:19+08:00">
+                2017-04-19
               </time>
             
 
@@ -324,8 +321,7 @@ Falcom 2017 Calendar">
       
 
       
-        <h1 id="Falcom-2017-日历"><a href="#Falcom-2017-日历" class="headerlink" title="Falcom 2017 日历"></a>Falcom 2017 日历</h1><p>简单做了个Falcom日历轮播，画面太美</p>
-<p><a href="/falcom">Falcom 2017 Calendar</a></p>
+        <h1 id="JS计算时间相减"><a href="#JS计算时间相减" class="headerlink" title="JS计算时间相减"></a>JS计算时间相减</h1><p>项目有时需要前台自己对时间进行相减和格式化，这里写一个，import就可以用<br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> timeleft = <span class="function"><span class="keyword">function</span> (<span class="params">endtime, startTime</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> date = endtime - startTime;   <span class="comment">//时间差的毫秒数</span></div><div class="line">    <span class="comment">// 计算出相差天数</span></div><div class="line">    <span class="keyword">var</span> days = <span class="built_in">Math</span>.floor(date / (<span class="number">24</span> * <span class="number">3600</span> * <span class="number">1000</span>));</div><div class="line">    <span class="comment">// 计算出小时数</span></div><div class="line">    <span class="comment">//计算天数后剩余的毫秒数</span></div><div class="line">    <span class="keyword">var</span> leave1 = date % (<span class="number">24</span> * <span class="number">3600</span> * <span class="number">1000</span>);</div><div class="line">    <span class="keyword">var</span> hours = <span class="built_in">Math</span>.floor(leave1 / (<span class="number">3600</span> * <span class="number">1000</span>));</div><div class="line">    hours = hours &lt; <span class="number">10</span> ? <span class="string">'0'</span> + hours : hours;</div><div class="line">    <span class="comment">// 计算相差分钟数</span></div><div class="line">    <span class="comment">//计算小时数后剩余的毫秒数</span></div><div class="line">    <span class="keyword">var</span> leave2 = leave1 % (<span class="number">3600</span> * <span class="number">1000</span>);</div><div class="line">    <span class="keyword">var</span> minutes = <span class="built_in">Math</span>.floor(leave2 / (<span class="number">60</span> * <span class="number">1000</span>));</div><div class="line">    minutes = minutes &lt; <span class="number">10</span> ? <span class="string">'0'</span> + minutes : minutes;</div><div class="line">    <span class="comment">// 计算相差秒数</span></div><div class="line">    <span class="comment">//计算分钟数后剩余的毫秒数</span></div><div class="line">    <span class="keyword">var</span> leave3 = leave2 % (<span class="number">60</span> * <span class="number">1000</span>);</div><div class="line">    <span class="keyword">var</span> seconds = <span class="built_in">Math</span>.round(leave3 / <span class="number">1000</span>);</div><div class="line">    seconds = seconds &lt; <span class="number">10</span> ? <span class="string">'0'</span> + seconds : seconds;</div><div class="line">    <span class="keyword">var</span> format = <span class="string">`<span class="subst">$&#123;days&#125;</span>天 <span class="subst">$&#123;hours&#125;</span>:<span class="subst">$&#123;minutes&#125;</span>:<span class="subst">$&#123;seconds&#125;</span>`</span>;</div><div class="line">    <span class="keyword">return</span> format;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">export</span> &#123; timeleft &#125;;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -362,15 +358,15 @@ Falcom 2017 Calendar">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/19/mobile-dev/" rel="next" title="移动端web开发技巧">
+                <i class="fa fa-chevron-left"></i> 移动端web开发技巧
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/02/knowledge/" rel="prev" title="knowledge">
-                knowledge <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -481,7 +477,7 @@ Falcom 2017 Calendar">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Falcom-2017-日历"><span class="nav-number">1.</span> <span class="nav-text">Falcom 2017 日历</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JS计算时间相减"><span class="nav-number">1.</span> <span class="nav-text">JS计算时间相减</span></a></li></ol></div>
             
 
           </div>
