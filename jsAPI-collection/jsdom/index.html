@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>原生JS中DOM节点相关API合集 | 涵月天-microzz.com | IT技术分享</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="API,JavaScript,JS,DOM">
+    <meta name="description" content="原生JS中DOM节点相关API合集节点属性Node.nodeName   //返回节点名称，只读Node.nodeType   //返回节点类型的常数值，只读Node.nodeValue  //返回Text或Comment节点的文本值，只读Node.textContent  //返回当前节点和它的所有后代节点的文本内容，可读写Node.baseURI    //返回当前网页的绝对路径Node.ow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原生JS中DOM节点相关API合集">
+<meta property="og:url" content="https://microzz.com/2017/04/06/jsdom/index.html">
+<meta property="og:site_name" content="涵月天-microzz.com">
+<meta property="og:description" content="原生JS中DOM节点相关API合集节点属性Node.nodeName   //返回节点名称，只读Node.nodeType   //返回节点类型的常数值，只读Node.nodeValue  //返回Text或Comment节点的文本值，只读Node.textContent  //返回当前节点和它的所有后代节点的文本内容，可读写Node.baseURI    //返回当前网页的绝对路径Node.ow">
+<meta property="og:updated_time" content="2017-04-06T15:26:39.177Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="原生JS中DOM节点相关API合集">
+<meta name="twitter:description" content="原生JS中DOM节点相关API合集节点属性Node.nodeName   //返回节点名称，只读Node.nodeType   //返回节点类型的常数值，只读Node.nodeValue  //返回Text或Comment节点的文本值，只读Node.textContent  //返回当前节点和它的所有后代节点的文本内容，可读写Node.baseURI    //返回当前网页的绝对路径Node.ow">
+    
+        <link rel="alternative" href="/atom.xml" title="涵月天-microzz.com" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- <link rel="stylesheet" href="/css/style.css?v=1.4.5"> -->
+    <link rel="stylesheet" href="https://icdn.microzz.com/microzz/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://icdn.microzz.com/microzz/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Microzz</h5>
+          <a href="mailto:zhaohui@microzz.com" title="zhaohui@microzz.com" class="mail">zhaohui@microzz.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://microzz.com/archives/"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://microzz.com/tags/"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/microzz" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                GitHub
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://microzz.com/about/"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://juejin.im/user/57f0f27a128fe100542d29ad" target="_blank" >
+                <i class="icon icon-lg icon-pencil"></i>
+                掘金专栏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://segmentfault.com/u/microzz/posts" target="_blank" >
+                <i class="icon icon-lg icon-leaf"></i>
+                SegmentFault
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://microzz.com/vue-music/" target="_blank" >
+                <i class="icon icon-lg icon-music"></i>
+                Vue音乐播放器
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://microzz.com/vue-cnode/" target="_blank" >
+                <i class="icon icon-lg icon-comments"></i>
+                Vue CNode社区
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://microzz.com/github-ranking/" target="_blank" >
+                <i class="icon icon-lg icon-star"></i>
+                GitHub排行榜
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://microzz.com/about/friendly.html"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">原生JS中DOM节点相关API合集</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">原生JS中DOM节点相关API合集</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-06T12:14:10.000Z" itemprop="datePublished" class="page-time">
+  2017-04-06
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>快捷导航</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#原生JS中DOM节点相关API合集"><span class="post-toc-number">1.</span> <span class="post-toc-text">原生JS中DOM节点相关API合集</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#节点属性"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">节点属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#操作"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">操作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Document节点"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Document节点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Document节点的属性"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">Document节点的属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Document节点的方法"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">Document节点的方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#读写方法"><span class="post-toc-number">1.3.2.1.</span> <span class="post-toc-text">读写方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#查找节点"><span class="post-toc-number">1.3.2.2.</span> <span class="post-toc-text">查找节点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#生成节点"><span class="post-toc-number">1.3.2.3.</span> <span class="post-toc-text">生成节点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#其他"><span class="post-toc-number">1.3.2.4.</span> <span class="post-toc-text">其他</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Element节点"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Element节点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Element节点的属性"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">Element节点的属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#特性属性"><span class="post-toc-number">1.4.1.1.</span> <span class="post-toc-text">特性属性</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#尺寸属性"><span class="post-toc-number">1.4.1.2.</span> <span class="post-toc-text">尺寸属性</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#节点相关属性"><span class="post-toc-number">1.4.1.3.</span> <span class="post-toc-text">节点相关属性</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Element节点的方法"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">Element节点的方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#位置方法"><span class="post-toc-number">1.4.2.1.</span> <span class="post-toc-text">位置方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#属性方法"><span class="post-toc-number">1.4.2.2.</span> <span class="post-toc-text">属性方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#查找方法"><span class="post-toc-number">1.4.2.3.</span> <span class="post-toc-text">查找方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#事件方法"><span class="post-toc-number">1.4.2.4.</span> <span class="post-toc-text">事件方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#其他-1"><span class="post-toc-number">1.4.2.5.</span> <span class="post-toc-text">其他</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-jsdom"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">原生JS中DOM节点相关API合集</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年04月06日 20:14" datetime="2017-04-06T12:14:10.000Z"  itemprop="datePublished">2017-04-06</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="原生JS中DOM节点相关API合集"><a href="#原生JS中DOM节点相关API合集" class="headerlink" title="原生JS中DOM节点相关API合集"></a>原生JS中DOM节点相关API合集</h1><h2 id="节点属性"><a href="#节点属性" class="headerlink" title="节点属性"></a>节点属性</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Node.nodeName   <span class="comment">//返回节点名称，只读</span></div><div class="line">Node.nodeType   <span class="comment">//返回节点类型的常数值，只读</span></div><div class="line">Node.nodeValue  <span class="comment">//返回Text或Comment节点的文本值，只读</span></div><div class="line">Node.textContent  <span class="comment">//返回当前节点和它的所有后代节点的文本内容，可读写</span></div><div class="line">Node.baseURI    <span class="comment">//返回当前网页的绝对路径</span></div><div class="line"></div><div class="line">Node.ownerDocument  <span class="comment">//返回当前节点所在的顶层文档对象，即document</span></div><div class="line">Node.nextSibling  <span class="comment">//返回紧跟在当前节点后面的第一个兄弟节点</span></div><div class="line">Node.previousSibling  <span class="comment">//返回当前节点前面的、距离最近的一个兄弟节点</span></div><div class="line">Node.parentNode   <span class="comment">//返回当前节点的父节点</span></div><div class="line">Node.parentElement  <span class="comment">//返回当前节点的父Element节点</span></div><div class="line">Node.childNodes   <span class="comment">//返回当前节点的所有子节点</span></div><div class="line">Node.firstChild  <span class="comment">//返回当前节点的第一个子节点</span></div><div class="line">Node.lastChild   <span class="comment">//返回当前节点的最后一个子节点</span></div><div class="line"></div><div class="line"><span class="comment">//parentNode接口</span></div><div class="line">Node.children  <span class="comment">//返回指定节点的所有Element子节点</span></div><div class="line">Node.firstElementChild  <span class="comment">//返回当前节点的第一个Element子节点</span></div><div class="line">Node.lastElementChild   <span class="comment">//返回当前节点的最后一个Element子节点</span></div><div class="line">Node.childElementCount  <span class="comment">//返回当前节点所有Element子节点的数目。</span></div></pre></td></tr></table></figure>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Node.appendChild(node)   <span class="comment">//向节点添加最后一个子节点</span></div><div class="line">Node.hasChildNodes()   <span class="comment">//返回布尔值，表示当前节点是否有子节点</span></div><div class="line">Node.cloneNode(<span class="literal">true</span>);  <span class="comment">// 默认为false(克隆节点), true(克隆节点及其属性，以及后代)</span></div><div class="line">Node.insertBefore(newNode,oldNode)  <span class="comment">// 在指定子节点之前插入新的子节点</span></div><div class="line">Node.removeChild(node)   <span class="comment">//删除节点，在要删除节点的父节点上操作</span></div><div class="line">Node.replaceChild(newChild,oldChild)  <span class="comment">//替换节点</span></div><div class="line">Node.contains(node)  <span class="comment">//返回一个布尔值，表示参数节点是否为当前节点的后代节点。</span></div><div class="line">Node.compareDocumentPosition(node)   <span class="comment">//返回一个7个比特位的二进制值，表示参数节点和当前节点的关系</span></div><div class="line">Node.isEqualNode(noe)  <span class="comment">//返回布尔值，用于检查两个节点是否相等。所谓相等的节点，指的是两个节点的类型相同、属性相同、子节点相同。</span></div><div class="line">Node.normalize()   <span class="comment">//用于清理当前节点内部的所有Text节点。它会去除空的文本节点，并且将毗邻的文本节点合并成一个。</span></div><div class="line"></div><div class="line"><span class="comment">//ChildNode接口</span></div><div class="line">Node.remove()  <span class="comment">//用于删除当前节点</span></div><div class="line">Node.before()  <span class="comment">//</span></div><div class="line">Node.after()</div><div class="line">Node.replaceWith()</div></pre></td></tr></table></figure>
+<h2 id="Document节点"><a href="#Document节点" class="headerlink" title="Document节点"></a>Document节点</h2><h3 id="Document节点的属性"><a href="#Document节点的属性" class="headerlink" title="Document节点的属性"></a>Document节点的属性</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">document</span>.doctype   <span class="comment">//</span></div><div class="line"><span class="built_in">document</span>.documentElement  <span class="comment">//返回当前文档的根节点</span></div><div class="line"><span class="built_in">document</span>.defaultView   <span class="comment">//返回document对象所在的window对象</span></div><div class="line"><span class="built_in">document</span>.body   <span class="comment">//返回当前文档的&lt;body&gt;节点</span></div><div class="line"><span class="built_in">document</span>.head   <span class="comment">//返回当前文档的&lt;head&gt;节点</span></div><div class="line"><span class="built_in">document</span>.activeElement  <span class="comment">//返回当前文档中获得焦点的那个元素。</span></div><div class="line"></div><div class="line"><span class="comment">//节点集合属性</span></div><div class="line"><span class="built_in">document</span>.links  <span class="comment">//返回当前文档的所有a元素</span></div><div class="line"><span class="built_in">document</span>.forms  <span class="comment">//返回页面中所有表单元素</span></div><div class="line"><span class="built_in">document</span>.images  <span class="comment">//返回页面中所有图片元素</span></div><div class="line"><span class="built_in">document</span>.embeds  <span class="comment">//返回网页中所有嵌入对象</span></div><div class="line"><span class="built_in">document</span>.scripts  <span class="comment">//返回当前文档的所有脚本</span></div><div class="line"><span class="built_in">document</span>.styleSheets  <span class="comment">//返回当前网页的所有样式表</span></div><div class="line"></div><div class="line"><span class="comment">//文档信息属性</span></div><div class="line"><span class="built_in">document</span>.documentURI  <span class="comment">//表示当前文档的网址</span></div><div class="line"><span class="built_in">document</span>.URL  <span class="comment">//返回当前文档的网址</span></div><div class="line"><span class="built_in">document</span>.domain  <span class="comment">//返回当前文档的域名</span></div><div class="line"><span class="built_in">document</span>.lastModified  <span class="comment">//返回当前文档最后修改的时间戳</span></div><div class="line"><span class="built_in">document</span>.location  <span class="comment">//返回location对象，提供当前文档的URL信息</span></div><div class="line"><span class="built_in">document</span>.referrer  <span class="comment">//返回当前文档的访问来源</span></div><div class="line"><span class="built_in">document</span>.title    <span class="comment">//返回当前文档的标题</span></div><div class="line"><span class="built_in">document</span>.characterSet属性返回渲染当前文档的字符集，比如UTF<span class="number">-8</span>、ISO<span class="number">-8859</span><span class="number">-1</span>。</div><div class="line"><span class="built_in">document</span>.readyState  <span class="comment">//返回当前文档的状态</span></div><div class="line"><span class="built_in">document</span>.designMode  <span class="comment">//控制当前文档是否可编辑，可读写</span></div><div class="line"><span class="built_in">document</span>.compatMode  <span class="comment">//返回浏览器处理文档的模式</span></div><div class="line"><span class="built_in">document</span>.cookie   <span class="comment">//用来操作Cookie</span></div></pre></td></tr></table></figure>
+<h3 id="Document节点的方法"><a href="#Document节点的方法" class="headerlink" title="Document节点的方法"></a>Document节点的方法</h3><h4 id="读写方法"><a href="#读写方法" class="headerlink" title="读写方法"></a>读写方法</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">document</span>.open()   <span class="comment">//用于新建并打开一个文档</span></div><div class="line"><span class="built_in">document</span>.close()   <span class="comment">//不安比open方法所新建的文档</span></div><div class="line"><span class="built_in">document</span>.write()   <span class="comment">//用于向当前文档写入内容</span></div><div class="line"><span class="built_in">document</span>.writeIn()  <span class="comment">//用于向当前文档写入内容，尾部添加换行符。</span></div></pre></td></tr></table></figure>
+<h4 id="查找节点"><a href="#查找节点" class="headerlink" title="查找节点"></a>查找节点</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">document</span>.querySelector(selectors)   <span class="comment">//接受一个CSS选择器作为参数，返回第一个匹配该选择器的元素节点。</span></div><div class="line"><span class="built_in">document</span>.querySelectorAll(selectors)  <span class="comment">//接受一个CSS选择器作为参数，返回所有匹配该选择器的元素节点。</span></div><div class="line"><span class="built_in">document</span>.getElementsByTagName(tagName)  <span class="comment">//返回所有指定HTML标签的元素</span></div><div class="line"><span class="built_in">document</span>.getElementsByClassName(className)   <span class="comment">//返回包括了所有class名字符合指定条件的元素</span></div><div class="line"><span class="built_in">document</span>.getElementsByName(name)   <span class="comment">//用于选择拥有name属性的HTML元素（比如&lt;form&gt;、&lt;radio&gt;、&lt;img&gt;、&lt;frame&gt;、&lt;embed&gt;和&lt;object&gt;等）</span></div><div class="line"><span class="built_in">document</span>.getElementById(id)   <span class="comment">//返回匹配指定id属性的元素节点。</span></div><div class="line"><span class="built_in">document</span>.elementFromPoint(x,y)  <span class="comment">//返回位于页面指定位置最上层的Element子节点。</span></div></pre></td></tr></table></figure>
+<h4 id="生成节点"><a href="#生成节点" class="headerlink" title="生成节点"></a>生成节点</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">document</span>.createElement(tagName)   <span class="comment">//用来生成HTML元素节点。</span></div><div class="line"><span class="built_in">document</span>.createTextNode(text)   <span class="comment">//用来生成文本节点</span></div><div class="line"><span class="built_in">document</span>.createAttribute(name)  <span class="comment">//生成一个新的属性对象节点，并返回它。</span></div><div class="line"><span class="built_in">document</span>.createDocumentFragment()  <span class="comment">//生成一个DocumentFragment对象</span></div><div class="line">（<span class="number">4</span>）事件方法</div><div class="line"></div><div class="line"><span class="built_in">document</span>.createEvent(type)   <span class="comment">//生成一个事件对象，该对象能被element.dispatchEvent()方法使用</span></div><div class="line"><span class="built_in">document</span>.addEventListener(type,listener,capture)  <span class="comment">//注册事件</span></div><div class="line"><span class="built_in">document</span>.removeEventListener(type,listener,capture)  <span class="comment">//注销事件</span></div><div class="line"><span class="built_in">document</span>.dispatchEvent(event)  <span class="comment">//触发事件</span></div></pre></td></tr></table></figure>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">document</span>.hasFocus()   <span class="comment">//返回一个布尔值，表示当前文档之中是否有元素被激活或获得焦点。</span></div><div class="line"><span class="built_in">document</span>.adoptNode(externalNode)  <span class="comment">//将某个节点，从其原来所在的文档移除，插入当前文档，并返回插入后的新节点。</span></div><div class="line"><span class="built_in">document</span>.importNode(externalNode, deep)   <span class="comment">//从外部文档拷贝指定节点，插入当前文档。</span></div></pre></td></tr></table></figure>
+<h2 id="Element节点"><a href="#Element节点" class="headerlink" title="Element节点"></a>Element节点</h2><h3 id="Element节点的属性"><a href="#Element节点的属性" class="headerlink" title="Element节点的属性"></a>Element节点的属性</h3><h4 id="特性属性"><a href="#特性属性" class="headerlink" title="特性属性"></a>特性属性</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Element.attributes  <span class="comment">//返回当前元素节点的所有属性节点</span></div><div class="line">Element.id  <span class="comment">//返回指定元素的id属性，可读写</span></div><div class="line">Element.tagName  <span class="comment">//返回指定元素的大写标签名</span></div><div class="line">Element.innerHTML   <span class="comment">//返回该元素包含的HTML代码，可读写</span></div><div class="line">Element.outerHTML  <span class="comment">//返回指定元素节点的所有HTML代码，包括它自身和包含的的所有子元素，可读写</span></div><div class="line">Element.className  <span class="comment">//返回当前元素的class属性，可读写</span></div><div class="line">Element.classList  <span class="comment">//返回当前元素节点的所有class集合</span></div><div class="line">Element.dataset   <span class="comment">//返回元素节点中所有的data-*属性。</span></div></pre></td></tr></table></figure>
+<h4 id="尺寸属性"><a href="#尺寸属性" class="headerlink" title="尺寸属性"></a>尺寸属性</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Element.clientHeight   <span class="comment">//返回元素节点可见部分的高度</span></div><div class="line">Element.clientWidth   <span class="comment">//返回元素节点可见部分的宽度</span></div><div class="line">Element.clientLeft   <span class="comment">//返回元素节点左边框的宽度</span></div><div class="line">Element.clientTop   <span class="comment">//返回元素节点顶部边框的宽度</span></div><div class="line">Element.scrollHeight  <span class="comment">//返回元素节点的总高度</span></div><div class="line">Element.scrollWidth  <span class="comment">//返回元素节点的总宽度</span></div><div class="line">Element.scrollLeft   <span class="comment">//返回元素节点的水平滚动条向右滚动的像素数值,通过设置这个属性可以改变元素的滚动位置</span></div><div class="line">Element.scrollTop   <span class="comment">//返回元素节点的垂直滚动向下滚动的像素数值</span></div><div class="line">Element.offsetHeight   <span class="comment">//返回元素的垂直高度(包含border,padding)</span></div><div class="line">Element.offsetWidth    <span class="comment">//返回元素的水平宽度(包含border,padding)</span></div><div class="line">Element.offsetLeft    <span class="comment">//返回当前元素左上角相对于Element.offsetParent节点的垂直偏移</span></div><div class="line">Element.offsetTop   <span class="comment">//返回水平位移</span></div><div class="line">Element.style  <span class="comment">//返回元素节点的行内样式</span></div></pre></td></tr></table></figure>
+<h4 id="节点相关属性"><a href="#节点相关属性" class="headerlink" title="节点相关属性"></a>节点相关属性</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Element.children   <span class="comment">//包括当前元素节点的所有子元素</span></div><div class="line">Element.childElementCount   <span class="comment">//返回当前元素节点包含的子HTML元素节点的个数</span></div><div class="line">Element.firstElementChild  <span class="comment">//返回当前节点的第一个Element子节点  </span></div><div class="line">Element.lastElementChild   <span class="comment">//返回当前节点的最后一个Element子节点  </span></div><div class="line">Element.nextElementSibling  <span class="comment">//返回当前元素节点的下一个兄弟HTML元素节点</span></div><div class="line">Element.previousElementSibling  <span class="comment">//返回当前元素节点的前一个兄弟HTML节点</span></div><div class="line">Element.offsetParent   <span class="comment">//返回当前元素节点的最靠近的、并且CSS的position属性不等于static的父元素。</span></div></pre></td></tr></table></figure>
+<h3 id="Element节点的方法"><a href="#Element节点的方法" class="headerlink" title="Element节点的方法"></a>Element节点的方法</h3><h4 id="位置方法"><a href="#位置方法" class="headerlink" title="位置方法"></a>位置方法</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">getBoundingClientRect()  </div><div class="line"><span class="comment">// getBoundingClientRect返回一个对象，包含top,left,right,bottom,width,height // width、height 元素自身宽高</span></div><div class="line"><span class="comment">// top 元素上外边界距窗口最上面的距离</span></div><div class="line"><span class="comment">// right 元素右外边界距窗口最上面的距离</span></div><div class="line"><span class="comment">// bottom 元素下外边界距窗口最上面的距离</span></div><div class="line"><span class="comment">// left 元素左外边界距窗口最上面的距离</span></div><div class="line"><span class="comment">// width 元素自身宽(包含border,padding) </span></div><div class="line"><span class="comment">// height 元素自身高(包含border,padding) </span></div><div class="line"></div><div class="line">getClientRects()   <span class="comment">//返回当前元素在页面上形参的所有矩形。</span></div><div class="line"></div><div class="line"><span class="comment">// 元素在页面上的偏移量  </span></div><div class="line"><span class="keyword">var</span> rect = el.getBoundingClientRect()  </div><div class="line"><span class="keyword">return</span> &#123;   </div><div class="line">  <span class="attr">top</span>: rect.top + <span class="built_in">document</span>.body.scrollTop,   </div><div class="line">  <span class="attr">left</span>: rect.left + <span class="built_in">document</span>.body.scrollLeft  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="属性方法"><a href="#属性方法" class="headerlink" title="属性方法"></a>属性方法</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Element.getAttribute()：读取指定属性  </div><div class="line">Element.setAttribute()：设置指定属性  </div><div class="line">Element.hasAttribute()：返回一个布尔值，表示当前元素节点是否有指定的属性  </div><div class="line">Element.removeAttribute()：移除指定属性</div></pre></td></tr></table></figure>
+<h4 id="查找方法"><a href="#查找方法" class="headerlink" title="查找方法"></a>查找方法</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Element.querySelector()  </div><div class="line">Element.querySelectorAll()  </div><div class="line">Element.getElementsByTagName()  </div><div class="line">Element.getElementsByClassName()</div></pre></td></tr></table></figure>
+<h4 id="事件方法"><a href="#事件方法" class="headerlink" title="事件方法"></a>事件方法</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Element.addEventListener()：添加事件的回调函数  </div><div class="line">Element.removeEventListener()：移除事件监听函数  </div><div class="line">Element.dispatchEvent()：触发事件</div><div class="line"></div><div class="line"><span class="comment">//ie8</span></div><div class="line">Element.attachEvent(oneventName,listener)</div><div class="line">Element.detachEvent(oneventName,listener)</div><div class="line"></div><div class="line"><span class="comment">// event对象  </span></div><div class="line"><span class="keyword">var</span> event = <span class="built_in">window</span>.event||event;    </div><div class="line"></div><div class="line"><span class="comment">// 事件的目标节点  </span></div><div class="line"><span class="keyword">var</span> target = event.target || event.srcElement;</div><div class="line"></div><div class="line"><span class="comment">// 事件代理  </span></div><div class="line">ul.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;   </div><div class="line">  <span class="keyword">if</span> (event.target.tagName.toLowerCase() === <span class="string">'li'</span>) &#123;   </div><div class="line">    <span class="built_in">console</span>.log(event.target.innerHTML)   </div><div class="line">  &#125;  </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">Element.scrollIntoView()   <span class="comment">//滚动当前元素，进入浏览器的可见区域</span></div><div class="line"></div><div class="line"><span class="comment">//解析HTML字符串，然后将生成的节点插入DOM树的指定位置。</span></div><div class="line">Element.insertAdjacentHTML(where, htmlString); </div><div class="line">Element.insertAdjacentHTML(<span class="string">'beforeBegin'</span>, htmlString); <span class="comment">// 在该元素前插入  </span></div><div class="line">Element.insertAdjacentHTML(<span class="string">'afterBegin'</span>, htmlString); <span class="comment">// 在该元素第一个子元素前插入 </span></div><div class="line">Element.insertAdjacentHTML(<span class="string">'beforeEnd'</span>, htmlString); <span class="comment">// 在该元素最后一个子元素后面插入 </span></div><div class="line">Element.insertAdjacentHTML(<span class="string">'afterEnd'</span>, htmlString); <span class="comment">// 在该元素后插入</span></div><div class="line"></div><div class="line">Element.remove()  <span class="comment">//用于将当前元素节点从DOM中移除</span></div><div class="line">Element.focus()   <span class="comment">//用于将当前页面的焦点，转移到指定元素上</span></div></pre></td></tr></table></figure>
+<p>👉<a href="https://github.com/microzz" target="_blank" rel="external">GitHub</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-06T15:26:39.177Z" itemprop="dateUpdated">2017年4月6日 23:26</time>
+</span><br>
+
+
+        转载请注明出处：<a href="https://microzz.com/2017/04/06/jsdom/" target="_blank" rel="external">https://microzz.com/2017/04/06/jsdom/</a>
+    </div>
+    <footer>
+        <a href="https://microzz.com">
+            <img src="https://icdn.microzz.com/microzz/img/avatar.jpg" alt="Microzz">
+            Microzz
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/API/">API</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOM/">DOM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS/">JS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://microzz.com/2017/04/06/jsdom/&title=《原生JS中DOM节点相关API合集》 — 涵月天-microzz.com&pic=https://icdn.microzz.com/microzz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://microzz.com/2017/04/06/jsdom/&title=《原生JS中DOM节点相关API合集》 — 涵月天-microzz.com&source=HTML/HTML5 CSS/CSS3 JavaScript React Vue Angular Node.js ES6 JS" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://microzz.com/2017/04/06/jsdom/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《原生JS中DOM节点相关API合集》 — 涵月天-microzz.com&url=https://microzz.com/2017/04/06/jsdom/&via=https://microzz.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://microzz.com/2017/04/06/jsdom/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/08/vue-music2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Vue.js音乐播放器升级版</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/01/array-uniq/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">为Array对象添加一个去除重复项的方法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃辣条~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="https://icdn.microzz.com/microzz/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="https://icdn.microzz.com/microzz/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top" style="padding:7px;">
+        
+<p>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+    </div>
+    <div class="bottom" style="padding: 8px;">
+        <p>
+            <span>Powered by <a href="https://microzz.com">Zhaohui</a></span>
+            <span>
+              <a target="_blank" href="mailto:zhaohui@microzz.com" style="border-bottom:none">
+                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNDkwMTUwOTQ2NDk3IiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjUzMjkiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNNTEyIDEwMDcuMjEzMTE1QzIzOC41MDgwNjYgMTAwNy4yMTMxMTUgMTYuNzg2ODg1IDc4NS40OTE5MzQgMTYuNzg2ODg1IDUxMiAxNi43ODY4ODUgMjM4LjUwODA2NiAyMzguNTA4MDY2IDE2Ljc4Njg4NSA1MTIgMTYuNzg2ODg1IDc4NS40OTE5MzQgMTYuNzg2ODg1IDEwMDcuMjEzMTE1IDIzOC41MDgwNjYgMTAwNy4yMTMxMTUgNTEyIDEwMDcuMjEzMTE1IDc4NS40OTE5MzQgNzg1LjQ5MTkzNCAxMDA3LjIxMzExNSA1MTIgMTAwNy4yMTMxMTVaTTUxMiA1MC4zNjA2NTZDMjU3LjA0MDc4NyA1MC4zNjA2NTYgNTAuMzYwNjU2IDI1Ny4wNDA3ODcgNTAuMzYwNjU2IDUxMiA1MC4zNjA2NTYgNzY2Ljk1OTIxMyAyNTcuMDQwNzg3IDk3My42MzkzNDQgNTEyIDk3My42MzkzNDQgNzY2Ljk1OTIxMyA5NzMuNjM5MzQ0IDk3My42MzkzNDQgNzY2Ljk1OTIxMyA5NzMuNjM5MzQ0IDUxMiA5NzMuNjM5MzQ0IDI1Ny4wNDA3ODcgNzY2Ljk1OTIxMyA1MC4zNjA2NTYgNTEyIDUwLjM2MDY1NlpNNzU1LjQwOTgzNiA3MjEuODM2MDY2IDI4NS4zNzcwNDkgNzIxLjgzNjA2NkMyNjYuODI3NTQxIDcyMS44MzYwNjYgMjUxLjgwMzI3OSA3MDcuOTcwMDk4IDI1MS44MDMyNzkgNjkwLjg0NzQ3NUwyNTEuODAzMjc5IDM0OS45Mzk0MUMyNTEuODAzMjc5IDMzMi44MzM1NzQgMjY2LjgyNzU0MSAzMTguOTUwODIgMjg1LjM3NzA0OSAzMTguOTUwODJMNzU1LjQwOTgzNiAzMTguOTUwODJDNzczLjk1OTM0NCAzMTguOTUwODIgNzg4Ljk4MzYwNyAzMzIuODMzNTc0IDc4OC45ODM2MDcgMzQ5LjkzOTQxTDc4OC45ODM2MDcgNjkwLjg0NzQ3NUM3ODguOTgzNjA3IDcwNy45NzAwOTggNzczLjk1OTM0NCA3MjEuODM2MDY2IDc1NS40MDk4MzYgNzIxLjgzNjA2NlpNNzU1LjQwOTgzNiAzNDkuOTM5NDEgMjg1LjM3NzA0OSAzNDkuOTM5NDEgMjg1LjM3NzA0OSAzNTAuOTYzNDEgNTIxLjkyMTA0OSA1NjkuMjkzNjM5IDc1NS40MDk4MzYgMzUzLjc2NjgyIDc1NS40MDk4MzYgMzQ5LjkzOTQxWk03NTUuNDA5ODM2IDM5Ny41OTczNzcgNTM4LjQzOTM0NCA1OTcuODY0OTE4IDUwNS4zODU5NjcgNTk3Ljg2NDkxOCAyODUuMzc3MDQ5IDM5NC43NzcxOCAyODUuMzc3MDQ5IDY5MC44NDc0NzUgNzU1LjQwOTgzNiA2OTAuODQ3NDc1IDc1NS40MDk4MzYgMzk3LjU5NzM3N1oiIHAtaWQ9IjUzMzAiIGZpbGw9IiNmZmZmZmYiPjwvcGF0aD48L3N2Zz4=" alt="E-mai联系" title="E-mai联系" style="width:20px;height:20px;border:none;"/>
+              </a>
+            </span>
+	          <span>
+              <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=903036377&site=qq&menu=yes" style="border-bottom:none">
+              <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNDkwMTUxNTc4MDQ0IiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjUgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjE1MjE0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjIwMC4xOTUzMTI1IiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNNTE2Ljk3MSAzNC44MTJjLTI2Mi44MzYgMC00NzUuOTExIDIxMy4wNzEtNDc1LjkxMSA0NzUuOTExczIxMy4wNzUgNDc1LjkxIDQ3NS45MTEgNDc1LjkxYzI2Mi44MzggMCA0NzUuOTE1LTIxMy4wNzAgNDc1LjkxNS00NzUuOTEgMC0yNjIuODM5LTIxMy4wNzYtNDc1LjkxMS00NzUuOTE1LTQ3NS45MTF6TTUxNi45NzEgOTYwLjA5OGMtMjQ4LjE4MSAwLTQ0OS4zNzMtMjAxLjE5MS00NDkuMzczLTQ0OS4zNzVzMjAxLjE5Mi00NDkuMzcxIDQ0OS4zNzMtNDQ5LjM3MWMyNDguMTgyIDAgNDQ5LjM3NyAyMDEuMTg4IDQ0OS4zNzcgNDQ5LjM3MSAwIDI0OC4xODMtMjAxLjE5NiA0NDkuMzc1LTQ0OS4zNzcgNDQ5LjM3NXoiIHAtaWQ9IjE1MjE1IiBmaWxsPSIjZmZmZmZmIj48L3BhdGg+PHBhdGggZD0iTTc2Ni45ODYgNTY5LjI2M2wtMS43NDktOS4zMjMtMS4xNjUtNC42NjEtMS4xNjctNC42NjEtMS43NDctNC42NjItMS43NDgtNS4yNDQtMi4zMy01LjI0NC0yLjMzMi01LjI0NC00LjA3OC04LjE1Ny0zLjQ5Ni03LjU3NS0zLjQ5Ni02LjQxLTIuOTEzLTUuODI3LTMuNDk2LTUuODI2LTIuMzMxLTQuNjYyLTUuMjQ0LTguMTU4LTYuOTkyLTkuOTA2LTEuNzQ5LTIuOTEyLTAuNTgyLTAuNTgzIDAtMS4xNjYgMS4xNjYtMy40OTYgMS4xNjUtMi45MTQgMS43NDctNS44MjcgMC41ODMtMy40OTYgMC0yLjkxNCAwLjU4My0yLjMzMSAwLTIuOTEzLTAuNTgzLTIuOTEzLTAuNTgzLTIuOTE0LTAuNTgyLTQuNjYyLTEuMTY1LTQuNjYxLTEuNzQ5LTQuNjYyLTEuNzQ4LTQuMDc5LTEuNzQ4LTMuNDk3LTEuNzQ3LTMuNDk2LTEuNzQ4LTIuOTE0LTMuNDk2LTUuMjQ1LTAuNTgyLTEuNzQ3LTAuNTg0LTEuMTY2LTEuMTY0LTkuMzIzLTEuMTY2LTUuODI2LTAuNTgzLTcuNTc1LTEuNzQ4LTcuNTc1LTIuMzMxLTguNzQxLTEuMTY0LTUuMjQzLTEuMTY1LTQuMDc5LTEuNzQ5LTQuNjYxLTEuNzQ4LTUuMjQ1LTEuNzQ5LTUuMjQzLTEuNzQ3LTUuMjQ1LTQuNjYxLTkuOTA1LTIuMzMtNC42NjItMy40OTgtNS4yNDQtMi45MTItNC42NjItMi45MTQtNS4yNDMtNC4wNzgtNS4yNDUtMy40OTctNC42NjEtNC4wNzktNC42NjItNC42NjEtNC42NjEtNC4wNzktNC4wNzktNS4yNDMtNC4wOC0yLjkxNC0yLjMzMS0yLjMzLTEuNzQ4LTUuODI3LTQuMDc5LTYuNDEtNC4wNzktNi40MDgtNC4wNzktNy41NzUtMy40OTctNi45OTItMi45MTQtNi45OTItMi45MTMtNy41NzYtMi45MTQtNy41NzMtMS43NDgtNy41NzUtMS43NDgtOC4xNTctMS43NDgtNy41NzUtMS43NDgtNy41NzUtMS4xNjUtOC4xNTctMC41ODMtNy41NzYtMS4xNjYtOC4xNTcgMC03LjU3NSAwLTcuNTc0IDAtNy41NzUgMC41ODMtNy41NzQgMS4xNjctNy41NzUgMC41ODItNy41NzUgMS4xNjYtNi45OTIgMS4xNjUtNi45OTEgMS43NDgtNi45OTIgMi4zMzEtNi45OTMgMi4zMzItNi40MDkgMi4zMy02LjQxIDIuOTE0LTUuODI1IDIuMzMxLTUuODI4IDMuNDk3LTUuODI2IDMuNDk2LTUuMjQ1IDMuNDk2LTUuMjQzIDQuMDgtNC42NjIgMy40OTZMNDEwLjM4MyAyODJsLTUuODI3IDUuMjQ1LTUuMjQ0IDUuODI2LTQuNjYxIDUuODI3LTQuNjYxIDUuODI4LTQuMDc4IDUuMjQzLTMuNDk3IDUuODI3LTIuMzMxIDIuOTE0LTEuNzQ4IDIuOTEzLTMuNDk2IDUuMjQ1LTIuOTEzIDUuMjQ0LTIuMzMxIDUuMjQ0LTIuMzMgNS4yNDUtMi4zMzEgNC42NjEtMS43NDggNC42NjEtMS43NDggNS4yNDQtMS43NDggNC4wNzktMS43NDggOC4xNTgtMi4zMzEgOC4xNTgtMC41ODIgNi40MDktMS4xNjYgNS44MjcgMCA0LjA3OSAwIDMuNDk2IDAgMy40OTctMS4xNjUgMS43NDgtMS43NDggMS43NDgtMS4xNjYgMi4zMzEtMC41ODIgMi4zMy0xLjc0OSA0LjY2Mi0xLjE2NSA0LjY2MS0wLjU4MiAzLjQ5NiAwIDMuNDk3IDAgMi45MTMtMy40OTcgNC4wNzktMS43NDcgNC42NjItMi4zMzEgNC4wNzgtMS4xNjUgNC4wNzktMC41ODMgMy40OTctMS4xNjUgMy40OTYgMCAyLjkxNCAwIDMuNDk2IDAgMi4zMzEgMC41ODMgMi4zMzEgMS4xNjUgNC4wNzkgMC41ODMgMi45MTQtMS43NDggMS4xNjUtNC42NjIgMy40OTctNi40MDkgNS44MjctNC4wNzkgMy40OTYtNC4wNzggMy40OTctMi45MTQgMi4zMzEtMS43NDggMi4zMy00LjY2MSA1LjI0NS00LjY2MiA0LjY2Mi0zLjQ5NSA0LjY2Mi00LjA3OSA1LjgyNy00LjA3OSA1LjgyNi00LjA3OCA2LjQxLTMuNDk3IDUuMjQ0LTIuOTEzIDYuNDEtMi45MTMgNS44MjYtMS43NDggNS4yNDQtMi4zMzEgNS44MjctMS43NDggNS44MjYtMS43NDggNS44MjctMS43NDggNS4yNDQtMC41ODIgNS4yNDQtMC41ODMgNS4yNDQtMS4xNjUgNC42NjEtMC41ODMgOS4zMjMgMCA4Ljc0IDAgNC4wNzkgMC41ODMgNC4wNzggMC41ODEgNi40MSAwLjU4NCAzLjQ5NiAxLjE2NSAyLjkxMyAwLjU4MyAyLjkxNCAwLjU4MiAxLjc0OCAyLjMzMSAzLjQ5NiAwLjU4MiAxLjE2NSAxLjE2NiAxLjE2NCAxLjE2NSAwIDEuMTY2IDAuNTg0IDEuMTY1IDAgMS43NDgtMC41ODQgNC42NjEtMS4xNjQgMy40OTctMS4xNjUgMy40OTYtMi4zMyAyLjkxMy0yLjMzMiAzLjQ5NS0yLjMzIDIuOTE0LTIuOTE0IDIuMzMxLTIuOTE0IDIuOTEzLTIuOTEyIDIuMzMxLTIuOTEzIDEuNzQ4LTIuOTE0IDEuMTY1LTIuMzMxIDIuOTEzLTUuMjQ0IDAuNTgzLTEuNzQ3IDAuNTgzLTEuMTY2IDAuNTgyLTEuMTY2IDAuNTgzLTEuMTY0IDAuNTgzIDAgMC41ODMtMC41ODMgMC41ODIgMCAwIDAuNTgzIDAuNTgyIDAgMC41ODQgMCAxLjE2NSA2LjQwOCAxLjc0OCA1LjI0NCAyLjMzIDUuMjQ1IDIuMzMxIDQuNjYgMS43NDggNC42NjIgMi4zMzEgNC42NjIgMi4zMyA0LjA3OSAyLjMzMSA0LjA3OSAyLjMzMSAzLjQ5NSAyLjMzIDMuNDk3IDUuMjQ1IDYuNDA4IDQuNjYxIDUuMjQ1IDQuNjYxIDQuNjYxIDQuMDc5IDQuMDc4IDQuMDc5IDIuOTE0IDUuODI3IDEuNzQ3IDIuMzMgMS4xNjUgMC41ODIgMC41ODQgMCAwLjU4My0wLjU4MiAwLjU4MS0xLjE2NiAwLjU4NC00LjA3OCAwLjU4Mi00LjA3OSAwLTMuNDk2IDAuNTgzLTMuNDk2IDAuNTgzLTMuNDk2IDEuMTY1LTIuOTE0IDEuMTY1LTIuMzMgMS4xNjYtMi4zMzEgMS4xNjUtMi4zMyAwLjU4My0yLjMzMSAxLjc0OC0xLjE2NSAxLjE2Ni0yLjMzMSAxLjE2NC0yLjMzMSAyLjkxNC0xLjE2NSAxLjc0OC0xLjE2NSAxLjE2NS0xLjE2NiAyLjkxNC0wLjU4MiAyLjkxMi0xLjE2NiAyLjMzMi0wLjU4MiAyLjMzIDAgMi45MTMgMCAxLjE2Ni0wLjU4MyAyLjMzIDAgMi4zMyAwIDIuMzMyIDAgMS43NDggMCAyLjMzMSAwLjU4MyAxLjE2NSAxLjc0OCAzLjQ5NiAwLjU4MiAxLjc0NyAwLjU4MyAyLjMzMSAxLjc0OCAxLjc0OCAxLjE2NSAxLjE2NiAxLjc0OCAxLjc0NyAxLjE2NiAxLjE2NyA0LjA3OCAyLjMyOSA0LjA3OSAyLjkxNCA0LjA3OCAyLjMzIDUuMjQ1IDEuNzQ4IDUuMjQ0IDEuNzQ4IDUuMjQ0IDEuNzQ5IDUuODI2IDEuNzQ3IDUuODI3IDEuMTY3IDYuNDA5IDAuNTgxIDUuODI3IDEuMTY2IDYuOTkzIDEuMTY2IDEyLjgxNyAxLjE2NSAxMi44MiAwLjU4MiAxMi4yMzYgMCA1LjgyNiAwIDUuODI4IDAgNS4yNDMtMC41ODIgNC42NjEtMC41ODMgNS4yNDUtMC41ODIgNC4wNzggMCA2Ljk5My0xLjc0OCA1LjI0My0xLjE2NSA1LjI0NC0xLjE2NyA4Ljc0LTMuNDk2IDQuMDc5LTEuNzQ4IDQuMDc4LTEuNzQ4IDYuNDEtMy40OTUgNS44MjYtMi45MTQgNC4wNzgtMi45MTMgMy40OTctMi4zMzEgNC42NjIgMCAzLjQ5NSAwLjU4MyA3LjU3NiAwLjU4MyAzLjQ5NiAwIDIuOTEyIDAgMi4zMzEgMC41ODIgMi4zMyAwLjU4MyA0LjA4IDEuMTY1IDMuNDk2IDEuNzQ4IDguMTU3IDIuMzMxIDcuNTc1IDIuOTEzIDguMTU3IDEuNzQ4IDcuNTc0IDEuNzQ5IDguMTU4IDEuNzQ3IDguMTU4IDEuNzQ5IDguMTU3IDAuNTgyIDcuNTczIDAuNTgyIDcuNTc2IDEuMTY3IDcuNTc0IDAuNTgxIDcuNTc2IDAgNy41NzMgMCA2Ljk5MiAwIDYuOTkzLTEuMTY0IDYuOTkyLTAuNTg0IDYuNDEtMC41ODIgNi40MDgtMS4xNjUgNS44MjctMS43NDkgNS44MjYtMS4xNjQgMi4zMzItMC41ODQgMi45MTQtMS4xNjUgNS4yNDMtMS43NDggNC4wNzktMi4zMyA0LjY2Mi0xLjc0OCA0LjA3OC0yLjMzIDMuNDk1LTIuMzMyIDEuMTY3LTEuNzQ4IDEuNzQ3LTEuNzQ4IDIuMzMxLTIuMzMxIDEuNzQ3LTIuOTEzIDEuMTY2LTIuMzMgMC41ODItMS4xNjUgMC41ODQtMS43NDkgMC41ODItMS43NDggMC0xLjc0NyAwLjU4Mi0xLjc0OC0wLjU4Mi0yLjMzMi0wLjU4Mi0yLjMzLTAuNTg0LTIuMzMtMS4xNjUtMi4zMzItMS4xNjUtMi45MTMtMS43NDgtMS43NDctMS43NDgtMi4zMzItMi4zMy0xLjc0OC00LjY2Mi00LjA3OC01LjI0NC00LjA3OS01LjI0My0yLjkxMy01LjgyOC0yLjkxNC0xMi44MTgtNi40MDktMi41NDktMS41MjkgNC4yOTgtNC4yOTcgMi45MTItMi45MTQgMi4zMzEtMi45MTMgNC4wNzgtNS44MjYgNC4wNzktNi40MSAzLjQ5Ny01LjgyNyAyLjkxMy01LjI0NSA0LjY2MS0xMC40ODcgMy40OTYtOC43NCAxLjc0OC01LjgyNyAxLjc0Ny0yLjMzIDAuNTg0LTEuNzQ4IDEuMTY0LTAuNTgzIDAuNTg0IDAgMC41ODIgMCAyLjkxMyA2LjQwOSAyLjkxMyA1LjgyOCAyLjMzMiAzLjQ5NSAyLjMzIDMuNDk2IDIuMzMxIDMuNDk2IDIuMzMxIDMuNDk2IDIuMzMgMi4zMzEgMS4xNjUgMS4xNjQgMS4xNjYgMS43NDkgMS43NDggMC41ODQgMS4xNjQgMS4xNjQgMi4zMzIgMS4xNjUgMS43NDggMC41ODMgMC41ODIgMCAxLjE2NiAwIDEuNzQ3LTAuNTgzIDEuNzQ5LTEuMTY1IDEuNzQ4LTAuNTgzIDEuNzQ3LTEuMTY1IDEuMTY3LTEuNzQ5IDEuNzQ3LTEuNzQ2IDEuMTY2LTEuNzQ5IDEuMTY1LTIuMzMgMS43NDctMi4zMzIgMS4xNjctMi4zMyAwLjU4MS0yLjkxMyAxLjc0OS01LjgyNyAxLjc0OC02LjQxIDAuNTgyLTYuOTkxIDAuNTgzLTQuMDc4IDAtMy40OTcgMC0zLjQ5NiAwLTQuNjYxLTEuMTY1LTguMTU4TDc2Ni45ODYgNTY5LjI2M3pNNjgwLjc0OCA2NzAuNjQ5bC0wLjU4Mi0wLjU4MiAwLjk3MS0wLjk3MUw2ODAuNzQ4IDY3MC42NDl6IiBwLWlkPSIxNTIxNiIgZmlsbD0iI2ZmZmZmZiI+PC9wYXRoPjwvc3ZnPg==" alt="QQ联系microzz" title="QQ联系microzz" style="width:22px;height:22px;border:none;"/></a>
+            </span>
+            <!-- <span>&copy; 2015 - 2017</span> -->
+
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://microzz.com/2017/04/06/jsdom/&title=《原生JS中DOM节点相关API合集》 — 涵月天-microzz.com&pic=https://icdn.microzz.com/microzz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://microzz.com/2017/04/06/jsdom/&title=《原生JS中DOM节点相关API合集》 — 涵月天-microzz.com&source=HTML/HTML5 CSS/CSS3 JavaScript React Vue Angular Node.js ES6 JS" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://microzz.com/2017/04/06/jsdom/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《原生JS中DOM节点相关API合集》 — 涵月天-microzz.com&url=https://microzz.com/2017/04/06/jsdom/&via=https://microzz.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://microzz.com/2017/04/06/jsdom/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABv0lEQVR42u3aSY7DIBAF0Nz/0mkp25bJLwqwIz1WkePhsSnVwOsVr/dn5Xderf/3vHYsXFzcNjf/QPVt4+tXG7gy4OLinueOg9c4GI1xVfoXGy4u7sO4V/fnYSh/Jy4u7q9w55KepKDCxcV9JjdvZFSvJwXSlloNFxe3we0EnVW/N/Z3cXFxi9x3cSWpz8av4+LiHuGO2xydUWvy7GRxhYuLe5C7tqQZbyz5N6rVcHFxN3CTz1cTlM6Gv4Q8XFzcg9xqQdIJRp0v4uLi3sXtFEXV41bVzeDi4p7hVketeYOj3zxtdVtxcXEb3OqrkwQlKY3GQQoXF/debr/sqUKTFkz0FC4u7jZuHpjGqUzePM2DKS4u7hO4efGTDGjzCFoIc7i4uEe4+eAzKVfmSqBquoOLi7ubu/bwRBLUqkkPLi7uXdx+E7M6WJ0bseDi4p7k5qua9ORBatn4BBcXt82dG692Ep08/LWOdODi4ra5c4PVHJoPYApnRnBxcY9wO8Erv39ZfxcXF/cx3CQI5jFnrqzCxcX9XW71WGehcMLFxT3IzY9ddo5b5b2ZBW0RXFzcNZPQqCCZY1W3hIuLexP3D1/lyC9hmHipAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+<script>
+// (function(){
+//     var bp = document.createElement('script');
+//     var curProtocol = window.location.protocol.split(':')[0];
+//     if (curProtocol === 'https') {
+//         bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+//     }
+//     else {
+//         bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+//     }
+//     var s = document.getElementsByTagName("script")[0];
+//     s.parentNode.insertBefore(bp, s);
+// })();
+console.log("%c Powered by Zhaohui - microzz.com","background-image:-webkit-gradient( linear, left top,right top, color-stop(0, #00a419),color-stop(0.15, #f44336), color-stop(0.29, #ff4300),color-stop(0.3, #AA00FF),color-stop(0.4, #8BC34A), color-stop(0.45, #607D8B),color-stop(0.6, #4096EE), color-stop(0.75, #D50000),color-stop(0.9, #4096EE), color-stop(1, #FF1A00));color:transparent;-webkit-background-clip:text;font-size:13px;");
+</script>
+
+    <!-- <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script> -->
+<script src="https://icdn.microzz.com/microzz/js/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<!-- <script src="/js/main.min.js?v=1.4.5"></script> -->
+<script src="https://icdn.microzz.com/microzz/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<!-- <script src="/js/search.min.js?v=1.4.5" async></script> -->
+<script src="https://icdn.microzz.com/microzz/js/search.min.js" async></script>
+
+
+
+
+
+
+<!-- <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+<script async src="https://icdn.microzz.com/microzz/js/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
