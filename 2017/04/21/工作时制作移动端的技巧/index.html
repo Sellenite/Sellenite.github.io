@@ -93,7 +93,7 @@
 <meta property="og:url" content="https://sellenite.github.io/2017/04/21/工作时制作移动端的技巧/index.html">
 <meta property="og:site_name" content="yuuhei's Home">
 <meta property="og:description" content="JS方面简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.locati">
-<meta property="og:updated_time" content="2017-04-21T01:14:53.796Z">
+<meta property="og:updated_time" content="2017-04-21T01:16:54.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工作时制作移动端的技巧">
 <meta name="twitter:description" content="JS方面简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.locati">
@@ -322,6 +322,7 @@
 
       
         <h2 id="JS方面"><a href="#JS方面" class="headerlink" title="JS方面"></a>JS方面</h2><h4 id="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><a href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法" class="headerlink" title="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"></a>简单的利用JS来判断页面是在手机端还是在PC端打开的方法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="regexp">/Android|webOS|iPhone|iPod|BlackBerry/i</span>.test(navigator.userAgent)) &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"https://www.baidu.com/"</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"http://news.baidu.com/"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="CSS方面"><a href="#CSS方面" class="headerlink" title="CSS方面"></a>CSS方面</h2><h4 id="移动端图片模糊的问题"><a href="#移动端图片模糊的问题" class="headerlink" title="移动端图片模糊的问题"></a>移动端图片模糊的问题</h4><ul>
 <li>在移动端需要使用PC端两倍尺寸的图片，然后用background-size:50%;来还原本来的尺寸，这样移动端的图片才会清晰，不模糊</li>
 </ul>
