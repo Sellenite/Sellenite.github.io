@@ -247,6 +247,132 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/04/21/vue倒数组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/21/vue倒数组件/" itemprop="url">
+                  vue倒数组件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-21T14:24:16+08:00">
+                2017-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>父元素定好结束时间，结束后显示的文字，结束后回调的函数就可以用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">countDown</span> <span class="attr">:endTime</span>=<span class="string">"endTime"</span> <span class="attr">:callback</span>=<span class="string">"callback"</span> <span class="attr">:endText</span>=<span class="string">"聘筹已结束"</span>&gt;</span><span class="tag">&lt;/<span class="name">countDown</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>一个正在倒数的时间，单位有天、时分秒。</p>
+<blockquote>
+<p>组件源码：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">    &lt;span :endTime=&quot;endTime&quot; :callback=&quot;callback&quot; :endText=&quot;endText&quot;&gt;</div><div class="line">        &lt;slot&gt;</div><div class="line">            &#123;&#123;content&#125;&#125;</div><div class="line">        &lt;/slot&gt;</div><div class="line">    &lt;/span&gt;</div><div class="line">&lt;/template&gt;</div><div class="line"></div><div class="line">&lt;script type=&quot;text/ecmascript-6&quot;&gt;</div><div class="line">    export default &#123;</div><div class="line">        data()&#123;</div><div class="line">            return &#123;</div><div class="line">                content: &apos;&apos;,</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        props: &#123;</div><div class="line">            endTime: &#123;</div><div class="line">                type: String,</div><div class="line">                default: &apos;&apos;</div><div class="line">            &#125;,</div><div class="line">            endText: &#123;</div><div class="line">                type: String,</div><div class="line">                default: &apos;已结束&apos;</div><div class="line">            &#125;,</div><div class="line">            callback: &#123;</div><div class="line">                type: Function,</div><div class="line">                default: &apos;&apos;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        mounted () &#123;</div><div class="line">            this.countdowm(this.endTime)</div><div class="line">        &#125;,</div><div class="line">        methods: &#123;</div><div class="line">            countdowm(endtime)&#123;</div><div class="line">                let self = this;</div><div class="line">                let timer = setInterval(function () &#123;</div><div class="line">                    var date = endtime - new Date();   //时间差的毫秒数</div><div class="line">                    if (date &gt; 0) &#123;</div><div class="line">                        // 计算出相差天数</div><div class="line">                        var days = Math.floor(date / (24 * 3600 * 1000));</div><div class="line">                        // 计算出小时数</div><div class="line">                        //计算天数后剩余的毫秒数</div><div class="line">                        var leave1 = date % (24 * 3600 * 1000);</div><div class="line">                        var hours = Math.floor(leave1 / (3600 * 1000));</div><div class="line">                        hours = hours &lt; 10 ? &apos;0&apos; + hours : hours;</div><div class="line">                        // 计算相差分钟数</div><div class="line">                        //计算小时数后剩余的毫秒数</div><div class="line">                        var leave2 = leave1 % (3600 * 1000);</div><div class="line">                        var minutes = Math.floor(leave2 / (60 * 1000));</div><div class="line">                        minutes = minutes &lt; 10 ? &apos;0&apos; + minutes : minutes;</div><div class="line">                        // 计算相差秒数</div><div class="line">                        //计算分钟数后剩余的毫秒数</div><div class="line">                        var leave3 = leave2 % (60 * 1000);</div><div class="line">                        var seconds = Math.round(leave3 / 1000);</div><div class="line">                        seconds = seconds &lt; 10 ? &apos;0&apos; + seconds : seconds;</div><div class="line">                        var format = `$&#123;days&#125;天 $&#123;hours&#125;:$&#123;minutes&#125;:$&#123;seconds&#125;`;</div><div class="line">                        self.content = format;</div><div class="line">                    &#125; else &#123;</div><div class="line">                        clearInterval(timer);</div><div class="line">                        self.content = self.endText;</div><div class="line">                        self._callback();</div><div class="line">                    &#125;</div><div class="line">                &#125;, 1000);</div><div class="line">            &#125;,</div><div class="line">            _callback()&#123;</div><div class="line">                if (this.callback &amp;&amp; this.callback instanceof Function) &#123;</div><div class="line">                    this.callback(...this);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/04/21/一劳永逸的搞定flex布局/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -447,7 +573,7 @@
           <h2 id="JS方面"><a href="#JS方面" class="headerlink" title="JS方面"></a>JS方面</h2><h4 id="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><a href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法" class="headerlink" title="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"></a>简单的利用JS来判断页面是在手机端还是在PC端打开的方法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="regexp">/Android|webOS|iPhone|iPod|BlackBerry/i</span>.test(navigator.userAgent)) &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"https://www.baidu.com/"</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"http://news.baidu.com/"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/21/工作时制作移动端的技巧/#more" rel="contents">
+            <a class="btn" href="/2017/04/21/工作时制作移动端的技巧/#далее" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -705,7 +831,7 @@
 <p>rem配置参考：<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/20/移动端rem模板/#more" rel="contents">
+            <a class="btn" href="/2017/04/20/移动端rem模板/#далее" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -841,7 +967,7 @@
 </blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/20/水平居中方法总结/#more" rel="contents">
+            <a class="btn" href="/2017/04/20/水平居中方法总结/#далее" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -975,7 +1101,7 @@
 </blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/20/垂直居中方法总结/#more" rel="contents">
+            <a class="btn" href="/2017/04/20/垂直居中方法总结/#далее" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1100,7 +1226,7 @@
           <h1 id="JS计算时间相减"><a href="#JS计算时间相减" class="headerlink" title="JS计算时间相减"></a>JS计算时间相减</h1><p>项目有时需要前台自己对时间进行相减和格式化，这里写一个，import就可以用<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/19/JS计算时间相减/#more" rel="contents">
+            <a class="btn" href="/2017/04/19/JS计算时间相减/#далее" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1380,128 +1506,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/03/02/鸡狗零碎的知识/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/02/鸡狗零碎的知识/" itemprop="url">
-                  knowledge
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-02T10:26:03+08:00">
-                2017-03-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="鸡狗零碎的知识"><a href="#鸡狗零碎的知识" class="headerlink" title="鸡狗零碎的知识"></a>鸡狗零碎的知识</h1><p>别人整理的，搬过来自己看：</p>
-<p><a href="http://www.vichily.com/2017/02/28/%E7%AC%BC%E7%BB%9F%E7%9A%84%E5%89%8D%E7%AB%AF/#more" target="_blank" rel="external">笼统的前端</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1551,7 +1555,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
