@@ -1,0 +1,684 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="父元素用法:1234567891011121314151617181920212223242526272829303132&amp;lt;pagination :total=&quot;total&quot; :display=&quot;display&quot; :current=&quot;current&quot; :pagegroup=&quot;pagegroup&quot; v-on:pagechange=&quot;pagechange&quot;&amp;gt;&amp;lt;/pagination&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2.0实现分页组件">
+<meta property="og:url" content="https://sellenite.github.io/2017/04/24/Vue2-0实现分页组件/index.html">
+<meta property="og:site_name" content="yuuhei's Home">
+<meta property="og:description" content="父元素用法:1234567891011121314151617181920212223242526272829303132&amp;lt;pagination :total=&quot;total&quot; :display=&quot;display&quot; :current=&quot;current&quot; :pagegroup=&quot;pagegroup&quot; v-on:pagechange=&quot;pagechange&quot;&amp;gt;&amp;lt;/pagination&amp;">
+<meta property="og:image" content="https://sellenite.github.io/images/pagination.png">
+<meta property="og:updated_time" content="2017-04-24T02:53:19.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue2.0实现分页组件">
+<meta name="twitter:description" content="父元素用法:1234567891011121314151617181920212223242526272829303132&amp;lt;pagination :total=&quot;total&quot; :display=&quot;display&quot; :current=&quot;current&quot; :pagegroup=&quot;pagegroup&quot; v-on:pagechange=&quot;pagechange&quot;&amp;gt;&amp;lt;/pagination&amp;">
+<meta name="twitter:image" content="https://sellenite.github.io/images/pagination.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2017/04/24/Vue2-0实现分页组件/"/>
+
+
+
+
+
+  <title> Vue2.0实现分页组件 | yuuhei's Home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/04/24/Vue2-0实现分页组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Vue2.0实现分页组件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-24T10:35:19+08:00">
+                2017-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/04/24/Vue2-0实现分页组件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="父元素用法"><a href="#父元素用法" class="headerlink" title="父元素用法:"></a>父元素用法:</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">pagination</span> <span class="attr">:total</span>=<span class="string">"total"</span> <span class="attr">:display</span>=<span class="string">"display"</span> <span class="attr">:current</span>=<span class="string">"current"</span> <span class="attr">:pagegroup</span>=<span class="string">"pagegroup"</span> <span class="attr">v-on:pagechange</span>=<span class="string">"pagechange"</span>&gt;</span><span class="tag">&lt;/<span class="name">pagination</span>&gt;</span></div><div class="line"></div><div class="line">import pagination from './pagination';</div><div class="line"></div><div class="line">export default() &#123;</div><div class="line">    data() &#123;</div><div class="line">        return &#123;</div><div class="line">          total: 91,            //总页数</div><div class="line">          display: 5,           //每页显示条数</div><div class="line">          current: 1,           //当前页码</div><div class="line">          pagegroup: 7,         //显示多少个分页索引(奇数)</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    methods: &#123;</div><div class="line">        pagechange(p) &#123;</div><div class="line">            console.log(p);      //点击时传参，传当前激活的页数</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    components: &#123;</div><div class="line">        pagination</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * [pagination 分页组件]</div><div class="line"> * @param  &#123;Number&#125; total   [数据总条数]</div><div class="line"> * @param  &#123;Number&#125; display     [每页显示条数 default:10]</div><div class="line"> * @param  &#123;Number&#125; current     [当前页码 default:1]</div><div class="line"> * @param  &#123;Number&#125; pagegroup   [显示多少个分页索引(奇数) default:5]</div><div class="line"> * @param  &#123;Event&#125; pagechange   [页码改动时 $emit，父元素接收当前的页数]</div><div class="line"> * @return &#123;[type]&#125;   [description]</div><div class="line"> **/</div></pre></td></tr></table></figure>
+<h3 id="子元素源码"><a href="#子元素源码" class="headerlink" title="子元素源码"></a>子元素源码</h3><a id="more"></a>
+<blockquote>
+<p>template部分</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">nav</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">:class</span>=<span class="string">"&#123;'disabled': currentFix == 1&#125;"</span> @<span class="attr">click</span>=<span class="string">"setCurrent(1)"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:;"</span>&gt;</span> 首页 <span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">:class</span>=<span class="string">"&#123;'disabled': currentFix == 1&#125;"</span> @<span class="attr">click</span>=<span class="string">"setCurrent(currentFix - 1)"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:;"</span>&gt;</span> 上一页 <span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"p in grouplist"</span> <span class="attr">:class</span>=<span class="string">"&#123;'active': currentFix == p.val&#125;"</span> @<span class="attr">click</span>=<span class="string">"setCurrent(p.val)"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:;"</span>&gt;</span> &#123;&#123; p.text &#125;&#125; <span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">:class</span>=<span class="string">"&#123;'disabled': currentFix == page&#125;"</span> @<span class="attr">click</span>=<span class="string">"setCurrent(currentFix + 1)"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:;"</span>&gt;</span> 下一页<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">:class</span>=<span class="string">"&#123;'disabled': currentFix == page&#125;"</span> @<span class="attr">click</span>=<span class="string">"setCurrent(page)"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:;"</span>&gt;</span> 尾页 <span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"displayArea"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span> 共 &#123;&#123; total &#125;&#125;  条数据 <span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span> 每页显示 &#123;&#123; display &#125;&#125;  条数据 <span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span> 共 &#123;&#123; page &#125;&#125; 页 <span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span> 当前第 &#123;&#123; currentFix &#125;&#125; 页 <span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>Javascript部分</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/ecmascript-6"</span>&gt;</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">    <span class="attr">props</span>: &#123;</div><div class="line">        <span class="comment">/* 数据总条数 */</span></div><div class="line">        total: &#123;</div><div class="line">            <span class="attr">type</span>: <span class="built_in">Number</span>,</div><div class="line">            <span class="attr">default</span>: <span class="number">0</span></div><div class="line">        &#125;,</div><div class="line">        <span class="comment">/* 每页显示条数 */</span></div><div class="line">        display: &#123;</div><div class="line">            <span class="attr">type</span>: <span class="built_in">Number</span>,</div><div class="line">            <span class="attr">default</span>: <span class="number">10</span></div><div class="line">        &#125;,</div><div class="line">        <span class="comment">/* 当前页码 */</span></div><div class="line">        current: &#123;</div><div class="line">            <span class="attr">type</span>: <span class="built_in">Number</span>,</div><div class="line">            <span class="attr">default</span>: <span class="number">1</span></div><div class="line">        &#125;,</div><div class="line">        <span class="comment">/* 分页条数--奇数 */</span></div><div class="line">        pagegroup: &#123;</div><div class="line">            <span class="attr">type</span>: <span class="built_in">Number</span>,</div><div class="line">            <span class="attr">default</span>: <span class="number">5</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    data() &#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">currentFix</span>: <span class="keyword">this</span>.current</div><div class="line">        &#125;;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">computed</span>: &#123;</div><div class="line">        <span class="comment">/* 计算修改分页索引条数 */</span></div><div class="line">        normalizedPagegroup: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> v = <span class="keyword">this</span>.pagegroup;</div><div class="line">            v = v &gt; <span class="number">0</span> ? v : <span class="number">5</span>;</div><div class="line">            <span class="keyword">return</span> v % <span class="number">2</span> === <span class="number">1</span> ? v : v + <span class="number">1</span>;</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">/* 总页数 */</span></div><div class="line">        page: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">Math</span>.ceil(<span class="keyword">this</span>.total / <span class="keyword">this</span>.display);</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">/* 获取分页页码 */</span></div><div class="line">        grouplist: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> len = <span class="keyword">this</span>.page;</div><div class="line">            <span class="keyword">var</span> temp = [];</div><div class="line">            <span class="keyword">var</span> list = [];</div><div class="line">            <span class="keyword">var</span> count = <span class="built_in">Math</span>.floor(<span class="keyword">this</span>.normalizedPagegroup / <span class="number">2</span>);</div><div class="line">            <span class="keyword">var</span> center = <span class="keyword">this</span>.currentFix;</div><div class="line">            <span class="keyword">if</span> (len &lt;= <span class="keyword">this</span>.normalizedPagegroup) &#123;</div><div class="line">                <span class="keyword">while</span> (len--) &#123; temp.push(&#123; <span class="attr">text</span>: <span class="keyword">this</span>.page - len, <span class="attr">val</span>: <span class="keyword">this</span>.page - len &#125;); &#125;;</div><div class="line">                <span class="keyword">return</span> temp;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">while</span> (len--) &#123; temp.push(<span class="keyword">this</span>.page - len); &#125;;</div><div class="line">            <span class="keyword">var</span> idx = temp.indexOf(center);</div><div class="line">            (idx &lt; count) &amp;&amp; (center = center + count - idx);</div><div class="line">            (<span class="keyword">this</span>.currentFix &gt; <span class="keyword">this</span>.page - count) &amp;&amp; (center = <span class="keyword">this</span>.page - count);</div><div class="line">            temp = temp.splice(center - count - <span class="number">1</span>, <span class="keyword">this</span>.normalizedPagegroup);</div><div class="line">            <span class="keyword">do</span> &#123;</div><div class="line">                <span class="keyword">var</span> t = temp.shift();</div><div class="line">                list.push(&#123;</div><div class="line">                    <span class="attr">text</span>: t,</div><div class="line">                    <span class="attr">val</span>: t</div><div class="line">                &#125;);</div><div class="line">            &#125; <span class="keyword">while</span> (temp.length);</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.page &gt; <span class="keyword">this</span>.normalizedPagegroup) &#123;</div><div class="line">                (<span class="keyword">this</span>.currentFix &gt; count + <span class="number">1</span>) &amp;&amp; list.unshift(&#123; <span class="attr">text</span>: <span class="string">'...'</span>, <span class="attr">val</span>: list[<span class="number">0</span>].val - <span class="number">1</span> &#125;);</div><div class="line">                (<span class="keyword">this</span>.currentFix &lt; <span class="keyword">this</span>.page - count) &amp;&amp; list.push(&#123; <span class="attr">text</span>: <span class="string">'...'</span>, <span class="attr">val</span>: list[list.length - <span class="number">1</span>].val + <span class="number">1</span> &#125;);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> list;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">methods</span>: &#123;</div><div class="line">        <span class="attr">setCurrent</span>: <span class="function"><span class="keyword">function</span> (<span class="params">idx</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.currentFix !== idx &amp;&amp; idx &gt; <span class="number">0</span> &amp;&amp; idx &lt; <span class="keyword">this</span>.page + <span class="number">1</span>) &#123;</div><div class="line">                <span class="keyword">this</span>.currentFix = idx;</div><div class="line">                <span class="keyword">this</span>.$emit(<span class="string">'pagechange'</span>, <span class="keyword">this</span>.currentFix);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>CSS部分</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;style lang=<span class="string">"stylus"</span> rel=<span class="string">"stylesheet/stylus"</span>&gt;</div><div class="line">    <span class="selector-class">.pagination</span></div><div class="line">        <span class="attribute">list-style</span>: none</div><div class="line">        <span class="attribute">font-size</span>: <span class="number">0</span></div><div class="line">        <span class="selector-tag">li</span></div><div class="line">            <span class="attribute">display</span>: inline-block</div><div class="line">            <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">12px</span></div><div class="line">            <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#ddd</span></div><div class="line">            <span class="attribute">font-size</span>: <span class="number">13px</span></div><div class="line">            <span class="attribute">border-right</span>: none</div><div class="line">            <span class="attribute">cursor</span>: pointer</div><div class="line">            &amp;:last-child</div><div class="line">                <span class="attribute">border-right</span>: <span class="number">1px</span> solid <span class="number">#ddd</span></div><div class="line">            <span class="selector-tag">a</span></div><div class="line">                <span class="attribute">text-decoration</span>: none</div><div class="line">                <span class="attribute">color</span>: <span class="number">#656565</span></div><div class="line">            &amp;<span class="selector-class">.active</span></div><div class="line">                <span class="attribute">background</span>: <span class="number">#42b983</span></div><div class="line">                <span class="selector-tag">a</span></div><div class="line">                    <span class="attribute">color</span>: <span class="number">#FFF</span></div><div class="line">    <span class="selector-class">.displayArea</span></div><div class="line">        <span class="attribute">list-style</span>: none</div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="/images/pagination.png" alt="image"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/21/vue记事本分析vuex过程/" rel="next" title="vue记事本分析vuex过程">
+                <i class="fa fa-chevron-left"></i> vue记事本分析vuex过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="Sellenite" />
+          <p class="site-author-name" itemprop="name">Sellenite</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#父元素用法"><span class="nav-number">1.</span> <span class="nav-text">父元素用法:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子元素源码"><span class="nav-number">2.</span> <span class="nav-text">子元素源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效果"><span class="nav-number">3.</span> <span class="nav-text">效果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
