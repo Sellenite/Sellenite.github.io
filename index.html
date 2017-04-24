@@ -1332,10 +1332,12 @@
 </li>
 <li><p>若是块级元素, 该元素设置 margin:0 auto即可.</p>
 </li>
+<li><p>若是 display:inline-block, 该元素的父元素设置 text-align:center 即可.</p>
+</li>
 <li><p>若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配合margin, 作如下设置:</p>
 </li>
 </ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span>&#123;</div><div class="line">      <span class="attribute">width</span>: -moz-fit-content;</div><div class="line">    <span class="attribute">width</span>: -webkit-fit-content;</div><div class="line">    <span class="attribute">width</span>:fit-content;</div><div class="line">    <span class="attribute">margin</span>:<span class="number">0</span> auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span>&#123;</div><div class="line">    <span class="attribute">width</span>: -moz-fit-content;</div><div class="line">    <span class="attribute">width</span>: -webkit-fit-content;</div><div class="line">    <span class="attribute">width</span>:fit-content;</div><div class="line">    <span class="attribute">margin</span>:<span class="number">0</span> auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <blockquote>
 <p>fit-content是CSS3中给width属性新加的一个属性值,它配合margin可以轻松实现水平居中, 目前只支持Chrome 和 Firefox浏览器.</p>
 </blockquote>

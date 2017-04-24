@@ -91,10 +91,9 @@
 
 若是块级元素, 该元素设置 margin:0 auto即可.
 
-若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配合margin, 作如下设置:
+若是 display:inline-block, 该元素的父元素设置 text-align:center 即可.
 
-
-123456.parent&amp;#123;      width: -moz-fit">
+若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配">
 <meta property="og:type" content="article">
 <meta property="og:title" content="水平居中方法总结">
 <meta property="og:url" content="https://sellenite.github.io/2017/04/20/水平居中方法总结/index.html">
@@ -103,21 +102,19 @@
 
 若是块级元素, 该元素设置 margin:0 auto即可.
 
-若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配合margin, 作如下设置:
+若是 display:inline-block, 该元素的父元素设置 text-align:center 即可.
 
-
-123456.parent&amp;#123;      width: -moz-fit">
-<meta property="og:updated_time" content="2017-04-24T07:48:34.572Z">
+若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配">
+<meta property="og:updated_time" content="2017-04-24T08:02:28.711Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="水平居中方法总结">
 <meta name="twitter:description" content="若是行内元素, 给其父元素设置 text-align:center,即可实现行内元素水平居中.
 
 若是块级元素, 该元素设置 margin:0 auto即可.
 
-若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配合margin, 作如下设置:
+若是 display:inline-block, 该元素的父元素设置 text-align:center 即可.
 
-
-123456.parent&amp;#123;      width: -moz-fit">
+若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配">
 
 
 
@@ -357,10 +354,12 @@
 </li>
 <li><p>若是块级元素, 该元素设置 margin:0 auto即可.</p>
 </li>
+<li><p>若是 display:inline-block, 该元素的父元素设置 text-align:center 即可.</p>
+</li>
 <li><p>若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配合margin, 作如下设置:</p>
 </li>
 </ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span>&#123;</div><div class="line">      <span class="attribute">width</span>: -moz-fit-content;</div><div class="line">    <span class="attribute">width</span>: -webkit-fit-content;</div><div class="line">    <span class="attribute">width</span>:fit-content;</div><div class="line">    <span class="attribute">margin</span>:<span class="number">0</span> auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span>&#123;</div><div class="line">    <span class="attribute">width</span>: -moz-fit-content;</div><div class="line">    <span class="attribute">width</span>: -webkit-fit-content;</div><div class="line">    <span class="attribute">width</span>:fit-content;</div><div class="line">    <span class="attribute">margin</span>:<span class="number">0</span> auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <blockquote>
 <p>fit-content是CSS3中给width属性新加的一个属性值,它配合margin可以轻松实现水平居中, 目前只支持Chrome 和 Firefox浏览器.</p>
 </blockquote>
@@ -372,11 +371,11 @@
 <ul>
 <li>使用flex 2009年版本, 父元素display: box;box-pack: center;如下设置:</li>
 </ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: -webkit-box;</div><div class="line">    <span class="attribute">-webkit-box-orient</span>: horizontal;</div><div class="line">    <span class="attribute">-webkit-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: -moz-box;</div><div class="line">    <span class="attribute">-moz-box-orient</span>: horizontal;</div><div class="line">    <span class="attribute">-moz-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: -o-box;</div><div class="line">      <span class="attribute">-o-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-o-box-pack</span>: center;</div><div class="line">      <span class="attribute">display</span>: -ms-box;</div><div class="line">      <span class="attribute">-ms-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-ms-box-pack</span>: center;</div><div class="line">      <span class="attribute">display</span>: box;</div><div class="line">      <span class="attribute">box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">box-pack</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: -webkit-box;</div><div class="line">      <span class="attribute">-webkit-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-webkit-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: -moz-box;</div><div class="line">      <span class="attribute">-moz-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-moz-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: -o-box;</div><div class="line">      <span class="attribute">-o-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-o-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: -ms-box;</div><div class="line">      <span class="attribute">-ms-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-ms-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: box;</div><div class="line">      <span class="attribute">box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">box-pack</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>使用CSS3中新增的transform属性, 子元素设置如下:</li>
 </ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.son</span>&#123;</div><div class="line">    <span class="attribute">position</span>:absolute;</div><div class="line">      <span class="attribute">left</span>:<span class="number">50%</span>;</div><div class="line">      <span class="attribute">transform</span>:<span class="built_in">translate</span>(-50%,0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.son</span>&#123;</div><div class="line">    <span class="attribute">position</span>:absolute;</div><div class="line">    <span class="attribute">left</span>:<span class="number">50%</span>;</div><div class="line">    <span class="attribute">transform</span>:<span class="built_in">translate</span>(-50%,0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>使用绝对定位方式, 以及负值的margin-left, 子元素设置如下:</li>
 </ul>
