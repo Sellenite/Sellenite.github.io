@@ -93,7 +93,7 @@
 <meta property="og:url" content="https://sellenite.github.io/2017/04/21/工作时制作移动端的技巧/index.html">
 <meta property="og:site_name" content="yuuhei's Home">
 <meta property="og:description" content="JS方面简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.locati">
-<meta property="og:updated_time" content="2017-04-26T07:40:13.004Z">
+<meta property="og:updated_time" content="2017-04-26T07:44:55.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工作时制作移动端的技巧">
 <meta name="twitter:description" content="JS方面简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.locati">
@@ -336,6 +336,7 @@
 <li>需要在微信公众号签名才能够使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WeixinJSBridge.call(&apos;closeWindow&apos;)</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<a id="more"></a>
 <h3 id="Vue里引用jQuery"><a href="#Vue里引用jQuery" class="headerlink" title="Vue里引用jQuery"></a>Vue里引用jQuery</h3><p>首先在index.html下引入jQuery的cdn:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;//cdn.staticfile.org/jquery/3.1.1/jquery.min.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure></p>
 <p>如果有eslint的话，在使用$和jQuery选择时会显示没有定义，需要在eslint设置：<br>‘no-undef’: 0<br>然后再methods里就可以正常使用。</p>
 <h3 id="Vue里引用require-js"><a href="#Vue里引用require-js" class="headerlink" title="Vue里引用require.js"></a>Vue里引用require.js</h3><p>首先在index.html下引入require.js的cdn:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;//apps.bdimg.com/libs/require.js/2.1.11/require.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure></p>
@@ -347,8 +348,8 @@
 </ul>
 <p>Vue里：<br>将jquery.qrcode.min.js放在静态配置文件夹static中,在Vue文件利用require.js引入：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mounted() &#123;</div><div class="line">    <span class="comment">/* 保证DOM渲染完毕 */</span></div><div class="line">    <span class="keyword">this</span>.$nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        requirejs([<span class="string">"/static/jquery.qrcode.min.js"</span>], () =&gt; &#123;</div><div class="line">            <span class="comment">// 被渲染的容器</span></div><div class="line">            $(<span class="string">'#code'</span>).qrcode(&#123;</div><div class="line">                <span class="attr">text</span>: <span class="string">`http://www.baidu.com`</span>,</div><div class="line">                <span class="attr">width</span>: <span class="number">200</span>,</div><div class="line">                <span class="attr">height</span>: <span class="number">200</span></div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<h2 id="CSS方面"><a href="#CSS方面" class="headerlink" title="CSS方面"></a>CSS方面</h2><h4 id="移动端图片模糊的问题"><a href="#移动端图片模糊的问题" class="headerlink" title="移动端图片模糊的问题"></a>移动端图片模糊的问题</h4><ul>
+<!--more-->
+<h2 id="CSS方面"><a href="#CSS方面" class="headerlink" title="CSS方面"></a>CSS方面</h2><h3 id="移动端图片模糊的问题"><a href="#移动端图片模糊的问题" class="headerlink" title="移动端图片模糊的问题"></a>移动端图片模糊的问题</h3><ul>
 <li>在移动端需要使用PC端两倍尺寸的图片，然后用background-size:50%;来还原本来的尺寸，这样移动端的图片才会清晰，不模糊</li>
 </ul>
 
@@ -531,7 +532,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS方面"><span class="nav-number">1.</span> <span class="nav-text">JS方面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><span class="nav-number">1.0.1.</span> <span class="nav-text">简单的利用JS来判断页面是在手机端还是在PC端打开的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在微信浏览器关闭当前页面的方法"><span class="nav-number">1.1.</span> <span class="nav-text">在微信浏览器关闭当前页面的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue里引用jQuery"><span class="nav-number">1.2.</span> <span class="nav-text">Vue里引用jQuery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue里引用require-js"><span class="nav-number">1.3.</span> <span class="nav-text">Vue里引用require.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Vue里生成二维码"><span class="nav-number">1.4.</span> <span class="nav-text">在Vue里生成二维码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS方面"><span class="nav-number">2.</span> <span class="nav-text">CSS方面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#移动端图片模糊的问题"><span class="nav-number">2.0.1.</span> <span class="nav-text">移动端图片模糊的问题</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS方面"><span class="nav-number">1.</span> <span class="nav-text">JS方面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><span class="nav-number">1.0.1.</span> <span class="nav-text">简单的利用JS来判断页面是在手机端还是在PC端打开的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在微信浏览器关闭当前页面的方法"><span class="nav-number">1.1.</span> <span class="nav-text">在微信浏览器关闭当前页面的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue里引用jQuery"><span class="nav-number">1.2.</span> <span class="nav-text">Vue里引用jQuery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue里引用require-js"><span class="nav-number">1.3.</span> <span class="nav-text">Vue里引用require.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Vue里生成二维码"><span class="nav-number">1.4.</span> <span class="nav-text">在Vue里生成二维码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS方面"><span class="nav-number">2.</span> <span class="nav-text">CSS方面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#移动端图片模糊的问题"><span class="nav-number">2.1.</span> <span class="nav-text">移动端图片模糊的问题</span></a></li></ol></li></ol></div>
             
 
           </div>
