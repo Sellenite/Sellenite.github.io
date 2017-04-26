@@ -93,7 +93,7 @@
 <meta property="og:url" content="https://sellenite.github.io/2017/04/21/工作时制作移动端的技巧/index.html">
 <meta property="og:site_name" content="yuuhei's Home">
 <meta property="og:description" content="JS方面简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.locati">
-<meta property="og:updated_time" content="2017-04-26T07:46:38.524Z">
+<meta property="og:updated_time" content="2017-04-26T07:53:17.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工作时制作移动端的技巧">
 <meta name="twitter:description" content="JS方面简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.locati">
@@ -333,9 +333,9 @@
       
         <h2 id="JS方面"><a href="#JS方面" class="headerlink" title="JS方面"></a>JS方面</h2><h3 id="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><a href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法" class="headerlink" title="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"></a>简单的利用JS来判断页面是在手机端还是在PC端打开的方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="regexp">/Android|webOS|iPhone|iPod|BlackBerry/i</span>.test(navigator.userAgent)) &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"https://www.baidu.com/"</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"http://news.baidu.com/"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="在微信浏览器关闭当前页面的方法"><a href="#在微信浏览器关闭当前页面的方法" class="headerlink" title="在微信浏览器关闭当前页面的方法"></a>在微信浏览器关闭当前页面的方法</h3><ul>
-<li>需要在微信公众号签名才能够使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WeixinJSBridge.call(&apos;closeWindow&apos;)</div></pre></td></tr></table></figure>
-</li>
+<li>需要在微信公众号签名才能够使用</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WeixinJSBridge.call(&apos;closeWindow&apos;)</div></pre></td></tr></table></figure>
 <a id="more"></a>
 <h3 id="Vue里引用jQuery"><a href="#Vue里引用jQuery" class="headerlink" title="Vue里引用jQuery"></a>Vue里引用jQuery</h3><p>首先在index.html下引入jQuery的cdn:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;//cdn.staticfile.org/jquery/3.1.1/jquery.min.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure></p>
 <p>如果有eslint的话，在使用$和jQuery选择时会显示没有定义，需要在eslint设置：<br>‘no-undef’: 0<br>然后再methods里就可以正常使用。</p>
