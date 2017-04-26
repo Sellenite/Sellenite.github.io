@@ -1071,6 +1071,16 @@
 <li>需要在微信公众号签名才能够使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WeixinJSBridge.call(&apos;closeWindow&apos;)</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<h4 id="Vue里引用jQuery"><a href="#Vue里引用jQuery" class="headerlink" title="Vue里引用jQuery"></a>Vue里引用jQuery</h4><p>首先在index.html下引入jQuery的cdn:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;//cdn.staticfile.org/jquery/3.1.1/jquery.min.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p>如果有eslint的话，在使用$和jQuery选择时会显示没有定义，需要在eslint设置：<br>‘no-undef’: 0<br>然后再methods里就可以正常使用。</p>
+<h4 id="在Vue里生成二维码"><a href="#在Vue里生成二维码" class="headerlink" title="在Vue里生成二维码"></a>在Vue里生成二维码</h4><p>依赖：</p>
+<ul>
+<li><a href="//cdn.staticfile.org/jquery/3.1.1/jquery.min.js">jQuery</a></li>
+<li><a href="//apps.bdimg.com/libs/require.js/2.1.11/require.js">require.js</a></li>
+<li><a href="/src/jquery.qrcode.min.js">jquery.qrcode.min.js</a></li>
+</ul>
+<p>Vue里：<br>将jquery.qrcode.min.js放在静态配置文件夹static中,在Vue文件利用require.js引入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mounted() &#123;</div><div class="line">    <span class="comment">/* 保证DOM渲染完毕 */</span></div><div class="line">    <span class="keyword">this</span>.$nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        requirejs([<span class="string">"/static/jquery.qrcode.min.js"</span>], () =&gt; &#123;</div><div class="line">            <span class="comment">// 被渲染的容器</span></div><div class="line">            $(<span class="string">'#code'</span>).qrcode(&#123;</div><div class="line">                <span class="attr">text</span>: <span class="string">`http://www.baidu.com`</span>,</div><div class="line">                <span class="attr">width</span>: <span class="number">200</span>,</div><div class="line">                <span class="attr">height</span>: <span class="number">200</span></div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/21/工作时制作移动端的技巧/#more" rel="contents">
