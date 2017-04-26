@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="注意，该方法只能够关闭通过js打开的页面，其他方式打开的页面是无法关闭的,而且需要微信公众号签名才能够调用
+<meta name="description" content="注意，该方法只能够关闭通过js打开的页面，其他方式打开的页面是无法关闭的，而且需要微信公众号签名才能够调用
 123456789101112131415161718function CloseWebPage() &amp;#123;    if (navigator.userAgent.indexOf(&quot;MSIE&quot;) &amp;gt; 0) &amp;#123;        if (navigator.userAgent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS关闭当前窗口">
 <meta property="og:url" content="https://sellenite.github.io/2017/04/26/JS关闭当前窗口/index.html">
 <meta property="og:site_name" content="yuuhei's Home">
-<meta property="og:description" content="注意，该方法只能够关闭通过js打开的页面，其他方式打开的页面是无法关闭的,而且需要微信公众号签名才能够调用
+<meta property="og:description" content="注意，该方法只能够关闭通过js打开的页面，其他方式打开的页面是无法关闭的，而且需要微信公众号签名才能够调用
 123456789101112131415161718function CloseWebPage() &amp;#123;    if (navigator.userAgent.indexOf(&quot;MSIE&quot;) &amp;gt; 0) &amp;#123;        if (navigator.userAgent">
-<meta property="og:updated_time" content="2017-04-26T07:16:50.389Z">
+<meta property="og:updated_time" content="2017-04-26T07:18:35.128Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS关闭当前窗口">
-<meta name="twitter:description" content="注意，该方法只能够关闭通过js打开的页面，其他方式打开的页面是无法关闭的,而且需要微信公众号签名才能够调用
+<meta name="twitter:description" content="注意，该方法只能够关闭通过js打开的页面，其他方式打开的页面是无法关闭的，而且需要微信公众号签名才能够调用
 123456789101112131415161718function CloseWebPage() &amp;#123;    if (navigator.userAgent.indexOf(&quot;MSIE&quot;) &amp;gt; 0) &amp;#123;        if (navigator.userAgent">
 
 
@@ -334,7 +334,7 @@
       
 
       
-        <p><strong>注意，该方法只能够关闭通过js打开的页面，其他方式打开的页面是无法关闭的,而且需要微信公众号签名才能够调用</strong></p>
+        <p><strong>注意，该方法只能够关闭通过js打开的页面，其他方式打开的页面是无法关闭的，而且需要微信公众号签名才能够调用</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">CloseWebPage</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (navigator.userAgent.indexOf(<span class="string">"MSIE"</span>) &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (navigator.userAgent.indexOf(<span class="string">"MSIE 6.0"</span>) &gt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="built_in">window</span>.opener = <span class="literal">null</span>;</div><div class="line">            <span class="built_in">window</span>.close();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="built_in">window</span>.open(<span class="string">''</span>, <span class="string">'_top'</span>);</div><div class="line">            <span class="built_in">window</span>.top.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (navigator.userAgent.indexOf(<span class="string">"Firefox"</span>) &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">window</span>.location.href = <span class="string">'about:blank '</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">window</span>.opener = <span class="literal">null</span>;</div><div class="line">        <span class="built_in">window</span>.open(<span class="string">''</span>, <span class="string">'_self'</span>, <span class="string">''</span>);</div><div class="line">        <span class="built_in">window</span>.close();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
