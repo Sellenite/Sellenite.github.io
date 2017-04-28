@@ -326,9 +326,11 @@
           <ul>
 <li><p>若是行内元素, 给其父元素设置 text-align:center,即可实现行内元素水平居中.</p>
 </li>
-<li><p>若是块级元素, 该元素设置 margin:0 auto即可.</p>
+<li><p>若是块级元素且定宽, 该元素设置 margin:0 auto 即可.</p>
 </li>
 <li><p>若是 display:inline-block, 该元素的父元素设置 text-align:center 即可.</p>
+</li>
+<li><p>若不论是块级还是行内，而且元素不定宽，可以给元素设置 display: table 然后设置 margin: 0 auto 即可.</p>
 </li>
 <li><p>若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配合margin, 作如下设置:</p>
 </li>
