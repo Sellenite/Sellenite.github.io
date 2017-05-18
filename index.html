@@ -247,6 +247,135 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/18/Vue选择单个select组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/18/Vue选择单个select组件/" itemprop="url">
+                  Vue选择单个select组件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-18T23:33:16+08:00">
+                2017-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">v-selection</span> <span class="attr">:selections</span>=<span class="string">""</span> @<span class="attr">on-change</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">v-selection</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>selections：绑定的数据，默认格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">buyTypes: [</div><div class="line">        &#123;</div><div class="line">          label: &apos;入门版&apos;,</div><div class="line">          value: 0</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">          label: &apos;中级版&apos;,</div><div class="line">          value: 1</div><div class="line">        &#125;,</div><div class="line">    ]</div></pre></td></tr></table></figure>
+<p>on-change：选择下拉列表时触发，返回被选择的数据</p>
+<h3 id="子组件源码："><a href="#子组件源码：" class="headerlink" title="子组件源码："></a>子组件源码：</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/18/Vue选择单个select组件/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/18/增加减少input组件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -323,25 +452,18 @@
 
       
         
-          
-            <h3 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">v-counter</span> @<span class="attr">on-change</span>=<span class="string">""</span> <span class="attr">:min</span>=<span class="string">""</span> <span class="attr">:max</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">v-counter</span>&gt;</span></div></pre></td></tr></table></figure>
+          <h3 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">v-counter</span> @<span class="attr">on-change</span>=<span class="string">""</span> <span class="attr">:min</span>=<span class="string">""</span> <span class="attr">:max</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">v-counter</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>on-change：每当input里数值改变的时候触发，返回input里的值</p>
 <p>min：限制最小值</p>
 <p>max：限制最大值</p>
-<h3 id="子组件源码："><a href="#子组件源码：" class="headerlink" title="子组件源码："></a>子组件源码：</h3><blockquote>
-<p>template</p>
-</blockquote>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"counter-component"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"counter-btn"</span> @<span class="attr">click</span>=<span class="string">"minus"</span>&gt;</span> - <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"counter-show"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model</span>=<span class="string">"number"</span> @<span class="attr">keyup</span>=<span class="string">"numberLimit"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"counter-btn"</span> @<span class="attr">click</span>=<span class="string">"add"</span>&gt;</span> + <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>JavaScript</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">props</span>: &#123;</div><div class="line">    <span class="attr">max</span>: &#123;</div><div class="line">      <span class="attr">type</span>: <span class="built_in">Number</span>,</div><div class="line">      <span class="attr">default</span>: <span class="number">5</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">min</span>: &#123;</div><div class="line">      <span class="attr">type</span>: <span class="built_in">Number</span>,</div><div class="line">      <span class="attr">default</span>: <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  data() &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">number</span>: <span class="keyword">this</span>.min</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">watch</span>: &#123;</div><div class="line">    <span class="comment">// 利用数值改变的时候emit</span></div><div class="line">    number() &#123;</div><div class="line">      <span class="keyword">this</span>.$emit(<span class="string">'on-change'</span>, <span class="keyword">this</span>.number)</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">methods</span>: &#123;</div><div class="line">    minus() &#123;</div><div class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.number &lt;= <span class="keyword">this</span>.min)</div><div class="line">        <span class="keyword">this</span>.number = <span class="keyword">this</span>.min</div><div class="line">      <span class="keyword">else</span></div><div class="line">        <span class="keyword">this</span>.number--</div><div class="line">    &#125;,</div><div class="line">    add() &#123;</div><div class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.number &gt;= <span class="keyword">this</span>.max)</div><div class="line">        <span class="keyword">this</span>.number = <span class="keyword">this</span>.max</div><div class="line">      <span class="keyword">else</span></div><div class="line">        <span class="keyword">this</span>.number++</div><div class="line">    &#125;,</div><div class="line">    numberLimit() &#123;</div><div class="line">      <span class="keyword">let</span> fix</div><div class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.number === <span class="string">'string'</span>) &#123;</div><div class="line">        <span class="comment">// \d表示匹配0-9数字，大写是有区别的，\D表示匹配非0-9数字的字符</span></div><div class="line">        fix = <span class="built_in">Number</span>(<span class="keyword">this</span>.number.replace(<span class="regexp">/\D/g</span>, <span class="string">''</span>))</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span> &#123;</div><div class="line">        fix = <span class="keyword">this</span>.number</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span>( fix &gt;= <span class="keyword">this</span>.max) &#123;</div><div class="line">        fix = <span class="keyword">this</span>.max</div><div class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( fix &lt;= <span class="keyword">this</span>.min) &#123;</div><div class="line">        fix = <span class="keyword">this</span>.min</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">this</span>.number = fix</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>CSS</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">&lt;style scoped&gt;</div><div class="line">.counter-component &#123;</div><div class="line">  position: relative;</div><div class="line">  display: inline-block;</div><div class="line">  overflow: hidden;</div><div class="line">  vertical-align: middle;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.counter-show &#123;</div><div class="line">  float: left;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.counter-show input &#123;</div><div class="line">  border: none;</div><div class="line">  border-top: 1px solid #e3e3e3;</div><div class="line">  border-bottom: 1px solid #e3e3e3;</div><div class="line">  height: 23px;</div><div class="line">  line-height: 23px;</div><div class="line">  width: 30px;</div><div class="line">  outline: none;</div><div class="line">  text-indent: 4px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.counter-btn &#123;</div><div class="line">  border: 1px solid #e3e3e3;</div><div class="line">  float: left;</div><div class="line">  height: 25px;</div><div class="line">  line-height: 25px;</div><div class="line">  width: 25px;</div><div class="line">  text-align: center;</div><div class="line">  cursor: pointer;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.counter-btn:hover &#123;</div><div class="line">  border-color: #4fc08d;</div><div class="line">  background: #4fc08d;</div><div class="line">  color: #fff;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure>
-
-          
+<h3 id="子组件源码："><a href="#子组件源码：" class="headerlink" title="子组件源码："></a>子组件源码：</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/18/增加减少input组件/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1365,132 +1487,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/04/24/Vue2-0实现分页组件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/24/Vue2-0实现分页组件/" itemprop="url">
-                  Vue2.0实现分页组件
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-24T10:35:19+08:00">
-                2017-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="父元素用法"><a href="#父元素用法" class="headerlink" title="父元素用法:"></a>父元素用法:</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">pagination</span> <span class="attr">:total</span>=<span class="string">"total"</span> <span class="attr">:display</span>=<span class="string">"display"</span> <span class="attr">:current</span>=<span class="string">"current"</span> <span class="attr">:pagegroup</span>=<span class="string">"pagegroup"</span> <span class="attr">v-on:pagechange</span>=<span class="string">"pagechange"</span>&gt;</span><span class="tag">&lt;/<span class="name">pagination</span>&gt;</span></div><div class="line"></div><div class="line">import pagination from './pagination';</div><div class="line"></div><div class="line">export default() &#123;</div><div class="line">    data() &#123;</div><div class="line">        return &#123;</div><div class="line">          total: 91,            //总页数</div><div class="line">          display: 5,           //每页显示条数</div><div class="line">          current: 1,           //当前页码</div><div class="line">          pagegroup: 7,         //显示多少个分页索引(奇数)</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    methods: &#123;</div><div class="line">        pagechange(p) &#123;</div><div class="line">            console.log(p);      //点击时传参，传当前激活的页数</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    components: &#123;</div><div class="line">        pagination</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * [pagination 分页组件]</div><div class="line"> * @param  &#123;Number&#125; total   [数据总条数]</div><div class="line"> * @param  &#123;Number&#125; display     [每页显示条数 default:10]</div><div class="line"> * @param  &#123;Number&#125; current     [当前页码 default:1]</div><div class="line"> * @param  &#123;Number&#125; pagegroup   [显示多少个分页索引(奇数) default:5]</div><div class="line"> * @param  &#123;Event&#125; pagechange   [页码改动时 $emit，父元素接收当前的页数]</div><div class="line"> * @return &#123;[type]&#125;   [description]</div><div class="line"> **/</div></pre></td></tr></table></figure>
-<h3 id="子元素源码"><a href="#子元素源码" class="headerlink" title="子元素源码"></a>子元素源码</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/24/Vue2-0实现分页组件/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1540,7 +1536,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

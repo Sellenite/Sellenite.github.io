@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="用法：1&amp;lt;v-counter @on-change=&quot;&quot; :min=&quot;&quot; :max=&quot;&quot;&amp;gt;&amp;lt;/v-counter&amp;gt; on-change：每当input里数值改变的时候触发，返回input里的值 min：限制最小值 max：限制最大值 子组件源码： template  123456789&amp;lt;template&amp;gt;  &amp;lt;div class=&quot;counter-comp">
+<meta name="description" content="用法：1&amp;lt;v-counter @on-change=&quot;&quot; :min=&quot;&quot; :max=&quot;&quot;&amp;gt;&amp;lt;/v-counter&amp;gt; on-change：每当input里数值改变的时候触发，返回input里的值 min：限制最小值 max：限制最大值 子组件源码：">
 <meta name="keywords" content="Vue,组件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="增加减少input组件">
 <meta property="og:url" content="https://sellenite.github.io/2017/05/18/增加减少input组件/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
-<meta property="og:description" content="用法：1&amp;lt;v-counter @on-change=&quot;&quot; :min=&quot;&quot; :max=&quot;&quot;&amp;gt;&amp;lt;/v-counter&amp;gt; on-change：每当input里数值改变的时候触发，返回input里的值 min：限制最小值 max：限制最大值 子组件源码： template  123456789&amp;lt;template&amp;gt;  &amp;lt;div class=&quot;counter-comp">
-<meta property="og:updated_time" content="2017-05-18T15:30:18.975Z">
+<meta property="og:description" content="用法：1&amp;lt;v-counter @on-change=&quot;&quot; :min=&quot;&quot; :max=&quot;&quot;&amp;gt;&amp;lt;/v-counter&amp;gt; on-change：每当input里数值改变的时候触发，返回input里的值 min：限制最小值 max：限制最大值 子组件源码：">
+<meta property="og:updated_time" content="2017-05-18T15:37:07.507Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="增加减少input组件">
-<meta name="twitter:description" content="用法：1&amp;lt;v-counter @on-change=&quot;&quot; :min=&quot;&quot; :max=&quot;&quot;&amp;gt;&amp;lt;/v-counter&amp;gt; on-change：每当input里数值改变的时候触发，返回input里的值 min：限制最小值 max：限制最大值 子组件源码： template  123456789&amp;lt;template&amp;gt;  &amp;lt;div class=&quot;counter-comp">
+<meta name="twitter:description" content="用法：1&amp;lt;v-counter @on-change=&quot;&quot; :min=&quot;&quot; :max=&quot;&quot;&amp;gt;&amp;lt;/v-counter&amp;gt; on-change：每当input里数值改变的时候触发，返回input里的值 min：限制最小值 max：限制最大值 子组件源码：">
 
 
 
@@ -336,7 +336,8 @@
 <p>on-change：每当input里数值改变的时候触发，返回input里的值</p>
 <p>min：限制最小值</p>
 <p>max：限制最大值</p>
-<h3 id="子组件源码："><a href="#子组件源码：" class="headerlink" title="子组件源码："></a>子组件源码：</h3><blockquote>
+<h3 id="子组件源码："><a href="#子组件源码：" class="headerlink" title="子组件源码："></a>子组件源码：</h3><a id="more"></a>
+<blockquote>
 <p>template</p>
 </blockquote>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"counter-component"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"counter-btn"</span> @<span class="attr">click</span>=<span class="string">"minus"</span>&gt;</span> - <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"counter-show"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model</span>=<span class="string">"number"</span> @<span class="attr">keyup</span>=<span class="string">"numberLimit"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"counter-btn"</span> @<span class="attr">click</span>=<span class="string">"add"</span>&gt;</span> + <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -401,6 +402,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/18/Vue选择单个select组件/" rel="prev" title="Vue选择单个select组件">
+                Vue选择单个select组件 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -474,7 +479,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
