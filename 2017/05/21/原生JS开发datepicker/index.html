@@ -1,0 +1,727 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS,组件," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="基础知识首先，需要知道new Date()这个参数的基本使用：  传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日 月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数 拿到当月第一天是这样写的：new Date(year, month-1, 1)">
+<meta name="keywords" content="JS,组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原生JS开发datepicker">
+<meta property="og:url" content="https://sellenite.github.io/2017/05/21/原生JS开发datepicker/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="基础知识首先，需要知道new Date()这个参数的基本使用：  传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日 月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数 拿到当月第一天是这样写的：new Date(year, month-1, 1)">
+<meta property="og:image" content="https://sellenite.github.io/image/datepicker%20development%20process.jpg">
+<meta property="og:updated_time" content="2017-05-21T03:03:38.205Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="原生JS开发datepicker">
+<meta name="twitter:description" content="基础知识首先，需要知道new Date()这个参数的基本使用：  传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日 月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数 拿到当月第一天是这样写的：new Date(year, month-1, 1)">
+<meta name="twitter:image" content="https://sellenite.github.io/image/datepicker%20development%20process.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2017/05/21/原生JS开发datepicker/"/>
+
+
+
+
+
+  <title> 原生JS开发datepicker | yuuhei's Home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/21/原生JS开发datepicker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                原生JS开发datepicker
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T10:14:49+08:00">
+                2017-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/05/21/原生JS开发datepicker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>首先，需要知道new Date()这个参数的基本使用：</p>
+<ul>
+<li>传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日</li>
+<li>月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数</li>
+<li>拿到当月第一天是这样写的：new Date(year, month-1, 1)</li>
+<li>拿到当月最后一天是这样写的：new Date(year, month, 0)</li>
+<li>.getDay()获取的的是这个日期的星期几，星期一~星期天对应[1, 2, 3, 4, 5, 6, 0]</li>
+</ul>
+<p>其次，需要知道js的一些新的API：</p>
+<ul>
+<li>document.querySelector()获取的是CSS选择器，即传入的参数是’.exampleClass’或’.#exampleID’，需要将字符串传进去，获取的就是第一个匹配的class</li>
+<li>如果想获取多个同class的CSS选择器，使用document.querySelectorAll</li>
+<li>$element.classList.add()可以添加class</li>
+<li>$element.classList.remove()可以移除特定class</li>
+<li>$element.dataset.xx可以访问到dom元素里自定义属性data-xx，返回的值就是xx</li>
+<li>注意好编码习惯，例如一个dom元素起名就用$开头，如$wrapper</li>
+</ul>
+<h3 id="开发思路"><a href="#开发思路" class="headerlink" title="开发思路"></a>开发思路</h3><a id="more"></a>
+<p>日历中，首先需要知道这个月的第一天是星期几，这个月的最后一天的日期，上个月最后一天的日期。</p>
+<p>这个日历中，是7*6行，用i做遍历。分析图如下图：</p>
+<p><img src="/image/datepicker development process.jpg" alt="image"></p>
+<p>首先要分析上个月的日期，在这个月的日历中会显示多少个。这个月的1号是星期四，那么前面就有3个上个月的。所以上个月日期的数量是这个月第一天的星期-1</p>
+<p>其次要计算出真实日期date（1是这个月第一天，那么0就是上个月的最后一天，-1就是上个月的倒数第二天）。公式：i - 上个月日期数 + 1</p>
+<p>算完真实日期，那么要计算显示的日期，由于date等于0小于0就是说明上个月的，假设上个月最后一天是31号，date为0，倒数第二天是30号，date为-1，那么上个月显示的日期就是利用上个月的最后一天加上date的值（这里date为负数）</p>
+<p>算完上个月的，就要算下个月的日期在这个月日历中显示的。可以看出，当真实日期date大于本月的最后一天的日期时，就说明后面的都是下个月的日期，那么显示的日期就是date减去这个月最后一天的日期</p>
+<h3 id="计算日期的代码："><a href="#计算日期的代码：" class="headerlink" title="计算日期的代码："></a>计算日期的代码：</h3><blockquote>
+<p>datepicker.js</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">var</span> datepicker = &#123;&#125;;</div><div class="line"></div><div class="line">    datepicker.getMonthData = <span class="function"><span class="keyword">function</span> (<span class="params">year, month</span>) </span>&#123;</div><div class="line">        <span class="comment">// 用于返回数据</span></div><div class="line">        <span class="keyword">var</span> ret = [];</div><div class="line"></div><div class="line">        <span class="comment">// 用于显示哪天高亮</span></div><div class="line">        <span class="keyword">var</span> todayShow = <span class="keyword">new</span> <span class="built_in">Date</span>().getDate();</div><div class="line">        <span class="comment">// 获得这个月的第一天</span></div><div class="line">        <span class="keyword">var</span> firstDay = <span class="keyword">new</span> <span class="built_in">Date</span>(year, month - <span class="number">1</span>, <span class="number">1</span>);</div><div class="line">        <span class="comment">// 获得这个月的第一天是星期几，用于判断前面的数</span></div><div class="line">        <span class="keyword">var</span> firstDayWeekDay = firstDay.getDay();</div><div class="line">        <span class="comment">// 如果获得这个是星期天，将getDay的0重置为7</span></div><div class="line">        <span class="keyword">if</span> (firstDayWeekDay === <span class="number">0</span>)</div><div class="line">            firstDayWeekDay = <span class="number">7</span>;</div><div class="line"></div><div class="line">        <span class="comment">// 用于日历头部的显示</span></div><div class="line">        HeadYear = firstDay.getFullYear();</div><div class="line">        HeadMonth = firstDay.getMonth() + <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="comment">// 获得这个月的最后一天和日期</span></div><div class="line">        <span class="keyword">var</span> lastDay = <span class="keyword">new</span> <span class="built_in">Date</span>(year, month, <span class="number">0</span>);</div><div class="line">        <span class="keyword">var</span> lastDate = lastDay.getDate();</div><div class="line"></div><div class="line">        <span class="comment">// 获得上个月的最后一天</span></div><div class="line">        <span class="keyword">var</span> lastDayOfLastMonth = <span class="keyword">new</span> <span class="built_in">Date</span>(year, month - <span class="number">1</span>, <span class="number">0</span>);</div><div class="line">        <span class="keyword">var</span> lastDateOfLastMonth = lastDayOfLastMonth.getDate();</div><div class="line"></div><div class="line">        <span class="comment">// 用于判断第一行显示多少个上一个月的日期。</span></div><div class="line">        <span class="comment">// 如果这个月的第一天是星期一，那么上一个月就没有日期显示</span></div><div class="line">        <span class="comment">// 如果这个月的第一天是星期二，那么上一个月就显示一个日期在星期一的位置</span></div><div class="line">        <span class="comment">// 因此，上一个月需要显示日期的数量是这个月的第一天的星期几 -1.</span></div><div class="line">        <span class="keyword">var</span> preMonthDayCount = firstDayWeekDay - <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">7</span> * <span class="number">6</span>; i++) &#123;</div><div class="line">            <span class="comment">// 利用i获取每一天的真实日期</span></div><div class="line">            <span class="comment">// 假设上个月有2天在这个日历内，那么这个月的2号就是星期四</span></div><div class="line">            <span class="comment">// 当i等于3的时候，就是星期四</span></div><div class="line">            <span class="comment">// 3 - 2 = 1，再加1才是真实日期</span></div><div class="line">            <span class="comment">// 所以利用i拿到真实日期公式：i - 上个月日期显示的数量 + 1.</span></div><div class="line">            <span class="keyword">var</span> date = i - preMonthDayCount + <span class="number">1</span>;</div><div class="line">            <span class="comment">// showDate用于修正真实日期，用于显示</span></div><div class="line">            <span class="keyword">var</span> showDate = date;</div><div class="line">            <span class="comment">// showMonth用于统计该日期真实月份</span></div><div class="line">            <span class="keyword">var</span> thisMonth = month;</div><div class="line"></div><div class="line">            <span class="comment">// 统计哪些不是本月的日期，设置实际月份和现实日期（最好将日期写下来研究）</span></div><div class="line">            <span class="keyword">if</span> (date &lt;= <span class="number">0</span>) &#123;</div><div class="line">                <span class="comment">// 当这个data数值等于零或小于零时，就说明遍历的这个日期是上一个月的</span></div><div class="line">                thisMonth = month - <span class="number">1</span>;</div><div class="line">                showDate = lastDateOfLastMonth + date;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (date &gt; lastDate) &#123;</div><div class="line">                <span class="comment">//下个月的，比如这个月有30日，多出2日，date显示是31，32，则是下月的1、2号</span></div><div class="line">                thisMonth = month + <span class="number">1</span>;</div><div class="line">                showDate = showDate - lastDate;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">//如果-1的时候变成0，说明上月份是上年12月</span></div><div class="line">            <span class="keyword">if</span> (thisMonth === <span class="number">0</span>)</div><div class="line">                thisMonth = <span class="number">12</span>;</div><div class="line">            <span class="comment">//如果+1的时候变成13，说下月份是下年1月</span></div><div class="line">            <span class="keyword">if</span> (thisMonth === <span class="number">13</span>)</div><div class="line">                thisMonth = <span class="number">1</span>;</div><div class="line"></div><div class="line">            ret.push(</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">month</span>: thisMonth,  <span class="comment">// 每个日期的实际月份</span></div><div class="line">                    date: date, <span class="comment">// 真实日期，有负数情况，date为1时作为本月的1号</span></div><div class="line">                    showDate: showDate <span class="comment">// 显示日期</span></div><div class="line">                &#125;</div><div class="line">            );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">console</span>.log(ret);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="attr">year</span>: HeadYear,</div><div class="line">            <span class="attr">month</span>: HeadMonth,</div><div class="line">            lastDate,  <span class="comment">// 传入最后一天的日期，用来判断渲染颜色</span></div><div class="line">            days: ret</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="built_in">window</span>.datepicker = datepicker;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<h3 id="渲染和事件行为代码："><a href="#渲染和事件行为代码：" class="headerlink" title="渲染和事件行为代码："></a>渲染和事件行为代码：</h3><blockquote>
+<p>main.js</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">var</span> datepicker = <span class="built_in">window</span>.datepicker;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> monthData;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> $wrapper;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> $input;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> isOpen;</div><div class="line"></div><div class="line">    <span class="comment">// 渲染函数</span></div><div class="line">    datepicker.buildUi = <span class="function"><span class="keyword">function</span> (<span class="params">year, month</span>) </span>&#123;</div><div class="line">        <span class="comment">// 需要加载完datepicker.js才加载本js</span></div><div class="line">        monthData = datepicker.getMonthData(year, month);</div><div class="line"></div><div class="line">        <span class="comment">// 拼接&lt;td&gt;&lt;/td&gt;中的内容</span></div><div class="line">        <span class="keyword">var</span> html =</div><div class="line">            <span class="string">'&lt;div class="ui-datepicker-header"&gt;'</span> +</div><div class="line">            <span class="string">'&lt;a href="javascript:;" class="ui-datepicker-btn ui-datepicker-prev-btn"&gt;&amp;lt&lt;/a&gt;'</span> +</div><div class="line">            <span class="string">'&lt;a href="javascript:;" class="ui-datepicker-btn ui-datepicker-next-btn"&gt;&amp;gt&lt;/a&gt;'</span> +</div><div class="line">            <span class="string">'&lt;span class="ui-datepicker-curr-month"&gt;'</span> + monthData.year + <span class="string">'-'</span> + monthData.month + <span class="string">'&lt;/span&gt;'</span> +</div><div class="line">            <span class="string">'&lt;/div&gt;'</span> +</div><div class="line">            <span class="string">'&lt;div class="ui-datepicker-body"&gt;'</span> +</div><div class="line">            <span class="string">'&lt;table&gt;'</span> +</div><div class="line">            <span class="string">'&lt;thead&gt;'</span> +</div><div class="line">            <span class="string">'&lt;tr&gt;'</span> +</div><div class="line">            <span class="string">'&lt;th&gt;一&lt;/th&gt;'</span> +</div><div class="line">            <span class="string">'&lt;th&gt;二&lt;/th&gt;'</span> +</div><div class="line">            <span class="string">'&lt;th&gt;三&lt;/th&gt;'</span> +</div><div class="line">            <span class="string">'&lt;th&gt;四&lt;/th&gt;'</span> +</div><div class="line">            <span class="string">'&lt;th&gt;五&lt;/th&gt;'</span> +</div><div class="line">            <span class="string">'&lt;th&gt;六&lt;/th&gt;'</span> +</div><div class="line">            <span class="string">'&lt;th&gt;日&lt;/th&gt;'</span> +</div><div class="line">            <span class="string">'&lt;/tr&gt;'</span> +</div><div class="line">            <span class="string">'&lt;/thead&gt;'</span> +</div><div class="line">            <span class="string">'&lt;tbody&gt;'</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; monthData.days.length; i++) &#123;</div><div class="line">            <span class="comment">// 用于高亮当天的日期</span></div><div class="line">            <span class="keyword">var</span> todayEqual = <span class="keyword">new</span> <span class="built_in">Date</span>().getDate();</div><div class="line">            <span class="keyword">var</span> monthEqual = <span class="keyword">new</span> <span class="built_in">Date</span>().getMonth() + <span class="number">1</span>;</div><div class="line">            <span class="keyword">var</span> yearEqual = <span class="keyword">new</span> <span class="built_in">Date</span>().getFullYear();</div><div class="line"></div><div class="line">            <span class="keyword">var</span> date = monthData.days[i];</div><div class="line">            <span class="comment">// 一周的第一天</span></div><div class="line">            <span class="keyword">if</span> (i % <span class="number">7</span> === <span class="number">0</span>)</div><div class="line">                html += <span class="string">'&lt;tr&gt;'</span>;</div><div class="line"></div><div class="line">            <span class="comment">// 渲染&lt;tr&gt;&lt;/tr&gt;里的内容，利用data-date保存真实日期</span></div><div class="line">            <span class="keyword">if</span> (date.date &lt;= <span class="number">0</span>) &#123;</div><div class="line">                <span class="comment">// 上个月的日期</span></div><div class="line">                html += <span class="string">'&lt;td style="color: #ccc" data-date="'</span> + date.date + <span class="string">'"&gt;'</span> + date.showDate + <span class="string">'&lt;/td&gt;'</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (date.date &gt; monthData.lastDate) &#123;</div><div class="line">                <span class="comment">// 下个月的日期</span></div><div class="line">                html += <span class="string">'&lt;td style="color: #ccc" data-date="'</span> + date.date + <span class="string">'"&gt;'</span> + date.showDate + <span class="string">'&lt;/td&gt;'</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (date.date === todayEqual &amp;&amp; monthData.month === monthEqual &amp;&amp; monthData.year === yearEqual) &#123;</div><div class="line">                <span class="comment">// 等于今天的日期</span></div><div class="line">                html += <span class="string">'&lt;td style="background: rgba(0, 0, 0, 0.1)" data-date="'</span> + date.date + <span class="string">'"&gt;'</span> + date.showDate + <span class="string">'&lt;/td&gt;'</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">// 普通的日期</span></div><div class="line">                html += <span class="string">'&lt;td data-date="'</span> + date.date + <span class="string">'"&gt;'</span> + date.showDate + <span class="string">'&lt;/td&gt;'</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 一周的最后一天</span></div><div class="line">            <span class="keyword">if</span> (i % <span class="number">7</span> === <span class="number">6</span>)</div><div class="line">                html += <span class="string">'&lt;/tr&gt;'</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        html += <span class="string">'&lt;/tbody&gt;'</span> +</div><div class="line">            <span class="string">'&lt;/table&gt;'</span> +</div><div class="line">            <span class="string">'&lt;/div&gt;'</span>;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> html;</div><div class="line"></div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 开始渲染</span></div><div class="line">    datepicker.render = <span class="function"><span class="keyword">function</span> (<span class="params">direction, year, month</span>) </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// 如果没有传值，证明需要重新获取时间的值</span></div><div class="line">        <span class="keyword">if</span> (!year &amp;&amp; !month) &#123;</div><div class="line">            year = monthData.year;</div><div class="line">            month = monthData.month;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 判断是否上下页渲染</span></div><div class="line">        <span class="keyword">if</span> (direction === <span class="string">'prev'</span>)</div><div class="line">            month--</div><div class="line">        <span class="keyword">if</span> (direction === <span class="string">'next'</span>)</div><div class="line">            month++</div><div class="line">        <span class="comment">// 超页调整</span></div><div class="line">        <span class="keyword">if</span> (month === <span class="number">0</span>) &#123;</div><div class="line">            month = <span class="number">12</span>;</div><div class="line">            year--;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> html = datepicker.buildUi(year, month);</div><div class="line"></div><div class="line">        <span class="comment">// 如果这个元素已经被添加，则直接改变innerHTML</span></div><div class="line">        <span class="keyword">if</span> (!$wrapper) &#123;</div><div class="line">            $wrapper = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">            $wrapper.className = <span class="string">'ui-datepicker-wrapper'</span>;</div><div class="line">            <span class="comment">// 将wrapper注入到body内</span></div><div class="line">            <span class="built_in">document</span>.body.appendChild($wrapper);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 将渲染结果插入进去，结合了上一页和下一页功能</span></div><div class="line">        $wrapper.innerHTML = html;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// datepicker初始化，传入函数</span></div><div class="line">    datepicker.init = <span class="function"><span class="keyword">function</span> (<span class="params">inputClass, year, month</span>) </span>&#123;</div><div class="line">        <span class="comment">// 如果没有传入数据，那么就用现在的时间</span></div><div class="line">        <span class="keyword">if</span> (!year || !month) &#123;</div><div class="line">            <span class="keyword">var</span> today = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">            year = today.getFullYear();</div><div class="line">            month = today.getMonth() + <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 由于是初始渲染而不是上下页渲染，传入一个无用值</span></div><div class="line">        datepicker.render(<span class="string">'no-direction'</span>, year, month);</div><div class="line"></div><div class="line">        <span class="comment">// inputClass = '.example';</span></div><div class="line">        $input = <span class="built_in">document</span>.querySelector(inputClass);</div><div class="line">        isOpen = <span class="literal">false</span>;</div><div class="line"></div><div class="line">        $input.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (isOpen) &#123;</div><div class="line">                $wrapper.classList.remove(<span class="string">'ui-datepicker-wrapper-show'</span>);</div><div class="line">                isOpen = <span class="literal">false</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">// 定位到目标元素下方</span></div><div class="line">                <span class="keyword">var</span> left = $input.offsetLeft;</div><div class="line">                <span class="keyword">var</span> top = $input.offsetTop;</div><div class="line">                <span class="keyword">var</span> height = $input.offsetHeight;</div><div class="line">                $wrapper.style.top = top + height + <span class="number">2</span> + <span class="string">'px'</span>;</div><div class="line">                $wrapper.style.left = left + <span class="string">'px'</span>;</div><div class="line"></div><div class="line">                $wrapper.classList.add(<span class="string">'ui-datepicker-wrapper-show'</span>);</div><div class="line">                isOpen = <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line"></div><div class="line">        <span class="comment">// 使用时间冒泡触发点击事件</span></div><div class="line">        $wrapper.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> $target = e.target;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> ($target.classList.contains(<span class="string">'ui-datepicker-prev-btn'</span>)) &#123;</div><div class="line">                <span class="comment">// 上个月</span></div><div class="line">                datepicker.render(<span class="string">'prev'</span>);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($target.classList.contains(<span class="string">'ui-datepicker-next-btn'</span>)) &#123;</div><div class="line">                <span class="comment">// 下个月</span></div><div class="line">                datepicker.render(<span class="string">'next'</span>);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($target.tagName.toLowerCase() === <span class="string">'td'</span>) &#123;</div><div class="line">                <span class="comment">// 点击日期，利用最后一个参数可以通过自我判断负数或超过当月日期数，可以自己进退</span></div><div class="line">                <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>(monthData.year, monthData.month - <span class="number">1</span>, $target.dataset.date);</div><div class="line">                $input.value = format(date);</div><div class="line"></div><div class="line">                $wrapper.classList.remove(<span class="string">'ui-datepicker-wrapper-show'</span>);</div><div class="line">                isOpen = <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line"></div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 对传出来的时间格式进行格式化</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">format</span>(<span class="params">date</span>) </span>&#123;</div><div class="line">        ret = <span class="string">''</span>;</div><div class="line"></div><div class="line">        <span class="comment">// 小于9的时候加0</span></div><div class="line">        <span class="keyword">var</span> padding = <span class="function"><span class="keyword">function</span> (<span class="params">num</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (num &lt;= <span class="number">9</span>) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">'0'</span> + num;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> num;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        ret += date.getFullYear() + <span class="string">'-'</span>;</div><div class="line">        ret += padding(date.getMonth() + <span class="number">1</span>) + <span class="string">'-'</span>;</div><div class="line">        ret += padding(date.getDate());</div><div class="line"></div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 点击外部收起日历</span></div><div class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'click'</span>, (e) =&gt; &#123;</div><div class="line">        <span class="keyword">var</span> target = e.target;</div><div class="line">        <span class="keyword">if</span> (!$input.contains(target) &amp;&amp; !$wrapper.contains(target) &amp;&amp; target.tagName.toLowerCase() !== <span class="string">'a'</span>) &#123;</div><div class="line">            $wrapper.classList.remove(<span class="string">'ui-datepicker-wrapper-show'</span>);</div><div class="line">            isOpen = <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;, <span class="literal">false</span>);</div><div class="line"></div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<h3 id="CSS代码："><a href="#CSS代码：" class="headerlink" title="CSS代码："></a>CSS代码：</h3><blockquote>
+<p>style.css</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">240px</span>;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">16px</span>;</div><div class="line">    <span class="attribute">color</span>: <span class="number">#666</span>;</div><div class="line">    <span class="attribute">box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">8px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(128, 128, 128, .3);</div><div class="line">    <span class="attribute">display</span>: none;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper-show</span> &#123;</div><div class="line">    <span class="attribute">display</span>: block;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-header</span> &#123;</div><div class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">20px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</div><div class="line">    <span class="attribute">line-height</span>: <span class="number">50px</span>;</div><div class="line">    <span class="attribute">text-align</span>: center;</div><div class="line">    <span class="attribute">background</span>: <span class="number">#F0F0F0</span>;</div><div class="line">    <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#CCC</span>;</div><div class="line">    <span class="attribute">font-weight</span>: bold;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-btn</span> &#123;</div><div class="line">    <span class="attribute">font-family</span>: serif;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">20px</span>;</div><div class="line">    <span class="attribute">width</span>: <span class="number">20px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</div><div class="line">    <span class="attribute">line-height</span>: <span class="number">50px</span>;</div><div class="line">    <span class="attribute">color</span>: <span class="number">#1abc9c</span>;</div><div class="line">    <span class="attribute">text-align</span>: center;</div><div class="line">    <span class="attribute">cursor</span>: pointer;</div><div class="line">    <span class="attribute">text-decoration</span>: none;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-prev-btn</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-next-btn</span> &#123;</div><div class="line">    <span class="attribute">float</span>: right;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-body</span> <span class="selector-tag">table</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">    <span class="attribute">border-collapse</span>: collapse;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-body</span> <span class="selector-tag">th</span>,</div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-body</span> <span class="selector-tag">td</span> &#123;</div><div class="line">    <span class="attribute">height</span>: <span class="number">30px</span>;</div><div class="line">    <span class="attribute">text-align</span>: center;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-body</span> <span class="selector-tag">th</span> &#123;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">40px</span>;</div><div class="line">    <span class="attribute">line-height</span>: <span class="number">40px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-body</span> <span class="selector-tag">td</span> &#123;</div><div class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#F0F0F0</span>;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">10px</span>;</div><div class="line">    <span class="attribute">width</span>: <span class="number">14%</span>;</div><div class="line">    <span class="attribute">cursor</span>: pointer;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.ui-datepicker-wrapper</span> <span class="selector-class">.ui-datepicker-body</span> <span class="selector-tag">td</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">    <span class="attribute">background</span>: <span class="built_in">rgba</span>(0, 0, 0, 0.1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="html使用方法："><a href="#html使用方法：" class="headerlink" title="html使用方法："></a>html使用方法：</h3><p>先加载datepicker.js，然后加载main.js，在html里创建一个input元素，给这个input元素设置一个classname，然后传入这个css选择器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">datepicker.init(&apos;.datepicker&apos;, 2017, 5);</div></pre></td></tr></table></figure>
+<p>可以传入年月，这个是真实日期，不用修正，也可以不传</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/组件/" rel="tag"># 组件</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/19/JS改变date原型进行format/" rel="next" title="JS改变date原型进行format">
+                <i class="fa fa-chevron-left"></i> JS改变date原型进行format
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="Sellenite" />
+          <p class="site-author-name" itemprop="name">Sellenite</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发思路"><span class="nav-number">2.</span> <span class="nav-text">开发思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算日期的代码："><span class="nav-number">3.</span> <span class="nav-text">计算日期的代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染和事件行为代码："><span class="nav-number">4.</span> <span class="nav-text">渲染和事件行为代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS代码："><span class="nav-number">5.</span> <span class="nav-text">CSS代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html使用方法："><span class="nav-number">6.</span> <span class="nav-text">html使用方法：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
