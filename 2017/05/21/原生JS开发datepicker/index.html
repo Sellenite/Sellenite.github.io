@@ -94,12 +94,12 @@
 <meta property="og:url" content="https://sellenite.github.io/2017/05/21/原生JS开发datepicker/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="基础知识首先，需要知道new Date()这个参数的基本使用：  传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日 月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数 拿到当月第一天是这样写的：new Date(year, month-1, 1)">
-<meta property="og:image" content="https://sellenite.github.io/image/datepicker%20development%20process.jpg">
-<meta property="og:updated_time" content="2017-05-22T03:05:52.240Z">
+<meta property="og:image" content="https://sellenite.github.io/images/datepicker.jpg">
+<meta property="og:updated_time" content="2017-05-22T03:17:09.742Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原生JS开发datepicker">
 <meta name="twitter:description" content="基础知识首先，需要知道new Date()这个参数的基本使用：  传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日 月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数 拿到当月第一天是这样写的：new Date(year, month-1, 1)">
-<meta name="twitter:image" content="https://sellenite.github.io/image/datepicker%20development%20process.jpg">
+<meta name="twitter:image" content="https://sellenite.github.io/images/datepicker.jpg">
 
 
 
@@ -354,7 +354,7 @@
 <h3 id="开发思路"><a href="#开发思路" class="headerlink" title="开发思路"></a>开发思路</h3><a id="more"></a>
 <p>日历中，首先需要知道这个月的第一天是星期几，这个月的最后一天的日期，上个月最后一天的日期。</p>
 <p>这个日历中，是7*6行，用i做遍历。分析图如下图：</p>
-<p><img src="/image/datepicker development process.jpg" alt="image"></p>
+<p><img src="/images/datepicker.jpg" alt="image"></p>
 <p>首先要分析上个月的日期，在这个月的日历中会显示多少个。这个月的1号是星期四，那么前面就有3个上个月的。所以上个月日期的数量是这个月第一天的星期-1</p>
 <p>其次要计算出真实日期date（1是这个月第一天，那么0就是上个月的最后一天，-1就是上个月的倒数第二天）。公式：i - 上个月日期数 + 1</p>
 <p>算完真实日期，那么要计算显示的日期，由于date等于0小于0就是说明上个月的，假设上个月最后一天是31号，date为0，倒数第二天是30号，date为-1，那么上个月显示的日期就是利用上个月的最后一天加上date的值（这里date为负数）</p>
