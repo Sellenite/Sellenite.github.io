@@ -247,6 +247,139 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/21/JS函数节流和函数去抖/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/21/JS函数节流和函数去抖/" itemprop="url">
+                  JS函数节流和函数去抖
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-21T15:48:06+08:00">
+                2017-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="函数节流throttle-js"><a href="#函数节流throttle-js" class="headerlink" title="函数节流throttle.js"></a>函数节流throttle.js</h3><p>我们这里说的throttle就是函数节流的意思。再说的通俗一点就是函数调用的频度控制器，是连续执行时间间隔控制。主要应用的场景比如：</p>
+<ul>
+<li><p>鼠标移动，mousemove 事件</p>
+</li>
+<li><p>DOM 元素动态定位，window对象的resize和scroll 事件</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> last = <span class="number">0</span></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">        <span class="keyword">if</span> (curr - last &gt; delay) &#123;</div><div class="line">            fn.apply(<span class="keyword">this</span>, args)</div><div class="line">            last = curr</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="函数去抖debounce-js"><a href="#函数去抖debounce-js" class="headerlink" title="函数去抖debounce.js"></a>函数去抖debounce.js</h3><p>debounce和throttle很像，debounce是空闲时间必须大于或等于 一定值的时候，才会执行调用方法。debounce是空闲时间的间隔控制。比如我们做autocomplete，这时需要我们很好的控制输入文字时调用方法时间间隔。一般时第一个输入的字符马上开始调用，根据一定的时间间隔重复调用执行的方法。对于变态的输入，比如按住某一个建不放的时候特别有用。<br>debounce主要应用的场景比如：</p>
+<ul>
+<li>文本输入keydown 事件，keyup 事件，例如做autocomplete</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> timer</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (timer) &#123;</div><div class="line">            clearTimeout(timer)</div><div class="line">        &#125;</div><div class="line">        timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            fn.apply(<span class="keyword">this</span>, args)</div><div class="line">        &#125;, delay)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/21/Vue时间倒数组件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1397,135 +1530,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/18/Vue增加减少input组件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/18/Vue增加减少input组件/" itemprop="url">
-                  Vue增加减少input组件
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-18T23:22:03+08:00">
-                2017-05-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">v-counter</span> @<span class="attr">on-change</span>=<span class="string">""</span> <span class="attr">:min</span>=<span class="string">""</span> <span class="attr">:max</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">v-counter</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>on-change：每当input里数值改变的时候触发，返回input里的值</p>
-<p>min：限制最小值</p>
-<p>max：限制最大值</p>
-<h3 id="子组件源码："><a href="#子组件源码：" class="headerlink" title="子组件源码："></a>子组件源码：</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/18/Vue增加减少input组件/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1575,7 +1579,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
