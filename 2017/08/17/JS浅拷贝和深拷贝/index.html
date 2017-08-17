@@ -1,0 +1,719 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Shallow Copy: 浅拷贝顶层属性遍历浅拷贝是指复制对象的时候，指对第一层键值对进行独立的复制。一个简单的实现如下： 123456789101112131415161718192021222324252627282930313233343536// 浅拷贝实现function shadowCopy(target, source)&amp;#123;    if( !source || typeof">
+<meta name="keywords" content="JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS浅拷贝和深拷贝">
+<meta property="og:url" content="https://sellenite.github.io/2017/08/17/JS浅拷贝和深拷贝/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="Shallow Copy: 浅拷贝顶层属性遍历浅拷贝是指复制对象的时候，指对第一层键值对进行独立的复制。一个简单的实现如下： 123456789101112131415161718192021222324252627282930313233343536// 浅拷贝实现function shadowCopy(target, source)&amp;#123;    if( !source || typeof">
+<meta property="og:updated_time" content="2017-08-17T01:47:38.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS浅拷贝和深拷贝">
+<meta name="twitter:description" content="Shallow Copy: 浅拷贝顶层属性遍历浅拷贝是指复制对象的时候，指对第一层键值对进行独立的复制。一个简单的实现如下： 123456789101112131415161718192021222324252627282930313233343536// 浅拷贝实现function shadowCopy(target, source)&amp;#123;    if( !source || typeof">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2017/08/17/JS浅拷贝和深拷贝/"/>
+
+
+
+
+
+  <title> JS浅拷贝和深拷贝 | yuuhei's Home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/08/17/JS浅拷贝和深拷贝/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JS浅拷贝和深拷贝
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T09:39:52+08:00">
+                2017-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/08/17/JS浅拷贝和深拷贝/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Shallow-Copy-浅拷贝"><a href="#Shallow-Copy-浅拷贝" class="headerlink" title="Shallow Copy: 浅拷贝"></a>Shallow Copy: 浅拷贝</h3><h4 id="顶层属性遍历"><a href="#顶层属性遍历" class="headerlink" title="顶层属性遍历"></a>顶层属性遍历</h4><p>浅拷贝是指复制对象的时候，指对第一层键值对进行独立的复制。一个简单的实现如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 浅拷贝实现</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">shadowCopy</span>(<span class="params">target, source</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>( !source || <span class="keyword">typeof</span> source !== <span class="string">'object'</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 这个方法有点小trick，target一定得事先定义好，不然就不能改变实参了。</span></div><div class="line">       <span class="comment">// 具体原因解释可以看参考资料中 JS是值传递还是引用传递</span></div><div class="line">    <span class="keyword">if</span>( !target || <span class="keyword">typeof</span> target !== <span class="string">'object'</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 这边最好区别一下对象和数组的复制</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> source)&#123;</div><div class="line">        <span class="keyword">if</span>(source.hasOwnProperty(key))&#123;</div><div class="line">            target[key] = source[key];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//测试例子</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> arr2 = [];</div><div class="line">shadowCopy(arr2, arr);</div><div class="line"><span class="built_in">console</span>.log(arr2);</div><div class="line"><span class="comment">//[1,2,3]</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> today = &#123;</div><div class="line">    <span class="attr">weather</span>: <span class="string">'Sunny'</span>,</div><div class="line">    <span class="attr">date</span>: &#123;</div><div class="line">        <span class="attr">week</span>: <span class="string">'Wed'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> tomorrow = &#123;&#125;;</div><div class="line">shadowCopy(tomorrow, today);</div><div class="line"><span class="built_in">console</span>.log(tomorrow);</div><div class="line"><span class="comment">// Object &#123;weather: "Sunny", date: Object&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign"></a>Object.assign</h4><a id="more"></a>
+<p>Object.assign() 方法可以把任意多个的源对象所拥有的自身可枚举属性拷贝给目标对象，然后返回目标对象。Object.assign 方法只会拷贝源对象自身的并且可枚举的属性到目标对象身上。注意，对于访问器属性，该方法会执行那个访问器属性的 getter 函数，然后把得到的值拷贝给目标对象，如果你想拷贝访问器属性本身，请使用 Object.getOwnPropertyDescriptor() 和Object.defineProperties() 方法。</p>
+<p>注意，字符串类型和 symbol 类型的属性都会被拷贝。</p>
+<p>注意，在属性拷贝过程中可能会产生异常，比如目标对象的某个只读属性和源对象的某个属性同名，这时该方法会抛出一个 TypeError 异常，拷贝过程中断，已经拷贝成功的属性不会受到影响，还未拷贝的属性将不会再被拷贝。</p>
+<p>注意， Object.assign 会跳过那些值为 null 或 undefined 的源对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.assign(target, ...sources)</div></pre></td></tr></table></figure>
+<p>例子：浅拷贝一个对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</div><div class="line"><span class="keyword">var</span> copy = <span class="built_in">Object</span>.assign(&#123;&#125;, obj);</div><div class="line"><span class="built_in">console</span>.log(copy); <span class="comment">// &#123; a: 1 &#125;</span></div></pre></td></tr></table></figure>
+<p>例子：合并若干个对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> o1 = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</div><div class="line"><span class="keyword">var</span> o2 = &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;;</div><div class="line"><span class="keyword">var</span> o3 = &#123; <span class="attr">c</span>: <span class="number">3</span> &#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> obj = <span class="built_in">Object</span>.assign(o1, o2, o3);</div><div class="line"><span class="built_in">console</span>.log(obj); <span class="comment">// &#123; a: 1, b: 2, c: 3 &#125;</span></div><div class="line"><span class="built_in">console</span>.log(o1);  <span class="comment">// &#123; a: 1, b: 2, c: 3 &#125;, 注意目标对象自身也会改变。</span></div></pre></td></tr></table></figure>
+<p>例子：拷贝 symbol 类型的属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> o1 = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</div><div class="line"><span class="keyword">var</span> o2 = &#123; [<span class="built_in">Symbol</span>(<span class="string">"foo"</span>)]: <span class="number">2</span> &#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> obj = <span class="built_in">Object</span>.assign(&#123;&#125;, o1, o2);</div><div class="line"><span class="built_in">console</span>.log(obj); <span class="comment">// &#123; a: 1, [Symbol("foo")]: 2 &#125;</span></div></pre></td></tr></table></figure>
+<p>例子：继承属性和不可枚举属性是不能拷贝的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = <span class="built_in">Object</span>.create(&#123;<span class="attr">foo</span>: <span class="number">1</span>&#125;, &#123; <span class="comment">// foo 是个继承属性。</span></div><div class="line">    bar: &#123;</div><div class="line">        <span class="attr">value</span>: <span class="number">2</span>  <span class="comment">// bar 是个不可枚举属性。</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">baz</span>: &#123;</div><div class="line">        <span class="attr">value</span>: <span class="number">3</span>,</div><div class="line">        <span class="attr">enumerable</span>: <span class="literal">true</span>  <span class="comment">// baz 是个自身可枚举属性。</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> copy = <span class="built_in">Object</span>.assign(&#123;&#125;, obj);</div><div class="line"><span class="built_in">console</span>.log(copy); <span class="comment">// &#123; baz: 3 &#125;</span></div></pre></td></tr></table></figure>
+<p>例子：原始值会被隐式转换成其包装对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> v1 = <span class="string">"123"</span>;</div><div class="line"><span class="keyword">var</span> v2 = <span class="literal">true</span>;</div><div class="line"><span class="keyword">var</span> v3 = <span class="number">10</span>;</div><div class="line"><span class="keyword">var</span> v4 = <span class="built_in">Symbol</span>(<span class="string">"foo"</span>)</div><div class="line"></div><div class="line"><span class="keyword">var</span> obj = <span class="built_in">Object</span>.assign(&#123;&#125;, v1, <span class="literal">null</span>, v2, <span class="literal">undefined</span>, v3, v4);</div><div class="line"><span class="comment">// 源对象如果是原始值，会被自动转换成它们的包装对象，</span></div><div class="line"><span class="comment">// 而 null 和 undefined 这两种原始值会被完全忽略。</span></div><div class="line"><span class="comment">// 注意，只有字符串的包装对象才有可能有自身可枚举属性。</span></div><div class="line"><span class="built_in">console</span>.log(obj); <span class="comment">// &#123; "0": "1", "1": "2", "2": "3" &#125;</span></div></pre></td></tr></table></figure>
+<p>例子：拷贝属性过程中发生异常</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> target = <span class="built_in">Object</span>.defineProperty(&#123;&#125;, <span class="string">"foo"</span>, &#123;</div><div class="line">    <span class="attr">value</span>: <span class="number">1</span>,</div><div class="line">    <span class="attr">writeable</span>: <span class="literal">false</span></div><div class="line">&#125;); <span class="comment">// target 的 foo 属性是个只读属性。</span></div><div class="line"></div><div class="line"><span class="built_in">Object</span>.assign(target, &#123;<span class="attr">bar</span>: <span class="number">2</span>&#125;, &#123;<span class="attr">foo2</span>: <span class="number">3</span>, <span class="attr">foo</span>: <span class="number">3</span>, <span class="attr">foo3</span>: <span class="number">3</span>&#125;, &#123;<span class="attr">baz</span>: <span class="number">4</span>&#125;);</div><div class="line"><span class="comment">// TypeError: "foo" is read-only</span></div><div class="line"><span class="comment">// 注意这个异常是在拷贝第二个源对象的第二个属性时发生的。</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(target.bar);  <span class="comment">// 2，说明第一个源对象拷贝成功了。</span></div><div class="line"><span class="built_in">console</span>.log(target.foo2); <span class="comment">// 3，说明第二个源对象的第一个属性也拷贝成功了。</span></div><div class="line"><span class="built_in">console</span>.log(target.foo);  <span class="comment">// 1，只读属性不能被覆盖，所以第二个源对象的第二个属性拷贝失败了。</span></div><div class="line"><span class="built_in">console</span>.log(target.foo3); <span class="comment">// undefined，异常之后 assign 方法就退出了，第三个属性是不会被拷贝到的。</span></div><div class="line"><span class="built_in">console</span>.log(target.baz);  <span class="comment">// undefined，第三个源对象更是不会被拷贝到的。</span></div></pre></td></tr></table></figure>
+<h4 id="使用-concat-来复制数组"><a href="#使用-concat-来复制数组" class="headerlink" title="使用 [].concat 来复制数组"></a>使用 [].concat 来复制数组</h4><p>同样类似于对于对象的复制，我们建议使用[].concat来进行数组的深复制:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> changedList = [].concat(list);</div><div class="line">changedList[<span class="number">1</span>] = <span class="number">2</span>;</div><div class="line">list === changedList; <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>同样的，concat方法也只能保证一层深复制:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt; list = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]]</div><div class="line">[ [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ] ]</div><div class="line">&gt; new_list = [].concat(list)</div><div class="line">[ [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ] ]</div><div class="line">&gt; new_list[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">4</span></div><div class="line"><span class="number">4</span></div><div class="line">&gt; list</div><div class="line">[ [ <span class="number">4</span>, <span class="number">2</span>, <span class="number">3</span> ] ]</div></pre></td></tr></table></figure>
+<p>浅拷贝的缺陷</p>
+<p>不过需要注意的是，assign是浅拷贝，或者说，它是一级深拷贝，举两个例子说明：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> defaultOpt = &#123;</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">        <span class="attr">text</span>: <span class="string">'hello world'</span>,</div><div class="line">        <span class="attr">subtext</span>: <span class="string">'It\'s my world.'</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">const</span> opt = <span class="built_in">Object</span>.assign(&#123;&#125;, defaultOpt, &#123;</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">        <span class="attr">subtext</span>: <span class="string">'Yes, your world.'</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(opt);</div><div class="line"></div><div class="line"><span class="comment">// 预期结果</span></div><div class="line">&#123;</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">        <span class="attr">text</span>: <span class="string">'hello world'</span>,</div><div class="line">        <span class="attr">subtext</span>: <span class="string">'Yes, your world.'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 实际结果</span></div><div class="line">&#123;</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">        <span class="attr">subtext</span>: <span class="string">'Yes, your world.'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面这个例子中，对于对象的一级子元素而言，只会替换引用，而不会动态的添加内容。那么，其实assign并没有解决对象的引用混乱问题，参考下下面这个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> defaultOpt = &#123;</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">        <span class="attr">text</span>: <span class="string">'hello world'</span>,</div><div class="line">        <span class="attr">subtext</span>: <span class="string">'It\'s my world.'</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">const</span> opt1 = <span class="built_in">Object</span>.assign(&#123;&#125;, defaultOpt);</div><div class="line"><span class="keyword">const</span> opt2 = <span class="built_in">Object</span>.assign(&#123;&#125;, defaultOpt);</div><div class="line">opt2.title.subtext = <span class="string">'Yes, your world.'</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'opt1:'</span>);</div><div class="line"><span class="built_in">console</span>.log(opt1);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'opt2:'</span>);</div><div class="line"><span class="built_in">console</span>.log(opt2);</div><div class="line"></div><div class="line"><span class="comment">// 结果</span></div><div class="line">opt1:</div><div class="line">&#123;</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">        <span class="attr">text</span>: <span class="string">'hello world'</span>,</div><div class="line">        <span class="attr">subtext</span>: <span class="string">'Yes, your world.'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">opt2:</div><div class="line">&#123;</div><div class="line">    <span class="attr">title</span>: &#123;</div><div class="line">        <span class="attr">text</span>: <span class="string">'hello world'</span>,</div><div class="line">        <span class="attr">subtext</span>: <span class="string">'Yes, your world.'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="DeepCopy-深拷贝"><a href="#DeepCopy-深拷贝" class="headerlink" title="DeepCopy: 深拷贝"></a>DeepCopy: 深拷贝</h3><h4 id="递归属性遍历"><a href="#递归属性遍历" class="headerlink" title="递归属性遍历"></a>递归属性遍历</h4><p>一般来说，在JavaScript中考虑复合类型的深层复制的时候，往往就是指对于Date、Object与Array这三个复合类型的处理。我们能想到的最常用的方法就是先创建一个空的新对象，然后递归遍历旧对象，直到发现基础类型的子节点才赋予到新对象对应的位置。不过这种方法会存在一个问题，就是JavaScript中存在着神奇的原型机制，并且这个原型会在遍历的时候出现，然后原型不应该被赋予给新对象。那么在遍历的过程中，我们应该考虑使用hasOenProperty方法来过滤掉那些继承自原型链上的属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">clone</span>(<span class="params">obj</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> copy;</div><div class="line"></div><div class="line">    <span class="comment">// Handle the 3 simple types, and null or undefined</span></div><div class="line">    <span class="keyword">if</span> (<span class="literal">null</span> == obj || <span class="string">"object"</span> != <span class="keyword">typeof</span> obj) <span class="keyword">return</span> obj;</div><div class="line"></div><div class="line">    <span class="comment">// Handle Date</span></div><div class="line">    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> <span class="built_in">Date</span>) &#123;</div><div class="line">        copy = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">        copy.setTime(obj.getTime());</div><div class="line">        <span class="keyword">return</span> copy;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Handle Array</span></div><div class="line">    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> <span class="built_in">Array</span>) &#123;</div><div class="line">        copy = [];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = obj.length; i &lt; len; i++) &#123;</div><div class="line">            copy[i] = clone(obj[i]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> copy;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Handle Object</span></div><div class="line">    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> <span class="built_in">Object</span>) &#123;</div><div class="line">        copy = &#123;&#125;;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> attr <span class="keyword">in</span> obj) &#123;</div><div class="line">            <span class="keyword">if</span> (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> copy;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"Unable to copy obj! Its type isn't supported."</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>调用如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// This would be cloneable:</span></div><div class="line"><span class="keyword">var</span> tree = &#123;</div><div class="line">    <span class="string">"left"</span>  : &#123; <span class="string">"left"</span> : <span class="literal">null</span>, <span class="string">"right"</span> : <span class="literal">null</span>, <span class="string">"data"</span> : <span class="number">3</span> &#125;,</div><div class="line">    <span class="string">"right"</span> : <span class="literal">null</span>,</div><div class="line">    <span class="string">"data"</span>  : <span class="number">8</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// This would kind-of work, but you would get 2 copies of the</span></div><div class="line"><span class="comment">// inner node instead of 2 references to the same copy</span></div><div class="line"><span class="keyword">var</span> directedAcylicGraph = &#123;</div><div class="line">    <span class="string">"left"</span>  : &#123; <span class="string">"left"</span> : <span class="literal">null</span>, <span class="string">"right"</span> : <span class="literal">null</span>, <span class="string">"data"</span> : <span class="number">3</span> &#125;,</div><div class="line">    <span class="string">"data"</span>  : <span class="number">8</span></div><div class="line">&#125;;</div><div class="line">directedAcyclicGraph[<span class="string">"right"</span>] = directedAcyclicGraph[<span class="string">"left"</span>];</div><div class="line"></div><div class="line"><span class="comment">// Cloning this would cause a stack overflow due to infinite recursion:</span></div><div class="line"><span class="keyword">var</span> cylicGraph = &#123;</div><div class="line">    <span class="string">"left"</span>  : &#123; <span class="string">"left"</span> : <span class="literal">null</span>, <span class="string">"right"</span> : <span class="literal">null</span>, <span class="string">"data"</span> : <span class="number">3</span> &#125;,</div><div class="line">    <span class="string">"data"</span>  : <span class="number">8</span></div><div class="line">&#125;;</div><div class="line">cylicGraph[<span class="string">"right"</span>] = cylicGraph;</div></pre></td></tr></table></figure>
+<h4 id="利用-JSON-深拷贝"><a href="#利用-JSON-深拷贝" class="headerlink" title="利用 JSON 深拷贝"></a>利用 JSON 深拷贝</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj));</div></pre></td></tr></table></figure>
+<p>对于一般的需求是可以满足的，但是它有缺点。下例中，可以看到JSON复制会忽略掉值为undefined以及函数表达式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">1</span>,</div><div class="line">    <span class="attr">b</span>: <span class="number">2</span>,</div><div class="line">    <span class="attr">c</span>: <span class="literal">undefined</span>,</div><div class="line">    <span class="attr">sum</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> a + b; &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> obj2 = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj));</div><div class="line"><span class="built_in">console</span>.log(obj2);</div><div class="line"><span class="comment">//Object &#123;a: 1, b: 2&#125;</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/04/JS实现图片瀑布流/" rel="next" title="JS实现图片瀑布流">
+                <i class="fa fa-chevron-left"></i> JS实现图片瀑布流
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="Sellenite" />
+          <p class="site-author-name" itemprop="name">Sellenite</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Shallow-Copy-浅拷贝"><span class="nav-number">1.</span> <span class="nav-text">Shallow Copy: 浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#顶层属性遍历"><span class="nav-number">1.1.</span> <span class="nav-text">顶层属性遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-assign"><span class="nav-number">1.2.</span> <span class="nav-text">Object.assign</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-concat-来复制数组"><span class="nav-number">1.3.</span> <span class="nav-text">使用 [].concat 来复制数组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepCopy-深拷贝"><span class="nav-number">2.</span> <span class="nav-text">DeepCopy: 深拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#递归属性遍历"><span class="nav-number">2.1.</span> <span class="nav-text">递归属性遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用-JSON-深拷贝"><span class="nav-number">2.2.</span> <span class="nav-text">利用 JSON 深拷贝</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
