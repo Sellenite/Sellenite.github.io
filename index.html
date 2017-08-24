@@ -374,132 +374,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/08/04/JS实现图片瀑布流/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/08/04/JS实现图片瀑布流/" itemprop="url">
-                  JS实现图片瀑布流
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-04T15:32:54+08:00">
-                2017-08-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="JS实现"><a href="#JS实现" class="headerlink" title="JS实现"></a>JS实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    waterfall(<span class="string">"main"</span>, <span class="string">"box"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">var</span> dataInt = &#123;</div><div class="line">        <span class="string">"data"</span>: [</div><div class="line">            &#123;</div><div class="line">                <span class="string">"src"</span>: <span class="string">"1.jpg"</span></div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">                <span class="string">"src"</span>: <span class="string">"2.jpg"</span></div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">                <span class="string">"src"</span>: <span class="string">"3.jpg"</span></div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">                <span class="string">"src"</span>: <span class="string">"4.jpg"</span></div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="built_in">window</span>.onscroll = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (checkscrollside()) &#123;</div><div class="line">            <span class="keyword">var</span> oParent = <span class="built_in">document</span>.getElementById(<span class="string">"main"</span>);</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; dataInt.data.length; i++) &#123;</div><div class="line">                <span class="keyword">var</span> oBox = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</div><div class="line">                oBox.className = <span class="string">"box"</span>;</div><div class="line">                oParent.appendChild(oBox);</div><div class="line">                <span class="keyword">var</span> oPic = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</div><div class="line">                oPic.className = <span class="string">"pic"</span>;</div><div class="line">                oBox.appendChild(oPic);</div><div class="line">                <span class="keyword">var</span> oImg = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);</div><div class="line">                oImg.src = <span class="string">"images/"</span> + dataInt.data[i].src;</div><div class="line">                oPic.appendChild(oImg);</div><div class="line">            &#125;</div><div class="line">            waterfall(<span class="string">"main"</span>, <span class="string">"box"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">waterfall</span>(<span class="params">parent, box</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> oParent = <span class="built_in">document</span>.getElementById(parent);</div><div class="line">    <span class="keyword">var</span> oBoxs = getByClass(oParent, box);</div><div class="line">    <span class="keyword">var</span> oBoxW = oBoxs[<span class="number">0</span>].offsetWidth;</div><div class="line">    <span class="keyword">var</span> cols = <span class="built_in">Math</span>.floor(<span class="built_in">document</span>.documentElement.clientWidth / oBoxW);</div><div class="line">    oParent.style.cssText = <span class="string">"width:"</span> + oBoxW * cols + <span class="string">"px;margin:0 auto"</span>;</div><div class="line">    <span class="keyword">var</span> hArr = [];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; oBoxs.length; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (i &lt; cols) &#123;</div><div class="line">            hArr.push(oBoxs[i].offsetHeight);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">var</span> minH = <span class="built_in">Math</span>.min.apply(<span class="literal">null</span>, hArr);</div><div class="line">            <span class="keyword">var</span> minHIndex = getMinHIndex(hArr, minH);</div><div class="line">            oBoxs[i].style.position = <span class="string">"absolute"</span>;</div><div class="line">            oBoxs[i].style.top = minH + <span class="string">"px"</span>;</div><div class="line">            oBoxs[i].style.left = oBoxs[minHIndex].offsetLeft + <span class="string">"px"</span>;</div><div class="line">            <span class="comment">// 将新加元素的高加入循环列表</span></div><div class="line">            hArr[minHIndex] += oBoxs[i].offsetHeight;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getByClass</span>(<span class="params">parent, cls</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> oParent = parent.getElementsByTagName(<span class="string">"*"</span>);</div><div class="line">    <span class="keyword">var</span> result = [];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; oParent.length; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (oParent[i].className == cls) &#123;</div><div class="line">            result.push(oParent[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMinHIndex</span>(<span class="params">arr, minH</span>) </span>&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> arr) &#123;</div><div class="line">        <span class="keyword">if</span> (arr[i] == minH) &#123;</div><div class="line">            <span class="keyword">return</span> i;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscrollside</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> oParent = <span class="built_in">document</span>.getElementById(<span class="string">"main"</span>);</div><div class="line">    <span class="keyword">var</span> oBoxs = getByClass(oParent, <span class="string">"box"</span>);</div><div class="line">    <span class="keyword">var</span> lastBoxH = oBoxs[oBoxs.length - <span class="number">1</span>].offsetTop + <span class="built_in">Math</span>.floor(oBoxs[oBoxs.length - <span class="number">1</span>].offsetHeight / <span class="number">2</span>);</div><div class="line">    <span class="keyword">var</span> clientHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</div><div class="line">    <span class="keyword">var</span> scrollTop = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</div><div class="line">    <span class="keyword">return</span> (lastBoxH &lt; clientHeight + scrollTop) ? <span class="literal">true</span> : <span class="literal">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="附带jQuery实现"><a href="#附带jQuery实现" class="headerlink" title="附带jQuery实现"></a>附带jQuery实现</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/04/JS实现图片瀑布流/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/08/04/JS实现图片Lazyload/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -578,7 +452,7 @@
         
           
             <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>主要思路：将真实地址放在自定义属性里，src用一张图片做统一。当clientHeight + scrollTop &gt; 图片的offsetTop，将src替换成自定义属性里的真实地址</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line">        img &#123;</div><div class="line">            display: block;</div><div class="line">            margin-bottom: 50px;</div><div class="line">            width: 400px;</div><div class="line">            height: 400px;</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUo3/17a398edce.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/uLFTw/cdae7c18d6.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/to0KT/024776ae13.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">        (<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            <span class="keyword">var</span> num = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'img'</span>).length;</div><div class="line">            <span class="keyword">var</span> img = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"img"</span>);</div><div class="line">            <span class="keyword">var</span> n = <span class="number">0</span>;  <span class="comment">// 存储图片加载到的位置，避免每次都从第一张图片开始遍历</span></div><div class="line">            lazyload();  <span class="comment">// 页面载入完毕加载可是区域内的图片</span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">lazyload</span>(<span class="params"></span>) </span>&#123;  <span class="comment">// 图片请求函数，实际开发需写成ajax请求写入src</span></div><div class="line">                <span class="built_in">console</span>.log(<span class="string">'scrolling'</span>)</div><div class="line">                <span class="keyword">var</span> seeHeight = <span class="built_in">document</span>.documentElement.clientHeight;  <span class="comment">// 可见区域高度</span></div><div class="line">                <span class="keyword">var</span> scrollTop = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;  <span class="comment">// 滚动条距离顶部高度</span></div><div class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = n; i &lt; num; i++) &#123;</div><div class="line">                    <span class="keyword">if</span> (img[i].offsetTop &lt; seeHeight + scrollTop) &#123;</div><div class="line">                        <span class="keyword">if</span> (img[i].getAttribute(<span class="string">"src"</span>) == <span class="string">"default.jpg"</span>) &#123;</div><div class="line">                            img[i].src = img[i].getAttribute(<span class="string">"data-src"</span>);</div><div class="line">                        &#125;</div><div class="line">                        n = i + <span class="number">1</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 简单的节流函数</span></div><div class="line">            <span class="comment">// fn 要执行的函数</span></div><div class="line">            <span class="comment">// delay 延迟</span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</div><div class="line">                <span class="keyword">var</span> last = <span class="number">0</span></div><div class="line">                <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</div><div class="line">                    <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">                    <span class="keyword">if</span> (curr - last &gt; delay) &#123;</div><div class="line">                        fn.apply(<span class="keyword">this</span>, args)</div><div class="line">                        last = curr</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 采用了节流函数</span></div><div class="line">            <span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, throttle(lazyload, <span class="number">500</span>));</div><div class="line">        &#125;)()</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line">        <span class="selector-tag">img</span> &#123;</div><div class="line">            <span class="attribute">display</span>: block;</div><div class="line">            <span class="attribute">margin-bottom</span>: <span class="number">50px</span>;</div><div class="line">            <span class="attribute">width</span>: <span class="number">400px</span>;</div><div class="line">            <span class="attribute">height</span>: <span class="number">400px</span>;</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUo3/17a398edce.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/uLFTw/cdae7c18d6.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/to0KT/024776ae13.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">        (<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            <span class="keyword">var</span> num = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'img'</span>).length;</div><div class="line">            <span class="keyword">var</span> img = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"img"</span>);</div><div class="line">            <span class="keyword">var</span> n = <span class="number">0</span>;  <span class="comment">// 存储图片加载到的位置，避免每次都从第一张图片开始遍历</span></div><div class="line">            lazyload();  <span class="comment">// 页面载入完毕加载可是区域内的图片</span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">lazyload</span>(<span class="params"></span>) </span>&#123;  <span class="comment">// 图片请求函数，实际开发需写成ajax请求写入src</span></div><div class="line">                <span class="built_in">console</span>.log(<span class="string">'scrolling'</span>)</div><div class="line">                <span class="keyword">var</span> seeHeight = <span class="built_in">document</span>.documentElement.clientHeight;  <span class="comment">// 可见区域高度</span></div><div class="line">                <span class="keyword">var</span> scrollTop = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;  <span class="comment">// 滚动条距离顶部高度</span></div><div class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = n; i &lt; num; i++) &#123;</div><div class="line">                    <span class="keyword">if</span> (img[i].offsetTop &lt; seeHeight + scrollTop) &#123;</div><div class="line">                        <span class="keyword">if</span> (img[i].getAttribute(<span class="string">"src"</span>) == <span class="string">"default.jpg"</span>) &#123;</div><div class="line">                            img[i].src = img[i].getAttribute(<span class="string">"data-src"</span>);</div><div class="line">                        &#125;</div><div class="line">                        n = i + <span class="number">1</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 简单的节流函数</span></div><div class="line">            <span class="comment">// fn 要执行的函数</span></div><div class="line">            <span class="comment">// delay 延迟</span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</div><div class="line">                <span class="keyword">var</span> last = <span class="number">0</span></div><div class="line">                <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</div><div class="line">                    <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">                    <span class="keyword">if</span> (curr - last &gt; delay) &#123;</div><div class="line">                        fn.apply(<span class="keyword">this</span>, args)</div><div class="line">                        last = curr</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 采用了节流函数</span></div><div class="line">            <span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, throttle(lazyload, <span class="number">500</span>));</div><div class="line">        &#125;)()</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1527,6 +1401,128 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/19/JS改变date原型进行format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/19/JS改变date原型进行format/" itemprop="url">
+                  JS改变date原型进行format
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T10:35:20+08:00">
+                2017-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>利用改原型编写</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 对Date的扩展，将 Date 转化为指定格式的String</span></div><div class="line"><span class="comment">// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，</span></div><div class="line"><span class="comment">// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)</span></div><div class="line"><span class="comment">// 例子：</span></div><div class="line"><span class="comment">// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==&gt; 2006-07-02 08:09:04.423</span></div><div class="line"><span class="comment">// (new Date()).Format("yyyy-M-d h:m:s.S")      ==&gt; 2006-7-2 8:9:4.18</span></div><div class="line"><span class="built_in">Date</span>.prototype.Format = <span class="function"><span class="keyword">function</span> (<span class="params">fmt</span>) </span>&#123; <span class="comment">//author: meizz</span></div><div class="line">    <span class="keyword">var</span> o = &#123;</div><div class="line">        <span class="string">"M+"</span>: <span class="keyword">this</span>.getMonth() + <span class="number">1</span>, <span class="comment">//月份</span></div><div class="line">        <span class="string">"d+"</span>: <span class="keyword">this</span>.getDate(), <span class="comment">//日</span></div><div class="line">        <span class="string">"H+"</span>: <span class="keyword">this</span>.getHours(), <span class="comment">//小时</span></div><div class="line">        <span class="string">"m+"</span>: <span class="keyword">this</span>.getMinutes(), <span class="comment">//分</span></div><div class="line">        <span class="string">"s+"</span>: <span class="keyword">this</span>.getSeconds(), <span class="comment">//秒</span></div><div class="line">        <span class="string">"q+"</span>: <span class="built_in">Math</span>.floor((<span class="keyword">this</span>.getMonth() + <span class="number">3</span>) / <span class="number">3</span>), <span class="comment">//季度</span></div><div class="line">        <span class="string">"S"</span>: <span class="keyword">this</span>.getMilliseconds() <span class="comment">//毫秒</span></div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">if</span> (<span class="regexp">/(y+)/</span>.test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="keyword">this</span>.getFullYear() + <span class="string">""</span>).substr(<span class="number">4</span> - <span class="built_in">RegExp</span>.$<span class="number">1.</span>length));</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> o)</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"("</span> + k + <span class="string">")"</span>).test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="built_in">RegExp</span>.$<span class="number">1.</span>length == <span class="number">1</span>) ? (o[k]) : ((<span class="string">"00"</span> + o[k]).substr((<span class="string">""</span> + o[k]).length)));</div><div class="line">    <span class="keyword">return</span> fmt;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> time1 = <span class="keyword">new</span> <span class="built_in">Date</span>().Format(<span class="string">"yyyy-MM-dd"</span>);</div><div class="line"><span class="keyword">var</span> time2 = <span class="keyword">new</span> <span class="built_in">Date</span>().Format(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1576,7 +1572,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
