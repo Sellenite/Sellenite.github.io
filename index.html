@@ -247,6 +247,286 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/10/22/现代JavaScript速查/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/10/22/现代JavaScript速查/" itemprop="url">
+                  现代JavaScript速查
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T11:41:49+08:00">
+                2017-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="现代-JavaScript-速查"><a href="#现代-JavaScript-速查" class="headerlink" title="现代 JavaScript 速查"></a>现代 JavaScript 速查</h1><p><a id="modern-javascript-cheatsheet"></a></p>
+<p><img src="https://i.imgur.com/aexPxMb.png" alt="Modern JavaScript cheatsheet"></p>
+<p><small>文档翻译自: <a href="https://github.com/mbeaudru/modern-js-cheatsheet" target="_blank" rel="external">Modern JavaScript Cheatsheet</a></small></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="初心"><a href="#初心" class="headerlink" title="初心"></a>初心</h3><p>本文档是一份 JavaScript 速查表，你在现代项目中会经常遇到，以及最新的代码示例。</p>
+<p>本指南不是为了教你从头开始学习 JavaScript ，而是为了帮助那些可能不熟悉当前代码库（例如 React）所用到 JavaScript 概念的开发人员。</p>
+<p>此外，我有时还会提供一些个人的建议，这些建议可能是有争议的，但我也会注意到，当我这么做的时候，这是我个人的建议。</p>
+<blockquote>
+<p><strong>注意：</strong> 这里介绍的大多数概念来自于最新的 JavaScript 语言（ ES2015，通常称为 ES6）。你可以在 <a href="http://es6-features.org" target="_blank" rel="external">这里</a> 找到新增的特性，网站做得很棒。</p>
+</blockquote>
+<h3 id="补充资源"><a href="#补充资源" class="headerlink" title="补充资源"></a>补充资源</h3><p>当您努力了解一个新概念时，我建议你在以下资源网站上寻找相关的答案：</p>
+<ul>
+<li><a href="https://developer.mozilla.org/fr/search?q=" target="_blank" rel="external">MDN (Mozilla Developer Network)</a></li>
+<li><a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="external">你所不知道的JS (书)</a></li>
+<li><a href="http://es6-features.org" target="_blank" rel="external">ES6 新特性和例子</a></li>
+<li><a href="http://wesbos.com/category/es6/" target="_blank" rel="external">WesBos 的博客 (ES6)</a></li>
+<li><a href="https://www.reddit.com/r/javascript/" target="_blank" rel="external">Reddit (JavaScript)</a></li>
+<li>用 <a href="https://www.google.com/" target="_blank" rel="external">Google</a> 来查找特定的博客和资源</li>
+<li><a href="https://stackoverflow.com/questions/tagged/javascript" target="_blank" rel="external">StackOverflow</a></li>
+</ul>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#modern-javascript-cheatsheet">现代 JavaScript 速查</a><ul>
+<li><a href="#introduction">简介</a><ul>
+<li><a href="#motivation">初心</a></li>
+<li><a href="#complementary-resources">参考资料</a></li>
+</ul>
+</li>
+<li><a href="#table-of-contents">目录</a></li>
+<li><a href="#notions">概念</a><ul>
+<li><a href="#variable-declaration-var-const-let">变量声明: var, const, let</a><ul>
+<li><a href="#short-explanation">简单说明</a></li>
+<li><a href="#sample-code">简单的示例</a></li>
+<li><a href="#detailed-explanation">详细说明</a></li>
+<li><a href="#external-resource">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#-arrow-function">箭头函数</a><ul>
+<li><a href="#sample-code-1">简单的示例</a></li>
+<li><a href="#detailed-explanation-1">详细说明</a><ul>
+<li><a href="#concision">简洁性</a></li>
+<li><a href="#this-reference"><em>this</em> 引用</a></li>
+</ul>
+</li>
+<li><a href="#useful-resources">有用的资源</a></li>
+</ul>
+</li>
+<li><a href="#function-default-parameter-value">函数参数默认值</a><ul>
+<li><a href="#external-resource-1">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#destructuring-objects-and-arrays">解构对象和数组</a><ul>
+<li><a href="#explanation-with-sample-code">用示例代码说明</a></li>
+<li><a href="#useful-resources-1">有用的资源</a></li>
+</ul>
+</li>
+<li><a href="#array-methods---map--filter--reduce">数组方法 - map / filter / reduce</a><ul>
+<li><a href="#sample-code-2">简单的示例</a></li>
+<li><a href="#explanation">说明</a><ul>
+<li><a href="#arrayprototypemap">Array.prototype.map()</a></li>
+<li><a href="#arrayprototypefilter">Array.prototype.filter()</a></li>
+<li><a href="#arrayprototypereduce">Array.prototype.reduce()</a></li>
+</ul>
+</li>
+<li><a href="#external-resource-2">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#spread-operator-">展开操作符 “…”</a><ul>
+<li><a href="#sample-code-3">简单的代码示例</a></li>
+<li><a href="#explanation-1">说明</a><ul>
+<li><a href="#in-iterables-like-arrays">应用于迭代 (如数组)</a></li>
+<li><a href="#function-rest-parameter">函数剩余参数</a></li>
+<li><a href="#object-properties-spreading">对象属性展开</a></li>
+</ul>
+</li>
+<li><a href="#external-resources">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#object-property-shorthand">对象属性简写</a><ul>
+<li><a href="#explanation-2">说明</a></li>
+<li><a href="#external-resources-1">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#promises">Promises</a><ul>
+<li><a href="#sample-code-4">简单的代码示例</a></li>
+<li><a href="#explanation-3">说明</a><ul>
+<li><a href="#create-the-promise">创建 promise</a></li>
+<li><a href="#promise-handlers-usage">Promise 处理器的用法</a></li>
+</ul>
+</li>
+<li><a href="#external-resources-2">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#template-literals">模板字符串</a><ul>
+<li><a href="#sample-code-5">简单的代码示例</a></li>
+<li><a href="#external-resources-3">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#tagged-template-literals">带标签(tag)的模板字符串</a><ul>
+<li><a href="#external-resources-4">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#imports--exports">ES6 模块的导入 / 导出 (imports / exports)</a><ul>
+<li><a href="#explanation-with-sample-code-1">用示例代码说明</a><ul>
+<li><a href="#named-exports">命名导出</a></li>
+<li><a href="#default-import--export">默认导入 / 导出 (imports / exports)</a></li>
+</ul>
+</li>
+<li><a href="#external-resources-5">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#-javascript-this">JavaScript 中的 <em>this</em></a><ul>
+<li><a href="#external-resources-6">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#class">类(Class)</a><ul>
+<li><a href="#samples">简单的示例</a></li>
+<li><a href="#external-resources-7">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#extends-and-super-keywords"><code>Extends</code> 和 <code>super</code> 关键字</a><ul>
+<li><a href="#sample-code-6">简单的代码示例</a></li>
+<li><a href="#external-resources-8">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#async-await">异步和等待(Async Await)</a><ul>
+<li><a href="#sample-code-7">简单的代码示例</a></li>
+<li><a href="#explanation-with-sample-code-2">用示例代码说明</a></li>
+<li><a href="#error-handling">错误处理</a></li>
+<li><a href="#external-resources-9">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#truthy--falsy">真值/假值(Truthy / Falsy)</a><ul>
+<li><a href="#external-resources-10">扩展阅读</a></li>
+</ul>
+</li>
+<li><a href="#static-methods">静态方法</a><ul>
+<li><a href="#short-explanation-1">简单说明</a></li>
+<li><a href="#sample-code-8">简单的代码示例</a></li>
+<li><a href="#detailed-explanation-2">详细说明</a><ul>
+<li><a href="#calling-other-static-methods-from-a-static-method">在静态方法调用另一个静态方法</a></li>
+<li><a href="#calling-static-methods-from-non-static-methods">在非静态方法调用静态方法</a></li>
+</ul>
+</li>
+<li><a href="#external-resources-11">扩展阅读</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#glossary">词汇表</a><ul>
+<li><a href="#-scope">作用域(Scope)</a></li>
+<li><a href="#-variable-mutation">变量的可变性</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div id="notions"></div>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/22/现代JavaScript速查/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/08/17/JS浅拷贝和深拷贝/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1401,133 +1681,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/19/JS改变date原型进行format/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/19/JS改变date原型进行format/" itemprop="url">
-                  JS改变date原型进行format
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T10:35:20+08:00">
-                2017-05-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>利用改原型编写</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 对Date的扩展，将 Date 转化为指定格式的String</span></div><div class="line"><span class="comment">// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，</span></div><div class="line"><span class="comment">// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)</span></div><div class="line"><span class="comment">// 例子：</span></div><div class="line"><span class="comment">// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==&gt; 2006-07-02 08:09:04.423</span></div><div class="line"><span class="comment">// (new Date()).Format("yyyy-M-d h:m:s.S")      ==&gt; 2006-7-2 8:9:4.18</span></div><div class="line"><span class="built_in">Date</span>.prototype.Format = <span class="function"><span class="keyword">function</span> (<span class="params">fmt</span>) </span>&#123; <span class="comment">//author: meizz</span></div><div class="line">    <span class="keyword">var</span> o = &#123;</div><div class="line">        <span class="string">"M+"</span>: <span class="keyword">this</span>.getMonth() + <span class="number">1</span>, <span class="comment">//月份</span></div><div class="line">        <span class="string">"d+"</span>: <span class="keyword">this</span>.getDate(), <span class="comment">//日</span></div><div class="line">        <span class="string">"H+"</span>: <span class="keyword">this</span>.getHours(), <span class="comment">//小时</span></div><div class="line">        <span class="string">"m+"</span>: <span class="keyword">this</span>.getMinutes(), <span class="comment">//分</span></div><div class="line">        <span class="string">"s+"</span>: <span class="keyword">this</span>.getSeconds(), <span class="comment">//秒</span></div><div class="line">        <span class="string">"q+"</span>: <span class="built_in">Math</span>.floor((<span class="keyword">this</span>.getMonth() + <span class="number">3</span>) / <span class="number">3</span>), <span class="comment">//季度</span></div><div class="line">        <span class="string">"S"</span>: <span class="keyword">this</span>.getMilliseconds() <span class="comment">//毫秒</span></div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">if</span> (<span class="regexp">/(y+)/</span>.test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="keyword">this</span>.getFullYear() + <span class="string">""</span>).substr(<span class="number">4</span> - <span class="built_in">RegExp</span>.$<span class="number">1.</span>length));</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> o)</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"("</span> + k + <span class="string">")"</span>).test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="built_in">RegExp</span>.$<span class="number">1.</span>length == <span class="number">1</span>) ? (o[k]) : ((<span class="string">"00"</span> + o[k]).substr((<span class="string">""</span> + o[k]).length)));</div><div class="line">    <span class="keyword">return</span> fmt;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> time1 = <span class="keyword">new</span> <span class="built_in">Date</span>().Format(<span class="string">"yyyy-MM-dd"</span>);</div><div class="line"><span class="keyword">var</span> time2 = <span class="keyword">new</span> <span class="built_in">Date</span>().Format(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1572,7 +1730,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
