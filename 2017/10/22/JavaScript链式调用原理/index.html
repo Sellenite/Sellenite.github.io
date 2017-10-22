@@ -94,7 +94,7 @@
 <meta property="og:url" content="https://sellenite.github.io/2017/10/22/JavaScript链式调用原理/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="原理链式调用的原理就是通过构造函数中的每个方法，在结尾都返回实例本身，这样就可以通过调用方法后继续通过实例来进行链式调用： /* underscore实现方式，与lodash不同，lodash是惰性调用 */ var _ = function (array) {     // 建立数组副本方法     this._value = Array.prototype.slice.apply(array)">
-<meta property="og:updated_time" content="2017-10-22T04:38:46.749Z">
+<meta property="og:updated_time" content="2017-10-22T04:45:54.141Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript链式调用原理">
 <meta name="twitter:description" content="原理链式调用的原理就是通过构造函数中的每个方法，在结尾都返回实例本身，这样就可以通过调用方法后继续通过实例来进行链式调用： /* underscore实现方式，与lodash不同，lodash是惰性调用 */ var _ = function (array) {     // 建立数组副本方法     this._value = Array.prototype.slice.apply(array)">
@@ -333,7 +333,7 @@
 
       
         <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>链式调用的原理就是通过构造函数中的每个方法，在结尾都返回实例本身，这样就可以通过调用方法后继续通过实例来进行链式调用：</p>
-<pre><code class="js"><span class="comment">/* underscore实现方式，与lodash不同，lodash是惰性调用 */</span>
+<pre><code class="javascript"><span class="comment">/* underscore实现方式，与lodash不同，lodash是惰性调用 */</span>
 <span class="keyword">var</span> _ = <span class="function"><span class="keyword">function</span> (<span class="params">array</span>) </span>{
     <span class="comment">// 建立数组副本方法</span>
     <span class="keyword">this</span>._value = <span class="built_in">Array</span>.prototype.slice.apply(array)
