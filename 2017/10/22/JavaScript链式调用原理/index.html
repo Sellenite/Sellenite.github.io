@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JS," />
 
 
 
@@ -87,16 +87,17 @@
 
 
 
-<meta name="description" content="据说这资料很全，memomemo~前端资源大汇总">
+<meta name="description" content="原理链式调用的原理就是通过构造函数中的每个方法，在结尾都返回实例本身，这样就可以通过调用方法后继续通过实例来进行链式调用： /* underscore实现方式，与lodash不同，lodash是惰性调用 */ var _ = function (array) {     // 建立数组副本方法     this._value = Array.prototype.slice.apply(array)">
+<meta name="keywords" content="JS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端资源大汇总">
-<meta property="og:url" content="https://sellenite.github.io/2017/03/04/前端资源大汇总/index.html">
+<meta property="og:title" content="JavaScript链式调用原理">
+<meta property="og:url" content="https://sellenite.github.io/2017/10/22/JavaScript链式调用原理/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
-<meta property="og:description" content="据说这资料很全，memomemo~前端资源大汇总">
-<meta property="og:updated_time" content="2017-03-04T00:38:20.000Z">
+<meta property="og:description" content="原理链式调用的原理就是通过构造函数中的每个方法，在结尾都返回实例本身，这样就可以通过调用方法后继续通过实例来进行链式调用： /* underscore实现方式，与lodash不同，lodash是惰性调用 */ var _ = function (array) {     // 建立数组副本方法     this._value = Array.prototype.slice.apply(array)">
+<meta property="og:updated_time" content="2017-10-22T04:38:46.749Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前端资源大汇总">
-<meta name="twitter:description" content="据说这资料很全，memomemo~前端资源大汇总">
+<meta name="twitter:title" content="JavaScript链式调用原理">
+<meta name="twitter:description" content="原理链式调用的原理就是通过构造函数中的每个方法，在结尾都返回实例本身，这样就可以通过调用方法后继续通过实例来进行链式调用： /* underscore实现方式，与lodash不同，lodash是惰性调用 */ var _ = function (array) {     // 建立数组副本方法     this._value = Array.prototype.slice.apply(array)">
 
 
 
@@ -124,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://sellenite.github.io/2017/03/04/前端资源大汇总/"/>
+  <link rel="canonical" href="https://sellenite.github.io/2017/10/22/JavaScript链式调用原理/"/>
 
 
 
 
 
-  <title> 前端资源大汇总 | yuuhei's Home </title>
+  <title> JavaScript链式调用原理 | yuuhei's Home </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +250,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/03/04/前端资源大汇总/">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/10/22/JavaScript链式调用原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sellenite">
@@ -270,7 +271,7 @@
             
             
               
-                前端资源大汇总
+                JavaScript链式调用原理
               
             
           </h1>
@@ -285,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-04T08:35:52+08:00">
-                2017-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T12:32:35+08:00">
+                2017-10-22
               </time>
             
 
@@ -304,7 +305,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/03/04/前端资源大汇总/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/10/22/JavaScript链式调用原理/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -331,7 +332,65 @@
       
 
       
-        <p>据说这资料很全，memomemo~<br><a href="http://www.jianshu.com/p/6cb49271cd2a" target="_blank" rel="external">前端资源大汇总</a></p>
+        <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>链式调用的原理就是通过构造函数中的每个方法，在结尾都返回实例本身，这样就可以通过调用方法后继续通过实例来进行链式调用：</p>
+<pre><code class="js"><span class="comment">/* underscore实现方式，与lodash不同，lodash是惰性调用 */</span>
+<span class="keyword">var</span> _ = <span class="function"><span class="keyword">function</span> (<span class="params">array</span>) </span>{
+    <span class="comment">// 建立数组副本方法</span>
+    <span class="keyword">this</span>._value = <span class="built_in">Array</span>.prototype.slice.apply(array)
+}
+
+_.forEach = <span class="function"><span class="keyword">function</span> (<span class="params">array, fn</span>) </span>{
+    array.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item, index, array</span>) </span>{
+        fn.apply(item, [item, index, array])
+    })
+}
+_.map = <span class="function"><span class="keyword">function</span> (<span class="params">array, fn</span>) </span>{
+    <span class="keyword">return</span> array.map(<span class="function"><span class="keyword">function</span> (<span class="params">item, index, array</span>) </span>{
+        <span class="keyword">return</span> fn.apply(item, [item, index, array])
+    })
+}
+_.chain = <span class="function"><span class="keyword">function</span> (<span class="params">array</span>) </span>{
+    <span class="keyword">return</span> <span class="keyword">new</span> _(array)
+}
+
+<span class="comment">// 链式调用遍历，实例化后除了chain每个方法都返回实例本身，故可以链式调用</span>
+<span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> _) {
+    <span class="keyword">if</span> (i !== <span class="string">'chain'</span>) {
+        <span class="comment">// 除去顶端chain，将所有方法赋值给prototype</span>
+        _.prototype[i] = (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>{
+            <span class="comment">// 闭包执行全局变量i</span>
+            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>{
+                <span class="comment">// 取出参数，其实就是fn，相当于以下写法</span>
+                <span class="comment">// var args = []</span>
+                <span class="comment">// args.push(fn)</span>
+                <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.apply(<span class="built_in">arguments</span>)
+                <span class="comment">// 将value放在数组第一个，用于apply传值</span>
+                args.unshift(<span class="keyword">this</span>._value)
+                <span class="keyword">this</span>._value = _[i].apply(<span class="keyword">this</span>, args);
+                <span class="keyword">return</span> <span class="keyword">this</span>;
+            }
+        })(i);
+    }
+}
+
+_.prototype.value = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{
+    <span class="keyword">return</span> <span class="keyword">this</span>._value
+}
+
+<span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]
+
+_.forEach(a, <span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>{
+    <span class="built_in">console</span>.log(item)
+})
+
+<span class="built_in">console</span>.log(_.map(a, <span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>{
+    <span class="keyword">return</span> ++item
+}))
+
+_.chain(a).map(<span class="function"><span class="keyword">function</span> (<span class="params">item, index</span>) </span>{
+    <span class="keyword">return</span> item * index
+}).value()
+</code></pre>
 
       
     </div>
@@ -359,6 +418,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
 
       
         
@@ -368,8 +433,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/02/鸡狗零碎的知识/" rel="next" title="knowledge">
-                <i class="fa fa-chevron-left"></i> knowledge
+              <a href="/2017/10/22/现代JavaScript速查/" rel="next" title="现代JavaScript速查">
+                <i class="fa fa-chevron-left"></i> 现代JavaScript速查
               </a>
             
           </div>
@@ -377,10 +442,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/24/前端HTML-CSS基础知识/" rel="prev" title="前端HTML+CSS基础知识">
-                前端HTML+CSS基础知识 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -429,8 +490,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://puu.sh/uoJbK/033c9ae781.jpg"
@@ -483,6 +553,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
