@@ -91,6 +91,7 @@
 <meta property="og:title" content="yuuhei&#39;s Home">
 <meta property="og:url" content="https://sellenite.github.io/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="yuuhei&#39;s Home">
 
@@ -247,185 +248,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/10/22/JavaScript链式调用原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/10/22/JavaScript链式调用原理/" itemprop="url">
-                  JavaScript链式调用原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T12:32:35+08:00">
-                2017-10-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>链式调用的原理就是通过构造函数中的每个方法，在结尾都返回实例本身，这样就可以通过调用方法后继续通过实例来进行链式调用：</p>
-<pre><code class="javascript"><span class="comment">/* underscore实现方式，与lodash不同，lodash是惰性调用 */</span>
-<span class="keyword">var</span> _ = <span class="function"><span class="keyword">function</span> (<span class="params">array</span>) </span>{
-    <span class="comment">// 建立数组副本方法</span>
-    <span class="keyword">this</span>._value = <span class="built_in">Array</span>.prototype.slice.apply(array)
-}
-
-_.forEach = <span class="function"><span class="keyword">function</span> (<span class="params">array, fn</span>) </span>{
-    array.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item, index, array</span>) </span>{
-        fn.apply(item, [item, index, array])
-    })
-}
-_.map = <span class="function"><span class="keyword">function</span> (<span class="params">array, fn</span>) </span>{
-    <span class="keyword">return</span> array.map(<span class="function"><span class="keyword">function</span> (<span class="params">item, index, array</span>) </span>{
-        <span class="keyword">return</span> fn.apply(item, [item, index, array])
-    })
-}
-_.chain = <span class="function"><span class="keyword">function</span> (<span class="params">array</span>) </span>{
-    <span class="keyword">return</span> <span class="keyword">new</span> _(array)
-}
-
-<span class="comment">// 链式调用遍历，实例化后除了chain每个方法都返回实例本身，故可以链式调用</span>
-<span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> _) {
-    <span class="keyword">if</span> (i !== <span class="string">'chain'</span>) {
-        <span class="comment">// 除去顶端chain，将所有方法赋值给prototype</span>
-        _.prototype[i] = (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>{
-            <span class="comment">// 闭包执行全局变量i</span>
-            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>{
-                <span class="comment">// 取出参数，其实就是fn，相当于以下写法</span>
-                <span class="comment">// var args = []</span>
-                <span class="comment">// args.push(fn)</span>
-                <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.apply(<span class="built_in">arguments</span>)
-                <span class="comment">// 将value放在数组第一个，用于apply传值</span>
-                args.unshift(<span class="keyword">this</span>._value)
-                <span class="keyword">this</span>._value = _[i].apply(<span class="keyword">this</span>, args);
-                <span class="keyword">return</span> <span class="keyword">this</span>;
-            }
-        })(i);
-    }
-}
-
-_.prototype.value = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{
-    <span class="keyword">return</span> <span class="keyword">this</span>._value
-}
-
-<span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]
-
-_.forEach(a, <span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>{
-    <span class="built_in">console</span>.log(item)
-})
-
-<span class="built_in">console</span>.log(_.map(a, <span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>{
-    <span class="keyword">return</span> ++item
-}))
-
-_.chain(a).map(<span class="function"><span class="keyword">function</span> (<span class="params">item, index</span>) </span>{
-    <span class="keyword">return</span> item * index
-}).value()
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/10/22/现代JavaScript速查/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -504,22 +326,22 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
         
           <h1 id="现代-JavaScript-速查"><a href="#现代-JavaScript-速查" class="headerlink" title="现代 JavaScript 速查"></a>现代 JavaScript 速查</h1><p><a id="modern-javascript-cheatsheet"></a></p>
 <p><img src="https://i.imgur.com/aexPxMb.png" alt="Modern JavaScript cheatsheet"></p>
-<p><small>文档翻译自: <a href="https://github.com/mbeaudru/modern-js-cheatsheet" target="_blank" rel="external">Modern JavaScript Cheatsheet</a></small></p>
+<p><small>文档翻译自: <a href="https://github.com/mbeaudru/modern-js-cheatsheet" target="_blank" rel="noopener">Modern JavaScript Cheatsheet</a></small></p>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="初心"><a href="#初心" class="headerlink" title="初心"></a>初心</h3><p>本文档是一份 JavaScript 速查表，你在现代项目中会经常遇到，以及最新的代码示例。</p>
 <p>本指南不是为了教你从头开始学习 JavaScript ，而是为了帮助那些可能不熟悉当前代码库（例如 React）所用到 JavaScript 概念的开发人员。</p>
 <p>此外，我有时还会提供一些个人的建议，这些建议可能是有争议的，但我也会注意到，当我这么做的时候，这是我个人的建议。</p>
 <blockquote>
-<p><strong>注意：</strong> 这里介绍的大多数概念来自于最新的 JavaScript 语言（ ES2015，通常称为 ES6）。你可以在 <a href="http://es6-features.org" target="_blank" rel="external">这里</a> 找到新增的特性，网站做得很棒。</p>
+<p><strong>注意：</strong> 这里介绍的大多数概念来自于最新的 JavaScript 语言（ ES2015，通常称为 ES6）。你可以在 <a href="http://es6-features.org" target="_blank" rel="noopener">这里</a> 找到新增的特性，网站做得很棒。</p>
 </blockquote>
 <h3 id="补充资源"><a href="#补充资源" class="headerlink" title="补充资源"></a>补充资源</h3><p>当您努力了解一个新概念时，我建议你在以下资源网站上寻找相关的答案：</p>
 <ul>
-<li><a href="https://developer.mozilla.org/fr/search?q=" target="_blank" rel="external">MDN (Mozilla Developer Network)</a></li>
-<li><a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="external">你所不知道的JS (书)</a></li>
-<li><a href="http://es6-features.org" target="_blank" rel="external">ES6 新特性和例子</a></li>
-<li><a href="http://wesbos.com/category/es6/" target="_blank" rel="external">WesBos 的博客 (ES6)</a></li>
-<li><a href="https://www.reddit.com/r/javascript/" target="_blank" rel="external">Reddit (JavaScript)</a></li>
-<li>用 <a href="https://www.google.com/" target="_blank" rel="external">Google</a> 来查找特定的博客和资源</li>
-<li><a href="https://stackoverflow.com/questions/tagged/javascript" target="_blank" rel="external">StackOverflow</a></li>
+<li><a href="https://developer.mozilla.org/fr/search?q=" target="_blank" rel="noopener">MDN (Mozilla Developer Network)</a></li>
+<li><a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="noopener">你所不知道的JS (书)</a></li>
+<li><a href="http://es6-features.org" target="_blank" rel="noopener">ES6 新特性和例子</a></li>
+<li><a href="http://wesbos.com/category/es6/" target="_blank" rel="noopener">WesBos 的博客 (ES6)</a></li>
+<li><a href="https://www.reddit.com/r/javascript/" target="_blank" rel="noopener">Reddit (JavaScript)</a></li>
+<li>用 <a href="https://www.google.com/" target="_blank" rel="noopener">Google</a> 来查找特定的博客和资源</li>
+<li><a href="https://stackoverflow.com/questions/tagged/javascript" target="_blank" rel="noopener">StackOverflow</a></li>
 </ul>
 <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
 <li><a href="#modern-javascript-cheatsheet">现代 JavaScript 速查</a><ul>
@@ -911,141 +733,9 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
         
           
             <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>主要思路：将真实地址放在自定义属性里，src用一张图片做统一。当clientHeight + scrollTop &gt; 图片的offsetTop，将src替换成自定义属性里的真实地址</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line">        img &#123;</div><div class="line">            display: block;</div><div class="line">            margin-bottom: 50px;</div><div class="line">            width: 400px;</div><div class="line">            height: 400px;</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUo3/17a398edce.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/uLFTw/cdae7c18d6.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/to0KT/024776ae13.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">        (<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            <span class="keyword">var</span> num = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'img'</span>).length;</div><div class="line">            <span class="keyword">var</span> img = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"img"</span>);</div><div class="line">            <span class="keyword">var</span> n = <span class="number">0</span>;  <span class="comment">// 存储图片加载到的位置，避免每次都从第一张图片开始遍历</span></div><div class="line">            lazyload();  <span class="comment">// 页面载入完毕加载可是区域内的图片</span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">lazyload</span>(<span class="params"></span>) </span>&#123;  <span class="comment">// 图片请求函数，实际开发需写成ajax请求写入src</span></div><div class="line">                <span class="built_in">console</span>.log(<span class="string">'scrolling'</span>)</div><div class="line">                <span class="keyword">var</span> seeHeight = <span class="built_in">document</span>.documentElement.clientHeight;  <span class="comment">// 可见区域高度</span></div><div class="line">                <span class="keyword">var</span> scrollTop = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;  <span class="comment">// 滚动条距离顶部高度</span></div><div class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = n; i &lt; num; i++) &#123;</div><div class="line">                    <span class="keyword">if</span> (img[i].offsetTop &lt; seeHeight + scrollTop) &#123;</div><div class="line">                        <span class="keyword">if</span> (img[i].getAttribute(<span class="string">"src"</span>) == <span class="string">"default.jpg"</span>) &#123;</div><div class="line">                            img[i].src = img[i].getAttribute(<span class="string">"data-src"</span>);</div><div class="line">                        &#125;</div><div class="line">                        n = i + <span class="number">1</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 简单的节流函数</span></div><div class="line">            <span class="comment">// fn 要执行的函数</span></div><div class="line">            <span class="comment">// delay 延迟</span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</div><div class="line">                <span class="keyword">var</span> last = <span class="number">0</span></div><div class="line">                <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</div><div class="line">                    <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">                    <span class="keyword">if</span> (curr - last &gt; delay) &#123;</div><div class="line">                        fn.apply(<span class="keyword">this</span>, args)</div><div class="line">                        last = curr</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 采用了节流函数</span></div><div class="line">            <span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, throttle(lazyload, <span class="number">500</span>));</div><div class="line">        &#125;)()</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line">        <span class="selector-tag">img</span> &#123;</div><div class="line">            <span class="attribute">display</span>: block;</div><div class="line">            <span class="attribute">margin-bottom</span>: <span class="number">50px</span>;</div><div class="line">            <span class="attribute">width</span>: <span class="number">400px</span>;</div><div class="line">            <span class="attribute">height</span>: <span class="number">400px</span>;</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUo3/17a398edce.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/uLFTw/cdae7c18d6.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/to0KT/024776ae13.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"default.jpg"</span> <span class="attr">data-src</span>=<span class="string">"https://puu.sh/aNUqI/5be1d985dc.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">        (<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            <span class="keyword">var</span> num = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'img'</span>).length;</div><div class="line">            <span class="keyword">var</span> img = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"img"</span>);</div><div class="line">            <span class="keyword">var</span> n = <span class="number">0</span>;  <span class="comment">// 存储图片加载到的位置，避免每次都从第一张图片开始遍历</span></div><div class="line">            lazyload();  <span class="comment">// 页面载入完毕加载可是区域内的图片</span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">lazyload</span>(<span class="params"></span>) </span>&#123;  <span class="comment">// 图片请求函数，实际开发需写成ajax请求写入src</span></div><div class="line">                <span class="built_in">console</span>.log(<span class="string">'scrolling'</span>)</div><div class="line">                <span class="keyword">var</span> seeHeight = <span class="built_in">document</span>.documentElement.clientHeight;  <span class="comment">// 可见区域高度</span></div><div class="line">                <span class="keyword">var</span> scrollTop = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;  <span class="comment">// 滚动条距离顶部高度</span></div><div class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = n; i &lt; num; i++) &#123;</div><div class="line">                    <span class="keyword">if</span> (img[i].offsetTop &lt; seeHeight + scrollTop) &#123;</div><div class="line">                        <span class="keyword">if</span> (img[i].getAttribute(<span class="string">"src"</span>) == <span class="string">"default.jpg"</span>) &#123;</div><div class="line">                            img[i].src = img[i].getAttribute(<span class="string">"data-src"</span>);</div><div class="line">                        &#125;</div><div class="line">                        n = i + <span class="number">1</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 简单的节流函数</span></div><div class="line">            <span class="comment">// fn 要执行的函数</span></div><div class="line">            <span class="comment">// delay 延迟</span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</div><div class="line">                <span class="keyword">var</span> last = <span class="number">0</span></div><div class="line">                <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</div><div class="line">                    <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">                    <span class="keyword">if</span> (curr - last &gt; delay) &#123;</div><div class="line">                        fn.apply(<span class="keyword">this</span>, args)</div><div class="line">                        last = curr</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 采用了节流函数</span></div><div class="line">            <span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, throttle(lazyload, <span class="number">500</span>));</div><div class="line">        &#125;)()</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/27/工作时制作移动端的技巧二/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/27/工作时制作移动端的技巧二/" itemprop="url">
-                  工作时制作移动端的技巧二
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T00:35:47+08:00">
-                2017-07-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>一个移动端真机调试：<a href="https://browsersync.io/" target="_blank" rel="external">browser-sync</a></p>
-<p><a href="http://www.cnblogs.com/beidan/p/5777476.html" target="_blank" rel="external">使用经验</a></p>
-<h3 id="input-placeholder问题"><a href="#input-placeholder问题" class="headerlink" title="input   placeholder问题　"></a>input   placeholder问题　</h3><p>在chrome 模拟移动端调试时，显示的非常正常，但是在真机上，placeholder里面的内容明显靠上，非常的不美观</p>
-<p>在国外网站，对这个属性的兼容性处理，那就是不要设计input的line-height或者设置line-height为normal即可，</p>
-<p>试了一下，虽然在谷歌模拟调试里稍微偏上，但是在“真机上”正常垂直居中～</p>
-<h3 id="line－height"><a href="#line－height" class="headerlink" title="line－height"></a>line－height</h3><p>line-height经常用于文字居中，不同手机显示效果不一样。</p>
-<p>在chrome模拟器上又是显示得非常完美，但是！Android和IOS又各自‘偏移’了。如果把line-height加1px，iPhone文字就会稍微‘正常显示’，由于我们app的ios用户居多，并且android机型太多，不同机型也会显示不同，所以只能退而求其次了。line-height的兼容问题不太好解决，容器高度越小，显示效果的差距越明显。</p>
-<p>解决方案：稍微大一点的高度，最好把line-height设置为高度+1px，两个平台显示都不会太‘奇怪’。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/27/工作时制作移动端的技巧二/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
         
       
     </div>
@@ -1350,127 +1040,6 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/13/JS正则表达式完整教程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/13/JS正则表达式完整教程/" itemprop="url">
-                  JS正则表达式完整教程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T20:32:44+08:00">
-                2017-07-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://juejin.im/post/5965943ff265da6c30653879" target="_blank" rel="external">教程</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/13/原生js实现Ajax和Jsonp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1600,7 +1169,7 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/23/Vue组件data为什么必须是函数/">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/21/原生JS开发datepicker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sellenite">
@@ -1622,8 +1191,8 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
             
               
                 
-                <a class="post-title-link" href="/2017/05/23/Vue组件data为什么必须是函数/" itemprop="url">
-                  Vue组件data为什么必须是函数
+                <a class="post-title-link" href="/2017/05/21/原生JS开发datepicker/" itemprop="url">
+                  原生JS开发datepicker
                 </a>
               
             
@@ -1639,8 +1208,8 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T10:25:35+08:00">
-                2017-05-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T10:14:49+08:00">
+                2017-05-21
               </time>
             
 
@@ -1676,12 +1245,408 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
 
       
         
-          <p>在创建或注册模板的时候，传入一个data属性作为用来绑定的数据。但是在组件中，data必须是一个函数，而不能直接把一个对象赋值给它。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'my-component'</span>, &#123;</div><div class="line">  <span class="attr">template</span>: <span class="string">'&lt;div&gt;OK&lt;/div&gt;'</span>,</div><div class="line">  data() &#123;</div><div class="line">    <span class="keyword">return</span> &#123;&#125; <span class="comment">// 返回一个唯一的对象，不要和其他组件共用一个对象进行返回</span></div><div class="line">  &#125;,</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>你在前面看到，在new Vue()的时候，是可以给data直接赋值为一个对象的。这是怎么回事，为什么到了组件这里就不行了。<br>你要理解，上面这个操作是一个简易操作，实际上，它首先需要创建一个组件构造器，然后注册组件。注册组件的本质其实就是建立一个组件构造器的引用。使用组件才是真正创建一个组件实例。所以，注册组件其实并不产生新的组件类，但会产生一个可以用来实例化的新方式。<br>理解这点之后，再理解js的原型链：</p>
+          <h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>首先，需要知道new Date()这个参数的基本使用：</p>
+<ul>
+<li>传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日</li>
+<li>月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数</li>
+<li>拿到当月第一天是这样写的：new Date(year, month-1, 1)</li>
+<li>拿到当月最后一天是这样写的：new Date(year, month, 0)</li>
+<li>.getDay()获取的的是这个日期的星期几，星期一~星期天对应[1, 2, 3, 4, 5, 6, 0]</li>
+</ul>
+<p>其次，需要知道js的一些新的API：</p>
+<ul>
+<li>document.querySelector()获取的是CSS选择器，即传入的参数是’.exampleClass’或’.#exampleID’，需要将字符串传进去，获取的就是第一个匹配的class</li>
+<li>如果想获取多个同class的CSS选择器，使用document.querySelectorAll</li>
+<li>$element.classList.add()可以添加class</li>
+<li>$element.classList.remove()可以移除特定class</li>
+<li>$element.dataset.xx可以访问到dom元素里自定义属性data-xx，返回的值就是xx</li>
+<li>注意好编码习惯，例如一个dom元素起名就用$开头，如$wrapper</li>
+</ul>
+<h3 id="开发思路"><a href="#开发思路" class="headerlink" title="开发思路"></a>开发思路</h3>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/23/Vue组件data为什么必须是函数/#more" rel="contents">
+            <a class="btn" href="/2017/05/21/原生JS开发datepicker/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/19/JS改变date原型进行format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/19/JS改变date原型进行format/" itemprop="url">
+                  JS改变date原型进行format
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T10:35:20+08:00">
+                2017-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>利用改原型编写</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 对Date的扩展，将 Date 转化为指定格式的String</span></div><div class="line"><span class="comment">// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，</span></div><div class="line"><span class="comment">// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)</span></div><div class="line"><span class="comment">// 例子：</span></div><div class="line"><span class="comment">// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==&gt; 2006-07-02 08:09:04.423</span></div><div class="line"><span class="comment">// (new Date()).Format("yyyy-M-d h:m:s.S")      ==&gt; 2006-7-2 8:9:4.18</span></div><div class="line"><span class="built_in">Date</span>.prototype.Format = <span class="function"><span class="keyword">function</span> (<span class="params">fmt</span>) </span>&#123; <span class="comment">//author: meizz</span></div><div class="line">    <span class="keyword">var</span> o = &#123;</div><div class="line">        <span class="string">"M+"</span>: <span class="keyword">this</span>.getMonth() + <span class="number">1</span>, <span class="comment">//月份</span></div><div class="line">        <span class="string">"d+"</span>: <span class="keyword">this</span>.getDate(), <span class="comment">//日</span></div><div class="line">        <span class="string">"H+"</span>: <span class="keyword">this</span>.getHours(), <span class="comment">//小时</span></div><div class="line">        <span class="string">"m+"</span>: <span class="keyword">this</span>.getMinutes(), <span class="comment">//分</span></div><div class="line">        <span class="string">"s+"</span>: <span class="keyword">this</span>.getSeconds(), <span class="comment">//秒</span></div><div class="line">        <span class="string">"q+"</span>: <span class="built_in">Math</span>.floor((<span class="keyword">this</span>.getMonth() + <span class="number">3</span>) / <span class="number">3</span>), <span class="comment">//季度</span></div><div class="line">        <span class="string">"S"</span>: <span class="keyword">this</span>.getMilliseconds() <span class="comment">//毫秒</span></div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">if</span> (<span class="regexp">/(y+)/</span>.test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="keyword">this</span>.getFullYear() + <span class="string">""</span>).substr(<span class="number">4</span> - <span class="built_in">RegExp</span>.$<span class="number">1.</span>length));</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> o)</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"("</span> + k + <span class="string">")"</span>).test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="built_in">RegExp</span>.$<span class="number">1.</span>length == <span class="number">1</span>) ? (o[k]) : ((<span class="string">"00"</span> + o[k]).substr((<span class="string">""</span> + o[k]).length)));</div><div class="line">    <span class="keyword">return</span> fmt;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> time1 = <span class="keyword">new</span> <span class="built_in">Date</span>().Format(<span class="string">"yyyy-MM-dd"</span>);</div><div class="line"><span class="keyword">var</span> time2 = <span class="keyword">new</span> <span class="built_in">Date</span>().Format(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/19/Vue多个选项多个chooser组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/19/Vue多个选项多个chooser组件/" itemprop="url">
+                  Vue多个选项多个chooser组件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T00:03:23+08:00">
+                2017-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">v-mul-chooser</span> <span class="attr">:selections</span>=<span class="string">""</span> @<span class="attr">on-change</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">v-mul-chooser</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>selections：传入的数据，默认格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">  versionList: [</div><div class="line">    &#123;</div><div class="line">      label: &apos;客户版&apos;,</div><div class="line">      value: 0</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      label: &apos;代理商版&apos;,</div><div class="line">      value: 1</div><div class="line">    &#125;,</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>on-change：每次点击数据的时候都会触发，返回多选回来的数组</p>
+<p>注意，子组件用了lodash这个JavaScript模块库，使用了“_”这个关键字，依赖需要</p>
+<h3 id="子组件源码"><a href="#子组件源码" class="headerlink" title="子组件源码"></a>子组件源码</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/19/Vue多个选项多个chooser组件/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/18/Vue多个选项单个chooser组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/18/Vue多个选项单个chooser组件/" itemprop="url">
+                  Vue多个选项单个chooser组件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-18T23:43:50+08:00">
+                2017-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">v-chooser</span> <span class="attr">:selections</span>=<span class="string">""</span> @<span class="attr">on-change</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">v-chooser</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>selections：传入的数据，默认格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">  periodList: [</div><div class="line">    &#123;</div><div class="line">      label: &apos;半年&apos;,</div><div class="line">      value: 0</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      label: &apos;一年&apos;,</div><div class="line">      value: 1</div><div class="line">    &#125;,</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>on-change：点击选择的时候触发，返回被选择的数据</p>
+<h3 id="子组件源码："><a href="#子组件源码：" class="headerlink" title="子组件源码："></a>子组件源码：</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/18/Vue多个选项单个chooser组件/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1722,7 +1687,7 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1767,7 +1732,7 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1780,7 +1745,7 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1822,7 +1787,7 @@ _.chain(a).map(<span class="function"><span class="keyword">function</span> (<sp
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

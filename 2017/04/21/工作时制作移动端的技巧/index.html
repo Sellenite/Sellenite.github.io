@@ -87,17 +87,18 @@
 
 
 
-<meta name="description" content="JS方面简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.locati">
+<meta name="description" content="简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.location.h">
 <meta name="keywords" content="JS,CSS,移动端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="工作时制作移动端的技巧">
 <meta property="og:url" content="https://sellenite.github.io/2017/04/21/工作时制作移动端的技巧/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
-<meta property="og:description" content="JS方面简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.locati">
-<meta property="og:updated_time" content="2017-04-26T07:53:18.000Z">
+<meta property="og:description" content="简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.location.h">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-05T11:07:53.976Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工作时制作移动端的技巧">
-<meta name="twitter:description" content="JS方面简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.locati">
+<meta name="twitter:description" content="简单的利用JS来判断页面是在手机端还是在PC端打开的方法12345if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &amp;#123;    window.location.href = &quot;https://www.baidu.com/&quot;;&amp;#125; else &amp;#123;    window.location.h">
 
 
 
@@ -332,26 +333,93 @@
       
 
       
-        <h2 id="JS方面"><a href="#JS方面" class="headerlink" title="JS方面"></a>JS方面</h2><h3 id="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><a href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法" class="headerlink" title="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"></a>简单的利用JS来判断页面是在手机端还是在PC端打开的方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="regexp">/Android|webOS|iPhone|iPod|BlackBerry/i</span>.test(navigator.userAgent)) &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"https://www.baidu.com/"</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"http://news.baidu.com/"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h3 id="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><a href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法" class="headerlink" title="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"></a>简单的利用JS来判断页面是在手机端还是在PC端打开的方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="regexp">/Android|webOS|iPhone|iPod|BlackBerry/i</span>.test(navigator.userAgent)) &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"https://www.baidu.com/"</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"http://news.baidu.com/"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="在微信浏览器关闭当前页面的方法"><a href="#在微信浏览器关闭当前页面的方法" class="headerlink" title="在微信浏览器关闭当前页面的方法"></a>在微信浏览器关闭当前页面的方法</h3><ul>
 <li>需要在微信公众号签名才能够使用</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WeixinJSBridge.call(&apos;closeWindow&apos;)</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="Vue里引用jQuery"><a href="#Vue里引用jQuery" class="headerlink" title="Vue里引用jQuery"></a>Vue里引用jQuery</h3><p>首先在index.html下引入jQuery的cdn:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;//cdn.staticfile.org/jquery/3.1.1/jquery.min.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure></p>
-<p>如果有eslint的话，在使用$和jQuery选择时会显示没有定义，需要在eslint设置：<br>‘no-undef’: 0<br>然后再methods里就可以正常使用。</p>
-<h3 id="Vue里引用require-js"><a href="#Vue里引用require-js" class="headerlink" title="Vue里引用require.js"></a>Vue里引用require.js</h3><p>首先在index.html下引入require.js的cdn:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;//apps.bdimg.com/libs/require.js/2.1.11/require.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure></p>
-<h3 id="在Vue里生成二维码"><a href="#在Vue里生成二维码" class="headerlink" title="在Vue里生成二维码"></a>在Vue里生成二维码</h3><p>依赖：</p>
-<ul>
-<li><a href="//cdn.staticfile.org/jquery/3.1.1/jquery.min.js">jQuery</a></li>
-<li><a href="//apps.bdimg.com/libs/require.js/2.1.11/require.js">require.js</a></li>
-<li><a href="/src/jquery.qrcode.min.js">jquery.qrcode.min.js</a></li>
-</ul>
-<p>Vue里：<br>将jquery.qrcode.min.js放在静态配置文件夹static中,在Vue文件利用require.js引入：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mounted() &#123;</div><div class="line">    <span class="comment">/* 保证DOM渲染完毕 */</span></div><div class="line">    <span class="keyword">this</span>.$nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        requirejs([<span class="string">"/static/jquery.qrcode.min.js"</span>], () =&gt; &#123;</div><div class="line">            <span class="comment">// 被渲染的容器</span></div><div class="line">            $(<span class="string">'#code'</span>).qrcode(&#123;</div><div class="line">                <span class="attr">text</span>: <span class="string">`http://www.baidu.com`</span>,</div><div class="line">                <span class="attr">width</span>: <span class="number">200</span>,</div><div class="line">                <span class="attr">height</span>: <span class="number">200</span></div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="CSS方面"><a href="#CSS方面" class="headerlink" title="CSS方面"></a>CSS方面</h2><h3 id="移动端图片模糊的问题"><a href="#移动端图片模糊的问题" class="headerlink" title="移动端图片模糊的问题"></a>移动端图片模糊的问题</h3><ul>
+<h3 id="移动端图片模糊的问题"><a href="#移动端图片模糊的问题" class="headerlink" title="移动端图片模糊的问题"></a>移动端图片模糊的问题</h3><ul>
 <li>在移动端需要使用PC端两倍尺寸的图片，然后用background-size:50%;来还原本来的尺寸，这样移动端的图片才会清晰，不模糊</li>
 </ul>
+<a id="more"></a>
+<h3 id="移动端调试工具"><a href="#移动端调试工具" class="headerlink" title="移动端调试工具"></a>移动端调试工具</h3><p>一个移动端真机调试：<a href="https://browsersync.io/" target="_blank" rel="noopener">browser-sync</a></p>
+<p><a href="http://www.cnblogs.com/beidan/p/5777476.html" target="_blank" rel="noopener">使用经验</a></p>
+<h3 id="input-placeholder问题"><a href="#input-placeholder问题" class="headerlink" title="input placeholder问题　"></a>input placeholder问题　</h3><p>在chrome 模拟移动端调试时，显示的非常正常，但是在真机上，placeholder里面的内容明显靠上，非常的不美观</p>
+<p>在国外网站，对这个属性的兼容性处理，那就是不要设计input的line-height或者设置line-height为normal即可，</p>
+<p>试了一下，虽然在谷歌模拟调试里稍微偏上，但是在“真机上”正常垂直居中～</p>
+<h3 id="line－height"><a href="#line－height" class="headerlink" title="line－height"></a>line－height</h3><p>line-height经常用于文字居中，不同手机显示效果不一样。</p>
+<p>有时需要不是用line-height和height相同来进行居中，使用其他方法居中</p>
+<h3 id="实现自定义原生控件的样式"><a href="#实现自定义原生控件的样式" class="headerlink" title="实现自定义原生控件的样式"></a>实现自定义原生控件的样式</h3><p>由于select移动端原生样式很丑，但是原生弹出样式是符合我们设计的原则</p>
+<p>解决方法：将原本select 设置为透明，z-index设置高～再用一个比较好看的样式‘假装’在表面</p>
+<h3 id="移动端使用innerHtml绘制"><a href="#移动端使用innerHtml绘制" class="headerlink" title="移动端使用innerHtml绘制"></a>移动端使用innerHtml绘制</h3><p>使用innerHTML绘制大段，之后想获取HTML的ID节点，事实上是获取不到的，这种问题在动态创建DOM会经常发生</p>
+<p>这也是一个神器的问题，博主自己写了一个移动端轮播插件，在chrome上浏览非常正常，但到了真机上却显示空白，各种百度，最后才发现这么坑的地方…</p>
+<p>解决方案：尝试了很多方法之后，老老实实在页面直接用html结构，如果有更好的方法，也请告诉我。</p>
+<h3 id="300ms延迟"><a href="#300ms延迟" class="headerlink" title="300ms延迟"></a>300ms延迟</h3><p>方案一：禁用缩放<br>在HTML文档头部包含如下meta标签时：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"user-scalable=no"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"initial-scale=1,maximum-scale=1"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p>缺点——就是必须通过完全禁用缩放来达到去掉点击延迟的目的，然而完全禁用缩放并不是我们的初衷，我们只是想禁掉默认的双击缩放行为，这样就不用等待300ms来判断当前操作是否是双击。</p>
+<p>方案二：更改默认的视口宽度</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p>如果设置了上述meta标签，那浏览器就可以认为该网站已经对移动端做过了适配和优化，就无需双击缩放操作了。<br>这个方案相比方案一的好处在于，它没有完全禁用缩放，而只是禁用了浏览器默认的双击缩放行为，但用户仍然可以通过双指缩放操作来缩放页面。</p>
+<p>兼容性问题：<br>对于方案一和方案二，Chrome是率先支持的，Firefox紧随其后，然而令Safari头疼的是，它除了双击缩放还有双击滚动操作，如果采用这种两种方案，那势必连双击滚动也要一起禁用。</p>
+<p>方案三：引入fastclick插件（最佳）</p>
+<h3 id="点击穿透"><a href="#点击穿透" class="headerlink" title="点击穿透"></a>点击穿透</h3><p>问题常见发生场景： 假如页面上有两个元素A和B。B元素在A元素之上。我们在B元素的touchstart事件上注册了一个回调函数，该回调函数的作用是隐藏B元素。我们发现，当我们点击B元素，B元素被隐藏了，随后，A元素触发了click事件。</p>
+<p>这是因为在移动端浏览器，事件执行的顺序是touchstart &gt; touchend &gt; click。</p>
+<p>而click事件有300ms的延迟，当touchstart事件把B元素隐藏之后，隔了300ms，浏览器触发了click事件，但是此时B元素不见了，所以该事件被派发到了A元素身上。如果A元素是一个链接，那此时页面就会意外地跳转。</p>
+<p>解决思路：</p>
+<p>1.不要混用touch和click</p>
+<p>2.消耗掉touch之后的click</p>
+<p>解决方法：</p>
+<p>1.只用touch   把页面内所有click全部换成touch事件（ touchstart 、’touchend’、’tap’），注意：a标签的href也是click，需要换成js的跳转。</p>
+<p>2.改动最小——350ms后再隐藏B元素</p>
+<h3 id="虚拟键盘导致fixed元素错位"><a href="#虚拟键盘导致fixed元素错位" class="headerlink" title="虚拟键盘导致fixed元素错位"></a>虚拟键盘导致fixed元素错位</h3><p>fixed元素一定会伴随虚拟键盘的出现，但是虚拟键盘只是“贴”在了viewport上，表面上不会对dom产生“任何”影响，但是这个时候fixed元素表现却变得怪异起来，会错位。</p>
+<p>解决原理：虚拟键盘弹出时将fixed元素设置为static，虚拟键盘消失时候设置回来。</p>
+<p>解决方案：由于虚拟键盘出现并未抛出事件，而检测scroll或者resize事件，皆会有一定延迟，会出现闪烁现象。则当前获取焦点元素为文本元素，就将fixed元素设置为static。</p>
+<h3 id="移动端手势"><a href="#移动端手势" class="headerlink" title="移动端手势"></a>移动端手势</h3><p>手指放在屏幕上：ontouchstart     手指在屏幕上滑动：ontouchmove      手指离开屏幕：ontouchend</p>
+<p>原理：</p>
+<p>1.在touchstart事件触发时，  记录手指按下的时间startTime，本次滑动的初始位置initialPos。</p>
+<p>2.在touchmove事件触发时， 记录当前位置nowPosition（实时移动元素），滑动距离movePosition（当前位置nowPosition与初始位置initialPos的差值），判断正负数再决定是左还是右移动。</p>
+<p>3.在touchend事件触发时，   记录手指离开屏幕的时间endTime，获得手指在屏幕上停留的时间（endTime－startTime），滑动距离movePosition</p>
+<p>判断是否滑动：<br>如果停留时间少于300ms，则认为是快速滑动，无论滑动距离是多少，都到下一页<br>滑动距离与‘容器’  大小进行比较，若超过‘容器’大小的1/3，则到下一页</p>
+<h3 id="iphone动态生成html元素click失效"><a href="#iphone动态生成html元素click失效" class="headerlink" title="iphone动态生成html元素click失效"></a>iphone动态生成html元素click失效</h3><p>这个也是神奇的坑，找了很久资料，也没有很原理的解释。<br>解决方法：  为绑定click的元素增加css样式   cursor：pointer；</p>
+<h3 id="腾讯移动端字体最佳规范设置"><a href="#腾讯移动端字体最佳规范设置" class="headerlink" title="腾讯移动端字体最佳规范设置"></a>腾讯移动端字体最佳规范设置</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span> &#123;</div><div class="line">  <span class="attribute">font-family</span>: -apple-system, BlinkMacSystemFont, <span class="string">"PingFang SC"</span>, <span class="string">"Helvetica Neue"</span>, STHeiti, <span class="string">"Microsoft Yahei"</span>, Tahoma, Simsun, sans-serif;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="基础交互"><a href="#基础交互" class="headerlink" title="基础交互"></a>基础交互</h3><p>设置全局的CSS样式，避免图中的长按弹出菜单与选中文本的行为</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span>, <span class="selector-tag">img</span> &#123;</div><div class="line">    <span class="attribute">-webkit-touch-callout</span>: none; <span class="comment">/* 禁止长按链接与图片弹出菜单 */</span></div><div class="line">&#125;</div><div class="line"><span class="selector-tag">html</span>, <span class="selector-tag">body</span> &#123;</div><div class="line">    <span class="attribute">-webkit-user-select</span>: none;   <span class="comment">/* 禁止选中文本（如无文本选中需求，此为必选项） */</span></div><div class="line">    <span class="attribute">user-select</span>: none;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="移动性能-腾讯移动web开发规范"><a href="#移动性能-腾讯移动web开发规范" class="headerlink" title="移动性能(腾讯移动web开发规范)"></a>移动性能(腾讯移动web开发规范)</h3><p>要考虑Android低端机与2G网络场景下性能<br>发布前必要检查项</p>
+<ul>
+<li>所有图片必须有进行过压缩</li>
+<li>考虑适度的有损压缩，如转化为80%质量的jpg图片</li>
+<li>考虑把大图切成多张小图，常见在banner图过大的场景</li>
+</ul>
+<p>加载性能优化, 达到打开足够快</p>
+<ul>
+<li>数据离线化，考虑将数据缓存在 localStorage</li>
+<li>初始请求资源数 &lt; 4 注意！</li>
+<li>图片使用CSS Sprites 或 DATAURI</li>
+<li>外链 CSS 中避免 @import 引入</li>
+<li>考虑内嵌小型的静态资源内容</li>
+<li>初始请求资源gzip后总体积 &lt; 50kb</li>
+<li>静态资源(HTML/CSS/JS/IMAGE)是否优化压缩？</li>
+<li>避免打包大型类库</li>
+<li>确保接入层已开启Gzip压缩</li>
+<li>尽量使用CSS3代替图片</li>
+<li>初始首屏之外的图片资源需延迟加载 注意！</li>
+<li>单页面应用(SPA)考虑延迟加载非首屏业务模块</li>
+</ul>
+<p>运行性能优化, 达到操作足够流畅</p>
+<ul>
+<li>避免 iOS 300+ms 点击延时问题 注意！</li>
+<li>缓存 DOM 选择与计算</li>
+<li>避免触发页面重绘的操作</li>
+<li>Debounce连续触发的事件(scroll/resize)，避免高频繁触发执行</li>
+<li>尽可能使用事件代理，避免批量绑定事件</li>
+<li>使用CSS3动画代替JS动画</li>
+<li>避免在低端机上使用大量CSS3渐变阴影效果，可考虑降级效果来提升流畅度</li>
+<li>HTML结构层级保持足够简单，推荐不超过 5 个层级</li>
+<li>尽能少的使用CSS高级选择器与通配选择器</li>
+<li>Keep it simple</li>
+</ul>
+<p>在线性能检测评定工具使用指南</p>
+<p>-访问 <a href="http://developers.google.com/speed/pagespeed/insights/" target="_blank" rel="noopener">Google PageSpeed</a> 在线评定网站<br>-在地址栏输入目标URL地址，点击分析按钮开始检测<br>-按 PageSpeed 分析出的建议进行优化，优先解决红色类别的问题</p>
 
       
     </div>
@@ -408,8 +476,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/21/一劳永逸的搞定flex布局/" rel="prev" title="一劳永逸的搞定flex布局">
-                一劳永逸的搞定flex布局 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/21/Vue记事本分析vuex过程/" rel="prev" title="Vue记事本分析vuex过程">
+                Vue记事本分析vuex过程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -484,7 +552,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -497,7 +565,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -532,7 +600,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS方面"><span class="nav-number">1.</span> <span class="nav-text">JS方面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><span class="nav-number">1.1.</span> <span class="nav-text">简单的利用JS来判断页面是在手机端还是在PC端打开的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在微信浏览器关闭当前页面的方法"><span class="nav-number">1.2.</span> <span class="nav-text">在微信浏览器关闭当前页面的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue里引用jQuery"><span class="nav-number">1.3.</span> <span class="nav-text">Vue里引用jQuery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue里引用require-js"><span class="nav-number">1.4.</span> <span class="nav-text">Vue里引用require.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Vue里生成二维码"><span class="nav-number">1.5.</span> <span class="nav-text">在Vue里生成二维码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS方面"><span class="nav-number">2.</span> <span class="nav-text">CSS方面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#移动端图片模糊的问题"><span class="nav-number">2.1.</span> <span class="nav-text">移动端图片模糊的问题</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><span class="nav-number">1.</span> <span class="nav-text">简单的利用JS来判断页面是在手机端还是在PC端打开的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在微信浏览器关闭当前页面的方法"><span class="nav-number">2.</span> <span class="nav-text">在微信浏览器关闭当前页面的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动端图片模糊的问题"><span class="nav-number">3.</span> <span class="nav-text">移动端图片模糊的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动端调试工具"><span class="nav-number">4.</span> <span class="nav-text">移动端调试工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#input-placeholder问题"><span class="nav-number">5.</span> <span class="nav-text">input placeholder问题　</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#line－height"><span class="nav-number">6.</span> <span class="nav-text">line－height</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现自定义原生控件的样式"><span class="nav-number">7.</span> <span class="nav-text">实现自定义原生控件的样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动端使用innerHtml绘制"><span class="nav-number">8.</span> <span class="nav-text">移动端使用innerHtml绘制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#300ms延迟"><span class="nav-number">9.</span> <span class="nav-text">300ms延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#点击穿透"><span class="nav-number">10.</span> <span class="nav-text">点击穿透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟键盘导致fixed元素错位"><span class="nav-number">11.</span> <span class="nav-text">虚拟键盘导致fixed元素错位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动端手势"><span class="nav-number">12.</span> <span class="nav-text">移动端手势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iphone动态生成html元素click失效"><span class="nav-number">13.</span> <span class="nav-text">iphone动态生成html元素click失效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#腾讯移动端字体最佳规范设置"><span class="nav-number">14.</span> <span class="nav-text">腾讯移动端字体最佳规范设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础交互"><span class="nav-number">15.</span> <span class="nav-text">基础交互</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动性能-腾讯移动web开发规范"><span class="nav-number">16.</span> <span class="nav-text">移动性能(腾讯移动web开发规范)</span></a></li></ol></div>
             
 
           </div>
@@ -555,7 +623,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
