@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="响应式布局，理想状态是，对PC/移动各种终端进行响应。媒体查询的支持程度是IE9+以及其他现代的浏览器，但是IE8在市场当中仍然占据了比较大量的市场份额，使我们不得不进行IE低端浏览器的考虑。那么如何在IE6~8浏览器中兼容响应式布局呢？这里我们需要借助这样一个文件：respond.js。文件下载地址：https://github.com/scottjehl/Respond 关于respond.j">
+<meta name="description" content="只有IE9+才支持CSS媒体查询，IE6-8使用媒体查询需要以下插件： respond.js。文件下载地址：https://github.com/scottjehl/Respond 关于respond.js的使用，有一些需要注意的地方，一旦不注意，在IE6-8中就无法显示出来。 插件原理接下来，需要理解respond.js的实现思路：  第一步，将head中所有外部引入的CSS文件路径取出来存储到">
 <meta name="keywords" content="CSS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用respond.js(IE6-8响应式方案)注意事项">
 <meta property="og:url" content="https://sellenite.github.io/2018/01/09/使用respond-js-IE6-8响应式方案/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
-<meta property="og:description" content="响应式布局，理想状态是，对PC/移动各种终端进行响应。媒体查询的支持程度是IE9+以及其他现代的浏览器，但是IE8在市场当中仍然占据了比较大量的市场份额，使我们不得不进行IE低端浏览器的考虑。那么如何在IE6~8浏览器中兼容响应式布局呢？这里我们需要借助这样一个文件：respond.js。文件下载地址：https://github.com/scottjehl/Respond 关于respond.j">
+<meta property="og:description" content="只有IE9+才支持CSS媒体查询，IE6-8使用媒体查询需要以下插件： respond.js。文件下载地址：https://github.com/scottjehl/Respond 关于respond.js的使用，有一些需要注意的地方，一旦不注意，在IE6-8中就无法显示出来。 插件原理接下来，需要理解respond.js的实现思路：  第一步，将head中所有外部引入的CSS文件路径取出来存储到">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-09T14:30:19.009Z">
+<meta property="og:updated_time" content="2018-01-09T14:39:26.466Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用respond.js(IE6-8响应式方案)注意事项">
-<meta name="twitter:description" content="响应式布局，理想状态是，对PC/移动各种终端进行响应。媒体查询的支持程度是IE9+以及其他现代的浏览器，但是IE8在市场当中仍然占据了比较大量的市场份额，使我们不得不进行IE低端浏览器的考虑。那么如何在IE6~8浏览器中兼容响应式布局呢？这里我们需要借助这样一个文件：respond.js。文件下载地址：https://github.com/scottjehl/Respond 关于respond.j">
+<meta name="twitter:description" content="只有IE9+才支持CSS媒体查询，IE6-8使用媒体查询需要以下插件： respond.js。文件下载地址：https://github.com/scottjehl/Respond 关于respond.js的使用，有一些需要注意的地方，一旦不注意，在IE6-8中就无法显示出来。 插件原理接下来，需要理解respond.js的实现思路：  第一步，将head中所有外部引入的CSS文件路径取出来存储到">
 
 
 
@@ -333,7 +333,8 @@
       
 
       
-        <p>响应式布局，理想状态是，对PC/移动各种终端进行响应。媒体查询的支持程度是IE9+以及其他现代的浏览器，但是IE8在市场当中仍然占据了比较大量的市场份额，使我们不得不进行IE低端浏览器的考虑。那么如何在IE6~8浏览器中兼容响应式布局呢？这里我们需要借助这样一个文件：respond.js。文件下载地址：<a href="http://note.youdao.com/" target="_blank" rel="noopener">https://github.com/scottjehl/Respond</a></p>
+        <p>只有IE9+才支持CSS媒体查询，IE6-8使用媒体查询需要以下插件：</p>
+<p>respond.js。文件下载地址：<a href="http://note.youdao.com/" target="_blank" rel="noopener">https://github.com/scottjehl/Respond</a></p>
 <p>关于respond.js的使用，有一些需要注意的地方，一旦不注意，在IE6-8中就无法显示出来。</p>
 <h4 id="插件原理"><a href="#插件原理" class="headerlink" title="插件原理"></a>插件原理</h4><p>接下来，需要理解respond.js的实现思路：</p>
 <ul>
