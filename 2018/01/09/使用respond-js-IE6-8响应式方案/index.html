@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Vue,Vuex," />
+  <meta name="keywords" content="CSS," />
 
 
 
@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="Vuex demo讲解">
-<meta name="keywords" content="Vue,Vuex">
+<meta name="description" content="响应式布局，理想状态是，对PC/移动各种终端进行响应。媒体查询的支持程度是IE9+以及其他现代的浏览器，但是IE8在市场当中仍然占据了比较大量的市场份额，使我们不得不进行IE低端浏览器的考虑。那么如何在IE6~8浏览器中兼容响应式布局呢？这里我们需要借助这样一个文件：respond.js。文件下载地址：https://github.com/scottjehl/Respond 关于respond.j">
+<meta name="keywords" content="CSS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vuex初始学习小demo">
-<meta property="og:url" content="https://sellenite.github.io/2017/04/26/Vuex初始学习小demo/index.html">
+<meta property="og:title" content="使用respond.js(IE6-8响应式方案)注意事项">
+<meta property="og:url" content="https://sellenite.github.io/2018/01/09/使用respond-js-IE6-8响应式方案/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
-<meta property="og:description" content="Vuex demo讲解">
+<meta property="og:description" content="响应式布局，理想状态是，对PC/移动各种终端进行响应。媒体查询的支持程度是IE9+以及其他现代的浏览器，但是IE8在市场当中仍然占据了比较大量的市场份额，使我们不得不进行IE低端浏览器的考虑。那么如何在IE6~8浏览器中兼容响应式布局呢？这里我们需要借助这样一个文件：respond.js。文件下载地址：https://github.com/scottjehl/Respond 关于respond.j">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-04-26T09:49:40.000Z">
+<meta property="og:updated_time" content="2018-01-09T14:30:19.009Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vuex初始学习小demo">
-<meta name="twitter:description" content="Vuex demo讲解">
+<meta name="twitter:title" content="使用respond.js(IE6-8响应式方案)注意事项">
+<meta name="twitter:description" content="响应式布局，理想状态是，对PC/移动各种终端进行响应。媒体查询的支持程度是IE9+以及其他现代的浏览器，但是IE8在市场当中仍然占据了比较大量的市场份额，使我们不得不进行IE低端浏览器的考虑。那么如何在IE6~8浏览器中兼容响应式布局呢？这里我们需要借助这样一个文件：respond.js。文件下载地址：https://github.com/scottjehl/Respond 关于respond.j">
 
 
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://sellenite.github.io/2017/04/26/Vuex初始学习小demo/"/>
+  <link rel="canonical" href="https://sellenite.github.io/2018/01/09/使用respond-js-IE6-8响应式方案/"/>
 
 
 
 
 
-  <title> Vuex初始学习小demo | yuuhei's Home </title>
+  <title> 使用respond.js(IE6-8响应式方案)注意事项 | yuuhei's Home </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +251,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/04/26/Vuex初始学习小demo/">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/09/使用respond-js-IE6-8响应式方案/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sellenite">
@@ -272,7 +272,7 @@
             
             
               
-                Vuex初始学习小demo
+                使用respond.js(IE6-8响应式方案)注意事项
               
             
           </h1>
@@ -287,8 +287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T17:48:30+08:00">
-                2017-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T22:16:42+08:00">
+                2018-01-09
               </time>
             
 
@@ -306,7 +306,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/04/26/Vuex初始学习小demo/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2018/01/09/使用respond-js-IE6-8响应式方案/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -333,7 +333,48 @@
       
 
       
-        <p><a href="https://juejin.im/post/58fffc52a22b9d0065b8db53?utm_source=gold_browser_extension" target="_blank" rel="noopener">Vuex demo讲解</a></p>
+        <p>响应式布局，理想状态是，对PC/移动各种终端进行响应。媒体查询的支持程度是IE9+以及其他现代的浏览器，但是IE8在市场当中仍然占据了比较大量的市场份额，使我们不得不进行IE低端浏览器的考虑。那么如何在IE6~8浏览器中兼容响应式布局呢？这里我们需要借助这样一个文件：respond.js。文件下载地址：<a href="http://note.youdao.com/" target="_blank" rel="noopener">https://github.com/scottjehl/Respond</a></p>
+<p>关于respond.js的使用，有一些需要注意的地方，一旦不注意，在IE6-8中就无法显示出来。</p>
+<h4 id="插件原理"><a href="#插件原理" class="headerlink" title="插件原理"></a>插件原理</h4><p>接下来，需要理解respond.js的实现思路：</p>
+<ul>
+<li><p>第一步，将head中所有外部引入的CSS文件路径取出来存储到一个数组当中；</p>
+</li>
+<li><p>第二步，遍历数组，并一个个发送AJAX请求<br>；</p>
+</li>
+<li><p>第三步，AJAX回调后，分析response中的media query的min-width和max-width语法（注意，仅仅支持min-width和max-width），分析出viewport变化区间对应相应的css块；</p>
+</li>
+<li><p>第四步，页面初始化时和window.resize时，根据当前viewport使用相应的css块。</p>
+</li>
+</ul>
+<h4 id="核心结论"><a href="#核心结论" class="headerlink" title="核心结论"></a>核心结论</h4><p>那么此时，就可以根据基本的实现思路，得到一些书写代码时要注意的地方：</p>
+<ul>
+<li><p>需要启动本地服务器（localhost），不能使用普通本地的url地址（file://开头）；</p>
+</li>
+<li><p>需要外部引入CSS文件，将CSS样式书写在style中是无效的；</p>
+</li>
+<li><p>由于respond插件是查找CSS文件，再进行处理，所以respond文件一定要放置在CSS文件的后面</p>
+</li>
+<li><p>另外，虽然把respond放置在head里还是在body后面都能够实现，但是建议放置在head中（具体原因在下面的文档提示中有提到）</p>
+</li>
+<li><p>可以使用js条件加载respond.js或css</p>
+</li>
+<li><p>最好不要为CSS设置utf-8的编码，使用默认（原因详见下面的文档提示部分）</p>
+</li>
+</ul>
+<h4 id="文档提示"><a href="#文档提示" class="headerlink" title="文档提示"></a>文档提示</h4><p>在官方文档当中的一些提示：</p>
+<p>1、越早的引入respond.js文件，也就越可能避免IE下出现的闪屏。</p>
+<p>2、不支持嵌套的媒体查询</p>
+<p>3、只支持CSS with screen and min/max-width media queries</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">480px</span>)&#123;</div><div class="line">    <span class="comment">/** ...styles for 480px and up go here **/</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">media</span> (min-width: <span class="number">3200px</span>) and (max-width: <span class="number">720px</span>)&#123;</div><div class="line">    <span class="comment">/** ...styles for 480px and up go here **/</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>4、utf-8的字符编码对respond.js文件的运行有影响。<br>官方API原文：if CSS files are encoded in UTF-8 with Byte-Order-Mark, they will not work with Respond.js in IE7 or IE8.</p>
+<p>基本含义就是：utf-8格式的CSS文件字符编码会对插件造成影响。</p>
+<p>但是在我使用IE6-8进行测试的时候，都能够正常显示（无论是在css文件中增加charset设置还是在link标签中增加charset设置）。因此，并不是太清楚这个位置bug的含义。</p>
+<p>4、跨域可能会出现闪屏（还没有测试，具体情况不详）</p>
+<blockquote>
+<p>其他的支持响应式布局的插件-css3-mediaqueries-js</p>
+</blockquote>
+<p>css3-mediaqueries-js官方文档和demo都没有，相对于respond.js，css3-mediaqueries-js支持几乎所有的media query的语法。</p>
+<p>但是会出现闪屏。并不是很推荐使用，虽然能够支持全部的mediaqueries，但min-width和max-width其实就可以满足我们对响应式布局的需要。</p>
 
       
     </div>
@@ -363,9 +404,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Vue/" rel="tag"># Vue</a>
-          
-            <a href="/tags/Vuex/" rel="tag"># Vuex</a>
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
           
         </div>
       
@@ -378,8 +417,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/26/JS关闭当前窗口/" rel="next" title="JS关闭当前窗口">
-                <i class="fa fa-chevron-left"></i> JS关闭当前窗口
+              <a href="/2018/01/09/JS无限单列滚动原理/" rel="next" title="JS无限单列滚动原理">
+                <i class="fa fa-chevron-left"></i> JS无限单列滚动原理
               </a>
             
           </div>
@@ -387,10 +426,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/30/使用vue和axios从第三方API获取数据/" rel="prev" title="使用vue和axios从第三方API获取数据">
-                使用vue和axios从第三方API获取数据 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -439,8 +474,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://puu.sh/uoJbK/033c9ae781.jpg"
@@ -504,6 +548,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#插件原理"><span class="nav-number">1.</span> <span class="nav-text">插件原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#核心结论"><span class="nav-number">2.</span> <span class="nav-text">核心结论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文档提示"><span class="nav-number">3.</span> <span class="nav-text">文档提示</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
