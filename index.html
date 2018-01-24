@@ -248,6 +248,158 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/24/关于浏览器重排和重绘和一个重绘案例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/01/24/关于浏览器重排和重绘和一个重绘案例/" itemprop="url">
+                  关于浏览器重排和重绘和一个重绘案例
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-24T19:27:50+08:00">
+                2018-01-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="什么是重排和重绘"><a href="#什么是重排和重绘" class="headerlink" title="什么是重排和重绘"></a>什么是重排和重绘</h3><p>浏览器下载完页面中的所有组件——HTML标记、JavaScript、CSS、图片之后会解析生成两个内部数据结构——<code>DOM树</code>和<code>渲染树</code>。</p>
+<p>DOM树表示页面结构，渲染树表示DOM节点如何显示。DOM树中的每一个需要显示的节点在渲染树种至少存在一个对应的节点（隐藏的DOM元素disply值为none 在渲染树中没有对应的节点）。渲染树中的节点被称为“帧”或“盒”,符合CSS模型的定义，理解页面元素为一个具有填充，边距，边框和位置的盒子。一旦DOM和渲染树构建完成，浏览器就开始显示（绘制）页面元素。</p>
+<p>当DOM的变化影响了元素的几何属性（宽或高），浏览器需要重新计算元素的几何属性，同样其他元素的几何属性和位置也会因此受到影响。浏览器会使渲染树中受到影响的部分失效，并重新构造渲染树。<strong>这个过程称为重排</strong>。完成重排后，浏览器会重新绘制受影响的部分到屏幕，<strong>该过程称为重绘</strong>。由于浏览器的流布局，对渲染树的计算通常只需要遍历一次就可以完成。但table及其内部元素除外，它可能需要多次计算才能确定好其在渲染树中节点的属性，通常要花3倍于同等元素的时间。这也是为什么我们要避免使用table做布局的一个原因。</p>
+<p>并不是所有的DOM变化都会影响几何属性，比如改变一个元素的背景色并不会影响元素的宽和高，这种情况下只会发生重绘。</p>
+<h3 id="重排和重绘的代价究竟多大"><a href="#重排和重绘的代价究竟多大" class="headerlink" title="重排和重绘的代价究竟多大"></a>重排和重绘的代价究竟多大</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> times = <span class="number">15000</span>;</div><div class="line"></div><div class="line"><span class="comment">// code1 每次过桥+重排+重绘</span></div><div class="line"><span class="built_in">console</span>.time(<span class="number">1</span>);</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; times; i++) &#123;</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'myDiv1'</span>).innerHTML += <span class="string">'a'</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.timeEnd(<span class="number">1</span>);</div><div class="line"></div><div class="line"><span class="comment">// code2 只过桥</span></div><div class="line"><span class="built_in">console</span>.time(<span class="number">2</span>);</div><div class="line"><span class="keyword">var</span> str = <span class="string">''</span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; times; i++) &#123;</div><div class="line">  <span class="keyword">var</span> tmp = <span class="built_in">document</span>.getElementById(<span class="string">'myDiv2'</span>).innerHTML;</div><div class="line">  str += <span class="string">'a'</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">'myDiv2'</span>).innerHTML = str;</div><div class="line"><span class="built_in">console</span>.timeEnd(<span class="number">2</span>);</div><div class="line"></div><div class="line"><span class="comment">// code3</span></div><div class="line"><span class="built_in">console</span>.time(<span class="number">3</span>);</div><div class="line"><span class="keyword">var</span> _str = <span class="string">''</span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; times; i++) &#123;</div><div class="line">  _str += <span class="string">'a'</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">'myDiv3'</span>).innerHTML = _str;</div><div class="line"><span class="built_in">console</span>.timeEnd(<span class="number">3</span>);</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 1: 2874.619ms</span></div><div class="line"><span class="comment">// 2: 11.154ms</span></div><div class="line"><span class="comment">// 3: 1.282ms</span></div></pre></td></tr></table></figure>
+<h3 id="重排何时发生"><a href="#重排何时发生" class="headerlink" title="重排何时发生"></a>重排何时发生</h3><p>很显然，每次重排，必然会导致重绘，那么，重排会在哪些情况下发生：</p>
+<ul>
+<li>添加或者删除可见的DOM元素</li>
+<li>元素位置改变</li>
+<li>元素尺寸改变</li>
+<li>元素内容改变（例如：一个文本被另一个不同尺寸的图片替代）</li>
+<li>页面渲染初始化（这个无法避免）</li>
+<li>浏览器窗口尺寸改变</li>
+</ul>
+<p>这些都是显而易见的，或许你已经有过这样的体会，不间断地改变浏览器窗口大小，导致UI反应迟钝（某些低版本IE下甚至直接挂掉），现在你可能恍然大悟，没错，正是一次次的重排重绘导致的！</p>
+<h3 id="渲染树变化的排队和刷新"><a href="#渲染树变化的排队和刷新" class="headerlink" title="渲染树变化的排队和刷新"></a>渲染树变化的排队和刷新</h3><p>思考下面代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ele = <span class="built_in">document</span>.getElementById(<span class="string">'myDiv'</span>);</div><div class="line">ele.style.borderLeft = <span class="string">'1px'</span>;</div><div class="line">ele.style.borderRight = <span class="string">'2px'</span>;</div><div class="line">ele.style.padding = <span class="string">'5px'</span>;</div></pre></td></tr></table></figure>
+<p>乍一想，元素的样式改变了三次，每次改变都会引起重排和重绘，所以总共有三次重排重绘过程，但是浏览器并不会这么笨，它会把三次修改“保存”起来（大多数浏览器通过队列化修改并批量执行来优化重排过程），一次完成！但是，有些时候你可能会（经常是不知不觉）强制刷新队列并要求计划任务立即执行。获取布局信息的操作会导致队列刷新，比如：</p>
+<ul>
+<li>offsetTop, offsetLeft, offsetWidth, offsetHeight</li>
+<li>scrollTop, scrollLeft, scrollWidth, scrollHeight</li>
+<li>clientTop, clientLeft, clientWidth, clientHeight</li>
+<li>getComputedStyle() (currentStyle in IE)</li>
+</ul>
+<p>将上面的代码稍加修改：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ele = <span class="built_in">document</span>.getElementById(<span class="string">'myDiv'</span>);</div><div class="line">ele.style.borderLeft = <span class="string">'1px'</span>;</div><div class="line">ele.style.borderRight = <span class="string">'2px'</span>;</div><div class="line"></div><div class="line"><span class="comment">// here use offsetHeight</span></div><div class="line"><span class="comment">// ...</span></div><div class="line">ele.style.padding = <span class="string">'5px'</span>;</div></pre></td></tr></table></figure>
+<p>因为offsetHeight属性需要返回最新的布局信息，因此浏览器不得不执行渲染队列中的“待处理变化”并触发重排以返回正确的值（即使队列中改变的样式属性和想要获取的属性值并没有什么关系），所以上面的代码，前两次的操作会缓存在渲染队列中待处理，但是一旦offsetHeight属性被请求了，队列就会立即执行，所以总共有两次重排与重绘。所以 <strong>尽量不要在布局信息改变时做查询</strong> 。</p>
+<h3 id="最小化重排和重绘"><a href="#最小化重排和重绘" class="headerlink" title="最小化重排和重绘"></a>最小化重排和重绘</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/24/关于浏览器重排和重绘和一个重绘案例/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/15/关于ES6的几个新的关于-Prototype-的几个API/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1448,155 +1600,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/10/22/现代JavaScript速查/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/10/22/现代JavaScript速查/" itemprop="url">
-                  现代JavaScript速查
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T11:41:49+08:00">
-                2017-10-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="现代-JavaScript-速查"><a href="#现代-JavaScript-速查" class="headerlink" title="现代 JavaScript 速查"></a>现代 JavaScript 速查</h1><p><a id="modern-javascript-cheatsheet"></a></p>
-<p><img src="https://i.imgur.com/aexPxMb.png" alt="Modern JavaScript cheatsheet"></p>
-<p><small>文档翻译自: <a href="https://github.com/mbeaudru/modern-js-cheatsheet" target="_blank" rel="noopener">Modern JavaScript Cheatsheet</a></small></p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="初心"><a href="#初心" class="headerlink" title="初心"></a>初心</h3><p>本文档是一份 JavaScript 速查表，你在现代项目中会经常遇到，以及最新的代码示例。</p>
-<p>本指南不是为了教你从头开始学习 JavaScript ，而是为了帮助那些可能不熟悉当前代码库（例如 React）所用到 JavaScript 概念的开发人员。</p>
-<p>此外，我有时还会提供一些个人的建议，这些建议可能是有争议的，但我也会注意到，当我这么做的时候，这是我个人的建议。</p>
-<blockquote>
-<p><strong>注意：</strong> 这里介绍的大多数概念来自于最新的 JavaScript 语言（ ES2015，通常称为 ES6）。你可以在 <a href="http://es6-features.org" target="_blank" rel="noopener">这里</a> 找到新增的特性，网站做得很棒。</p>
-</blockquote>
-<h3 id="补充资源"><a href="#补充资源" class="headerlink" title="补充资源"></a>补充资源</h3><p>当您努力了解一个新概念时，我建议你在以下资源网站上寻找相关的答案：</p>
-<ul>
-<li><a href="https://developer.mozilla.org/fr/search?q=" target="_blank" rel="noopener">MDN (Mozilla Developer Network)</a></li>
-<li><a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="noopener">你所不知道的JS (书)</a></li>
-<li><a href="http://es6-features.org" target="_blank" rel="noopener">ES6 新特性和例子</a></li>
-<li><a href="http://wesbos.com/category/es6/" target="_blank" rel="noopener">WesBos 的博客 (ES6)</a></li>
-<li><a href="https://www.reddit.com/r/javascript/" target="_blank" rel="noopener">Reddit (JavaScript)</a></li>
-<li>用 <a href="https://www.google.com/" target="_blank" rel="noopener">Google</a> 来查找特定的博客和资源</li>
-<li><a href="https://stackoverflow.com/questions/tagged/javascript" target="_blank" rel="noopener">StackOverflow</a></li>
-</ul>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/22/现代JavaScript速查/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1641,7 +1649,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
