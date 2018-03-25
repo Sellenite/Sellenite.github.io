@@ -324,8 +324,7 @@
 
       
         
-          
-            <blockquote>
+          <blockquote>
 <p>本文主要记录工作时使用Vue时的问题或经验</p>
 </blockquote>
 <h4 id="关于使用v-model传值给组件的语法糖"><a href="#关于使用v-model传值给组件的语法糖" class="headerlink" title="关于使用v-model传值给组件的语法糖"></a>关于使用v-model传值给组件的语法糖</h4><p>template:</p>
@@ -343,8 +342,20 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">v-button</span> @<span class="attr">click.native</span>=<span class="string">"clickHandler"</span> @<span class="attr">vclick</span>=<span class="string">"vClickHandler"</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">v-button</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>那么两个事件都会执行，<code>.native</code> 修饰符就是用来注册元素的原生事件而不是组件自定义事件的</p>
 <p>意思就是当你给一个vue组件绑定事件时候，要加上<code>.native</code>，如果是普通的html元素就不需要。</p>
-
-          
+<h4 id="使用v-if、v-else-if、v-else处理显示"><a href="#使用v-if、v-else-if、v-else处理显示" class="headerlink" title="使用v-if、v-else-if、v-else处理显示"></a>使用v-if、v-else-if、v-else处理显示</h4><p>注意v-else-if和v-else前一兄弟元素必须有 v-if 或 v-else-if，v-else。链式调用可以更好的处理template显示逻辑</p>
+<h4 id="class条件判断绑定问题"><a href="#class条件判断绑定问题" class="headerlink" title="class条件判断绑定问题"></a>class条件判断绑定问题</h4><p><code>:class={ active: isActive }</code>的时候左边可以不加引号，也可以加上active这个class，右边是props或data或computed的数据</p>
+<h4 id="在template使用引用静态文件（img等）"><a href="#在template使用引用静态文件（img等）" class="headerlink" title="在template使用引用静态文件（img等）"></a>在template使用引用静态文件（img等）</h4><p>vue，webpack中，template中可以使用~+alias配置名称，js里可以使用import和require引用静态图片地址</p>
+<h4 id="父子组件和非父子组件的传值问题"><a href="#父子组件和非父子组件的传值问题" class="headerlink" title="父子组件和非父子组件的传值问题"></a>父子组件和非父子组件的传值问题</h4><p>父子组件：使用@和$emit传值;\<br>非父子组件：eventBus或vuex。</p>
+<h4 id="filter使用技巧"><a href="#filter使用技巧" class="headerlink" title="filter使用技巧"></a>filter使用技巧</h4><p>filter可以的到第二，第三，以此类推个参数，在使用filter的时候使用filterA(arg1, agr2, …)传入，第一个参数就是值本身</p>
+<h4 id="vux如何通过v-model显示组件的问题"><a href="#vux如何通过v-model显示组件的问题" class="headerlink" title="vux如何通过v-model显示组件的问题"></a>vux如何通过v-model显示组件的问题</h4><p>vux是通过v-model传入value作为props，然后value用v-if控制组件的显示与否</p>
+<h4 id="对象watch问题"><a href="#对象watch问题" class="headerlink" title="对象watch问题"></a>对象watch问题</h4><p>有三种方法，推荐第二、三种方法，可以拿到oldValue，直接检测对象是拿不到oldValue的：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/19/Vue工作经验总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
