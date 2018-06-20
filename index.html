@@ -248,6 +248,148 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/06/20/JS工作经验总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/06/20/JS工作经验总结/" itemprop="url">
+                  JS工作经验总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T22:47:49+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>本文主要记录工作时JS问题或经验</p>
+</blockquote>
+<h4 id="html里自定义属性的赋值和取出问题"><a href="#html里自定义属性的赋值和取出问题" class="headerlink" title="html里自定义属性的赋值和取出问题"></a>html里自定义属性的赋值和取出问题</h4><p>给html元素写入<code>data-type</code>这样的格式，可以使用<code>el.dataset.type</code>进行相对应的访问；\<br>在不兼容dataset的情况下，可以使用更原始的<code>el.getAttribute(name)</code>进行取值，使用<code>el.setAttribute(name, value)</code>进行赋值</p>
+<h4 id="document-activeElement的应用（焦点问题）"><a href="#document-activeElement的应用（焦点问题）" class="headerlink" title="document.activeElement的应用（焦点问题）"></a>document.activeElement的应用（焦点问题）</h4><p><code>document.activeElement.tagName</code>可获得当前获得焦点的元素，<code>document.activeElement.blur()</code>使当前获得焦点的元素失焦</p>
+<h4 id="关闭webApp中的调起的系统键盘"><a href="#关闭webApp中的调起的系统键盘" class="headerlink" title="关闭webApp中的调起的系统键盘"></a>关闭webApp中的调起的系统键盘</h4><p><code>window.nativeKeyboradCancel()</code>，在webApp里取消调起系统的键盘，如果有的话</p>
+<h4 id="循环遍历父元素的方法"><a href="#循环遍历父元素的方法" class="headerlink" title="循环遍历父元素的方法"></a>循环遍历父元素的方法</h4><p>以下可以使用while一直遍历父元素：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTagName</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> parent = ele.parentElement;</div><div class="line">    <span class="keyword">var</span> string = <span class="string">''</span>;</div><div class="line">    <span class="keyword">while</span> (parent !== <span class="literal">null</span>) &#123;</div><div class="line">        string += parent.tagName + <span class="string">' '</span>;</div><div class="line">        parent = parent.parentElement；</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> string;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="CSS伪元素问题"><a href="#CSS伪元素问题" class="headerlink" title="CSS伪元素问题"></a>CSS伪元素问题</h4><p><code>:empty</code> 选择器匹配没有子元素（包括文本节点）的每个元素\<br>配合<code>before</code>和<code>after</code>伪元素，可以使用<code>content: attr(placeholder)</code>，将HTML里placeholder的属性写进伪元素里，属性随你定</p>
+<h4 id="window-pageYOffset和window-scrollY"><a href="#window-pageYOffset和window-scrollY" class="headerlink" title="window.pageYOffset和window.scrollY"></a>window.pageYOffset和window.scrollY</h4><p><code>window.pageYOffset</code>是<code>window.scrollY</code>的别名，都是同一种功能</p>
+<h4 id="input元素里的属性问题"><a href="#input元素里的属性问题" class="headerlink" title="input元素里的属性问题"></a>input元素里的属性问题</h4><p>input框的maxlength属性可以限制输入长度，但只有当type为text的时候才可以控制，当type为number等其他时长度不受控制时，还是需要js来控制长度。\<br>如<code>&lt;input type=&quot;number&quot; oninput=&quot;if(value.length&gt;5)value=value.slice(0,5)&quot; /&gt;</code>，password类型可以限制长度</p>
+<h4 id="onchange和oninput的不同"><a href="#onchange和oninput的不同" class="headerlink" title="onchange和oninput的不同"></a>onchange和oninput的不同</h4><p>有别于onchange事件，oninput 事件在元素值发生变化是立即触发， onchange 在元素失去焦点时触发。另外一点不同是 onchange 事件也可以作用于 <code>&lt;keygen&gt;</code> 和 <code>&lt;select&gt;</code> 元素</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"type"</span> <span class="attr">onchange</span>=<span class="string">"show_sub(this.options[this.options.selectedIndex].value)"</span>&gt;</span>    </div><div class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"0"</span>&gt;</span>请选择主类别<span class="tag">&lt;/<span class="name">option</span>&gt;</span>    </div><div class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"1"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">option</span>&gt;</span>    </div><div class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"2"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">option</span>&gt;</span>    </div><div class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="string-charCodeAt和string-charAt的不同"><a href="#string-charCodeAt和string-charAt的不同" class="headerlink" title="string.charCodeAt和string.charAt的不同"></a>string.charCodeAt和string.charAt的不同</h4><p>string.charCodeAt(index) 方法可返回指定位置的字符的 Unicode 编码。这个返回值是 0 - 65535 之间的整数。方法 string.charCodeAt() 与 string.charAt() 方法执行的操作相似，只不过前者返回的是位于指定位置的字符的编码，而后者返回的是字符子串。charCodeAt可以使用该方法配合A-Z进行升降序排序等</p>
+<h4 id="better-scroll使用问题（监听滚动）"><a href="#better-scroll使用问题（监听滚动）" class="headerlink" title="better-scroll使用问题（监听滚动）"></a>better-scroll使用问题（监听滚动）</h4><p>需要根据文档定义传入<code>probeType=&quot;3</code>，用于better-scroll监听swip等操作的scrollY，需要传入这个再选择:listen-scroll，即better-scroll的<code>this.scroll.on(&#39;scroll&#39;, (pos) =&gt; {})</code>进行监听返回的scrollY</p>
+<h4 id="async和await的使用方法"><a href="#async和await的使用方法" class="headerlink" title="async和await的使用方法"></a>async和await的使用方法</h4><p>async和await，await必定是写在async函数里：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">testSync</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</div><div class="line">         setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">             resolve(<span class="string">"async await test..."</span>);</div><div class="line">          &#125;, <span class="number">1000</span>);</div><div class="line">     &#125;);</div><div class="line">     <span class="built_in">console</span>.log(response);</div><div class="line">&#125;</div><div class="line">testSync(); <span class="comment">// async await test...</span></div></pre></td></tr></table></figure>
+<p>声明式版：</p>
+<p><code>const testSync = async() =&gt; {};</code></p>
+<h4 id="Promise-all使用方法及注意事项"><a href="#Promise-all使用方法及注意事项" class="headerlink" title="Promise.all使用方法及注意事项"></a>Promise.all使用方法及注意事项</h4><p>Promise.all是在会处理完then中的函数后（如果有执行后续then），再统一执行的，如果有返回数据则推进Promise.all的then中的res数组中，且返回顺序是确定的，传入all前的数组的顺序与后续返回的res的数组顺序是一致的；没有返回则里面推进undefined：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Promise1</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            resolve(<span class="string">'success'</span>);</div><div class="line">        &#125;, <span class="number">3000</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Promise2</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            resolve(<span class="string">'success 2'</span>);</div><div class="line">        &#125;, <span class="number">5000</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> p1 = Promise1</div><div class="line"></div><div class="line"><span class="keyword">var</span> p2 = Promise2</div><div class="line"></div><div class="line"><span class="keyword">var</span> a = p1().then(<span class="function"><span class="params">res</span> =&gt;</span> &#123; <span class="keyword">return</span> res &#125;)</div><div class="line"></div><div class="line"><span class="keyword">var</span> b = p2().then(<span class="function"><span class="params">res</span> =&gt;</span> &#123; <span class="keyword">return</span> res &#125;)</div><div class="line"></div><div class="line"><span class="built_in">Promise</span>.all([a, b]).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</div><div class="line">	<span class="comment">// 5秒之后打印 ["success", "success 2"]</span></div><div class="line">    <span class="built_in">console</span>.log(res);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>没有后续then版，直接resolve：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        resolve(<span class="string">'aaa'</span>);</div><div class="line">    &#125;, <span class="number">3000</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        resolve(<span class="string">'bbb'</span>);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> p = <span class="built_in">Promise</span>.all([a, b]);</div><div class="line"></div><div class="line">p.then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</div><div class="line">	<span class="comment">// 3秒后返回结果：['aaa','bbb']，数组的内容并不是谁先执行完谁在前面，而是按照之前传入的顺序</span></div><div class="line">    <span class="built_in">console</span>.log(res);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/03/19/Vue工作经验总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -344,7 +486,7 @@
 <p>意思就是当你给一个vue组件绑定事件时候，要加上<code>.native</code>，如果是普通的html元素就不需要。</p>
 <h4 id="使用v-if、v-else-if、v-else处理显示"><a href="#使用v-if、v-else-if、v-else处理显示" class="headerlink" title="使用v-if、v-else-if、v-else处理显示"></a>使用v-if、v-else-if、v-else处理显示</h4><p>注意v-else-if和v-else前一兄弟元素必须有 v-if 或 v-else-if，v-else。链式调用可以更好的处理template显示逻辑</p>
 <h4 id="class条件判断绑定问题"><a href="#class条件判断绑定问题" class="headerlink" title="class条件判断绑定问题"></a>class条件判断绑定问题</h4><p><code>:class={ active: isActive }</code>的时候左边可以不加引号，也可以加上active这个class，右边是props或data或computed的数据</p>
-<h4 id="在template使用引用静态文件（img等）"><a href="#在template使用引用静态文件（img等）" class="headerlink" title="在template使用引用静态文件（img等）"></a>在template使用引用静态文件（img等）</h4><p>vue，webpack中，template中可以使用~+alias配置名称，js里可以使用import和require引用静态图片地址</p>
+<h4 id="在template使用引用静态文件（img等）"><a href="#在template使用引用静态文件（img等）" class="headerlink" title="在template使用引用静态文件（img等）"></a>在template使用引用静态文件（img等）</h4><p>vue，webpack中，template中可以使用<code>~+alias</code>配置名称，js里可以使用import和require引用静态图片地址</p>
 <h4 id="父子组件和非父子组件的传值问题"><a href="#父子组件和非父子组件的传值问题" class="headerlink" title="父子组件和非父子组件的传值问题"></a>父子组件和非父子组件的传值问题</h4><p>父子组件：使用@和$emit传值;\<br>非父子组件：eventBus或vuex。</p>
 <h4 id="filter使用技巧"><a href="#filter使用技巧" class="headerlink" title="filter使用技巧"></a>filter使用技巧</h4><p>filter可以的到第二，第三，以此类推个参数，在使用filter的时候使用filterA(arg1, agr2, …)传入，第一个参数就是值本身</p>
 <h4 id="vux如何通过v-model显示组件的问题"><a href="#vux如何通过v-model显示组件的问题" class="headerlink" title="vux如何通过v-model显示组件的问题"></a>vux如何通过v-model显示组件的问题</h4><p>vux是通过v-model传入value作为props，然后value用v-if控制组件的显示与否</p>
@@ -1520,130 +1662,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/09/JS无限单列滚动原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/01/09/JS无限单列滚动原理/" itemprop="url">
-                  JS无限单列滚动原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T22:05:54+08:00">
-                2018-01-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>借助jQuery</p>
-<p>原理就是使用marginTop做负值动画，向上移动一个元素高度的值，当结束动画的时候将marginTio置为0，并将元素appendTo父元素，即从最高变成最底，即可无限单列循环向上</p>
-<p>原理：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">initNewsScroll: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">/* 消息轮播 */</span></div><div class="line">    <span class="keyword">var</span> $ul = $(<span class="string">'.news-wrapper'</span>).find(<span class="string">'ul'</span>)</div><div class="line">    <span class="keyword">var</span> timer = <span class="literal">null</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">intervalInit</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        timer = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> itemHeight = $ul.find(<span class="string">'li'</span>).eq(<span class="number">0</span>).height()</div><div class="line">            $ul.stop().animate(&#123;</div><div class="line">                <span class="attr">marginTop</span>: -itemHeight</div><div class="line">            &#125;, <span class="number">500</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                $ul.css(&#123;</div><div class="line">                    <span class="attr">marginTop</span>: <span class="number">0</span></div><div class="line">                &#125;).find(<span class="string">'li:first'</span>).appendTo($ul)</div><div class="line">            &#125;)</div><div class="line">        &#125;, <span class="number">5000</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    intervalInit()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1693,7 +1711,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

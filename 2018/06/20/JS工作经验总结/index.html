@@ -1,0 +1,717 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文主要记录工作时JS问题或经验  html里自定义属性的赋值和取出问题给html元素写入data-type这样的格式，可以使用el.dataset.type进行相对应的访问；\在不兼容dataset的情况下，可以使用更原始的el.getAttribute(name)进行取值，使用el.setAttribute(name, value)进行赋值 document.activeElement的应用">
+<meta name="keywords" content="JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS工作经验总结">
+<meta property="og:url" content="https://sellenite.github.io/2018/06/20/JS工作经验总结/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="本文主要记录工作时JS问题或经验  html里自定义属性的赋值和取出问题给html元素写入data-type这样的格式，可以使用el.dataset.type进行相对应的访问；\在不兼容dataset的情况下，可以使用更原始的el.getAttribute(name)进行取值，使用el.setAttribute(name, value)进行赋值 document.activeElement的应用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-20T15:16:21.513Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS工作经验总结">
+<meta name="twitter:description" content="本文主要记录工作时JS问题或经验  html里自定义属性的赋值和取出问题给html元素写入data-type这样的格式，可以使用el.dataset.type进行相对应的访问；\在不兼容dataset的情况下，可以使用更原始的el.getAttribute(name)进行取值，使用el.setAttribute(name, value)进行赋值 document.activeElement的应用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2018/06/20/JS工作经验总结/"/>
+
+
+
+
+
+  <title> JS工作经验总结 | yuuhei's Home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/06/20/JS工作经验总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JS工作经验总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T22:47:49+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2018/06/20/JS工作经验总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文主要记录工作时JS问题或经验</p>
+</blockquote>
+<h4 id="html里自定义属性的赋值和取出问题"><a href="#html里自定义属性的赋值和取出问题" class="headerlink" title="html里自定义属性的赋值和取出问题"></a>html里自定义属性的赋值和取出问题</h4><p>给html元素写入<code>data-type</code>这样的格式，可以使用<code>el.dataset.type</code>进行相对应的访问；\<br>在不兼容dataset的情况下，可以使用更原始的<code>el.getAttribute(name)</code>进行取值，使用<code>el.setAttribute(name, value)</code>进行赋值</p>
+<h4 id="document-activeElement的应用（焦点问题）"><a href="#document-activeElement的应用（焦点问题）" class="headerlink" title="document.activeElement的应用（焦点问题）"></a>document.activeElement的应用（焦点问题）</h4><p><code>document.activeElement.tagName</code>可获得当前获得焦点的元素，<code>document.activeElement.blur()</code>使当前获得焦点的元素失焦</p>
+<h4 id="关闭webApp中的调起的系统键盘"><a href="#关闭webApp中的调起的系统键盘" class="headerlink" title="关闭webApp中的调起的系统键盘"></a>关闭webApp中的调起的系统键盘</h4><p><code>window.nativeKeyboradCancel()</code>，在webApp里取消调起系统的键盘，如果有的话</p>
+<h4 id="循环遍历父元素的方法"><a href="#循环遍历父元素的方法" class="headerlink" title="循环遍历父元素的方法"></a>循环遍历父元素的方法</h4><p>以下可以使用while一直遍历父元素：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTagName</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> parent = ele.parentElement;</div><div class="line">    <span class="keyword">var</span> string = <span class="string">''</span>;</div><div class="line">    <span class="keyword">while</span> (parent !== <span class="literal">null</span>) &#123;</div><div class="line">        string += parent.tagName + <span class="string">' '</span>;</div><div class="line">        parent = parent.parentElement；</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> string;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="CSS伪元素问题"><a href="#CSS伪元素问题" class="headerlink" title="CSS伪元素问题"></a>CSS伪元素问题</h4><p><code>:empty</code> 选择器匹配没有子元素（包括文本节点）的每个元素\<br>配合<code>before</code>和<code>after</code>伪元素，可以使用<code>content: attr(placeholder)</code>，将HTML里placeholder的属性写进伪元素里，属性随你定</p>
+<h4 id="window-pageYOffset和window-scrollY"><a href="#window-pageYOffset和window-scrollY" class="headerlink" title="window.pageYOffset和window.scrollY"></a>window.pageYOffset和window.scrollY</h4><p><code>window.pageYOffset</code>是<code>window.scrollY</code>的别名，都是同一种功能</p>
+<h4 id="input元素里的属性问题"><a href="#input元素里的属性问题" class="headerlink" title="input元素里的属性问题"></a>input元素里的属性问题</h4><p>input框的maxlength属性可以限制输入长度，但只有当type为text的时候才可以控制，当type为number等其他时长度不受控制时，还是需要js来控制长度。\<br>如<code>&lt;input type=&quot;number&quot; oninput=&quot;if(value.length&gt;5)value=value.slice(0,5)&quot; /&gt;</code>，password类型可以限制长度</p>
+<h4 id="onchange和oninput的不同"><a href="#onchange和oninput的不同" class="headerlink" title="onchange和oninput的不同"></a>onchange和oninput的不同</h4><p>有别于onchange事件，oninput 事件在元素值发生变化是立即触发， onchange 在元素失去焦点时触发。另外一点不同是 onchange 事件也可以作用于 <code>&lt;keygen&gt;</code> 和 <code>&lt;select&gt;</code> 元素</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"type"</span> <span class="attr">onchange</span>=<span class="string">"show_sub(this.options[this.options.selectedIndex].value)"</span>&gt;</span>    </div><div class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"0"</span>&gt;</span>请选择主类别<span class="tag">&lt;/<span class="name">option</span>&gt;</span>    </div><div class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"1"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">option</span>&gt;</span>    </div><div class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"2"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">option</span>&gt;</span>    </div><div class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="string-charCodeAt和string-charAt的不同"><a href="#string-charCodeAt和string-charAt的不同" class="headerlink" title="string.charCodeAt和string.charAt的不同"></a>string.charCodeAt和string.charAt的不同</h4><p>string.charCodeAt(index) 方法可返回指定位置的字符的 Unicode 编码。这个返回值是 0 - 65535 之间的整数。方法 string.charCodeAt() 与 string.charAt() 方法执行的操作相似，只不过前者返回的是位于指定位置的字符的编码，而后者返回的是字符子串。charCodeAt可以使用该方法配合A-Z进行升降序排序等</p>
+<h4 id="better-scroll使用问题（监听滚动）"><a href="#better-scroll使用问题（监听滚动）" class="headerlink" title="better-scroll使用问题（监听滚动）"></a>better-scroll使用问题（监听滚动）</h4><p>需要根据文档定义传入<code>probeType=&quot;3</code>，用于better-scroll监听swip等操作的scrollY，需要传入这个再选择:listen-scroll，即better-scroll的<code>this.scroll.on(&#39;scroll&#39;, (pos) =&gt; {})</code>进行监听返回的scrollY</p>
+<h4 id="async和await的使用方法"><a href="#async和await的使用方法" class="headerlink" title="async和await的使用方法"></a>async和await的使用方法</h4><p>async和await，await必定是写在async函数里：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">testSync</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</div><div class="line">         setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">             resolve(<span class="string">"async await test..."</span>);</div><div class="line">          &#125;, <span class="number">1000</span>);</div><div class="line">     &#125;);</div><div class="line">     <span class="built_in">console</span>.log(response);</div><div class="line">&#125;</div><div class="line">testSync(); <span class="comment">// async await test...</span></div></pre></td></tr></table></figure>
+<p>声明式版：</p>
+<p><code>const testSync = async() =&gt; {};</code></p>
+<h4 id="Promise-all使用方法及注意事项"><a href="#Promise-all使用方法及注意事项" class="headerlink" title="Promise.all使用方法及注意事项"></a>Promise.all使用方法及注意事项</h4><p>Promise.all是在会处理完then中的函数后（如果有执行后续then），再统一执行的，如果有返回数据则推进Promise.all的then中的res数组中，且返回顺序是确定的，传入all前的数组的顺序与后续返回的res的数组顺序是一致的；没有返回则里面推进undefined：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Promise1</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            resolve(<span class="string">'success'</span>);</div><div class="line">        &#125;, <span class="number">3000</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Promise2</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            resolve(<span class="string">'success 2'</span>);</div><div class="line">        &#125;, <span class="number">5000</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> p1 = Promise1</div><div class="line"></div><div class="line"><span class="keyword">var</span> p2 = Promise2</div><div class="line"></div><div class="line"><span class="keyword">var</span> a = p1().then(<span class="function"><span class="params">res</span> =&gt;</span> &#123; <span class="keyword">return</span> res &#125;)</div><div class="line"></div><div class="line"><span class="keyword">var</span> b = p2().then(<span class="function"><span class="params">res</span> =&gt;</span> &#123; <span class="keyword">return</span> res &#125;)</div><div class="line"></div><div class="line"><span class="built_in">Promise</span>.all([a, b]).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</div><div class="line">	<span class="comment">// 5秒之后打印 ["success", "success 2"]</span></div><div class="line">    <span class="built_in">console</span>.log(res);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>没有后续then版，直接resolve：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        resolve(<span class="string">'aaa'</span>);</div><div class="line">    &#125;, <span class="number">3000</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        resolve(<span class="string">'bbb'</span>);</div><div class="line">    &#125;, <span class="number">1000</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> p = <span class="built_in">Promise</span>.all([a, b]);</div><div class="line"></div><div class="line">p.then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</div><div class="line">	<span class="comment">// 3秒后返回结果：['aaa','bbb']，数组的内容并不是谁先执行完谁在前面，而是按照之前传入的顺序</span></div><div class="line">    <span class="built_in">console</span>.log(res);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/Vue工作经验总结/" rel="next" title="Vue工作经验总结">
+                <i class="fa fa-chevron-left"></i> Vue工作经验总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="Sellenite" />
+          <p class="site-author-name" itemprop="name">Sellenite</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#html里自定义属性的赋值和取出问题"><span class="nav-number">1.</span> <span class="nav-text">html里自定义属性的赋值和取出问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#document-activeElement的应用（焦点问题）"><span class="nav-number">2.</span> <span class="nav-text">document.activeElement的应用（焦点问题）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭webApp中的调起的系统键盘"><span class="nav-number">3.</span> <span class="nav-text">关闭webApp中的调起的系统键盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环遍历父元素的方法"><span class="nav-number">4.</span> <span class="nav-text">循环遍历父元素的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSS伪元素问题"><span class="nav-number">5.</span> <span class="nav-text">CSS伪元素问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#window-pageYOffset和window-scrollY"><span class="nav-number">6.</span> <span class="nav-text">window.pageYOffset和window.scrollY</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#input元素里的属性问题"><span class="nav-number">7.</span> <span class="nav-text">input元素里的属性问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#onchange和oninput的不同"><span class="nav-number">8.</span> <span class="nav-text">onchange和oninput的不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-charCodeAt和string-charAt的不同"><span class="nav-number">9.</span> <span class="nav-text">string.charCodeAt和string.charAt的不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#better-scroll使用问题（监听滚动）"><span class="nav-number">10.</span> <span class="nav-text">better-scroll使用问题（监听滚动）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#async和await的使用方法"><span class="nav-number">11.</span> <span class="nav-text">async和await的使用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Promise-all使用方法及注意事项"><span class="nav-number">12.</span> <span class="nav-text">Promise.all使用方法及注意事项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
