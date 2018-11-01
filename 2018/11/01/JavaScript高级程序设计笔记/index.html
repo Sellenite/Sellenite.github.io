@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JS," />
 
 
 
@@ -87,17 +87,18 @@
 
 
 
-<meta name="description" content="别人的校招面试经验">
+<meta name="description" content="全局函数isNaN()的问题 isNaN()去执行一个非数字字符串，会返回true，注意。  因为isNaN()的本意是去判断这个参数是否”不是数值”，任何不能被转为数值的值都会导致这个函数返回true，注意，即首先对参数进行一次Number转换，返回为NaN的参数会被判断为NaN 123456alert(isNaN(NaN)); //truealert(isNaN(10)); //false（">
+<meta name="keywords" content="JS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="别人的校招面试经验">
-<meta property="og:url" content="https://sellenite.github.io/2017/05/02/别人的校招面试经验/index.html">
+<meta property="og:title" content="JavaScript高级程序设计笔记">
+<meta property="og:url" content="https://sellenite.github.io/2018/11/01/JavaScript高级程序设计笔记/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
-<meta property="og:description" content="别人的校招面试经验">
+<meta property="og:description" content="全局函数isNaN()的问题 isNaN()去执行一个非数字字符串，会返回true，注意。  因为isNaN()的本意是去判断这个参数是否”不是数值”，任何不能被转为数值的值都会导致这个函数返回true，注意，即首先对参数进行一次Number转换，返回为NaN的参数会被判断为NaN 123456alert(isNaN(NaN)); //truealert(isNaN(10)); //false（">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-05-02T09:29:51.140Z">
+<meta property="og:updated_time" content="2018-11-01T03:24:48.091Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="别人的校招面试经验">
-<meta name="twitter:description" content="别人的校招面试经验">
+<meta name="twitter:title" content="JavaScript高级程序设计笔记">
+<meta name="twitter:description" content="全局函数isNaN()的问题 isNaN()去执行一个非数字字符串，会返回true，注意。  因为isNaN()的本意是去判断这个参数是否”不是数值”，任何不能被转为数值的值都会导致这个函数返回true，注意，即首先对参数进行一次Number转换，返回为NaN的参数会被判断为NaN 123456alert(isNaN(NaN)); //truealert(isNaN(10)); //false（">
 
 
 
@@ -125,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://sellenite.github.io/2017/05/02/别人的校招面试经验/"/>
+  <link rel="canonical" href="https://sellenite.github.io/2018/11/01/JavaScript高级程序设计笔记/"/>
 
 
 
 
 
-  <title> 别人的校招面试经验 | yuuhei's Home </title>
+  <title> JavaScript高级程序设计笔记 | yuuhei's Home </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -250,7 +251,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/02/别人的校招面试经验/">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/11/01/JavaScript高级程序设计笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sellenite">
@@ -271,7 +272,7 @@
             
             
               
-                别人的校招面试经验
+                JavaScript高级程序设计笔记
               
             
           </h1>
@@ -286,8 +287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-02T17:28:55+08:00">
-                2017-05-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T11:21:09+08:00">
+                2018-11-01
               </time>
             
 
@@ -305,7 +306,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/05/02/别人的校招面试经验/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2018/11/01/JavaScript高级程序设计笔记/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -332,7 +333,15 @@
       
 
       
-        <p><a href="http://ovenzeze.coding.me/summer-intership-interview-experience/" target="_blank" rel="noopener">别人的校招面试经验</a></p>
+        <h4 id="全局函数isNaN-的问题"><a href="#全局函数isNaN-的问题" class="headerlink" title="全局函数isNaN()的问题"></a>全局函数isNaN()的问题</h4><blockquote>
+<p>isNaN()去执行一个非数字字符串，会返回true，注意。</p>
+</blockquote>
+<p>因为isNaN()的本意是去判断这个参数是否”不是数值”，任何不能被转为数值的值都会导致这个函数返回true，注意，即首先对参数进行一次Number转换，返回为NaN的参数会被判断为NaN</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">alert(<span class="built_in">isNaN</span>(<span class="literal">NaN</span>)); <span class="comment">//true</span></div><div class="line">alert(<span class="built_in">isNaN</span>(<span class="number">10</span>)); <span class="comment">//false（ 10 是一个数值）</span></div><div class="line">alert(<span class="built_in">isNaN</span>(<span class="string">"10"</span>)); <span class="comment">//false（可以被转换成数值 10）</span></div><div class="line">alert(<span class="built_in">isNaN</span>(<span class="literal">true</span>)); <span class="comment">//false（Boolean可以被转换成数值 1）</span></div><div class="line">alert(<span class="built_in">isNaN</span>(<span class="string">"blue"</span>)); <span class="comment">//true（非数字字符串不能转换成数值）</span></div><div class="line">alert(<span class="built_in">isNaN</span>(<span class="literal">undefined</span>)); <span class="comment">//true（undefined不能转换成数值）</span></div></pre></td></tr></table></figure>
+<p>解决方案有两种：<br>利用NaN是唯一一个与自身严格不相等的值：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">myIsNaN</span>(<span class="params">value</span>) </span>&#123; </div><div class="line">    <span class="keyword">return</span> value !== value; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在使用isNaN()之前先检查一下这个值是不是数字类型，这样就避免了隐式转换的问题：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">myIsNaN2</span>(<span class="params">value</span>) </span>&#123; </div><div class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> value === <span class="string">'number'</span> &amp;&amp; <span class="built_in">isNaN</span>(value); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="null进行数值转换为0，undefined进行数值转换为NaN"><a href="#null进行数值转换为0，undefined进行数值转换为NaN" class="headerlink" title="null进行数值转换为0，undefined进行数值转换为NaN"></a>null进行数值转换为0，undefined进行数值转换为NaN</h4><h4 id="js将字符串转换为dom元素的方法，利用childNodes"><a href="#js将字符串转换为dom元素的方法，利用childNodes" class="headerlink" title="js将字符串转换为dom元素的方法，利用childNodes"></a>js将字符串转换为dom元素的方法，利用childNodes</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseDom</span>(<span class="params">arg</span>) </span>&#123;</div><div class="line">　　<span class="keyword">var</span> objE = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</div><div class="line">　　objE.innerHTML = arg;</div><div class="line">　　<span class="keyword">return</span> objE.childNodes[<span class="number">0</span>];</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> obj=parseDom(<span class="string">'&lt;div id="div_1" class="div1"&gt;Hello World!&lt;/div&gt;'</span>);</div></pre></td></tr></table></figure>
+<p>注意：childNodes返回的是一个类似数组的list。所以如果是一个元素，要使用这个dom需要这样使用obj[0]。如果是多个同级的dom转换，可以这样使用obj[0]、obj[1]…</p>
 
       
     </div>
@@ -360,6 +369,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
 
       
         
@@ -369,8 +384,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/30/使用vue和axios从第三方API获取数据/" rel="next" title="使用vue和axios从第三方API获取数据">
-                <i class="fa fa-chevron-left"></i> 使用vue和axios从第三方API获取数据
+              <a href="/2018/10/29/JS工作经验总结（2）/" rel="next" title="JS工作经验总结（2）">
+                <i class="fa fa-chevron-left"></i> JS工作经验总结（2）
               </a>
             
           </div>
@@ -378,10 +393,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/11/记忆中CS里好玩的地图描述/" rel="prev" title="记忆中CS里好玩的地图描述">
-                记忆中CS里好玩的地图描述 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -430,8 +441,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://puu.sh/uoJbK/033c9ae781.jpg"
@@ -495,6 +515,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#全局函数isNaN-的问题"><span class="nav-number">1.</span> <span class="nav-text">全局函数isNaN()的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null进行数值转换为0，undefined进行数值转换为NaN"><span class="nav-number">2.</span> <span class="nav-text">null进行数值转换为0，undefined进行数值转换为NaN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#js将字符串转换为dom元素的方法，利用childNodes"><span class="nav-number">3.</span> <span class="nav-text">js将字符串转换为dom元素的方法，利用childNodes</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
