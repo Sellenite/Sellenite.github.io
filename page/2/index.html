@@ -941,130 +941,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/09/JS无限单列滚动原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/01/09/JS无限单列滚动原理/" itemprop="url">
-                  JS无限单列滚动原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T22:05:54+08:00">
-                2018-01-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>借助jQuery</p>
-<p>原理就是使用marginTop做负值动画，向上移动一个元素高度的值，当结束动画的时候将marginTio置为0，并将元素appendTo父元素，即从最高变成最底，即可无限单列循环向上</p>
-<p>原理：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">initNewsScroll: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">/* 消息轮播 */</span></div><div class="line">    <span class="keyword">var</span> $ul = $(<span class="string">'.news-wrapper'</span>).find(<span class="string">'ul'</span>)</div><div class="line">    <span class="keyword">var</span> timer = <span class="literal">null</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">intervalInit</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        timer = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> itemHeight = $ul.find(<span class="string">'li'</span>).eq(<span class="number">0</span>).height()</div><div class="line">            $ul.stop().animate(&#123;</div><div class="line">                <span class="attr">marginTop</span>: -itemHeight</div><div class="line">            &#125;, <span class="number">500</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                $ul.css(&#123;</div><div class="line">                    <span class="attr">marginTop</span>: <span class="number">0</span></div><div class="line">                &#125;).find(<span class="string">'li:first'</span>).appendTo($ul)</div><div class="line">            &#125;)</div><div class="line">        &#125;, <span class="number">5000</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    intervalInit()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/09/JS简单碰撞原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1335,7 +1211,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/10/22/现代JavaScript速查/">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/21/JS函数节流和函数去抖/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sellenite">
@@ -1357,8 +1233,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/10/22/现代JavaScript速查/" itemprop="url">
-                  现代JavaScript速查
+                <a class="post-title-link" href="/2017/07/21/JS函数节流和函数去抖/" itemprop="url">
+                  JS函数节流和函数去抖
                 </a>
               
             
@@ -1374,8 +1250,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T11:41:49+08:00">
-                2017-10-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-21T15:48:06+08:00">
+                2017-07-21
               </time>
             
 
@@ -1411,29 +1287,149 @@
 
       
         
-          <h1 id="现代-JavaScript-速查"><a href="#现代-JavaScript-速查" class="headerlink" title="现代 JavaScript 速查"></a>现代 JavaScript 速查</h1><p><a id="modern-javascript-cheatsheet"></a></p>
-<p><img src="https://i.imgur.com/aexPxMb.png" alt="Modern JavaScript cheatsheet"></p>
-<p><small>文档翻译自: <a href="https://github.com/mbeaudru/modern-js-cheatsheet" target="_blank" rel="noopener">Modern JavaScript Cheatsheet</a></small></p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="初心"><a href="#初心" class="headerlink" title="初心"></a>初心</h3><p>本文档是一份 JavaScript 速查表，你在现代项目中会经常遇到，以及最新的代码示例。</p>
-<p>本指南不是为了教你从头开始学习 JavaScript ，而是为了帮助那些可能不熟悉当前代码库（例如 React）所用到 JavaScript 概念的开发人员。</p>
-<p>此外，我有时还会提供一些个人的建议，这些建议可能是有争议的，但我也会注意到，当我这么做的时候，这是我个人的建议。</p>
-<blockquote>
-<p><strong>注意：</strong> 这里介绍的大多数概念来自于最新的 JavaScript 语言（ ES2015，通常称为 ES6）。你可以在 <a href="http://es6-features.org" target="_blank" rel="noopener">这里</a> 找到新增的特性，网站做得很棒。</p>
-</blockquote>
-<h3 id="补充资源"><a href="#补充资源" class="headerlink" title="补充资源"></a>补充资源</h3><p>当您努力了解一个新概念时，我建议你在以下资源网站上寻找相关的答案：</p>
+          
+            <h3 id="函数节流throttle-js"><a href="#函数节流throttle-js" class="headerlink" title="函数节流throttle.js"></a>函数节流throttle.js</h3><p>我们这里说的throttle就是函数节流的意思。再说的通俗一点就是函数调用的频度控制器，是连续执行时间间隔控制。主要应用的场景比如：</p>
 <ul>
-<li><a href="https://developer.mozilla.org/fr/search?q=" target="_blank" rel="noopener">MDN (Mozilla Developer Network)</a></li>
-<li><a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="noopener">你所不知道的JS (书)</a></li>
-<li><a href="http://es6-features.org" target="_blank" rel="noopener">ES6 新特性和例子</a></li>
-<li><a href="http://wesbos.com/category/es6/" target="_blank" rel="noopener">WesBos 的博客 (ES6)</a></li>
-<li><a href="https://www.reddit.com/r/javascript/" target="_blank" rel="noopener">Reddit (JavaScript)</a></li>
-<li>用 <a href="https://www.google.com/" target="_blank" rel="noopener">Google</a> 来查找特定的博客和资源</li>
-<li><a href="https://stackoverflow.com/questions/tagged/javascript" target="_blank" rel="noopener">StackOverflow</a></li>
+<li><p>鼠标移动，mousemove 事件</p>
+</li>
+<li><p>DOM 元素动态定位，window对象的resize和scroll 事件</p>
+</li>
 </ul>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> throttle = <span class="function"><span class="keyword">function</span>(<span class="params">fn, interval</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> timer,</div><div class="line">        firstTime = <span class="literal">true</span>;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> _this = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (firstTime) &#123;</div><div class="line">            fn.apply(_this, args);</div><div class="line">            <span class="keyword">return</span> firstTime = <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (timer) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            clearTimeout(timer);</div><div class="line">            timer = <span class="literal">null</span>;</div><div class="line">            fn.apply(_this, args);</div><div class="line">        &#125;, interval || <span class="number">200</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="函数去抖debounce-js"><a href="#函数去抖debounce-js" class="headerlink" title="函数去抖debounce.js"></a>函数去抖debounce.js</h3><p>debounce和throttle很像，debounce是空闲时间必须大于或等于 一定值的时候，才会执行调用方法。debounce是空闲时间的间隔控制。比如我们做autocomplete，这时需要我们很好的控制输入文字时调用方法时间间隔。一般时第一个输入的字符马上开始调用，根据一定的时间间隔重复调用执行的方法。对于变态的输入，比如按住某一个建不放的时候特别有用。<br>debounce主要应用的场景比如：</p>
+<ul>
+<li>文本输入keydown 事件，keyup 事件，例如做autocomplete</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> debounce = <span class="function"><span class="keyword">function</span>(<span class="params">fn, interval</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> timer</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> _this = <span class="keyword">this</span>;</div><div class="line">        <span class="keyword">if</span> (timer) &#123;</div><div class="line">            clearTimeout(timer);</div><div class="line">        &#125;</div><div class="line">        timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            fn.apply(_this, args);</div><div class="line">        &#125;, interval);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>用法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'mousemove'</span>, debounce(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>)</div><div class="line">&#125;, <span class="number">500</span>));</div><div class="line"></div><div class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'mousemove'</span>, throttle(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>)</div><div class="line">&#125;, <span class="number">500</span>));</div></pre></td></tr></table></figure></p>
+<h3 id="额外性能优化方案：分时函数"><a href="#额外性能优化方案：分时函数" class="headerlink" title="额外性能优化方案：分时函数"></a>额外性能优化方案：分时函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 分时函数，避免一次加载过多数据，类似好友列表</span></div><div class="line"><span class="keyword">var</span> timeChunk = <span class="function"><span class="keyword">function</span>(<span class="params">array, fn, count, interval</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> obj,</div><div class="line">        timer</div><div class="line"></div><div class="line">    <span class="keyword">var</span> start = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">Math</span>.min(count || <span class="number">1</span>, array.length); i++) &#123;</div><div class="line">            obj = array.shift();</div><div class="line">            fn(obj)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (array.length === <span class="number">0</span>) &#123;</div><div class="line">                <span class="keyword">return</span> clearInterval(timer);</div><div class="line">            &#125;</div><div class="line">            start();</div><div class="line">        &#125;, interval || <span class="number">200</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> friendList = [];</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</div><div class="line">    friendList.push(&#123; <span class="attr">id</span>: i &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> renderFriendList = timeChunk(friendList, <span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">    div.innerHTML = item.id;</div><div class="line">    <span class="built_in">document</span>.body.appendChild(div);</div><div class="line">&#125;, <span class="number">10</span>);</div><div class="line"></div><div class="line">renderFriendList();</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/13/JS实现Ajax和Jsonp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/13/JS实现Ajax和Jsonp/" itemprop="url">
+                  JS实现Ajax和Jsonp
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T20:12:16+08:00">
+                2017-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="一、JS原生AJAX"><a href="#一、JS原生AJAX" class="headerlink" title="一、JS原生AJAX"></a>一、JS原生AJAX</h3><p>ajax：一种请求数据的方式，不需要刷新整个页面；</p>
+<p>ajax的技术核心是 XMLHttpRequest 对象；</p>
+<p>ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据；</p>
+<p>封装基本ajax函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 普通回调</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span>(<span class="params">options</span>) </span>&#123;</div><div class="line">    options = options || &#123;&#125;;</div><div class="line">    options.data = options.data || &#123;&#125;;</div><div class="line"></div><div class="line">    <span class="comment">//  请求方式，默认是GET</span></div><div class="line">    options.type = (options.type || <span class="string">'GET'</span>).toUpperCase();</div><div class="line">    <span class="comment">// 避免有特殊字符，必须格式化传输数据  </span></div><div class="line">    options.data = formatParams(options.data);</div><div class="line">    <span class="keyword">var</span> xhr = <span class="literal">null</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 实例化XMLHttpRequest对象   </span></div><div class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest) &#123;</div><div class="line">        xhr = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// IE6及其以下版本   </span></div><div class="line">        xhr = <span class="keyword">new</span> ActiveXObjcet(<span class="string">'Microsoft.XMLHTTP'</span>);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 监听事件，只要 readyState 的值变化，就会调用 readystatechange 事件 </span></div><div class="line">    xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">//  readyState属性表示请求/响应过程的当前活动阶段，4为完成，已经接收到全部响应数据</span></div><div class="line">        <span class="keyword">if</span> (xhr.readyState == <span class="number">4</span>) &#123;</div><div class="line">            <span class="keyword">var</span> status = xhr.status;</div><div class="line">            <span class="comment">//  status：响应的HTTP状态码，以2开头的都是成功</span></div><div class="line">            <span class="keyword">if</span> (status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span>) &#123;</div><div class="line">                <span class="keyword">var</span> response = <span class="string">''</span>;</div><div class="line">                <span class="comment">// 判断接受数据的内容类型  </span></div><div class="line">                <span class="keyword">var</span> type = xhr.getResponseHeader(<span class="string">'Content-type'</span>);</div><div class="line">                <span class="keyword">if</span> (type.indexOf(<span class="string">'xml'</span>) !== <span class="number">-1</span> &amp;&amp; xhr.responseXML) &#123;</div><div class="line">                    response = xhr.responseXML; <span class="comment">//Document对象响应   </span></div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">'application/json'</span>) &#123;</div><div class="line">                    response = <span class="built_in">JSON</span>.parse(xhr.responseText); <span class="comment">//JSON响应   </span></div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    response = xhr.responseText; <span class="comment">//字符串响应   </span></div><div class="line">                &#125;;</div><div class="line">                <span class="comment">// 成功回调函数 </span></div><div class="line">                options.success &amp;&amp; options.success(response);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                options.error &amp;&amp; options.error(status);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 连接和传输数据   </span></div><div class="line">    <span class="keyword">if</span> (options.type == <span class="string">'GET'</span>) &#123;</div><div class="line">        <span class="comment">// 三个参数：请求方式、请求地址(get方式时，传输数据是加在地址后的)、是否异步请求(同步请求的情况极少)；</span></div><div class="line">        xhr.open(options.type, options.url + <span class="string">'?'</span> + options.data, <span class="literal">true</span>);</div><div class="line">        xhr.send(<span class="literal">null</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        xhr.open(options.type, options.url, <span class="literal">true</span>);</div><div class="line">        <span class="comment">//必须，设置提交时的内容类型   </span></div><div class="line">        xhr.setRequestHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/x-www-form-urlencoded; charset=UTF-8'</span>);</div><div class="line">        <span class="comment">// 传输数据  </span></div><div class="line">        xhr.send(options.data);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//格式化参数   </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">formatParams</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> arr = [];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> data) &#123;</div><div class="line">            <span class="comment">//   encodeURIComponent() ：用于对 URI 中的某一部分进行编码</span></div><div class="line">            arr.push(<span class="built_in">encodeURIComponent</span>(name) + <span class="string">'='</span> + <span class="built_in">encodeURIComponent</span>(data[name]));</div><div class="line">        &#125;;</div><div class="line">        <span class="comment">// 添加一个随机数参数，防止缓存   </span></div><div class="line">        arr.push(<span class="string">'v='</span> + random());</div><div class="line">        <span class="keyword">return</span> arr.join(<span class="string">'&amp;'</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 获取随机数   </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">random</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">10000</span> + <span class="number">500</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 调用</span></div><div class="line">ajax(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">'test.php'</span>,   <span class="comment">// 请求地址</span></div><div class="line">    type: <span class="string">'POST'</span>,   <span class="comment">// 请求类型，默认"GET"，还可以是"POST"</span></div><div class="line">    data: &#123; <span class="string">'b'</span>: <span class="string">'异步请求'</span> &#125;,   <span class="comment">// 传输数据</span></div><div class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;   <span class="comment">// 请求成功的回调函数</span></div><div class="line">        <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(res));</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">error</span>: <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123; &#125;   <span class="comment">// 请求失败的回调函数</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/10/22/现代JavaScript速查/#more" rel="contents">
+            <a class="btn" href="/2017/07/13/JS实现Ajax和Jsonp/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1479,7 +1475,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/08/17/JS浅拷贝和深拷贝/">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/21/JS开发datepicker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sellenite">
@@ -1501,8 +1497,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/08/17/JS浅拷贝和深拷贝/" itemprop="url">
-                  JS浅拷贝和深拷贝
+                <a class="post-title-link" href="/2017/05/21/JS开发datepicker/" itemprop="url">
+                  JS开发datepicker
                 </a>
               
             
@@ -1518,8 +1514,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T09:39:52+08:00">
-                2017-08-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T10:14:49+08:00">
+                2017-05-21
               </time>
             
 
@@ -1555,12 +1551,27 @@
 
       
         
-          <h3 id="Shallow-Copy-浅拷贝"><a href="#Shallow-Copy-浅拷贝" class="headerlink" title="Shallow Copy: 浅拷贝"></a>Shallow Copy: 浅拷贝</h3><h4 id="顶层属性遍历"><a href="#顶层属性遍历" class="headerlink" title="顶层属性遍历"></a>顶层属性遍历</h4><p>浅拷贝是指复制对象的时候，指对第一层键值对进行独立的复制。一个简单的实现如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 浅拷贝实现</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">shadowCopy</span>(<span class="params">target, source</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>( !source || <span class="keyword">typeof</span> source !== <span class="string">'object'</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 这个方法有点小trick，target一定得事先定义好，不然就不能改变实参了。</span></div><div class="line">       <span class="comment">// 具体原因解释可以看参考资料中 JS是值传递还是引用传递</span></div><div class="line">    <span class="keyword">if</span>( !target || <span class="keyword">typeof</span> target !== <span class="string">'object'</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 这边最好区别一下对象和数组的复制</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> source)&#123;</div><div class="line">        <span class="keyword">if</span>(source.hasOwnProperty(key))&#123;</div><div class="line">            target[key] = source[key];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//测试例子</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> arr2 = [];</div><div class="line">shadowCopy(arr2, arr);</div><div class="line"><span class="built_in">console</span>.log(arr2);</div><div class="line"><span class="comment">//[1,2,3]</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> today = &#123;</div><div class="line">    <span class="attr">weather</span>: <span class="string">'Sunny'</span>,</div><div class="line">    <span class="attr">date</span>: &#123;</div><div class="line">        <span class="attr">week</span>: <span class="string">'Wed'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> tomorrow = &#123;&#125;;</div><div class="line">shadowCopy(tomorrow, today);</div><div class="line"><span class="built_in">console</span>.log(tomorrow);</div><div class="line"><span class="comment">// Object &#123;weather: "Sunny", date: Object&#125;</span></div></pre></td></tr></table></figure>
-<h4 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign"></a>Object.assign</h4>
+          <h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>首先，需要知道new Date()这个参数的基本使用：</p>
+<ul>
+<li>传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日</li>
+<li>月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数</li>
+<li>拿到当月第一天是这样写的：new Date(year, month-1, 1)</li>
+<li>拿到当月最后一天是这样写的：new Date(year, month, 0)</li>
+<li>.getDay()获取的的是这个日期的星期几，星期一~星期天对应[1, 2, 3, 4, 5, 6, 0]</li>
+</ul>
+<p>其次，需要知道js的一些新的API：</p>
+<ul>
+<li>document.querySelector()获取的是CSS选择器，即传入的参数是’.exampleClass’或’.#exampleID’，需要将字符串传进去，获取的就是第一个匹配的class</li>
+<li>如果想获取多个同class的CSS选择器，使用document.querySelectorAll</li>
+<li>$element.classList.add()可以添加class</li>
+<li>$element.classList.remove()可以移除特定class</li>
+<li>$element.dataset.xx可以访问到dom元素里自定义属性data-xx，返回的值就是xx</li>
+<li>注意好编码习惯，例如一个dom元素起名就用$开头，如$wrapper</li>
+</ul>
+<h3 id="开发思路"><a href="#开发思路" class="headerlink" title="开发思路"></a>开发思路</h3>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/08/17/JS浅拷贝和深拷贝/#more" rel="contents">
+            <a class="btn" href="/2017/05/21/JS开发datepicker/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1601,7 +1612,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1646,7 +1657,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
