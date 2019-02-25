@@ -248,6 +248,132 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/15/关于ES6的几个新的关于-Prototype-的几个API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/01/15/关于ES6的几个新的关于-Prototype-的几个API/" itemprop="url">
+                  关于ES6的几个新的关于[[Prototype]]的几个API
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-15T21:19:09+08:00">
+                2018-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Object-create-应用"><a href="#Object-create-应用" class="headerlink" title="Object.create()应用"></a>Object.create()应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* Object.create(obj)会将[[prototype]]关联到指定对象，组合继承就由于这个原理 */</span></div><div class="line"><span class="comment">/* 面向委托模式来源于Object.create()这个特性 */</span></div><div class="line"><span class="keyword">let</span> obj = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">123</span>,</div><div class="line">    <span class="attr">cool</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    	<span class="built_in">console</span>.log(<span class="string">'cool!'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> obj2 = <span class="built_in">Object</span>.create(obj);</div><div class="line"><span class="built_in">console</span>.log(obj2.a)  <span class="comment">// 123</span></div><div class="line"><span class="built_in">console</span>.log(obj2.cool())  <span class="comment">// 'cool!'</span></div></pre></td></tr></table></figure>
+<h3 id="proto-和-Object-getPrototypeOf-应用"><a href="#proto-和-Object-getPrototypeOf-应用" class="headerlink" title="proto 和 Object.getPrototypeOf() 应用"></a><strong>proto</strong> 和 Object.getPrototypeOf() 应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 组合继承 */</span></div><div class="line"><span class="keyword">let</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> Bar = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    <span class="comment">/* 绑定父亲的构造属性 */</span></div><div class="line">    Foo.call(<span class="keyword">this</span>, name);</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/* 将Bar的[[prototype]]关联到Foo的，继承Foo的原型链属性 */</span></div><div class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype);</div><div class="line"></div><div class="line"><span class="comment">/* ES6直接获取一个对象的[[prototype]]的方式 */</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(bar) === Bar.prototype);</div><div class="line"><span class="comment">/* 绝大多数浏览器（非标准获取方式）支持 */</span></div><div class="line"><span class="built_in">console</span>.log(bar.__proto__ === Bar.prototype);</div></pre></td></tr></table></figure>
+<h3 id="instanceof-应用"><a href="#instanceof-应用" class="headerlink" title="instanceof 应用"></a>instanceof 应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	Foo.call(...)</div><div class="line">&#125;</div><div class="line"></div><div class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype)</div><div class="line"></div><div class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar()</div><div class="line"></div><div class="line"><span class="comment">/* 构造函数之间Foo和Bar的instanceof */</span></div><div class="line">Bar.prototype <span class="keyword">instanceof</span> Foo;  <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">/* 继承可以通过instanceof找到源头 */</span></div><div class="line"><span class="built_in">console</span>.log(bar <span class="keyword">instanceof</span> Foo);  <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">/* 注意以下instancof用法是错的，不要混淆了 */</span></div><div class="line">Bar <span class="keyword">instanceof</span> Foo  <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>instanceof一般用于确定一个值是哪种引用类型，是否存在于参数 object 的原型链上。而不是用于判断对象的构造函数，判断构造函数还是需要使用constructor，实例对象.constructor === 构造函数名字来判断</p>
+<p>array，function对象instanceof Object会返回true，因为他们的引用都来自Object</p>
+<h3 id="prototype-isPrototypeOf-应用"><a href="#prototype-isPrototypeOf-应用" class="headerlink" title=".prototype.isPrototypeOf() 应用"></a>.prototype.isPrototypeOf() 应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 内省 */</span></div><div class="line"><span class="keyword">let</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> Bar = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    Foo.call(<span class="keyword">this</span>, name);</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype);</div><div class="line"></div><div class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar(<span class="string">'yuuhei'</span>, <span class="number">23</span>);</div><div class="line"></div><div class="line"><span class="comment">// 首先要纠正错误，Bar instanceof Foo是错的</span></div><div class="line"></div><div class="line"><span class="comment">/* 构造函数之间Foo和Bar的内省 */</span></div><div class="line">Bar.prototype <span class="keyword">instanceof</span> Foo; <span class="comment">// true</span></div><div class="line"><span class="built_in">Object</span>.getPrototypeOf(Bar.prototype) === Foo.prototype; <span class="comment">// true</span></div><div class="line">Foo.prototype.isPrototypeOf(Bar.prototype); <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">/* 实例和构造函数之间的内省 */</span></div><div class="line">bar <span class="keyword">instanceof</span> Bar; <span class="comment">// true</span></div><div class="line">bar <span class="keyword">instanceof</span> Foo; <span class="comment">// true</span></div><div class="line"><span class="built_in">Object</span>.getPrototypeOf(bar) === Bar.prototype; <span class="comment">/// true</span></div><div class="line">Foo.prototype.isPrototypeOf(bar); <span class="comment">// true</span></div><div class="line">Bar.prototype.isPrototypeOf(bar); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<h3 id="Object-setPrototypeOf-继承应用"><a href="#Object-setPrototypeOf-继承应用" class="headerlink" title="Object.setPrototypeOf()继承应用"></a>Object.setPrototypeOf()继承应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* ES6拥有Object.setPrototypeOf进行原型链继承 */</span></div><div class="line"><span class="keyword">let</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">Foo.prototype.a = <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> Bar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.setPrototypeOf(Bar.prototype, Foo.prototype);</div><div class="line"></div><div class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar();</div><div class="line"><span class="built_in">console</span>.log(bar.a);  <span class="comment">// 1</span></div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/15/JS各种完美继承方案及其应用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1466,148 +1592,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/21/JS开发datepicker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/21/JS开发datepicker/" itemprop="url">
-                  JS开发datepicker
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T10:14:49+08:00">
-                2017-05-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>首先，需要知道new Date()这个参数的基本使用：</p>
-<ul>
-<li>传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日</li>
-<li>月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数</li>
-<li>拿到当月第一天是这样写的：new Date(year, month-1, 1)</li>
-<li>拿到当月最后一天是这样写的：new Date(year, month, 0)</li>
-<li>.getDay()获取的的是这个日期的星期几，星期一~星期天对应[1, 2, 3, 4, 5, 6, 0]</li>
-</ul>
-<p>其次，需要知道js的一些新的API：</p>
-<ul>
-<li>document.querySelector()获取的是CSS选择器，即传入的参数是’.exampleClass’或’.#exampleID’，需要将字符串传进去，获取的就是第一个匹配的class</li>
-<li>如果想获取多个同class的CSS选择器，使用document.querySelectorAll</li>
-<li>$element.classList.add()可以添加class</li>
-<li>$element.classList.remove()可以移除特定class</li>
-<li>$element.dataset.xx可以访问到dom元素里自定义属性data-xx，返回的值就是xx</li>
-<li>注意好编码习惯，例如一个dom元素起名就用$开头，如$wrapper</li>
-</ul>
-<h3 id="开发思路"><a href="#开发思路" class="headerlink" title="开发思路"></a>开发思路</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/21/JS开发datepicker/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1657,7 +1641,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1670,7 +1654,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

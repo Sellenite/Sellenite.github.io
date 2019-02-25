@@ -248,6 +248,156 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/02/25/JS上传文件到后台并返回/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/02/25/JS上传文件到后台并返回/" itemprop="url">
+                  JS上传文件到后台并返回
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T11:05:57+08:00">
+                2019-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="一般表单上传文件到后台的格式"><a href="#一般表单上传文件到后台的格式" class="headerlink" title="一般表单上传文件到后台的格式"></a>一般表单上传文件到后台的格式</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"form2"</span> <span class="attr">action</span>=<span class="string">"/manage/product/upload.do"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">encType</span>=<span class="string">"multipart/form-data"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"upload_file"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"upload"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>字段说明：</p>
+<ul>
+<li>name：input标签的name属性值要对应后台的字段</li>
+<li>enctype：属性规定在发送到服务器之前应该如何对表单数据进行编码，有以下三个值：<ul>
+<li>application/x-www-form-urlencoded：表单数据编码为键值对，&amp;分隔</li>
+<li>multipart/form-data：不对字符编码。在使用包含文件上传控件的表单时，必须使用该值</li>
+<li>text/plain：空格转换为 “+” 加号，但不对特殊字符编码</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何实现上传不跳转"><a href="#如何实现上传不跳转" class="headerlink" title="如何实现上传不跳转"></a>如何实现上传不跳转</h3><p>​    默认的使用上述提交表单，选择完图片提交后会进行页面跳转，这不是所期望的。由于兼容性问题，会分为IE10+和非IE10的情况。</p>
+<p>​    IE9和IE9以下只能用iframe表单上传拿回调，target=”rfFrame”调取的是下面这个iframe的id值。作用是为了提交表单时防止页面跳转，不兼容Formdata。</p>
+<p>​    IE10+和其他浏览器可以使用ajax的post去send一个Formdata的js对象，可以实现提交表单不跳转。</p>
+<p>​    FormData类型其实是在XMLHttpRequest 2级定义的，它是为序列化表以及创建与表单格式相同的数据（当然是用于XHR传输）提供便利，使用FormData的最大优点就是我们可以异步上传一个二进制文件，兼容性需要IE10+。</p>
+<h3 id="Formdata实现上传文件"><a href="#Formdata实现上传文件" class="headerlink" title="Formdata实现上传文件"></a>Formdata实现上传文件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ...</span></div><div class="line"><span class="comment">// 取file文件的方法</span></div><div class="line"><span class="keyword">let</span> fileObject = <span class="built_in">document</span>.getElementById(<span class="string">'upload_file'</span>).files[<span class="number">0</span>];</div><div class="line"><span class="comment">// FormData表单对象，ie10+和其他浏览器才能使用，ie9和以下只能够使用原始form+iframe取回调</span></div><div class="line"><span class="keyword">let</span> form = <span class="keyword">new</span> FormData();</div><div class="line"><span class="comment">// 将文件对象打入form实例，upload_file为后台指定的名称，取的是原有的input的name属性的值</span></div><div class="line">form.append(<span class="string">'upload_file'</span>, fileObject);</div><div class="line"><span class="comment">// ...</span></div><div class="line">xhr.send(form);</div></pre></td></tr></table></figure>
+<p>注意事项：</p>
+<ul>
+<li>传输文件时，send的时候不需要对参数进行序列化，直接将整个form对象发送过去，jquery设置processData为false</li>
+<li>传输文件时，不能设置请求头，jquery设置contentType为fasle</li>
+<li>可以在input框onChange时进行上传文件，点击确认和取消都会触发input的onChange</li>
+<li>点击input上传file时，如果点击取消，e.target会被更改，e.target.files[0]这个对象属性会消失</li>
+</ul>
+<h3 id="form-iframe实现上传文件不跳转"><a href="#form-iframe实现上传文件不跳转" class="headerlink" title="form+iframe实现上传文件不跳转"></a>form+iframe实现上传文件不跳转</h3><p>​    form原始处理form的回调这样做的：监听form指向的隐藏iframe的onLoad事件，取iframe里的innerHTML，因为它的innerHTML会直接返回一个对象，可以直接使用；有可能会返回其他东西，具体看后台怎样返回，前端再具体处理</p>
+<p>​    jquery可以使用ajaxForm插件实现form的提交回调</p>
+<h3 id="具体实现原理代码"><a href="#具体实现原理代码" class="headerlink" title="具体实现原理代码"></a>具体实现原理代码</h3><p>仅供参考，内嵌xhr请求实现，react版。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/25/JS上传文件到后台并返回/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/01/13/你不知道的JavaScript（下）读书笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1482,132 +1632,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/15/关于ES6的几个新的关于-Prototype-的几个API/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/01/15/关于ES6的几个新的关于-Prototype-的几个API/" itemprop="url">
-                  关于ES6的几个新的关于[[Prototype]]的几个API
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-15T21:19:09+08:00">
-                2018-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Object-create-应用"><a href="#Object-create-应用" class="headerlink" title="Object.create()应用"></a>Object.create()应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* Object.create(obj)会将[[prototype]]关联到指定对象，组合继承就由于这个原理 */</span></div><div class="line"><span class="comment">/* 面向委托模式来源于Object.create()这个特性 */</span></div><div class="line"><span class="keyword">let</span> obj = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">123</span>,</div><div class="line">    <span class="attr">cool</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    	<span class="built_in">console</span>.log(<span class="string">'cool!'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> obj2 = <span class="built_in">Object</span>.create(obj);</div><div class="line"><span class="built_in">console</span>.log(obj2.a)  <span class="comment">// 123</span></div><div class="line"><span class="built_in">console</span>.log(obj2.cool())  <span class="comment">// 'cool!'</span></div></pre></td></tr></table></figure>
-<h3 id="proto-和-Object-getPrototypeOf-应用"><a href="#proto-和-Object-getPrototypeOf-应用" class="headerlink" title="proto 和 Object.getPrototypeOf() 应用"></a><strong>proto</strong> 和 Object.getPrototypeOf() 应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 组合继承 */</span></div><div class="line"><span class="keyword">let</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> Bar = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    <span class="comment">/* 绑定父亲的构造属性 */</span></div><div class="line">    Foo.call(<span class="keyword">this</span>, name);</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/* 将Bar的[[prototype]]关联到Foo的，继承Foo的原型链属性 */</span></div><div class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype);</div><div class="line"></div><div class="line"><span class="comment">/* ES6直接获取一个对象的[[prototype]]的方式 */</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(bar) === Bar.prototype);</div><div class="line"><span class="comment">/* 绝大多数浏览器（非标准获取方式）支持 */</span></div><div class="line"><span class="built_in">console</span>.log(bar.__proto__ === Bar.prototype);</div></pre></td></tr></table></figure>
-<h3 id="instanceof-应用"><a href="#instanceof-应用" class="headerlink" title="instanceof 应用"></a>instanceof 应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	Foo.call(...)</div><div class="line">&#125;</div><div class="line"></div><div class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype)</div><div class="line"></div><div class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar()</div><div class="line"></div><div class="line"><span class="comment">/* 构造函数之间Foo和Bar的instanceof */</span></div><div class="line">Bar.prototype <span class="keyword">instanceof</span> Foo;  <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">/* 继承可以通过instanceof找到源头 */</span></div><div class="line"><span class="built_in">console</span>.log(bar <span class="keyword">instanceof</span> Foo);  <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">/* 注意以下instancof用法是错的，不要混淆了 */</span></div><div class="line">Bar <span class="keyword">instanceof</span> Foo  <span class="comment">// false</span></div></pre></td></tr></table></figure>
-<p>instanceof一般用于确定一个值是哪种引用类型，是否存在于参数 object 的原型链上。而不是用于判断对象的构造函数，判断构造函数还是需要使用constructor，实例对象.constructor === 构造函数名字来判断</p>
-<p>array，function对象instanceof Object会返回true，因为他们的引用都来自Object</p>
-<h3 id="prototype-isPrototypeOf-应用"><a href="#prototype-isPrototypeOf-应用" class="headerlink" title=".prototype.isPrototypeOf() 应用"></a>.prototype.isPrototypeOf() 应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 内省 */</span></div><div class="line"><span class="keyword">let</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> Bar = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    Foo.call(<span class="keyword">this</span>, name);</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype);</div><div class="line"></div><div class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar(<span class="string">'yuuhei'</span>, <span class="number">23</span>);</div><div class="line"></div><div class="line"><span class="comment">// 首先要纠正错误，Bar instanceof Foo是错的</span></div><div class="line"></div><div class="line"><span class="comment">/* 构造函数之间Foo和Bar的内省 */</span></div><div class="line">Bar.prototype <span class="keyword">instanceof</span> Foo; <span class="comment">// true</span></div><div class="line"><span class="built_in">Object</span>.getPrototypeOf(Bar.prototype) === Foo.prototype; <span class="comment">// true</span></div><div class="line">Foo.prototype.isPrototypeOf(Bar.prototype); <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">/* 实例和构造函数之间的内省 */</span></div><div class="line">bar <span class="keyword">instanceof</span> Bar; <span class="comment">// true</span></div><div class="line">bar <span class="keyword">instanceof</span> Foo; <span class="comment">// true</span></div><div class="line"><span class="built_in">Object</span>.getPrototypeOf(bar) === Bar.prototype; <span class="comment">/// true</span></div><div class="line">Foo.prototype.isPrototypeOf(bar); <span class="comment">// true</span></div><div class="line">Bar.prototype.isPrototypeOf(bar); <span class="comment">// true</span></div></pre></td></tr></table></figure>
-<h3 id="Object-setPrototypeOf-继承应用"><a href="#Object-setPrototypeOf-继承应用" class="headerlink" title="Object.setPrototypeOf()继承应用"></a>Object.setPrototypeOf()继承应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* ES6拥有Object.setPrototypeOf进行原型链继承 */</span></div><div class="line"><span class="keyword">let</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">Foo.prototype.a = <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> Bar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.setPrototypeOf(Bar.prototype, Foo.prototype);</div><div class="line"></div><div class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar();</div><div class="line"><span class="built_in">console</span>.log(bar.a);  <span class="comment">// 1</span></div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1657,7 +1681,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1670,7 +1694,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
