@@ -248,6 +248,136 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/13/JS实现Ajax和Jsonp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/13/JS实现Ajax和Jsonp/" itemprop="url">
+                  JS实现Ajax和Jsonp
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T20:12:16+08:00">
+                2017-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="一、JS原生AJAX"><a href="#一、JS原生AJAX" class="headerlink" title="一、JS原生AJAX"></a>一、JS原生AJAX</h3><p>ajax：一种请求数据的方式，不需要刷新整个页面；</p>
+<p>ajax的技术核心是 XMLHttpRequest 对象；</p>
+<p>ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据；</p>
+<p>封装基本ajax函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 普通回调</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span>(<span class="params">options</span>) </span>&#123;</div><div class="line">    options = options || &#123;&#125;;</div><div class="line">    options.data = options.data || &#123;&#125;;</div><div class="line"></div><div class="line">    <span class="comment">//  请求方式，默认是GET</span></div><div class="line">    options.type = (options.type || <span class="string">'GET'</span>).toUpperCase();</div><div class="line">    <span class="comment">// 避免有特殊字符，必须格式化传输数据  </span></div><div class="line">    options.data = formatParams(options.data);</div><div class="line">    <span class="keyword">var</span> xhr = <span class="literal">null</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 实例化XMLHttpRequest对象   </span></div><div class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest) &#123;</div><div class="line">        xhr = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// IE6及其以下版本   </span></div><div class="line">        xhr = <span class="keyword">new</span> ActiveXObjcet(<span class="string">'Microsoft.XMLHTTP'</span>);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 监听事件，只要 readyState 的值变化，就会调用 readystatechange 事件 </span></div><div class="line">    xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">//  readyState属性表示请求/响应过程的当前活动阶段，4为完成，已经接收到全部响应数据</span></div><div class="line">        <span class="keyword">if</span> (xhr.readyState == <span class="number">4</span>) &#123;</div><div class="line">            <span class="keyword">var</span> status = xhr.status;</div><div class="line">            <span class="comment">//  status：响应的HTTP状态码，以2开头的都是成功</span></div><div class="line">            <span class="keyword">if</span> (status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span>) &#123;</div><div class="line">                <span class="keyword">var</span> response = <span class="string">''</span>;</div><div class="line">                <span class="comment">// 判断接受数据的内容类型  </span></div><div class="line">                <span class="keyword">var</span> type = xhr.getResponseHeader(<span class="string">'Content-type'</span>);</div><div class="line">                <span class="keyword">if</span> (type.indexOf(<span class="string">'xml'</span>) !== <span class="number">-1</span> &amp;&amp; xhr.responseXML) &#123;</div><div class="line">                    response = xhr.responseXML; <span class="comment">//Document对象响应   </span></div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">'application/json'</span>) &#123;</div><div class="line">                    response = <span class="built_in">JSON</span>.parse(xhr.responseText); <span class="comment">//JSON响应   </span></div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    response = xhr.responseText; <span class="comment">//字符串响应   </span></div><div class="line">                &#125;;</div><div class="line">                <span class="comment">// 成功回调函数 </span></div><div class="line">                options.success &amp;&amp; options.success(response);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                options.error &amp;&amp; options.error(status);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 连接和传输数据   </span></div><div class="line">    <span class="keyword">if</span> (options.type == <span class="string">'GET'</span>) &#123;</div><div class="line">        <span class="comment">// 三个参数：请求方式、请求地址(get方式时，传输数据是加在地址后的)、是否异步请求(同步请求的情况极少)；</span></div><div class="line">        xhr.open(options.type, options.url + <span class="string">'?'</span> + options.data, <span class="literal">true</span>);</div><div class="line">        xhr.send(<span class="literal">null</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        xhr.open(options.type, options.url, <span class="literal">true</span>);</div><div class="line">        <span class="comment">//必须，设置提交时的内容类型   </span></div><div class="line">        xhr.setRequestHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/x-www-form-urlencoded; charset=UTF-8'</span>);</div><div class="line">        <span class="comment">// 传输数据  </span></div><div class="line">        xhr.send(options.data);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//格式化参数   </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">formatParams</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> arr = [];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> data) &#123;</div><div class="line">            <span class="comment">//   encodeURIComponent() ：用于对 URI 中的某一部分进行编码</span></div><div class="line">            arr.push(<span class="built_in">encodeURIComponent</span>(name) + <span class="string">'='</span> + <span class="built_in">encodeURIComponent</span>(data[name]));</div><div class="line">        &#125;;</div><div class="line">        <span class="comment">// 添加一个随机数参数，防止缓存   </span></div><div class="line">        arr.push(<span class="string">'v='</span> + random());</div><div class="line">        <span class="keyword">return</span> arr.join(<span class="string">'&amp;'</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 获取随机数   </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">random</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">10000</span> + <span class="number">500</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 调用</span></div><div class="line">ajax(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">'test.php'</span>,   <span class="comment">// 请求地址</span></div><div class="line">    type: <span class="string">'POST'</span>,   <span class="comment">// 请求类型，默认"GET"，还可以是"POST"</span></div><div class="line">    data: &#123; <span class="string">'b'</span>: <span class="string">'异步请求'</span> &#125;,   <span class="comment">// 传输数据</span></div><div class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;   <span class="comment">// 请求成功的回调函数</span></div><div class="line">        <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(res));</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">error</span>: <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123; &#125;   <span class="comment">// 请求失败的回调函数</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/13/JS实现Ajax和Jsonp/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/21/JS开发datepicker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1404,146 +1534,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/04/20/水平居中方法总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/20/水平居中方法总结/" itemprop="url">
-                  水平居中方法总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T11:32:47+08:00">
-                2017-04-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li><p>若是行内元素, 给其父元素设置 text-align:center,即可实现行内元素水平居中.</p>
-</li>
-<li><p>若是块级元素且定宽, 该元素设置 margin:0 auto 即可.</p>
-</li>
-<li><p>若是 display:inline-block, 该元素的父元素设置 text-align:center 即可.</p>
-</li>
-<li><p>若不论是块级还是行内，而且元素不定宽，可以给元素设置 display: table 然后设置 margin: 0 auto 即可.</p>
-</li>
-<li><p>若子元素包含 float:left 属性, 为了让子元素水平居中, 则可让父元素宽度设置为fit-content,并且配合margin, 作如下设置:</p>
-</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span>&#123;</div><div class="line">    <span class="attribute">width</span>: -moz-fit-content;</div><div class="line">    <span class="attribute">width</span>: -webkit-fit-content;</div><div class="line">    <span class="attribute">width</span>:fit-content;</div><div class="line">    <span class="attribute">margin</span>:<span class="number">0</span> auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>fit-content是CSS3中给width属性新加的一个属性值,它配合margin可以轻松实现水平居中, 目前只支持Chrome 和 Firefox浏览器.</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/20/水平居中方法总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1593,7 +1583,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
