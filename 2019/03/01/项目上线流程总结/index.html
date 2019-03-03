@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="发布必备条件 一台Linux服务器（CentOS/Ubuntu）服务器  一款Web服务器（Nginx/Apache/Tomcat）  一个属于自己的独立域名（cn/com/org/…）  本次流程以CentOS和Nginx配置为例 webpack设置静态地址打包 output的publicPath从开发地址/dist/设置为线上地址：//www.yuuhei.site  服务器购买 选择阿里云产">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-02T12:26:48.482Z">
+<meta property="og:updated_time" content="2019-03-03T17:05:30.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目上线流程总结">
 <meta name="twitter:description" content="发布必备条件 一台Linux服务器（CentOS/Ubuntu）服务器  一款Web服务器（Nginx/Apache/Tomcat）  一个属于自己的独立域名（cn/com/org/…）  本次流程以CentOS和Nginx配置为例 webpack设置静态地址打包 output的publicPath从开发地址/dist/设置为线上地址：//www.yuuhei.site  服务器购买 选择阿里云产">
@@ -378,83 +378,6 @@
 <ul>
 <li>这时候就可以直接全局执行node和npm了</li>
 </ul>
-<h3 id="linux和nginx基本命令"><a href="#linux和nginx基本命令" class="headerlink" title="linux和nginx基本命令"></a>linux和nginx基本命令</h3><a id="more"></a>
-<ul>
-<li>获取root权限</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo su</div></pre></td></tr></table></figure>
-<ul>
-<li>退出root权限模式</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ctrl+d</div></pre></td></tr></table></figure>
-<ul>
-<li>下载文件（url是下载文件的地址）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget url</div></pre></td></tr></table></figure>
-<ul>
-<li>查看当前路径</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pwd</div></pre></td></tr></table></figure>
-<ul>
-<li>返回上一路径</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd -</div></pre></td></tr></table></figure>
-<ul>
-<li>创建文件夹</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkidr name</div></pre></td></tr></table></figure>
-<ul>
-<li>创建/修改文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vim filename</div><div class="line">touch filename</div></pre></td></tr></table></figure>
-<ul>
-<li>查看文件内容</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat filename</div></pre></td></tr></table></figure>
-<ul>
-<li>vim保存退出</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 保存并退出</span></div><div class="line">:wq</div><div class="line"><span class="comment">// 保存</span></div><div class="line">:w</div><div class="line"><span class="comment">// 退出</span></div><div class="line">:q</div><div class="line"><span class="comment">// 强制退出</span></div><div class="line">:q!</div></pre></td></tr></table></figure>
-<ul>
-<li>vim视图模式</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> nu</div></pre></td></tr></table></figure>
-<ul>
-<li>vim编辑模式</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">i</div></pre></td></tr></table></figure>
-<ul>
-<li>vim只读模式</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">esc</div></pre></td></tr></table></figure>
-<ul>
-<li>连接远程服务器</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@remote_ip</div></pre></td></tr></table></figure>
-<ul>
-<li>上传网站到服务器</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// scp -r ./demo/* root@46.86.255.117:/root/www 例子</div><div class="line">scp -r local_dir user@ip:/remote_dir</div></pre></td></tr></table></figure>
-<ul>
-<li>查看名为nginx的进程，grep为过滤</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep nginx</div></pre></td></tr></table></figure>
-<ul>
-<li>停止nginx进程</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -s stop</div></pre></td></tr></table></figure>
-<ul>
-<li>重启nginx</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -s reload</div></pre></td></tr></table></figure>
-<ul>
-<li>开启nginx，指定配置文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -c /etc/nginx/nginx.conf</div></pre></td></tr></table></figure>
-<ul>
-<li>查看nginx默认配置文件和路径和语法是否正确</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -t</div></pre></td></tr></table></figure>
 <h3 id="nginx-conf"><a href="#nginx-conf" class="headerlink" title="nginx.conf"></a>nginx.conf</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 改成user root</span></div><div class="line"><span class="attribute">user</span> root</div><div class="line"><span class="comment"># ...</span></div><div class="line">http &#123;</div><div class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="attribute">server_name</span> yuuhei.site;</div><div class="line">    <span class="comment"># 日志文件</span></div><div class="line">    <span class="attribute">access_log</span> /etc/nginx/logs/access.log combined;</div><div class="line">    </div><div class="line">    <span class="comment"># 完全满足</span></div><div class="line">    <span class="attribute">location</span> = / &#123;</div><div class="line">        <span class="comment"># 网站路径，存放网站的地方</span></div><div class="line">        <span class="attribute">root</span> /root/www/;</div><div class="line">        <span class="comment"># 输入ip后，默认会显示哪个网址，不设置就需要手动在浏览器上访问</span></div><div class="line">        <span class="attribute">index</span> index.html index.htm;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment"># 满足条件，访问.do，正则匹配服务器地址</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.do$</span> &#123;</div><div class="line">        <span class="attribute">proxy_pass</span> http://www.server.com</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment"># 拒绝访问设定</span></div><div class="line">    location <span class="regexp">~ /source/*</span> &#123;</div><div class="line">    	<span class="attribute">deny</span> all;   </div><div class="line">	&#125;</div><div class="line">    </div><div class="line">    <span class="comment"># 都不满足则尝试，与 = / 有区别</span></div><div class="line">    <span class="attribute">location</span> / &#123;</div><div class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ <span class="variable">$uri</span>/index.html;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h3><ul>
 <li>www：平时输入网址的www，例如<code>www.baidu.com</code></li>
@@ -524,6 +447,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/04/ubuntu和nginx常用命令/" rel="prev" title="ubuntu和nginx常用命令">
+                ubuntu和nginx常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -597,7 +524,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -610,7 +537,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -656,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#发布必备条件"><span class="nav-number">1.</span> <span class="nav-text">发布必备条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack设置静态地址打包"><span class="nav-number">2.</span> <span class="nav-text">webpack设置静态地址打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器购买"><span class="nav-number">3.</span> <span class="nav-text">服务器购买</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接远程服务器"><span class="nav-number">4.</span> <span class="nav-text">链接远程服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web服务器的选择"><span class="nav-number">5.</span> <span class="nav-text">Web服务器的选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Web服务器"><span class="nav-number">6.</span> <span class="nav-text">配置Web服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node使用官网解压包安装"><span class="nav-number">7.</span> <span class="nav-text">node使用官网解压包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux和nginx基本命令"><span class="nav-number">8.</span> <span class="nav-text">linux和nginx基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-conf"><span class="nav-number">9.</span> <span class="nav-text">nginx.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#域名解析"><span class="nav-number">10.</span> <span class="nav-text">域名解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网站工作原理"><span class="nav-number">11.</span> <span class="nav-text">网站工作原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#发布必备条件"><span class="nav-number">1.</span> <span class="nav-text">发布必备条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack设置静态地址打包"><span class="nav-number">2.</span> <span class="nav-text">webpack设置静态地址打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器购买"><span class="nav-number">3.</span> <span class="nav-text">服务器购买</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接远程服务器"><span class="nav-number">4.</span> <span class="nav-text">链接远程服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web服务器的选择"><span class="nav-number">5.</span> <span class="nav-text">Web服务器的选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Web服务器"><span class="nav-number">6.</span> <span class="nav-text">配置Web服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node使用官网解压包安装"><span class="nav-number">7.</span> <span class="nav-text">node使用官网解压包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-conf"><span class="nav-number">8.</span> <span class="nav-text">nginx.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#域名解析"><span class="nav-number">9.</span> <span class="nav-text">域名解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网站工作原理"><span class="nav-number">10.</span> <span class="nav-text">网站工作原理</span></a></li></ol></div>
             
 
           </div>
