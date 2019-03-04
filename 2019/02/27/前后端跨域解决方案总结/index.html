@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="产生跨域的原因 浏览器限制 请求链接跨域 请求类型是XMLHttpRequest  跨域解决方法之一：JSONP​    实现jsonp，需要前后端都需要改造，后端需要增加支持返回js函数，主要约定是url的key字段，由于jquery默认的jsonp请求的关键字key默认是callback，后端一般都会使用callback关键字，当然也可以定义另一个名称，而这个key对应的value使用什么都可">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-03T16:59:18.105Z">
+<meta property="og:updated_time" content="2019-03-04T02:25:07.583Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前后端跨域解决方案总结">
 <meta name="twitter:description" content="产生跨域的原因 浏览器限制 请求链接跨域 请求类型是XMLHttpRequest  跨域解决方法之一：JSONP​    实现jsonp，需要前后端都需要改造，后端需要增加支持返回js函数，主要约定是url的key字段，由于jquery默认的jsonp请求的关键字key默认是callback，后端一般都会使用callback关键字，当然也可以定义另一个名称，而这个key对应的value使用什么都可">
@@ -406,11 +406,11 @@
 <p>配置nginx.conf</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># nginx.conf 在http块区域里最后面增加</span></div><div class="line"><span class="attribute">include</span> vhost/<span class="regexp">*.conf</span>;</div></pre></td></tr></table></figure>
 <p>nginx.conf目录下新建一个vhost文件夹，新建a.com.conf</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># a.com </div><div class="line">server&#123;</div><div class="line">	listen 80;</div><div class="line">    server_name a.com;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        # 本地客户端代理</div><div class="line">        proxy_pass http://localhost:8081/;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location ~ .*\.do$ &#123;</div><div class="line">        # 注意，使用了正则匹配就不能包含uri，即/</div><div class="line">        proxy_pass http://localhost:3000;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># a.com </div><div class="line">server&#123;</div><div class="line">	listen 80;</div><div class="line">    server_name a.com;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        # 本地客户端代理</div><div class="line">        proxy_pass http://localhost:8081/;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location ~ .*\.do$ &#123;</div><div class="line">        # 注意，使用了正则匹配代理路径就不能包含uri，即/</div><div class="line">        proxy_pass http://localhost:3000;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>现在所有的.do请求都会经过3000端口的这个代理</p>
 <p>开启nginx（ubuntu下）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -c /etc/nginx/nginx.conf</div></pre></td></tr></table></figure>
-<p>​    就可以通过<code>a.com</code>和<code>a.com/server/</code>就可以同时访问客户端和后台应用服务器，解决跨域问题</p>
+<p>​    就可以通过<code>a.com</code>和<code>a.com/user.do</code>就可以同时访问客户端和后台应用服务器，解决跨域问题</p>
 <p>​    这样解决的最大区别是，请求的地址，之前必须是一个绝对地址，现在是一个相对地址。比如之前请求的地址是<code>http://localhost:3000/users.do</code>，现在只需要请求<code>/users.do</code>即可</p>
 <p>​    这样的解决方法，之前前后端做的跨域设置都不用做，因为现在经过nginx反向代理后，两个地址都指向同一个域名，无跨域问题，cookie也能够发送到后台应用服务器～</p>
 
