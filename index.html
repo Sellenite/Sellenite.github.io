@@ -248,6 +248,134 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/03/14/Vue工作经验总结（2）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/03/14/Vue工作经验总结（2）/" itemprop="url">
+                  Vue工作经验总结（2）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-14T18:04:19+08:00">
+                2019-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="props可以控制传入的限制，使用validator"><a href="#props可以控制传入的限制，使用validator" class="headerlink" title="props可以控制传入的限制，使用validator"></a>props可以控制传入的限制，使用validator</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> oneOf = <span class="function">(<span class="params">value, validList</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; validList.length; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (value === validList[i]) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">props: &#123;</div><div class="line">    <span class="attr">size</span>: &#123;</div><div class="line">        validator(value) &#123;</div><div class="line">            <span class="keyword">return</span> oneOf(value, [<span class="string">'large'</span>, <span class="string">'small'</span>, <span class="string">'default'</span>])</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">default</span>: <span class="string">'default'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="provide-inject允许支持上下文特性，共享数据（类似react的context）"><a href="#provide-inject允许支持上下文特性，共享数据（类似react的context）" class="headerlink" title="provide/inject允许支持上下文特性，共享数据（类似react的context）"></a>provide/inject允许支持上下文特性，共享数据（类似react的context）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 祖先组件</span></div><div class="line">provide() &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">form</span>: <span class="keyword">this</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 子组件，这样子组件就可以使用this.form访问到祖先组件的实例了</span></div><div class="line">inject: [<span class="string">'form'</span>]</div></pre></td></tr></table></figure>
+<h4 id="使用mixins高度抽象各类方法，方便复用"><a href="#使用mixins高度抽象各类方法，方便复用" class="headerlink" title="使用mixins高度抽象各类方法，方便复用"></a>使用mixins高度抽象各类方法，方便复用</h4><h4 id="组件内使用-emit出来的事件，同样可以在本组件使用-on监听到"><a href="#组件内使用-emit出来的事件，同样可以在本组件使用-on监听到" class="headerlink" title="组件内使用$emit出来的事件，同样可以在本组件使用$on监听到"></a>组件内使用$emit出来的事件，同样可以在本组件使用$on监听到</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 同一个组件</span></div><div class="line"><span class="keyword">this</span>.$emit(<span class="string">'on-select'</span>, selectValue);</div><div class="line"><span class="keyword">this</span>.$on(<span class="string">'on-select'</span>, (selectValue) =&gt; &#123;&#125;);</div></pre></td></tr></table></figure>
+<h4 id="Vue2-x废除了Vue1-x的-dispatch和-broadcast的方法，可以使用现有的-on和-emit实现"><a href="#Vue2-x废除了Vue1-x的-dispatch和-broadcast的方法，可以使用现有的-on和-emit实现" class="headerlink" title="Vue2.x废除了Vue1.x的$dispatch和$broadcast的方法，可以使用现有的$on和$emit实现"></a>Vue2.x废除了Vue1.x的$dispatch和$broadcast的方法，可以使用现有的$on和$emit实现</h4>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/14/Vue工作经验总结（2）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/03/08/Promise、Promise.all、Promise.race实现原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1496,140 +1624,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/10/29/JS工作经验总结（2）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/10/29/JS工作经验总结（2）/" itemprop="url">
-                  JS工作经验总结（2）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T10:21:20+08:00">
-                2018-10-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>本文主要记录工作时JS问题或经验</p>
-</blockquote>
-<h4 id="new-Array-的遍历问题"><a href="#new-Array-的遍历问题" class="headerlink" title="new Array()的遍历问题"></a>new Array()的遍历问题</h4><p>new Array(3)这样得出的稀疏数组不能够进行遍历，需要进行特殊的转义才能够遍历</p>
-<h4 id="webkitTransitionEnd监听Transition动画结束事件"><a href="#webkitTransitionEnd监听Transition动画结束事件" class="headerlink" title="webkitTransitionEnd监听Transition动画结束事件"></a>webkitTransitionEnd监听Transition动画结束事件</h4><p>css3的过渡属性transition，在动画结束时，也存在结束的事件：webkitTransitionEnd; 注意：transition,也仅仅有这一个事件。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$el.addEventListener(<span class="string">'webkitTransitionEnd'</span>, handler, <span class="literal">false</span>);</div></pre></td></tr></table></figure></p>
-<p>css3的动画animation也能够监听事件，分别在开始和结束时都能够监听到animationstart，animationend</p>
-<h4 id="阻止冒泡问题"><a href="#阻止冒泡问题" class="headerlink" title="阻止冒泡问题"></a>阻止冒泡问题</h4><p><code>stopPropagation()</code>方法既可以阻止事件冒泡，也可以阻止事件捕获</p>
-<p><code>stopImmediatePropagation()</code>和 <code>stopPropagation()</code>的区别在，后者只会阻止冒泡或者是捕获。 但是前者除此之外还会阻止该元素的其他事件发生，但是后者就不会阻止其他事件的发生</p>
-<h4 id="arguments的问题"><a href="#arguments的问题" class="headerlink" title="arguments的问题"></a>arguments的问题</h4><p><code>arguments</code>不是一个真正的数组，是一个类数组，无法使用<code>shift</code>等数组方法，只能使用<code>Array.prototype.slice.apply(arguments)</code>转换成真正的数组，或者使用<code>[].shift.call(arguments)</code>之类的方法来调用数组的方法</p>
-<h4 id="img作为数据统计的问题"><a href="#img作为数据统计的问题" class="headerlink" title="img作为数据统计的问题"></a>img作为数据统计的问题</h4><p>img经常进行用于数据上报，做用户埋点什么的，消息已读什么的，就是将query放在图片的请求地址上就可以了。需要注意在使用img进行http请求时，img对象需要存储在闭包里，避免函数执行后，里面的变量在http请求完成前被销毁，导致发送不成功，会造成请求丢失的问题<br>例子（使用闭包封装img变量，避免销毁）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> tracker = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> imgs = [];</div><div class="line">    <span class="keyword">var</span> url = <span class="string">'https://www.baidu.com/img/bd_logo1.png'</span>;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">id, obj = &#123;&#125;</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> query = <span class="string">'?id='</span> + id;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> obj) &#123;</div><div class="line">            query += <span class="string">'&amp;'</span> + i + <span class="string">'='</span> + obj[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</div><div class="line">        imgs.push(img);</div><div class="line">        img.src = url + query;</div><div class="line">    &#125;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line">tracker(<span class="string">'TEST_TRACKER'</span>, &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'yuuhei'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="string">'24'</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/29/JS工作经验总结（2）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1679,7 +1673,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
