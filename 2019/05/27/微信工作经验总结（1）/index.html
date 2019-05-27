@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JS,微信," />
 
 
 
@@ -87,13 +87,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="yuuhei&#39;s Home">
-<meta property="og:url" content="https://sellenite.github.io/archives/index.html">
+<meta name="description" content="记一次微信公众号/h5支付 公众号支付，https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;amp;index=6 第三方H5支付，https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_4  具体步骤：  用户选择商品，提交订单，生成订单号，这时候金额什么的都会保存在后">
+<meta name="keywords" content="JS,微信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信工作经验总结（1）">
+<meta property="og:url" content="https://sellenite.github.io/2019/05/27/微信工作经验总结（1）/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="记一次微信公众号/h5支付 公众号支付，https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;amp;index=6 第三方H5支付，https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_4  具体步骤：  用户选择商品，提交订单，生成订单号，这时候金额什么的都会保存在后">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-27T14:43:34.468Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="yuuhei&#39;s Home">
+<meta name="twitter:title" content="微信工作经验总结（1）">
+<meta name="twitter:description" content="记一次微信公众号/h5支付 公众号支付，https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;amp;index=6 第三方H5支付，https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_4  具体步骤：  用户选择商品，提交订单，生成订单号，这时候金额什么的都会保存在后">
 
 
 
@@ -121,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://sellenite.github.io/archives/"/>
+  <link rel="canonical" href="https://sellenite.github.io/2019/05/27/微信工作经验总结（1）/"/>
 
 
 
 
 
-  <title> 归档 | yuuhei's Home </title>
+  <title> 微信工作经验总结（1） | yuuhei's Home </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -152,7 +157,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -236,402 +241,185 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-    <span class="archive-page-counter">
-      
-      
-       
-      
-      OK! 目前共计 42 篇日志。 继续努力。
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/05/27/微信工作经验总结（1）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
     </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                微信工作经验总结（1）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-27T22:20:28+08:00">
+                2019-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2019/05/27/微信工作经验总结（1）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
 
       
       
-      
 
+      
+        <h3 id="记一次微信公众号-h5支付"><a href="#记一次微信公众号-h5支付" class="headerlink" title="记一次微信公众号/h5支付"></a>记一次微信公众号/h5支付</h3><blockquote>
+<p>公众号支付，<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;index=6" target="_blank" rel="noopener">https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;index=6</a></p>
+<p>第三方H5支付，<a href="https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_4" target="_blank" rel="noopener">https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_4</a></p>
+</blockquote>
+<p>具体步骤：</p>
+<ul>
+<li>用户选择商品，提交订单，生成订单号，这时候金额什么的都会保存在后台算，不需要前端送任何关于钱的字段</li>
+<li>如果是公众号JSAPI支付，需要将这个订单号传到后台，生成一个签名，返回的字段里面包含公众号id，时间戳，随机字符串，签名方式，签名等</li>
+<li>使用这些签名的字段调用JSAPI</li>
+<li>在回调里处理成功和失败</li>
+<li>如果是h5支付，需要将订单号请求另一个接口，返回一个外部链接mwebUrl，然后拼接一个支付回调地址&amp;redirect_url=，直接使用window.location.href将地址转到外部链接，就会h5就会进行支付了</li>
+</ul>
+<blockquote>
+<p>注意：就算判断了支付成功，回调里也不能直接做成功的处理，到最后有可能由于各种原因失败，这时候一般都是判断支付成功后，跳到另一个页面，然后轮询这个订单的状况，那时候返回支付成功的时候，才算是真的成功，后台会得到各种信息，交易流水，交易时间等</p>
+<p>注意：h5支付如果订单超时，一般时间比较短，比使用JSAPI的方法短很多，这时候mwebUrl是不会返回回来的</p>
+<p>注意：已经生成订单的交易后台如果对交易金额进行修改，在继续交易用原订单号请求签名的时候，就会报错，走到了catch，不允许交易</p>
+<p>注意：调用公众号JSAPI支付的时候，需要在平台里维护支付的url，不然会在调用JSAPI的时候走到失败的回调，各种报错会有错误提示信息显示，根据提示处理即可</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
       
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2019">2019</h2>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/微信/" rel="tag"># 微信</a>
+          
         </div>
       
+
+      
+        
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/17/CSS工作经验总结/" rel="next" title="CSS工作经验总结">
+                <i class="fa fa-chevron-left"></i> CSS工作经验总结
+              </a>
+            
+          </div>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          <span class="post-nav-divider"></span>
 
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/27/微信工作经验总结（1）/" itemprop="url">
-              
-                <span itemprop="name">微信工作经验总结（1）</span>
-              
-            </a>
-        
-      </h1>
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-05-27T22:20:28+08:00"
-              content="2019-05-27" >
-          05-27
-        </time>
-      </div>
-
-    </header>
+      
+      
+    </footer>
   </article>
 
 
 
-    
-
+    <div class="post-spread">
       
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/17/CSS工作经验总结/" itemprop="url">
-              
-                <span itemprop="name">CSS工作经验总结</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-05-17T22:44:25+08:00"
-              content="2019-05-17" >
-          05-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/27/常用HTTP状态码/" itemprop="url">
-              
-                <span itemprop="name">常用HTTP状态码</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-27T23:29:50+08:00"
-              content="2019-03-27" >
-          03-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/26/call-apply-bind-new-create-instanceof原理/" itemprop="url">
-              
-                <span itemprop="name">call/apply/bind/new/create/instanceof原理</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-26T00:42:53+08:00"
-              content="2019-03-26" >
-          03-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/14/Vue工作经验总结（2）/" itemprop="url">
-              
-                <span itemprop="name">Vue工作经验总结（2）</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-14T18:04:19+08:00"
-              content="2019-03-14" >
-          03-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/08/Promise、Promise.all、Promise.race实现原理/" itemprop="url">
-              
-                <span itemprop="name">Promise、Promise.all、Promise.race实现原理</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-08T22:50:21+08:00"
-              content="2019-03-08" >
-          03-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/04/ubuntu和nginx常用命令/" itemprop="url">
-              
-                <span itemprop="name">ubuntu和nginx常用命令</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-04T00:10:51+08:00"
-              content="2019-03-04" >
-          03-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/01/项目上线流程总结/" itemprop="url">
-              
-                <span itemprop="name">项目上线流程总结</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-01T00:30:49+08:00"
-              content="2019-03-01" >
-          03-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/27/前后端跨域解决方案总结/" itemprop="url">
-              
-                <span itemprop="name">前后端跨域解决方案总结</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-02-27T23:19:11+08:00"
-              content="2019-02-27" >
-          02-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/25/JS上传文件到后台并返回/" itemprop="url">
-              
-                <span itemprop="name">JS上传文件到后台并返回</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-02-25T11:05:57+08:00"
-              content="2019-02-25" >
-          02-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
-
+    </div>
+  </div>
 
 
           </div>
@@ -639,6 +427,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -658,8 +452,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://puu.sh/uoJbK/033c9ae781.jpg"
@@ -723,6 +526,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#记一次微信公众号-h5支付"><span class="nav-number">1.</span> <span class="nav-text">记一次微信公众号/h5支付</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -830,11 +649,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
 
 
   
