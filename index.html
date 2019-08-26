@@ -248,6 +248,264 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/08/26/Vue工作经验总结（3）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/08/26/Vue工作经验总结（3）/" itemprop="url">
+                  Vue工作经验总结（3）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-26T22:18:15+08:00">
+                2019-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="v-model语法糖时，可以使用watch进行数据初始化"><a href="#v-model语法糖时，可以使用watch进行数据初始化" class="headerlink" title="v-model语法糖时，可以使用watch进行数据初始化"></a>v-model语法糖时，可以使用watch进行数据初始化</h3><p>之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">value: &#123;</div><div class="line">    <span class="attr">immediate</span>: <span class="literal">true</span>,</div><div class="line">    handler(val) &#123;</div><div class="line">        <span class="keyword">this</span>.currentValue = val;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="elementUI里的table，template里不要使用ref"><a href="#elementUI里的table，template里不要使用ref" class="headerlink" title="elementUI里的table，template里不要使用ref"></a>elementUI里的table，template里不要使用ref</h3><p>elementUI里的table，template里不要使用ref，引用的结果会与预期有差距，暂时无法找出什么原因</p>
+<h3 id="使用v-model进行双向绑定时，oninput可以立即修改数据"><a href="#使用v-model进行双向绑定时，oninput可以立即修改数据" class="headerlink" title="使用v-model进行双向绑定时，oninput可以立即修改数据"></a>使用v-model进行双向绑定时，oninput可以立即修改数据</h3><p>其实v-model就是emit一个input事件的语法糖，根据这个我们可以通过监听input事件，在修改之前就将它拦截修改就可以了，不用根据watch这个绑定值然后再手动修改一次，因为这样会有一个闪烁的问题，直接拦截input事件就不会出现这个问题，具体实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">components</span> <span class="attr">v-model</span>=<span class="string">"test"</span> @<span class="attr">input</span>=<span class="string">"value=value.replace(/[^\d]/g, '')"</span>&gt;</span><span class="tag">&lt;/<span class="name">components</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样绑定的test值就是经过执行函数后的值</p>
+<h3 id="fixed定位的浮动框，在滚动时依然能跟随屏幕移动"><a href="#fixed定位的浮动框，在滚动时依然能跟随屏幕移动" class="headerlink" title="fixed定位的浮动框，在滚动时依然能跟随屏幕移动"></a>fixed定位的浮动框，在滚动时依然能跟随屏幕移动</h3><p>参考elementUI在处理pop组件，这些组件一般都是放在body下，然后使用fixed定位的，如果不进行处理，在进行滚动的时候会一直定在同一个地方，很奇怪。</p>
+<p>参考popper.js 227行左右的监听滚动函数</p>
+<h3 id="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"><a href="#elementUI的table固定高度时，如何将里面滚动内容跳到顶部" class="headerlink" title="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"></a>elementUI的table固定高度时，如何将里面滚动内容跳到顶部</h3><p>可以看一下源码，里面存了dom</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$refs.table.bodyWrapper.scrollTop = <span class="number">0</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/08/26/JS工作经验总结（3）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/08/26/JS工作经验总结（3）/" itemprop="url">
+                  JS工作经验总结（3）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-26T21:53:30+08:00">
+                2019-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>JS工作经验总结（2）</p>
+<h3 id="JS拿到图片实际宽高方法"><a href="#JS拿到图片实际宽高方法" class="headerlink" title="JS拿到图片实际宽高方法"></a>JS拿到图片实际宽高方法</h3><p>其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> el.naturalWidth == <span class="literal">undefined</span>) &#123;</div><div class="line">    <span class="comment">// LTE 8</span></div><div class="line">    <span class="keyword">var</span> i = <span class="keyword">new</span> Image();</div><div class="line">    <span class="keyword">var</span> rw, rh;</div><div class="line">    i.src = el.src;</div><div class="line">    <span class="comment">// 判断是否有缓存</span></div><div class="line">    <span class="keyword">if</span> (i.complete) &#123;</div><div class="line">        rw = i.width;</div><div class="line">        rh = i.height;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        i.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            rw = i.width;</div><div class="line">            rh = i.height;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// GTE IE9</span></div><div class="line">    rw = el.naturalWidth;</div><div class="line">    rh = el.naturalHeight;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="关于使用formData传送的类型"><a href="#关于使用formData传送的类型" class="headerlink" title="关于使用formData传送的类型"></a>关于使用formData传送的类型</h3><p>formData可以直接传file，也可以通过Blob二进制类型转成二进制，然后放到formData里。一些压缩的原理就是经过转换后，存成二进制，然后发到后台，后台收到的仍然是文件类型</p>
+<p>注意formData传图片文件的时候，是不能直接传base64的，因为它不是文件类型。</p>
+<h3 id="清空input文件的值"><a href="#清空input文件的值" class="headerlink" title="清空input文件的值"></a>清空input文件的值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">inputEl.files.value = <span class="literal">null</span>;</div></pre></td></tr></table></figure>
+<h3 id="for-in循环时，使用数值作为键值遍历的问题"><a href="#for-in循环时，使用数值作为键值遍历的问题" class="headerlink" title="for-in循环时，使用数值作为键值遍历的问题"></a>for-in循环时，使用数值作为键值遍历的问题</h3><p>使用for in循环时，如果对象的键值为数值，会根据数值的大小顺序，从低到高进行遍历，遍历的顺序不可信，不要使用遍历对象然后直接push到数组，会有排序问题，需要额外的方法对数组进行排序</p>
+<h3 id="webpack打包体积过大，使用cdn引入依赖"><a href="#webpack打包体积过大，使用cdn引入依赖" class="headerlink" title="webpack打包体积过大，使用cdn引入依赖"></a>webpack打包体积过大，使用cdn引入依赖</h3><p>由于我们常引用依赖的方法是import xx from ‘xxx’，但由于引用的cdn是通过全局变量进行引用的，如果想要使用cdn，同时使用import的方法，可以采用cdn和webpack的externals</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/05/27/微信工作经验总结（1）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1414,292 +1672,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/02/27/前后端跨域解决方案总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/02/27/前后端跨域解决方案总结/" itemprop="url">
-                  前后端跨域解决方案总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-27T23:19:11+08:00">
-                2019-02-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="产生跨域的原因"><a href="#产生跨域的原因" class="headerlink" title="产生跨域的原因"></a>产生跨域的原因</h3><ul>
-<li>浏览器限制</li>
-<li>请求链接跨域</li>
-<li>请求类型是XMLHttpRequest</li>
-</ul>
-<h3 id="跨域解决方法之一：JSONP"><a href="#跨域解决方法之一：JSONP" class="headerlink" title="跨域解决方法之一：JSONP"></a>跨域解决方法之一：JSONP</h3><p>​    实现jsonp，需要前后端都需要改造，后端需要增加支持返回js函数，主要约定是url的key字段，由于jquery默认的jsonp请求的关键字key默认是callback，后端一般都会使用callback关键字，当然也可以定义另一个名称，而这个key对应的value使用什么都可以，jquery是使用随机数，后台会获取这个随机数，作为返回js函数的函数名。这是大多数情况，原理是如此，但可能有所不同。</p>
-<p>​    除此之外，还需要注意要使用随机数，不然jsonp由于是js脚本，如果请求参数相同，就会使用缓存的结果，而不会使用最新的结果，jquery的jsonp默认有随机数参数</p>
-<p>​    jsonp有以下弊端：服务端也需要改造，请求只能是get。由于请求是get，一般只能用来请求一些获取数据的接口，而不能用于修改用户信息等类型的接口（需要用到post）。由于这个缺点，一般很少接口会用到jsonp，解决跨域问题还需要找其他解决办法</p>
-<h3 id="网络请求的路径和解决思路"><a href="#网络请求的路径和解决思路" class="headerlink" title="网络请求的路径和解决思路"></a>网络请求的路径和解决思路</h3><p>​    一般请求路径是：Client(调用方) - Apache/Nginx(http服务器) - Tomcat(被调用方后台应用服务器)。其中Apache/Nginx会处理来自client的请求，判断该请求为什么类型的请求，如果是静态请求，则直接处理返回给client，如果是动态请求，则转发给后台的应用服务器，处理完毕后则原路返回。</p>
-<p>​    动态请求指，跟用户数据有关的请求，xhr等</p>
-<p>​    静态请求指，跟用户数据无关的请求，例如img，js，css</p>
-<p>​    解决跨域的思路有两种，一种是在被调用方后台应用服务器上做处理，在响应头上增加字段，告诉浏览器允许对方调用，浏览器就不会报跨域问题；第二种是隐藏跨域的思路，在http服务器上做处理，做一个http请求转发，浏览器发现所有的请求都是同一个域，就不会报跨域问题。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/27/前后端跨域解决方案总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/02/25/JS上传文件到后台并返回/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/02/25/JS上传文件到后台并返回/" itemprop="url">
-                  JS上传文件到后台并返回
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T11:05:57+08:00">
-                2019-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="一般表单上传文件到后台的格式"><a href="#一般表单上传文件到后台的格式" class="headerlink" title="一般表单上传文件到后台的格式"></a>一般表单上传文件到后台的格式</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"form2"</span> <span class="attr">action</span>=<span class="string">"/manage/product/upload.do"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">encType</span>=<span class="string">"multipart/form-data"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"upload_file"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"upload"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>字段说明：</p>
-<ul>
-<li>name：input标签的name属性值要对应后台的字段</li>
-<li>enctype：属性规定在发送到服务器之前应该如何对表单数据进行编码，有以下三个值：<ul>
-<li>application/x-www-form-urlencoded：表单数据编码为键值对，&amp;分隔</li>
-<li>multipart/form-data：不对字符编码。在使用包含文件上传控件的表单时，必须使用该值</li>
-<li>text/plain：空格转换为 “+” 加号，但不对特殊字符编码</li>
-</ul>
-</li>
-</ul>
-<h3 id="如何实现上传不跳转"><a href="#如何实现上传不跳转" class="headerlink" title="如何实现上传不跳转"></a>如何实现上传不跳转</h3><p>​    默认的使用上述提交表单，选择完图片提交后会进行页面跳转，这不是所期望的。由于兼容性问题，会分为IE10+和非IE10的情况。</p>
-<p>​    IE9和IE9以下只能用iframe表单上传拿回调，target=”rfFrame”调取的是下面这个iframe的id值。作用是为了提交表单时防止页面跳转，不兼容Formdata。</p>
-<p>​    IE10+和其他浏览器可以使用ajax的post去send一个Formdata的js对象，可以实现提交表单不跳转。</p>
-<p>​    FormData类型其实是在XMLHttpRequest 2级定义的，它是为序列化表以及创建与表单格式相同的数据（当然是用于XHR传输）提供便利，使用FormData的最大优点就是我们可以异步上传一个二进制文件，兼容性需要IE10+。</p>
-<h3 id="Formdata实现上传文件"><a href="#Formdata实现上传文件" class="headerlink" title="Formdata实现上传文件"></a>Formdata实现上传文件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ...</span></div><div class="line"><span class="comment">// 取file文件的方法</span></div><div class="line"><span class="keyword">let</span> fileObject = <span class="built_in">document</span>.getElementById(<span class="string">'upload_file'</span>).files[<span class="number">0</span>];</div><div class="line"><span class="comment">// FormData表单对象，ie10+和其他浏览器才能使用，ie9和以下只能够使用原始form+iframe取回调</span></div><div class="line"><span class="keyword">let</span> form = <span class="keyword">new</span> FormData();</div><div class="line"><span class="comment">// 将文件对象打入form实例，upload_file为后台指定的名称，取的是原有的input的name属性的值</span></div><div class="line">form.append(<span class="string">'upload_file'</span>, fileObject);</div><div class="line"><span class="comment">// ...</span></div><div class="line">xhr.send(form);</div></pre></td></tr></table></figure>
-<p>注意事项：</p>
-<ul>
-<li>传输文件时，send的时候不需要对参数进行序列化，直接将整个form对象发送过去，jquery设置processData为false</li>
-<li>传输文件时，不能设置请求头，jquery设置contentType为fasle</li>
-<li>可以在input框onChange时进行上传文件，点击确认和取消都会触发input的onChange</li>
-<li>点击input上传file时，如果点击取消，e.target会被更改，e.target.files[0]这个对象属性会消失</li>
-</ul>
-<h3 id="form-iframe实现上传文件不跳转"><a href="#form-iframe实现上传文件不跳转" class="headerlink" title="form+iframe实现上传文件不跳转"></a>form+iframe实现上传文件不跳转</h3><p>​    form原始处理form的回调这样做的：监听form指向的隐藏iframe的onLoad事件，取iframe里的innerHTML，因为它的innerHTML会直接返回一个对象，可以直接使用；有可能会返回其他东西，具体看后台怎样返回，前端再具体处理</p>
-<p>​    jquery可以使用ajaxForm插件实现form的提交回调</p>
-<h3 id="具体实现原理代码"><a href="#具体实现原理代码" class="headerlink" title="具体实现原理代码"></a>具体实现原理代码</h3><p>仅供参考，内嵌xhr请求实现，react版。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/25/JS上传文件到后台并返回/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1749,7 +1721,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

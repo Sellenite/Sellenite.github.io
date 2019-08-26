@@ -248,6 +248,284 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/24/关于浏览器重排和重绘和一个重绘案例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/01/24/关于浏览器重排和重绘和一个重绘案例/" itemprop="url">
+                  关于浏览器重排和重绘和一个重绘案例
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-24T19:27:50+08:00">
+                2018-01-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="什么是重排和重绘"><a href="#什么是重排和重绘" class="headerlink" title="什么是重排和重绘"></a>什么是重排和重绘</h3><p>浏览器下载完页面中的所有组件——HTML标记、JavaScript、CSS、图片之后会解析生成两个内部数据结构——<code>DOM树</code>和<code>渲染树</code>。</p>
+<p>DOM树表示页面结构，渲染树表示DOM节点如何显示。DOM树中的每一个需要显示的节点在渲染树种至少存在一个对应的节点（隐藏的DOM元素disply值为none 在渲染树中没有对应的节点）。渲染树中的节点被称为“帧”或“盒”,符合CSS模型的定义，理解页面元素为一个具有填充，边距，边框和位置的盒子。一旦DOM和渲染树构建完成，浏览器就开始显示（绘制）页面元素。</p>
+<p>当DOM的变化影响了元素的几何属性（宽或高），浏览器需要重新计算元素的几何属性，同样其他元素的几何属性和位置也会因此受到影响。浏览器会使渲染树中受到影响的部分失效，并重新构造渲染树。<strong>这个过程称为重排</strong>。完成重排后，浏览器会重新绘制受影响的部分到屏幕，<strong>该过程称为重绘</strong>。由于浏览器的流布局，对渲染树的计算通常只需要遍历一次就可以完成。但table及其内部元素除外，它可能需要多次计算才能确定好其在渲染树中节点的属性，通常要花3倍于同等元素的时间。这也是为什么我们要避免使用table做布局的一个原因。</p>
+<p>并不是所有的DOM变化都会影响几何属性，比如改变一个元素的背景色并不会影响元素的宽和高，这种情况下只会发生重绘。</p>
+<h3 id="重排和重绘的代价究竟多大"><a href="#重排和重绘的代价究竟多大" class="headerlink" title="重排和重绘的代价究竟多大"></a>重排和重绘的代价究竟多大</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> times = <span class="number">15000</span>;</div><div class="line"></div><div class="line"><span class="comment">// code1 每次过桥+重排+重绘</span></div><div class="line"><span class="built_in">console</span>.time(<span class="number">1</span>);</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; times; i++) &#123;</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'myDiv1'</span>).innerHTML += <span class="string">'a'</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.timeEnd(<span class="number">1</span>);</div><div class="line"></div><div class="line"><span class="comment">// code2 只过桥</span></div><div class="line"><span class="built_in">console</span>.time(<span class="number">2</span>);</div><div class="line"><span class="keyword">var</span> str = <span class="string">''</span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; times; i++) &#123;</div><div class="line">  <span class="keyword">var</span> tmp = <span class="built_in">document</span>.getElementById(<span class="string">'myDiv2'</span>).innerHTML;</div><div class="line">  str += <span class="string">'a'</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">'myDiv2'</span>).innerHTML = str;</div><div class="line"><span class="built_in">console</span>.timeEnd(<span class="number">2</span>);</div><div class="line"></div><div class="line"><span class="comment">// code3</span></div><div class="line"><span class="built_in">console</span>.time(<span class="number">3</span>);</div><div class="line"><span class="keyword">var</span> _str = <span class="string">''</span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; times; i++) &#123;</div><div class="line">  _str += <span class="string">'a'</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">'myDiv3'</span>).innerHTML = _str;</div><div class="line"><span class="built_in">console</span>.timeEnd(<span class="number">3</span>);</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 1: 2874.619ms</span></div><div class="line"><span class="comment">// 2: 11.154ms</span></div><div class="line"><span class="comment">// 3: 1.282ms</span></div></pre></td></tr></table></figure>
+<h3 id="重排何时发生"><a href="#重排何时发生" class="headerlink" title="重排何时发生"></a>重排何时发生</h3><p>很显然，每次重排，必然会导致重绘，那么，重排会在哪些情况下发生：</p>
+<ul>
+<li>添加或者删除可见的DOM元素</li>
+<li>元素位置改变</li>
+<li>元素尺寸改变</li>
+<li>元素内容改变（例如：一个文本被另一个不同尺寸的图片替代）</li>
+<li>页面渲染初始化（这个无法避免）</li>
+<li>浏览器窗口尺寸改变</li>
+</ul>
+<p>这些都是显而易见的，或许你已经有过这样的体会，不间断地改变浏览器窗口大小，导致UI反应迟钝（某些低版本IE下甚至直接挂掉），现在你可能恍然大悟，没错，正是一次次的重排重绘导致的！</p>
+<h3 id="渲染树变化的排队和刷新"><a href="#渲染树变化的排队和刷新" class="headerlink" title="渲染树变化的排队和刷新"></a>渲染树变化的排队和刷新</h3><p>思考下面代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ele = <span class="built_in">document</span>.getElementById(<span class="string">'myDiv'</span>);</div><div class="line">ele.style.borderLeft = <span class="string">'1px'</span>;</div><div class="line">ele.style.borderRight = <span class="string">'2px'</span>;</div><div class="line">ele.style.padding = <span class="string">'5px'</span>;</div></pre></td></tr></table></figure>
+<p>乍一想，元素的样式改变了三次，每次改变都会引起重排和重绘，所以总共有三次重排重绘过程，但是浏览器并不会这么笨，它会把三次修改“保存”起来（大多数浏览器通过队列化修改并批量执行来优化重排过程），一次完成！但是，有些时候你可能会（经常是不知不觉）强制刷新队列并要求计划任务立即执行。获取布局信息的操作会导致队列刷新，比如：</p>
+<ul>
+<li>offsetTop, offsetLeft, offsetWidth, offsetHeight</li>
+<li>scrollTop, scrollLeft, scrollWidth, scrollHeight</li>
+<li>clientTop, clientLeft, clientWidth, clientHeight</li>
+<li>getComputedStyle() (currentStyle in IE)</li>
+</ul>
+<p>将上面的代码稍加修改：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ele = <span class="built_in">document</span>.getElementById(<span class="string">'myDiv'</span>);</div><div class="line">ele.style.borderLeft = <span class="string">'1px'</span>;</div><div class="line">ele.style.borderRight = <span class="string">'2px'</span>;</div><div class="line"></div><div class="line"><span class="comment">// here use offsetHeight</span></div><div class="line"><span class="comment">// ...</span></div><div class="line">ele.style.padding = <span class="string">'5px'</span>;</div></pre></td></tr></table></figure>
+<p>因为offsetHeight属性需要返回最新的布局信息，因此浏览器不得不执行渲染队列中的“待处理变化”并触发重排以返回正确的值（即使队列中改变的样式属性和想要获取的属性值并没有什么关系），所以上面的代码，前两次的操作会缓存在渲染队列中待处理，但是一旦offsetHeight属性被请求了，队列就会立即执行，所以总共有两次重排与重绘。所以 <strong>尽量不要在布局信息改变时做查询</strong> 。</p>
+<h3 id="最小化重排和重绘"><a href="#最小化重排和重绘" class="headerlink" title="最小化重排和重绘"></a>最小化重排和重绘</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/24/关于浏览器重排和重绘和一个重绘案例/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/15/关于ES6的几个新的关于-Prototype-的几个API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/01/15/关于ES6的几个新的关于-Prototype-的几个API/" itemprop="url">
+                  关于ES6的几个新的关于[[Prototype]]的几个API
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-15T21:19:09+08:00">
+                2018-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Object-create-应用"><a href="#Object-create-应用" class="headerlink" title="Object.create()应用"></a>Object.create()应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* Object.create(obj)会将[[prototype]]关联到指定对象，组合继承就由于这个原理 */</span></div><div class="line"><span class="comment">/* 面向委托模式来源于Object.create()这个特性 */</span></div><div class="line"><span class="keyword">let</span> obj = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">123</span>,</div><div class="line">    <span class="attr">cool</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    	<span class="built_in">console</span>.log(<span class="string">'cool!'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> obj2 = <span class="built_in">Object</span>.create(obj);</div><div class="line"><span class="built_in">console</span>.log(obj2.a)  <span class="comment">// 123</span></div><div class="line"><span class="built_in">console</span>.log(obj2.cool())  <span class="comment">// 'cool!'</span></div></pre></td></tr></table></figure>
+<h3 id="proto-和-Object-getPrototypeOf-应用"><a href="#proto-和-Object-getPrototypeOf-应用" class="headerlink" title="proto 和 Object.getPrototypeOf() 应用"></a><strong>proto</strong> 和 Object.getPrototypeOf() 应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 组合继承 */</span></div><div class="line"><span class="keyword">let</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> Bar = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    <span class="comment">/* 绑定父亲的构造属性 */</span></div><div class="line">    Foo.call(<span class="keyword">this</span>, name);</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/* 将Bar的[[prototype]]关联到Foo的，继承Foo的原型链属性 */</span></div><div class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype);</div><div class="line"></div><div class="line"><span class="comment">/* ES6直接获取一个对象的[[prototype]]的方式 */</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(bar) === Bar.prototype);</div><div class="line"><span class="comment">/* 绝大多数浏览器（非标准获取方式）支持 */</span></div><div class="line"><span class="built_in">console</span>.log(bar.__proto__ === Bar.prototype);</div></pre></td></tr></table></figure>
+<h3 id="instanceof-应用"><a href="#instanceof-应用" class="headerlink" title="instanceof 应用"></a>instanceof 应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	Foo.call(...)</div><div class="line">&#125;</div><div class="line"></div><div class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype)</div><div class="line"></div><div class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar()</div><div class="line"></div><div class="line"><span class="comment">/* 构造函数之间Foo和Bar的instanceof */</span></div><div class="line">Bar.prototype <span class="keyword">instanceof</span> Foo;  <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">/* 继承可以通过instanceof找到源头 */</span></div><div class="line"><span class="built_in">console</span>.log(bar <span class="keyword">instanceof</span> Foo);  <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">/* 注意以下instancof用法是错的，不要混淆了 */</span></div><div class="line">Bar <span class="keyword">instanceof</span> Foo  <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>instanceof一般用于确定一个值是哪种引用类型，是否存在于参数 object 的原型链上。而不是用于判断对象的构造函数，判断构造函数还是需要使用constructor，实例对象.constructor === 构造函数名字来判断</p>
+<p>array，function对象instanceof Object会返回true，因为他们的引用都来自Object</p>
+<h3 id="prototype-isPrototypeOf-应用"><a href="#prototype-isPrototypeOf-应用" class="headerlink" title=".prototype.isPrototypeOf() 应用"></a>.prototype.isPrototypeOf() 应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 内省 */</span></div><div class="line"><span class="keyword">let</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> Bar = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    Foo.call(<span class="keyword">this</span>, name);</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype);</div><div class="line"></div><div class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar(<span class="string">'yuuhei'</span>, <span class="number">23</span>);</div><div class="line"></div><div class="line"><span class="comment">// 首先要纠正错误，Bar instanceof Foo是错的</span></div><div class="line"></div><div class="line"><span class="comment">/* 构造函数之间Foo和Bar的内省 */</span></div><div class="line">Bar.prototype <span class="keyword">instanceof</span> Foo; <span class="comment">// true</span></div><div class="line"><span class="built_in">Object</span>.getPrototypeOf(Bar.prototype) === Foo.prototype; <span class="comment">// true</span></div><div class="line">Foo.prototype.isPrototypeOf(Bar.prototype); <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="comment">/* 实例和构造函数之间的内省 */</span></div><div class="line">bar <span class="keyword">instanceof</span> Bar; <span class="comment">// true</span></div><div class="line">bar <span class="keyword">instanceof</span> Foo; <span class="comment">// true</span></div><div class="line"><span class="built_in">Object</span>.getPrototypeOf(bar) === Bar.prototype; <span class="comment">/// true</span></div><div class="line">Foo.prototype.isPrototypeOf(bar); <span class="comment">// true</span></div><div class="line">Bar.prototype.isPrototypeOf(bar); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<h3 id="Object-setPrototypeOf-继承应用"><a href="#Object-setPrototypeOf-继承应用" class="headerlink" title="Object.setPrototypeOf()继承应用"></a>Object.setPrototypeOf()继承应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* ES6拥有Object.setPrototypeOf进行原型链继承 */</span></div><div class="line"><span class="keyword">let</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">Foo.prototype.a = <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> Bar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.setPrototypeOf(Bar.prototype, Foo.prototype);</div><div class="line"></div><div class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar();</div><div class="line"><span class="built_in">console</span>.log(bar.a);  <span class="comment">// 1</span></div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/15/JS各种完美继承方案及其应用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1339,278 +1617,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/13/JS实现Ajax和Jsonp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/13/JS实现Ajax和Jsonp/" itemprop="url">
-                  JS实现Ajax和Jsonp
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T20:12:16+08:00">
-                2017-07-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="一、JS原生AJAX"><a href="#一、JS原生AJAX" class="headerlink" title="一、JS原生AJAX"></a>一、JS原生AJAX</h3><p>ajax：一种请求数据的方式，不需要刷新整个页面；</p>
-<p>ajax的技术核心是 XMLHttpRequest 对象；</p>
-<p>ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据；</p>
-<p>封装基本ajax函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 普通回调</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span>(<span class="params">options</span>) </span>&#123;</div><div class="line">    options = options || &#123;&#125;;</div><div class="line">    options.data = options.data || &#123;&#125;;</div><div class="line"></div><div class="line">    <span class="comment">//  请求方式，默认是GET</span></div><div class="line">    options.type = (options.type || <span class="string">'GET'</span>).toUpperCase();</div><div class="line">    <span class="comment">// 避免有特殊字符，必须格式化传输数据  </span></div><div class="line">    options.data = formatParams(options.data);</div><div class="line">    <span class="keyword">var</span> xhr = <span class="literal">null</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 实例化XMLHttpRequest对象   </span></div><div class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest) &#123;</div><div class="line">        xhr = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// IE6及其以下版本   </span></div><div class="line">        xhr = <span class="keyword">new</span> ActiveXObjcet(<span class="string">'Microsoft.XMLHTTP'</span>);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 监听事件，只要 readyState 的值变化，就会调用 readystatechange 事件 </span></div><div class="line">    xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">//  readyState属性表示请求/响应过程的当前活动阶段，4为完成，已经接收到全部响应数据</span></div><div class="line">        <span class="keyword">if</span> (xhr.readyState == <span class="number">4</span>) &#123;</div><div class="line">            <span class="keyword">var</span> status = xhr.status;</div><div class="line">            <span class="comment">//  status：响应的HTTP状态码，以2开头的都是成功</span></div><div class="line">            <span class="keyword">if</span> (status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span>) &#123;</div><div class="line">                <span class="keyword">var</span> response = <span class="string">''</span>;</div><div class="line">                <span class="comment">// 判断接受数据的内容类型  </span></div><div class="line">                <span class="keyword">var</span> type = xhr.getResponseHeader(<span class="string">'Content-type'</span>);</div><div class="line">                <span class="keyword">if</span> (type.indexOf(<span class="string">'xml'</span>) !== <span class="number">-1</span> &amp;&amp; xhr.responseXML) &#123;</div><div class="line">                    response = xhr.responseXML; <span class="comment">//Document对象响应   </span></div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">'application/json'</span>) &#123;</div><div class="line">                    response = <span class="built_in">JSON</span>.parse(xhr.responseText); <span class="comment">//JSON响应   </span></div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    response = xhr.responseText; <span class="comment">//字符串响应   </span></div><div class="line">                &#125;;</div><div class="line">                <span class="comment">// 成功回调函数 </span></div><div class="line">                options.success &amp;&amp; options.success(response);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                options.error &amp;&amp; options.error(status);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 连接和传输数据   </span></div><div class="line">    <span class="keyword">if</span> (options.type == <span class="string">'GET'</span>) &#123;</div><div class="line">        <span class="comment">// 三个参数：请求方式、请求地址(get方式时，传输数据是加在地址后的)、是否异步请求(同步请求的情况极少)；</span></div><div class="line">        xhr.open(options.type, options.url + <span class="string">'?'</span> + options.data, <span class="literal">true</span>);</div><div class="line">        xhr.send(<span class="literal">null</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        xhr.open(options.type, options.url, <span class="literal">true</span>);</div><div class="line">        <span class="comment">//必须，设置提交时的内容类型   </span></div><div class="line">        xhr.setRequestHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/x-www-form-urlencoded; charset=UTF-8'</span>);</div><div class="line">        <span class="comment">// 传输数据  </span></div><div class="line">        xhr.send(options.data);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//格式化参数   </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">formatParams</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> arr = [];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> data) &#123;</div><div class="line">            <span class="comment">//   encodeURIComponent() ：用于对 URI 中的某一部分进行编码</span></div><div class="line">            arr.push(<span class="built_in">encodeURIComponent</span>(name) + <span class="string">'='</span> + <span class="built_in">encodeURIComponent</span>(data[name]));</div><div class="line">        &#125;;</div><div class="line">        <span class="comment">// 添加一个随机数参数，防止缓存   </span></div><div class="line">        arr.push(<span class="string">'v='</span> + random());</div><div class="line">        <span class="keyword">return</span> arr.join(<span class="string">'&amp;'</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 获取随机数   </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">random</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">10000</span> + <span class="number">500</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 调用</span></div><div class="line">ajax(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">'test.php'</span>,   <span class="comment">// 请求地址</span></div><div class="line">    type: <span class="string">'POST'</span>,   <span class="comment">// 请求类型，默认"GET"，还可以是"POST"</span></div><div class="line">    data: &#123; <span class="string">'b'</span>: <span class="string">'异步请求'</span> &#125;,   <span class="comment">// 传输数据</span></div><div class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;   <span class="comment">// 请求成功的回调函数</span></div><div class="line">        <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(res));</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">error</span>: <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123; &#125;   <span class="comment">// 请求失败的回调函数</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/13/JS实现Ajax和Jsonp/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/21/JS开发datepicker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/21/JS开发datepicker/" itemprop="url">
-                  JS开发datepicker
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T10:14:49+08:00">
-                2017-05-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>首先，需要知道new Date()这个参数的基本使用：</p>
-<ul>
-<li>传入new Date(2017, 4, 20)，的时候，由于月份的索引是从0-11的，所以，传入2017, 4, 20的时候，实际的显示的月份是2017年5月20日</li>
-<li>月份和日期位会自动进位和退位，例如月份位小于0大于11，日期位等于小于0和大于本月日期数</li>
-<li>拿到当月第一天是这样写的：new Date(year, month-1, 1)</li>
-<li>拿到当月最后一天是这样写的：new Date(year, month, 0)</li>
-<li>.getDay()获取的的是这个日期的星期几，星期一~星期天对应[1, 2, 3, 4, 5, 6, 0]</li>
-</ul>
-<p>其次，需要知道js的一些新的API：</p>
-<ul>
-<li>document.querySelector()获取的是CSS选择器，即传入的参数是’.exampleClass’或’.#exampleID’，需要将字符串传进去，获取的就是第一个匹配的class</li>
-<li>如果想获取多个同class的CSS选择器，使用document.querySelectorAll</li>
-<li>$element.classList.add()可以添加class</li>
-<li>$element.classList.remove()可以移除特定class</li>
-<li>$element.dataset.xx可以访问到dom元素里自定义属性data-xx，返回的值就是xx</li>
-<li>注意好编码习惯，例如一个dom元素起名就用$开头，如$wrapper</li>
-</ul>
-<h3 id="开发思路"><a href="#开发思路" class="headerlink" title="开发思路"></a>开发思路</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/21/JS开发datepicker/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1660,7 +1666,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

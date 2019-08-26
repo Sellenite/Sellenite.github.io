@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JS," />
+  <meta name="keywords" content="Vue," />
 
 
 
@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="利用改原型编写 123456789101112131415161718192021222324// 对Date的扩展，将 Date 转化为指定格式的String// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)// 例子：// (new Date()).For">
-<meta name="keywords" content="JS">
+<meta name="description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue = val;    &amp;#125;&amp;#125; elementUI里">
+<meta name="keywords" content="Vue">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS正则匹配日期自定义格式化">
-<meta property="og:url" content="https://sellenite.github.io/2017/05/19/JS正则匹配日期自定义格式化/index.html">
+<meta property="og:title" content="Vue工作经验总结（3）">
+<meta property="og:url" content="https://sellenite.github.io/2019/08/26/Vue工作经验总结（3）/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
-<meta property="og:description" content="利用改原型编写 123456789101112131415161718192021222324// 对Date的扩展，将 Date 转化为指定格式的String// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)// 例子：// (new Date()).For">
+<meta property="og:description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue = val;    &amp;#125;&amp;#125; elementUI里">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-24T15:12:50.911Z">
+<meta property="og:updated_time" content="2019-08-26T14:43:21.823Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS正则匹配日期自定义格式化">
-<meta name="twitter:description" content="利用改原型编写 123456789101112131415161718192021222324// 对Date的扩展，将 Date 转化为指定格式的String// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)// 例子：// (new Date()).For">
+<meta name="twitter:title" content="Vue工作经验总结（3）">
+<meta name="twitter:description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue = val;    &amp;#125;&amp;#125; elementUI里">
 
 
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://sellenite.github.io/2017/05/19/JS正则匹配日期自定义格式化/"/>
+  <link rel="canonical" href="https://sellenite.github.io/2019/08/26/Vue工作经验总结（3）/"/>
 
 
 
 
 
-  <title> JS正则匹配日期自定义格式化 | yuuhei's Home </title>
+  <title> Vue工作经验总结（3） | yuuhei's Home </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +251,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/05/19/JS正则匹配日期自定义格式化/">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/08/26/Vue工作经验总结（3）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sellenite">
@@ -272,7 +272,7 @@
             
             
               
-                JS正则匹配日期自定义格式化
+                Vue工作经验总结（3）
               
             
           </h1>
@@ -287,8 +287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T10:35:20+08:00">
-                2017-05-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-26T22:18:15+08:00">
+                2019-08-26
               </time>
             
 
@@ -306,7 +306,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/05/19/JS正则匹配日期自定义格式化/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2019/08/26/Vue工作经验总结（3）/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -333,8 +333,16 @@
       
 
       
-        <p>利用改原型编写</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 对Date的扩展，将 Date 转化为指定格式的String</span></div><div class="line"><span class="comment">// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，</span></div><div class="line"><span class="comment">// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)</span></div><div class="line"><span class="comment">// 例子：</span></div><div class="line"><span class="comment">// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==&gt; 2006-07-02 08:09:04.423</span></div><div class="line"><span class="comment">// (new Date()).Format("yyyy-M-d h:m:s.S")      ==&gt; 2006-7-2 8:9:4.18</span></div><div class="line"><span class="built_in">Date</span>.prototype.Format = <span class="function"><span class="keyword">function</span> (<span class="params">fmt</span>) </span>&#123; <span class="comment">//author: meizz</span></div><div class="line">    <span class="keyword">var</span> o = &#123;</div><div class="line">        <span class="string">"M+"</span>: <span class="keyword">this</span>.getMonth() + <span class="number">1</span>, <span class="comment">//月份</span></div><div class="line">        <span class="string">"d+"</span>: <span class="keyword">this</span>.getDate(), <span class="comment">//日</span></div><div class="line">        <span class="string">"H+"</span>: <span class="keyword">this</span>.getHours(), <span class="comment">//小时</span></div><div class="line">        <span class="string">"m+"</span>: <span class="keyword">this</span>.getMinutes(), <span class="comment">//分</span></div><div class="line">        <span class="string">"s+"</span>: <span class="keyword">this</span>.getSeconds(), <span class="comment">//秒</span></div><div class="line">        <span class="string">"q+"</span>: <span class="built_in">Math</span>.floor((<span class="keyword">this</span>.getMonth() + <span class="number">3</span>) / <span class="number">3</span>), <span class="comment">//季度</span></div><div class="line">        <span class="string">"S"</span>: <span class="keyword">this</span>.getMilliseconds() <span class="comment">//毫秒</span></div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">if</span> (<span class="regexp">/(y+)/</span>.test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="keyword">this</span>.getFullYear() + <span class="string">""</span>).substr(<span class="number">4</span> - <span class="built_in">RegExp</span>.$<span class="number">1.</span>length));</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> o)</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"("</span> + k + <span class="string">")"</span>).test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="built_in">RegExp</span>.$<span class="number">1.</span>length == <span class="number">1</span>) ? (o[k]) : ((<span class="string">"00"</span> + o[k]).substr((<span class="string">""</span> + o[k]).length)));</div><div class="line">    <span class="keyword">return</span> fmt;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> time1 = <span class="keyword">new</span> <span class="built_in">Date</span>().Format(<span class="string">"yyyy-MM-dd"</span>);</div><div class="line"><span class="keyword">var</span> time2 = <span class="keyword">new</span> <span class="built_in">Date</span>().Format(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</div></pre></td></tr></table></figure>
+        <h3 id="v-model语法糖时，可以使用watch进行数据初始化"><a href="#v-model语法糖时，可以使用watch进行数据初始化" class="headerlink" title="v-model语法糖时，可以使用watch进行数据初始化"></a>v-model语法糖时，可以使用watch进行数据初始化</h3><p>之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">value: &#123;</div><div class="line">    <span class="attr">immediate</span>: <span class="literal">true</span>,</div><div class="line">    handler(val) &#123;</div><div class="line">        <span class="keyword">this</span>.currentValue = val;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="elementUI里的table，template里不要使用ref"><a href="#elementUI里的table，template里不要使用ref" class="headerlink" title="elementUI里的table，template里不要使用ref"></a>elementUI里的table，template里不要使用ref</h3><p>elementUI里的table，template里不要使用ref，引用的结果会与预期有差距，暂时无法找出什么原因</p>
+<h3 id="使用v-model进行双向绑定时，oninput可以立即修改数据"><a href="#使用v-model进行双向绑定时，oninput可以立即修改数据" class="headerlink" title="使用v-model进行双向绑定时，oninput可以立即修改数据"></a>使用v-model进行双向绑定时，oninput可以立即修改数据</h3><p>其实v-model就是emit一个input事件的语法糖，根据这个我们可以通过监听input事件，在修改之前就将它拦截修改就可以了，不用根据watch这个绑定值然后再手动修改一次，因为这样会有一个闪烁的问题，直接拦截input事件就不会出现这个问题，具体实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">components</span> <span class="attr">v-model</span>=<span class="string">"test"</span> @<span class="attr">input</span>=<span class="string">"value=value.replace(/[^\d]/g, '')"</span>&gt;</span><span class="tag">&lt;/<span class="name">components</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样绑定的test值就是经过执行函数后的值</p>
+<h3 id="fixed定位的浮动框，在滚动时依然能跟随屏幕移动"><a href="#fixed定位的浮动框，在滚动时依然能跟随屏幕移动" class="headerlink" title="fixed定位的浮动框，在滚动时依然能跟随屏幕移动"></a>fixed定位的浮动框，在滚动时依然能跟随屏幕移动</h3><p>参考elementUI在处理pop组件，这些组件一般都是放在body下，然后使用fixed定位的，如果不进行处理，在进行滚动的时候会一直定在同一个地方，很奇怪。</p>
+<p>参考popper.js 227行左右的监听滚动函数</p>
+<h3 id="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"><a href="#elementUI的table固定高度时，如何将里面滚动内容跳到顶部" class="headerlink" title="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"></a>elementUI的table固定高度时，如何将里面滚动内容跳到顶部</h3><p>可以看一下源码，里面存了dom</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$refs.table.bodyWrapper.scrollTop = <span class="number">0</span></div></pre></td></tr></table></figure>
 
       
     </div>
@@ -364,7 +372,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JS/" rel="tag"># JS</a>
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
           
         </div>
       
@@ -377,8 +385,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/19/Vue多个选项多个chooser组件/" rel="next" title="Vue多个选项多个chooser组件">
-                <i class="fa fa-chevron-left"></i> Vue多个选项多个chooser组件
+              <a href="/2019/08/26/JS工作经验总结（3）/" rel="next" title="JS工作经验总结（3）">
+                <i class="fa fa-chevron-left"></i> JS工作经验总结（3）
               </a>
             
           </div>
@@ -386,10 +394,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/21/JS开发datepicker/" rel="prev" title="JS开发datepicker">
-                JS开发datepicker <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -438,8 +442,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://puu.sh/uoJbK/033c9ae781.jpg"
@@ -503,6 +516,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model语法糖时，可以使用watch进行数据初始化"><span class="nav-number">1.</span> <span class="nav-text">v-model语法糖时，可以使用watch进行数据初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elementUI里的table，template里不要使用ref"><span class="nav-number">2.</span> <span class="nav-text">elementUI里的table，template里不要使用ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用v-model进行双向绑定时，oninput可以立即修改数据"><span class="nav-number">3.</span> <span class="nav-text">使用v-model进行双向绑定时，oninput可以立即修改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fixed定位的浮动框，在滚动时依然能跟随屏幕移动"><span class="nav-number">4.</span> <span class="nav-text">fixed定位的浮动框，在滚动时依然能跟随屏幕移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elementUI的table固定高度时，如何将里面滚动内容跳到顶部"><span class="nav-number">5.</span> <span class="nav-text">elementUI的table固定高度时，如何将里面滚动内容跳到顶部</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
