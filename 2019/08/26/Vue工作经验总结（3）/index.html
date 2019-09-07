@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue = val;    &amp;#125;&amp;#125; elementUI里">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-26T14:43:21.823Z">
+<meta property="og:updated_time" content="2019-09-07T05:51:32.157Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue工作经验总结（3）">
 <meta name="twitter:description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue = val;    &amp;#125;&amp;#125; elementUI里">
@@ -343,6 +343,7 @@
 <p>参考popper.js 227行左右的监听滚动函数</p>
 <h3 id="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"><a href="#elementUI的table固定高度时，如何将里面滚动内容跳到顶部" class="headerlink" title="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"></a>elementUI的table固定高度时，如何将里面滚动内容跳到顶部</h3><p>可以看一下源码，里面存了dom</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$refs.table.bodyWrapper.scrollTop = <span class="number">0</span></div></pre></td></tr></table></figure>
+<h3 id="父元素和子元素的渲染时机和顺序"><a href="#父元素和子元素的渲染时机和顺序" class="headerlink" title="父元素和子元素的渲染时机和顺序"></a>父元素和子元素的渲染时机和顺序</h3><p>父子组件在加载的时候，执行的先后顺序为父beforeCreate-&gt;父created-&gt;父beforeMount-&gt;子beforeCreate-&gt;子created-&gt;子beforeMount-&gt;子mounted-&gt;父mounted</p>
 
       
     </div>
@@ -530,7 +531,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model语法糖时，可以使用watch进行数据初始化"><span class="nav-number">1.</span> <span class="nav-text">v-model语法糖时，可以使用watch进行数据初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elementUI里的table，template里不要使用ref"><span class="nav-number">2.</span> <span class="nav-text">elementUI里的table，template里不要使用ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用v-model进行双向绑定时，oninput可以立即修改数据"><span class="nav-number">3.</span> <span class="nav-text">使用v-model进行双向绑定时，oninput可以立即修改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fixed定位的浮动框，在滚动时依然能跟随屏幕移动"><span class="nav-number">4.</span> <span class="nav-text">fixed定位的浮动框，在滚动时依然能跟随屏幕移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elementUI的table固定高度时，如何将里面滚动内容跳到顶部"><span class="nav-number">5.</span> <span class="nav-text">elementUI的table固定高度时，如何将里面滚动内容跳到顶部</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model语法糖时，可以使用watch进行数据初始化"><span class="nav-number">1.</span> <span class="nav-text">v-model语法糖时，可以使用watch进行数据初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elementUI里的table，template里不要使用ref"><span class="nav-number">2.</span> <span class="nav-text">elementUI里的table，template里不要使用ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用v-model进行双向绑定时，oninput可以立即修改数据"><span class="nav-number">3.</span> <span class="nav-text">使用v-model进行双向绑定时，oninput可以立即修改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fixed定位的浮动框，在滚动时依然能跟随屏幕移动"><span class="nav-number">4.</span> <span class="nav-text">fixed定位的浮动框，在滚动时依然能跟随屏幕移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elementUI的table固定高度时，如何将里面滚动内容跳到顶部"><span class="nav-number">5.</span> <span class="nav-text">elementUI的table固定高度时，如何将里面滚动内容跳到顶部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#父元素和子元素的渲染时机和顺序"><span class="nav-number">6.</span> <span class="nav-text">父元素和子元素的渲染时机和顺序</span></a></li></ol></div>
             
 
           </div>
