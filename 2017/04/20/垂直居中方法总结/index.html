@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="单行文本 若元素是单行文本, 则可设置 line-height 等于父元素高度  使用伪元素和inline-block 若元素是行内块级元素, 基本思想是使用display: inline-block, vertical-align: middle和一个伪元素让内容块处于容器中央.  12345678.parent::after, .son&amp;#123;    display:inline-bloc">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-19T12:53:20.197Z">
+<meta property="og:updated_time" content="2019-09-07T03:51:02.682Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="垂直居中方法总结">
 <meta name="twitter:description" content="单行文本 若元素是单行文本, 则可设置 line-height 等于父元素高度  使用伪元素和inline-block 若元素是行内块级元素, 基本思想是使用display: inline-block, vertical-align: middle和一个伪元素让内容块处于容器中央.  12345678.parent::after, .son&amp;#123;    display:inline-bloc">
@@ -375,17 +375,7 @@
 <p>优点</p>
 <p>内容块的宽高任意, 优雅的溢出.<br>可用于更复杂高级的布局技术中.</p>
 <p>缺点</p>
-<p>IE8/IE9不支持<br>需要浏览器厂商前缀<br>渲染上可能会有一些问题</p>
-</blockquote>
-<ul>
-<li>使用flex 2009版.</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">      <span class="attribute">display</span>: box;</div><div class="line">      <span class="attribute">box-orient</span>: vertical;</div><div class="line">      <span class="attribute">box-pack</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>优点</p>
-<p>实现简单, 扩展性强</p>
-<p>缺点</p>
-<p>兼容性差, 不支持IE</p>
+<p>IE8/IE9不支持<br>需要浏览器厂商前缀</p>
 </blockquote>
 <h3 id="使用transform"><a href="#使用transform" class="headerlink" title="使用transform"></a>使用transform</h3><ul>
 <li>可用 transform , 设置父元素相对定位(position:relative), 子元素如下css样式:</li>
@@ -545,7 +535,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

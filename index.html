@@ -248,6 +248,132 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/09/07/HTML-CSS实现一个步骤条/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/09/07/HTML-CSS实现一个步骤条/" itemprop="url">
+                  HTML+CSS实现一个步骤条
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-07T11:52:25+08:00">
+                2019-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>代码部分参考ElementUI的步骤条结构，如果作为组件，循环判断每个步骤的状态，加上对应的class即可。这里定义pass、current、future，每个状态都有不同的样式。这里是横版的，竖版的大同小异</p>
+<p>特别要注意横线的处理，移位的方法</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/07/HTML-CSS实现一个步骤条/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/08/26/Vue工作经验总结（3）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1489,189 +1615,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/03/01/项目上线流程总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/03/01/项目上线流程总结/" itemprop="url">
-                  项目上线流程总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-01T00:30:49+08:00">
-                2019-03-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="发布必备条件"><a href="#发布必备条件" class="headerlink" title="发布必备条件"></a>发布必备条件</h3><ul>
-<li><p>一台Linux服务器（<strong>CentOS</strong>/Ubuntu）服务器</p>
-</li>
-<li><p>一款Web服务器（<strong>Nginx</strong>/Apache/Tomcat）</p>
-</li>
-<li>一个属于自己的独立域名（cn/com/org/…）</li>
-</ul>
-<p>本次流程以CentOS和Nginx配置为例</p>
-<h3 id="webpack设置静态地址打包"><a href="#webpack设置静态地址打包" class="headerlink" title="webpack设置静态地址打包"></a>webpack设置静态地址打包</h3><ul>
-<li>output的publicPath从开发地址<code>/dist/</code>设置为线上地址：<code>//www.yuuhei.site/dist/</code></li>
-</ul>
-<h3 id="服务器购买"><a href="#服务器购买" class="headerlink" title="服务器购买"></a>服务器购买</h3><ul>
-<li>选择阿里云产品的【云服务器ECS】</li>
-<li>安全组有http（默认端口80）、https（默认端口443），linux SSH登录（默认端口22），windows远程桌面登录（默认端口3389）</li>
-</ul>
-<h3 id="链接远程服务器"><a href="#链接远程服务器" class="headerlink" title="链接远程服务器"></a>链接远程服务器</h3><ul>
-<li>windows下最好使用git bash，ubuntu下默认是bash控制台</li>
-<li>使用ssh user@remote_ip 连接</li>
-</ul>
-<h3 id="Web服务器的选择"><a href="#Web服务器的选择" class="headerlink" title="Web服务器的选择"></a>Web服务器的选择</h3><ul>
-<li>Nginx：高性能，高并发</li>
-<li>Apache：多平台，安全，流行</li>
-<li>Tomcat：多用于Java做jsp解析</li>
-</ul>
-<h3 id="配置Web服务器"><a href="#配置Web服务器" class="headerlink" title="配置Web服务器"></a>配置Web服务器</h3><ul>
-<li>命令行执行安装Nginx，各个linux系统的下载命令不一样，ubuntu执行sudo apt-get install nginx</li>
-<li>centOS和Ubuntu的nginx的配置文件一般都在/etc/nginx下，可以使用nginx -t查看配置文件位置</li>
-<li>nginx.conf文件内容的user xxx需要改为user root</li>
-<li>着重配置的是http块区域里的内容（http &gt; server &gt; location）</li>
-</ul>
-<h3 id="node使用官网解压包安装"><a href="#node使用官网解压包安装" class="headerlink" title="node使用官网解压包安装"></a>node使用官网解压包安装</h3><ul>
-<li>解压安装包</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -xzvf node-v10.15.2-linux-x64.tar.xz</div></pre></td></tr></table></figure>
-<ul>
-<li>移动文件夹到/usr/local/node</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv node-v10.15.2-linux-x64 /usr/local/node</div></pre></td></tr></table></figure>
-<ul>
-<li>建立全局命令node和npm软链（全局命令一般都在/usr/local/bin/）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ls -n /usr/local/node/bin/node /usr/local/bin/</div><div class="line">ls -n /usr/local/node/bin/npm /usr/local/bin/</div></pre></td></tr></table></figure>
-<ul>
-<li>这时候就可以直接全局执行node和npm了</li>
-</ul>
-<h3 id="nginx-conf"><a href="#nginx-conf" class="headerlink" title="nginx.conf"></a>nginx.conf</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 改成user root</span></div><div class="line"><span class="attribute">user</span> root</div><div class="line"><span class="comment"># ...</span></div><div class="line">http &#123;</div><div class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="attribute">server_name</span> yuuhei.site;</div><div class="line">    <span class="attribute">root</span> /root/www/admin-fe/dist/;</div><div class="line">    <span class="attribute">index</span> index.html;</div><div class="line">    <span class="comment"># 日志文件</span></div><div class="line">    <span class="attribute">access_log</span> /etc/nginx/logs/access.log combined;</div><div class="line">    </div><div class="line">    <span class="comment"># 完全满足</span></div><div class="line">    <span class="attribute">location</span> = / &#123;</div><div class="line">        <span class="comment"># 网站路径，存放网站的地方</span></div><div class="line">        <span class="attribute">root</span> /root/www/admin-fe/dist/;</div><div class="line">        <span class="comment"># 输入ip后，默认会显示哪个网址，不设置就需要手动在浏览器上访问</span></div><div class="line">        <span class="attribute">index</span> index.html index.htm;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.html$</span> &#123;</div><div class="line">        <span class="attribute">root</span> /root/www/admin-fe/dist/;</div><div class="line">        <span class="attribute">index</span> index.html index.htm;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment"># 满足条件，访问.do，正则匹配服务器地址</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.do$</span> &#123;</div><div class="line">        <span class="attribute">proxy_pass</span> http://www.server.com;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment"># 拒绝访问设定</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ /source/.*</span> &#123;</div><div class="line">    	<span class="attribute">deny</span> all;   </div><div class="line">    &#125;</div><div class="line">        </div><div class="line">    <span class="comment"># 指定访问静态资源，假如加载js的路径是 http://yuuhei.cn/dist/xxx.js</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*(js|css|png|jpg|gif)$</span> &#123;</div><div class="line">        <span class="attribute">root</span> /root/www/admin-fe/;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment"># 都不满足则尝试，与 = / 有区别</span></div><div class="line">    <span class="attribute">location</span> / &#123;</div><div class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.html;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h3><ul>
-<li>www：平时输入网址的www，例如<code>www.baidu.com</code></li>
-<li>@：平时输入网址不输入www，例如<code>baidu.com</code></li>
-<li>记录值：公网服务器的IPv4地址</li>
-<li>记录类型<ul>
-<li>A：将域名指向一个IPv4地址</li>
-<li>CNAME：将域名指向另外一个域名（redirect）</li>
-</ul>
-</li>
-<li>备案，服务器和域名的信息必须一致才能访问</li>
-</ul>
-<h3 id="网站工作原理"><a href="#网站工作原理" class="headerlink" title="网站工作原理"></a>网站工作原理</h3><ul>
-<li>输入网址</li>
-<li>DNS解析，寻找对应服务器地址</li>
-<li>进行握手（HTTP会话）</li>
-<li>建立文档树，加载资源</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1721,7 +1664,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

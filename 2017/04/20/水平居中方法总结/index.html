@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="若是行内元素, 给其父元素设置 text-align:center,即可实现行内元素水平居中.  若是块级元素且定宽, 该元素设置 margin:0 auto 即可.  若是 display:inline-block, 该元素的父元素设置 text-align:center 即可.  若不论是块级还是行内，而且元素不定宽，可以给元素设置 display: table 然后设置 margin: 0">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-04-28T07:47:30.000Z">
+<meta property="og:updated_time" content="2019-09-07T03:50:04.497Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="水平居中方法总结">
 <meta name="twitter:description" content="若是行内元素, 给其父元素设置 text-align:center,即可实现行内元素水平居中.  若是块级元素且定宽, 该元素设置 margin:0 auto 即可.  若是 display:inline-block, 该元素的父元素设置 text-align:center 即可.  若不论是块级还是行内，而且元素不定宽，可以给元素设置 display: table 然后设置 margin: 0">
@@ -355,10 +355,6 @@
 </ul>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.son</span>&#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">    <span class="attribute">justify-content</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li>使用flex 2009年版本, 父元素display: box;box-pack: center;如下设置:</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: -webkit-box;</div><div class="line">      <span class="attribute">-webkit-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-webkit-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: -moz-box;</div><div class="line">      <span class="attribute">-moz-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-moz-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: -o-box;</div><div class="line">      <span class="attribute">-o-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-o-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: -ms-box;</div><div class="line">      <span class="attribute">-ms-box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">-ms-box-pack</span>: center;</div><div class="line">    <span class="attribute">display</span>: box;</div><div class="line">      <span class="attribute">box-orient</span>: horizontal;</div><div class="line">      <span class="attribute">box-pack</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
 <li>使用CSS3中新增的transform属性, 子元素设置如下:</li>
 </ul>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.son</span>&#123;</div><div class="line">    <span class="attribute">position</span>:absolute;</div><div class="line">    <span class="attribute">left</span>:<span class="number">50%</span>;</div><div class="line">    <span class="attribute">transform</span>:<span class="built_in">translate</span>(-50%,0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -489,7 +485,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
