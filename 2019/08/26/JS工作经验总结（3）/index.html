@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="JS工作经验总结（2） JS拿到图片实际宽高方法其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高 1234567891011121314151617181920if (typeof el.naturalWidth == undefined) &amp;#123;    // LTE">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-07T05:50:39.053Z">
+<meta property="og:updated_time" content="2019-09-10T14:04:37.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS工作经验总结（3）">
 <meta name="twitter:description" content="JS工作经验总结（2） JS拿到图片实际宽高方法其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高 1234567891011121314151617181920if (typeof el.naturalWidth == undefined) &amp;#123;    // LTE">
@@ -350,6 +350,17 @@
 <p>第二种是参数方式传参，就没有问题</p>
 <p>如果有各类特殊字符，对参数进行一个encodeURIComponent()操作即可，这是一个编码标准，后端也很容易将它解码，当get请求传入json字符串的时候，必须使用这个编码转码发到后端</p>
 <h3 id="getBoundingClientRect获取的高度问题"><a href="#getBoundingClientRect获取的高度问题" class="headerlink" title="getBoundingClientRect获取的高度问题"></a>getBoundingClientRect获取的高度问题</h3><p>getBoundingClientRect拿到的top值只是距离窗口顶部的距离，如果有scroll，先拿到距离文档最高出的距离，需要将<code>rect.top + window.pageYOffset || document.documentElement.scrollTop</code></p>
+<h3 id="前端登录RSA加密流程"><a href="#前端登录RSA加密流程" class="headerlink" title="前端登录RSA加密流程"></a>前端登录RSA加密流程</h3><p>流程是这样的：</p>
+<ul>
+<li>请求后端，拿到一个publicKey和一个标识字符串</li>
+<li>前端使用插件，利用publicKey对密码进行RSA加密</li>
+<li>使用加密后的密码和标识字符串请求登录接口</li>
+<li>标识字符串的作用是后台通过这个标识使用对应的privateKey对加密字符串进行解密</li>
+</ul>
+<p>RSA为什么能安全：加密后的字符串，必须通过privateKey去解密，就算抓包的时候请求抓到publicKey，那也只是加密所使用的key，并不能解密。所以抓包抓到的加密字符串没有privateKey是无法加密的，privateKey保存在后台，解密工作在后台进行</p>
+<p>伪代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> JsEncrypt <span class="keyword">from</span> <span class="string">'jsencrypt'</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> jse = <span class="keyword">new</span> JsEncrypt();</div><div class="line"><span class="comment">// publicKey是请求后台获取的</span></div><div class="line">jse.setPublicKey(publicKey);</div><div class="line"><span class="keyword">let</span> encodePassword = jse.encrypt(password);</div><div class="line">client.request.post(<span class="string">'/login'</span>, &#123;</div><div class="line">    <span class="attr">username</span>: username,</div><div class="line">    <span class="attr">password</span>: encodePassword,</div><div class="line">    <span class="attr">key</span>: key <span class="comment">// 标识字符串，后台使用对应的密钥进行解密</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>已经通过RSA加密的内容进行解密（一般不会这么做，privateKey是不能暴露出来的）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> JsEncrypt <span class="keyword">from</span> <span class="string">'jsencrypt'</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> jse = <span class="keyword">new</span> JsEncrypt();</div><div class="line">jse.setPrivateKey(privateKey);</div><div class="line"><span class="keyword">let</span> decodePassword = jse.decrypt(encodePassword);</div></pre></td></tr></table></figure></p>
+<p>这样就完成一次RSA登录流程</p>
 
       
     </div>
@@ -537,7 +548,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS拿到图片实际宽高方法"><span class="nav-number">1.</span> <span class="nav-text">JS拿到图片实际宽高方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于使用formData传送的类型"><span class="nav-number">2.</span> <span class="nav-text">关于使用formData传送的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清空input文件的值"><span class="nav-number">3.</span> <span class="nav-text">清空input文件的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-in循环时，使用数值作为键值遍历的问题"><span class="nav-number">4.</span> <span class="nav-text">for-in循环时，使用数值作为键值遍历的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack打包体积过大，使用cdn引入依赖"><span class="nav-number">5.</span> <span class="nav-text">webpack打包体积过大，使用cdn引入依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串模板换行的情况"><span class="nav-number">6.</span> <span class="nav-text">字符串模板换行的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#url存在特殊字符的情况"><span class="nav-number">7.</span> <span class="nav-text">url存在特殊字符的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getBoundingClientRect获取的高度问题"><span class="nav-number">8.</span> <span class="nav-text">getBoundingClientRect获取的高度问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS拿到图片实际宽高方法"><span class="nav-number">1.</span> <span class="nav-text">JS拿到图片实际宽高方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于使用formData传送的类型"><span class="nav-number">2.</span> <span class="nav-text">关于使用formData传送的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清空input文件的值"><span class="nav-number">3.</span> <span class="nav-text">清空input文件的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-in循环时，使用数值作为键值遍历的问题"><span class="nav-number">4.</span> <span class="nav-text">for-in循环时，使用数值作为键值遍历的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack打包体积过大，使用cdn引入依赖"><span class="nav-number">5.</span> <span class="nav-text">webpack打包体积过大，使用cdn引入依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串模板换行的情况"><span class="nav-number">6.</span> <span class="nav-text">字符串模板换行的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#url存在特殊字符的情况"><span class="nav-number">7.</span> <span class="nav-text">url存在特殊字符的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getBoundingClientRect获取的高度问题"><span class="nav-number">8.</span> <span class="nav-text">getBoundingClientRect获取的高度问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端登录RSA加密流程"><span class="nav-number">9.</span> <span class="nav-text">前端登录RSA加密流程</span></a></li></ol></div>
             
 
           </div>
