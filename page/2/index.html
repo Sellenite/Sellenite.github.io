@@ -853,6 +853,138 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/01/16/ElementUI中的input组件简单实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/01/16/ElementUI中的input组件简单实现/" itemprop="url">
+                  ElementUI中的input组件简单实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-16T22:19:16+08:00">
+                2019-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>注意事项：</p>
+<ul>
+<li>此为ElementUI的input组件的简单实现</li>
+<li>里面的input不要使用v-model绑定数据，应该直接使用el本身的value来作为值，之前的做法一直是input又再使用了v-model</li>
+<li>input的change事件是在input在失焦的时候才会触发的</li>
+<li>compositionstart和compositionend是为了避免某些时候中文的预选字也会触发双向绑定，但暂时还没试过触发这两个事件，不知道具体的触发机制是怎样的</li>
+</ul>
+<p>源码：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/01/16/ElementUI中的input组件简单实现/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/01/13/你不知道的JavaScript（下）读书笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1491,138 +1623,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/06/20/JS工作经验总结（1）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/06/20/JS工作经验总结（1）/" itemprop="url">
-                  JS工作经验总结（1）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T22:47:49+08:00">
-                2018-06-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>本文主要记录工作时JS问题或经验</p>
-</blockquote>
-<h4 id="html里自定义属性的赋值和取出问题"><a href="#html里自定义属性的赋值和取出问题" class="headerlink" title="html里自定义属性的赋值和取出问题"></a>html里自定义属性的赋值和取出问题</h4><p>给html元素写入<code>data-type</code>这样的格式，可以使用<code>el.dataset.type</code>进行相对应的访问；\<br>在不兼容dataset的情况下，可以使用更原始的<code>el.getAttribute(name)</code>进行取值，使用<code>el.setAttribute(name, value)</code>进行赋值</p>
-<h4 id="document-activeElement的应用（焦点问题）"><a href="#document-activeElement的应用（焦点问题）" class="headerlink" title="document.activeElement的应用（焦点问题）"></a>document.activeElement的应用（焦点问题）</h4><p><code>document.activeElement.tagName</code>可获得当前获得焦点的元素，<code>document.activeElement.blur()</code>使当前获得焦点的元素失焦</p>
-<h4 id="关闭webApp中的调起的系统键盘"><a href="#关闭webApp中的调起的系统键盘" class="headerlink" title="关闭webApp中的调起的系统键盘"></a>关闭webApp中的调起的系统键盘</h4><p><code>window.nativeKeyboradCancel()</code>，在webApp里取消调起系统的键盘，如果有的话</p>
-<h4 id="循环遍历父元素的方法"><a href="#循环遍历父元素的方法" class="headerlink" title="循环遍历父元素的方法"></a>循环遍历父元素的方法</h4><p>以下可以使用while一直遍历父元素：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTagName</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> parent = ele.parentElement;</div><div class="line">    <span class="keyword">var</span> string = <span class="string">''</span>;</div><div class="line">    <span class="keyword">while</span> (parent !== <span class="literal">null</span>) &#123;</div><div class="line">        string += parent.tagName + <span class="string">' '</span>;</div><div class="line">        parent = parent.parentElement；</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> string;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/20/JS工作经验总结（1）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1672,7 +1672,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">47</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
