@@ -758,6 +758,18 @@
 </ul>
 <p>If you would like your client app to be able to access other headers, you need to set the <code>Access-Control-Expose-Headers</code> header on the server:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Access-Control-Expose-Headers: Access-Token, Uid</div></pre></td></tr></table></figure>
+<h3 id="获取布局信息的操作时，会强制队列刷新"><a href="#获取布局信息的操作时，会强制队列刷新" class="headerlink" title="获取布局信息的操作时，会强制队列刷新"></a>获取布局信息的操作时，会强制队列刷新</h3><p>比如当你访问以下属性或者使用以下方法：</p>
+<ul>
+<li>offsetTop、offsetLeft、offsetWidth、offsetHeight</li>
+<li>scrollTop、scrollLeft、scrollWidth、scrollHeight</li>
+<li>clientTop、clientLeft、clientWidth、clientHeight</li>
+<li>getComputedStyle()</li>
+<li>getBoundingClientRect</li>
+</ul>
+<p>以上属性和方法都需要返回最新的布局信息，因此浏览器不得不清空队列，触发回流重绘来返回正确的值。因此，我们在修改样式的时候，最好避免使用上面列出的属性，他们都会刷新渲染队列。如果要使用它们，最好将值缓存起来。</p>
+<p>但强制清空队列也有好处，可以解决display:none转场的transition失效问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">el.style.display = <span class="string">'block'</span>;</div><div class="line">el.offsetHeight;</div><div class="line">el.style.transform = <span class="string">'translate3d(100px, 0, 0)'</span>;</div></pre></td></tr></table></figure>
+<p>假如元素设置了transition，且display为none，如果不使用<code>el.offsetHeight</code>这句强制刷新队列，那么转场的动画就会失效</p>
 
           
         

@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="props可以控制传入的限制，使用validator1234567891011121314151617const oneOf = (value, validList) =&amp;gt; &amp;#123;    for (let i = 0; i &amp;lt; validList.length; i++) &amp;#123;        if (value === validList[i]) &amp;#123;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-03T09:56:34.979Z">
+<meta property="og:updated_time" content="2019-09-28T12:32:59.591Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue工作经验总结（2）">
 <meta name="twitter:description" content="props可以控制传入的限制，使用validator1234567891011121314151617const oneOf = (value, validList) =&amp;gt; &amp;#123;    for (let i = 0; i &amp;lt; validList.length; i++) &amp;#123;        if (value === validList[i]) &amp;#123;">
@@ -386,8 +386,32 @@
 <li>MutationObserver是h5新加的一个功能，其功能是监听dom节点的变动，在所有dom变动完成后，执行回调函数</li>
 <li>以上都不支持就使用setTimeout延迟器</li>
 </ul>
-<p>也可以直接使用以下setTimeout，$nextTick在某些机型上会有坑，延迟20毫秒，确保DOM更新完成即可</p>
+<p>现在2.6版本的走的全是microtasks，microtasks比macrotasks的优先级高很多，如果遇到nextTick后获取的DOM不符合预期，直接使用setTimeout延迟20毫秒，确保DOM更新即可</p>
+<blockquote>
+<p>We are reverting back to microtasks everywhere and will remove withMacroTask entirely in 2.6.</p>
+</blockquote>
+<p><strong>macrotasks</strong>:</p>
+<ul>
+<li>setTimeout</li>
+<li>setInterval</li>
+<li>setImmediate</li>
+<li>requestAnimationFrame</li>
+<li>I/O</li>
+<li>UI rendering</li>
+</ul>
+<p><strong>microtasks</strong>:</p>
+<ul>
+<li>process.nextTick</li>
+<li>Promises</li>
+<li>Object.observe</li>
+<li>MutationObserver</li>
+</ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    cb();</div><div class="line">&#125;, <span class="number">20</span>);</div></pre></td></tr></table></figure>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://juejin.im/post/5a1af88f5188254a701ec230" target="_blank" rel="noopener">https://juejin.im/post/5a1af88f5188254a701ec230</a></li>
+<li><a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="noopener">https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/</a></li>
+</ul>
 <h4 id="vue数组更新及小技巧"><a href="#vue数组更新及小技巧" class="headerlink" title="vue数组更新及小技巧"></a>vue数组更新及小技巧</h4><p>可以更新数组视图的操作有：</p>
 <ul>
 <li>push</li>
