@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="JS工作经验总结（2） JS拿到图片实际宽高方法其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高 1234567891011121314151617181920if (typeof el.naturalWidth == undefined) &amp;#123;    // LTE">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-28T12:46:31.230Z">
+<meta property="og:updated_time" content="2019-10-08T02:05:41.812Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS工作经验总结（3）">
 <meta name="twitter:description" content="JS工作经验总结（2） JS拿到图片实际宽高方法其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高 1234567891011121314151617181920if (typeof el.naturalWidth == undefined) &amp;#123;    // LTE">
@@ -341,6 +341,7 @@
 <h3 id="清空input文件的值"><a href="#清空input文件的值" class="headerlink" title="清空input文件的值"></a>清空input文件的值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">inputEl.files.value = <span class="literal">null</span>;</div></pre></td></tr></table></figure>
 <h3 id="for-in循环时，使用数值作为键值遍历的问题"><a href="#for-in循环时，使用数值作为键值遍历的问题" class="headerlink" title="for-in循环时，使用数值作为键值遍历的问题"></a>for-in循环时，使用数值作为键值遍历的问题</h3><p>使用for in循环时，如果对象的键值为数值，会根据数值的大小顺序，从低到高进行遍历，遍历的顺序不可信，不要使用遍历对象然后直接push到数组，会有排序问题，需要额外的方法对数组进行排序</p>
 <h3 id="webpack打包体积过大，使用cdn引入依赖"><a href="#webpack打包体积过大，使用cdn引入依赖" class="headerlink" title="webpack打包体积过大，使用cdn引入依赖"></a>webpack打包体积过大，使用cdn引入依赖</h3><p>由于我们常引用依赖的方法是import xx from ‘xxx’，但由于引用的cdn是通过全局变量进行引用的，如果想要使用cdn，同时使用import的方法，可以采用cdn和webpack的externals</p>
+<a id="more"></a>
 <h3 id="字符串模板换行的情况"><a href="#字符串模板换行的情况" class="headerlink" title="字符串模板换行的情况"></a>字符串模板换行的情况</h3><p>在模板字符串里换行的时候，实际上会的确存在换行符\n的，想要字符串进行换行，记得设置一下元素的white-space属性，设置为pre-wrap或pre-line进行换行</p>
 <h3 id="url存在特殊字符的情况"><a href="#url存在特殊字符的情况" class="headerlink" title="url存在特殊字符的情况"></a>url存在特殊字符的情况</h3><p>get请求，后端定义路由时，注意不要用到可能带有【.】作为路由url，会导致【.】后面的都会被忽略，且【.】属于安全字符，不会被转义。如果有这种情况，只能够使用参数方式传参，这样带【.】是无问题的</p>
 <p>例如：</p>
@@ -522,7 +523,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

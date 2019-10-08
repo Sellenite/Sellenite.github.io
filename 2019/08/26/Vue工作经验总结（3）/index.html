@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue = val;    &amp;#125;&amp;#125; elementUI里">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-07T05:51:32.157Z">
+<meta property="og:updated_time" content="2019-10-08T02:05:17.003Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue工作经验总结（3）">
 <meta name="twitter:description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue = val;    &amp;#125;&amp;#125; elementUI里">
@@ -336,6 +336,7 @@
         <h3 id="v-model语法糖时，可以使用watch进行数据初始化"><a href="#v-model语法糖时，可以使用watch进行数据初始化" class="headerlink" title="v-model语法糖时，可以使用watch进行数据初始化"></a>v-model语法糖时，可以使用watch进行数据初始化</h3><p>之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">value: &#123;</div><div class="line">    <span class="attr">immediate</span>: <span class="literal">true</span>,</div><div class="line">    handler(val) &#123;</div><div class="line">        <span class="keyword">this</span>.currentValue = val;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="elementUI里的table，template里不要使用ref"><a href="#elementUI里的table，template里不要使用ref" class="headerlink" title="elementUI里的table，template里不要使用ref"></a>elementUI里的table，template里不要使用ref</h3><p>elementUI里的table，template里不要使用ref，引用的结果会与预期有差距，暂时无法找出什么原因</p>
+<a id="more"></a>
 <h3 id="使用v-model进行双向绑定时，oninput可以立即修改数据"><a href="#使用v-model进行双向绑定时，oninput可以立即修改数据" class="headerlink" title="使用v-model进行双向绑定时，oninput可以立即修改数据"></a>使用v-model进行双向绑定时，oninput可以立即修改数据</h3><p>其实v-model就是emit一个input事件的语法糖，根据这个我们可以通过监听input事件，在修改之前就将它拦截修改就可以了，不用根据watch这个绑定值然后再手动修改一次，因为这样会有一个闪烁的问题，直接拦截input事件就不会出现这个问题，具体实现：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">components</span> <span class="attr">v-model</span>=<span class="string">"test"</span> @<span class="attr">input</span>=<span class="string">"value=value.replace(/[^\d]/g, '')"</span>&gt;</span><span class="tag">&lt;/<span class="name">components</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>这样绑定的test值就是经过执行函数后的值</p>
@@ -472,7 +473,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -248,138 +248,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/06/20/JS工作经验总结（1）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/06/20/JS工作经验总结（1）/" itemprop="url">
-                  JS工作经验总结（1）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T22:47:49+08:00">
-                2018-06-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>本文主要记录工作时JS问题或经验</p>
-</blockquote>
-<h4 id="html里自定义属性的赋值和取出问题"><a href="#html里自定义属性的赋值和取出问题" class="headerlink" title="html里自定义属性的赋值和取出问题"></a>html里自定义属性的赋值和取出问题</h4><p>给html元素写入<code>data-type</code>这样的格式，可以使用<code>el.dataset.type</code>进行相对应的访问；\<br>在不兼容dataset的情况下，可以使用更原始的<code>el.getAttribute(name)</code>进行取值，使用<code>el.setAttribute(name, value)</code>进行赋值</p>
-<h4 id="document-activeElement的应用（焦点问题）"><a href="#document-activeElement的应用（焦点问题）" class="headerlink" title="document.activeElement的应用（焦点问题）"></a>document.activeElement的应用（焦点问题）</h4><p><code>document.activeElement.tagName</code>可获得当前获得焦点的元素，<code>document.activeElement.blur()</code>使当前获得焦点的元素失焦</p>
-<h4 id="关闭webApp中的调起的系统键盘"><a href="#关闭webApp中的调起的系统键盘" class="headerlink" title="关闭webApp中的调起的系统键盘"></a>关闭webApp中的调起的系统键盘</h4><p><code>window.nativeKeyboradCancel()</code>，在webApp里取消调起系统的键盘，如果有的话</p>
-<h4 id="循环遍历父元素的方法"><a href="#循环遍历父元素的方法" class="headerlink" title="循环遍历父元素的方法"></a>循环遍历父元素的方法</h4><p>以下可以使用while一直遍历父元素：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTagName</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> parent = ele.parentElement;</div><div class="line">    <span class="keyword">var</span> string = <span class="string">''</span>;</div><div class="line">    <span class="keyword">while</span> (parent !== <span class="literal">null</span>) &#123;</div><div class="line">        string += parent.tagName + <span class="string">' '</span>;</div><div class="line">        parent = parent.parentElement；</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> string;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/20/JS工作经验总结（1）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/03/19/Vue工作经验总结（1）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1654,6 +1522,144 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/09/JS简单碰撞原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/01/09/JS简单碰撞原理/" itemprop="url">
+                  JS简单碰撞原理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T21:52:50+08:00">
+                2018-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>先看分析图：<br><img src="/images/js-crash.jpg" alt="碰撞原理"></p>
+<ul>
+<li><p>当div1在div2的上边线(t2)以上的区域活动时，始终碰不上</p>
+</li>
+<li><p>当div1在div2的右边线(r2)以右的区域活动时,始终碰不上</p>
+</li>
+<li><p>当div1在div2的下边线(b2)以下的区域活动时,始终碰不上</p>
+</li>
+<li><p>当div1在div2的左边线(r2)以左的区域活动时,始终碰不上</p>
+</li>
+</ul>
+<blockquote>
+<p>除了以上四种情况，其他情况表示div1和div2碰上了，下面试完整测试代码</p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/09/JS简单碰撞原理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1703,7 +1709,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

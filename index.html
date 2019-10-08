@@ -248,133 +248,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/09/07/单点登录原理与简单实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/09/07/单点登录原理与简单实现/" itemprop="url">
-                  单点登录原理与简单实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-07T12:25:25+08:00">
-                2019-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="单点登录原理与简单实现"><a href="#单点登录原理与简单实现" class="headerlink" title="单点登录原理与简单实现"></a><a href="https://www.cnblogs.com/ywlaker/p/6113927.html" target="_blank" rel="noopener">单点登录原理与简单实现</a></h1><p>(2017-09-22更新)GitHub：<a href="https://github.com/sheefee/simple-sso" target="_blank" rel="noopener">https://github.com/sheefee/simple-sso</a></p>
-<p>记录一篇单点登录写得很好的文章，从流程图和后端代码结合分析。</p>
-<h2 id="一、单系统登录机制"><a href="#一、单系统登录机制" class="headerlink" title="一、单系统登录机制"></a>一、单系统登录机制</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/09/07/单点登录原理与简单实现/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/09/07/HTML-CSS实现一个步骤条/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -577,20 +450,16 @@
 
       
         
-          
-            <h3 id="v-model语法糖时，可以使用watch进行数据初始化"><a href="#v-model语法糖时，可以使用watch进行数据初始化" class="headerlink" title="v-model语法糖时，可以使用watch进行数据初始化"></a>v-model语法糖时，可以使用watch进行数据初始化</h3><p>之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了：</p>
+          <h3 id="v-model语法糖时，可以使用watch进行数据初始化"><a href="#v-model语法糖时，可以使用watch进行数据初始化" class="headerlink" title="v-model语法糖时，可以使用watch进行数据初始化"></a>v-model语法糖时，可以使用watch进行数据初始化</h3><p>之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">value: &#123;</div><div class="line">    <span class="attr">immediate</span>: <span class="literal">true</span>,</div><div class="line">    handler(val) &#123;</div><div class="line">        <span class="keyword">this</span>.currentValue = val;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="elementUI里的table，template里不要使用ref"><a href="#elementUI里的table，template里不要使用ref" class="headerlink" title="elementUI里的table，template里不要使用ref"></a>elementUI里的table，template里不要使用ref</h3><p>elementUI里的table，template里不要使用ref，引用的结果会与预期有差距，暂时无法找出什么原因</p>
-<h3 id="使用v-model进行双向绑定时，oninput可以立即修改数据"><a href="#使用v-model进行双向绑定时，oninput可以立即修改数据" class="headerlink" title="使用v-model进行双向绑定时，oninput可以立即修改数据"></a>使用v-model进行双向绑定时，oninput可以立即修改数据</h3><p>其实v-model就是emit一个input事件的语法糖，根据这个我们可以通过监听input事件，在修改之前就将它拦截修改就可以了，不用根据watch这个绑定值然后再手动修改一次，因为这样会有一个闪烁的问题，直接拦截input事件就不会出现这个问题，具体实现：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">components</span> <span class="attr">v-model</span>=<span class="string">"test"</span> @<span class="attr">input</span>=<span class="string">"value=value.replace(/[^\d]/g, '')"</span>&gt;</span><span class="tag">&lt;/<span class="name">components</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>这样绑定的test值就是经过执行函数后的值</p>
-<h3 id="fixed定位的浮动框，在滚动时依然能跟随屏幕移动"><a href="#fixed定位的浮动框，在滚动时依然能跟随屏幕移动" class="headerlink" title="fixed定位的浮动框，在滚动时依然能跟随屏幕移动"></a>fixed定位的浮动框，在滚动时依然能跟随屏幕移动</h3><p>参考elementUI在处理pop组件，这些组件一般都是放在body下，然后使用fixed定位的，如果不进行处理，在进行滚动的时候会一直定在同一个地方，很奇怪。</p>
-<p>参考popper.js 227行左右的监听滚动函数</p>
-<h3 id="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"><a href="#elementUI的table固定高度时，如何将里面滚动内容跳到顶部" class="headerlink" title="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"></a>elementUI的table固定高度时，如何将里面滚动内容跳到顶部</h3><p>可以看一下源码，里面存了dom</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$refs.table.bodyWrapper.scrollTop = <span class="number">0</span></div></pre></td></tr></table></figure>
-<h3 id="父元素和子元素的渲染时机和顺序"><a href="#父元素和子元素的渲染时机和顺序" class="headerlink" title="父元素和子元素的渲染时机和顺序"></a>父元素和子元素的渲染时机和顺序</h3><p>父子组件在加载的时候，执行的先后顺序为父beforeCreate-&gt;父created-&gt;父beforeMount-&gt;子beforeCreate-&gt;子created-&gt;子beforeMount-&gt;子mounted-&gt;父mounted</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/26/Vue工作经验总结（3）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -708,8 +577,7 @@
 
       
         
-          
-            <p>JS工作经验总结（2）</p>
+          <p>JS工作经验总结（2）</p>
 <h3 id="JS拿到图片实际宽高方法"><a href="#JS拿到图片实际宽高方法" class="headerlink" title="JS拿到图片实际宽高方法"></a>JS拿到图片实际宽高方法</h3><p>其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> el.naturalWidth == <span class="literal">undefined</span>) &#123;</div><div class="line">    <span class="comment">// LTE 8</span></div><div class="line">    <span class="keyword">var</span> i = <span class="keyword">new</span> Image();</div><div class="line">    <span class="keyword">var</span> rw, rh;</div><div class="line">    i.src = el.src;</div><div class="line">    <span class="comment">// 判断是否有缓存</span></div><div class="line">    <span class="keyword">if</span> (i.complete) &#123;</div><div class="line">        rw = i.width;</div><div class="line">        rh = i.height;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        i.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            rw = i.width;</div><div class="line">            rh = i.height;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// GTE IE9</span></div><div class="line">    rw = el.naturalWidth;</div><div class="line">    rh = el.naturalHeight;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="关于使用formData传送的类型"><a href="#关于使用formData传送的类型" class="headerlink" title="关于使用formData传送的类型"></a>关于使用formData传送的类型</h3><p>formData可以直接传file，也可以通过Blob二进制类型转成二进制，然后放到formData里。一些压缩的原理就是经过转换后，存成二进制，然后发到后台，后台收到的仍然是文件类型</p>
@@ -717,61 +585,13 @@
 <h3 id="清空input文件的值"><a href="#清空input文件的值" class="headerlink" title="清空input文件的值"></a>清空input文件的值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">inputEl.files.value = <span class="literal">null</span>;</div></pre></td></tr></table></figure>
 <h3 id="for-in循环时，使用数值作为键值遍历的问题"><a href="#for-in循环时，使用数值作为键值遍历的问题" class="headerlink" title="for-in循环时，使用数值作为键值遍历的问题"></a>for-in循环时，使用数值作为键值遍历的问题</h3><p>使用for in循环时，如果对象的键值为数值，会根据数值的大小顺序，从低到高进行遍历，遍历的顺序不可信，不要使用遍历对象然后直接push到数组，会有排序问题，需要额外的方法对数组进行排序</p>
 <h3 id="webpack打包体积过大，使用cdn引入依赖"><a href="#webpack打包体积过大，使用cdn引入依赖" class="headerlink" title="webpack打包体积过大，使用cdn引入依赖"></a>webpack打包体积过大，使用cdn引入依赖</h3><p>由于我们常引用依赖的方法是import xx from ‘xxx’，但由于引用的cdn是通过全局变量进行引用的，如果想要使用cdn，同时使用import的方法，可以采用cdn和webpack的externals</p>
-<h3 id="字符串模板换行的情况"><a href="#字符串模板换行的情况" class="headerlink" title="字符串模板换行的情况"></a>字符串模板换行的情况</h3><p>在模板字符串里换行的时候，实际上会的确存在换行符\n的，想要字符串进行换行，记得设置一下元素的white-space属性，设置为pre-wrap或pre-line进行换行</p>
-<h3 id="url存在特殊字符的情况"><a href="#url存在特殊字符的情况" class="headerlink" title="url存在特殊字符的情况"></a>url存在特殊字符的情况</h3><p>get请求，后端定义路由时，注意不要用到可能带有【.】作为路由url，会导致【.】后面的都会被忽略，且【.】属于安全字符，不会被转义。如果有这种情况，只能够使用参数方式传参，这样带【.】是无问题的</p>
-<p>例如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/api/goods/<span class="number">100445.2</span></div></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/api/goods?id=<span class="number">100445.2</span></div></pre></td></tr></table></figure>
-<p>第一种就是路由方式去传参，100445.2会被浏览器忽略成100445去请求后端</p>
-<p>第二种是参数方式传参，就没有问题</p>
-<p>如果有各类特殊字符，对参数进行一个encodeURIComponent()操作即可，这是一个编码标准，后端也很容易将它解码，当get请求传入json字符串的时候，必须使用这个编码转码发到后端</p>
-<h3 id="getBoundingClientRect获取的高度问题"><a href="#getBoundingClientRect获取的高度问题" class="headerlink" title="getBoundingClientRect获取的高度问题"></a>getBoundingClientRect获取的高度问题</h3><p>getBoundingClientRect拿到的top值只是距离窗口顶部的距离，如果有scroll，先拿到距离文档最高出的距离，需要将<code>rect.top + window.pageYOffset || document.documentElement.scrollTop</code></p>
-<h3 id="前端登录RSA加密流程"><a href="#前端登录RSA加密流程" class="headerlink" title="前端登录RSA加密流程"></a>前端登录RSA加密流程</h3><p>流程是这样的：</p>
-<ul>
-<li>请求后端，拿到一个publicKey和一个标识字符串</li>
-<li>前端使用插件，利用publicKey对密码进行RSA加密</li>
-<li>使用加密后的密码和标识字符串请求登录接口</li>
-<li>标识字符串的作用是后台通过这个标识使用对应的privateKey对加密字符串进行解密</li>
-</ul>
-<p>RSA为什么能安全：加密后的字符串，必须通过privateKey去解密，就算抓包的时候请求抓到publicKey，那也只是加密所使用的key，并不能解密。所以抓包抓到的加密字符串没有privateKey是无法加密的，privateKey保存在后台，解密工作在后台进行</p>
-<p>伪代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> JsEncrypt <span class="keyword">from</span> <span class="string">'jsencrypt'</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> jse = <span class="keyword">new</span> JsEncrypt();</div><div class="line"><span class="comment">// publicKey是请求后台获取的</span></div><div class="line">jse.setPublicKey(publicKey);</div><div class="line"><span class="keyword">let</span> encodePassword = jse.encrypt(password);</div><div class="line">client.request.post(<span class="string">'/login'</span>, &#123;</div><div class="line">    <span class="attr">username</span>: username,</div><div class="line">    <span class="attr">password</span>: encodePassword,</div><div class="line">    <span class="attr">key</span>: key <span class="comment">// 标识字符串，后台使用对应的密钥进行解密</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>已经通过RSA加密的内容进行解密（一般不会这么做，privateKey是不能暴露出来的）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> JsEncrypt <span class="keyword">from</span> <span class="string">'jsencrypt'</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> jse = <span class="keyword">new</span> JsEncrypt();</div><div class="line">jse.setPrivateKey(privateKey);</div><div class="line"><span class="keyword">let</span> decodePassword = jse.decrypt(encodePassword);</div></pre></td></tr></table></figure></p>
-<p>这样就完成一次RSA登录流程</p>
-<h3 id="offsetTop的相对偏移问题"><a href="#offsetTop的相对偏移问题" class="headerlink" title="offsetTop的相对偏移问题"></a>offsetTop的相对偏移问题</h3><p>offsetTop是元素到offsetParent顶部的距离，offsetParent是距离元素最近的一个具有定位的祖宗元素（relative，absolute，fixed），若祖宗都不符合条件，offsetParent为body</p>
-<h3 id="使用ajax的方式下载文件"><a href="#使用ajax的方式下载文件" class="headerlink" title="使用ajax的方式下载文件"></a>使用ajax的方式下载文件</h3><p>一直使用的url下载方式只能为get【使用window.location.open或建立一个假的a标签或使用iframe加载路径】，而且并不是一个ajax请求，返回的是一个文件流，带有后端文件名称的文件。但这种方式有个问题，就是不知道后端能够下载文件的时机。假如这个文件是一个后端动态生成的excel文件，那么距离生成会有一段时间，传统的url下载方式并不知道后端什么时候才能下载</p>
-<p>以下为使用ajax的方式下载文件，配合blob二进制格式，以axios为例的伪代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">downFile</span>(<span class="params">url, parameter</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> axios(&#123;</div><div class="line">        <span class="attr">url</span>: url,</div><div class="line">        <span class="attr">params</span>: parameter,</div><div class="line">        <span class="attr">method</span>:<span class="string">'get'</span> ,</div><div class="line">        <span class="attr">responseType</span>: <span class="string">'blob'</span></div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 这里的fileName完全自定义，但如果想获取文件本来的名字就需要改接口</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleExportXls</span>(<span class="params">fileName</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> url = <span class="string">'/download'</span>;</div><div class="line">    <span class="keyword">let</span> param = &#123; <span class="attr">id</span>: <span class="number">10001</span> &#125;;</div><div class="line">    downFile(url, param).then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</div><div class="line">        <span class="keyword">if</span> (!data) &#123;</div><div class="line">            alert(<span class="string">"文件下载失败"</span>);</div><div class="line">            <span class="keyword">return</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span>.navigator.msSaveBlob !== <span class="string">'undefined'</span>) &#123;</div><div class="line">            <span class="built_in">window</span>.navigator.msSaveBlob(<span class="keyword">new</span> Blob([data]), fileName + <span class="string">'.xls'</span>)</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">let</span> url = <span class="built_in">window</span>.URL.createObjectURL(<span class="keyword">new</span> Blob([data]))</div><div class="line">            <span class="keyword">let</span> link = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>)</div><div class="line">            link.style.display = <span class="string">'none'</span></div><div class="line">            link.href = url</div><div class="line">            link.setAttribute(<span class="string">'download'</span>, fileName + <span class="string">'.xls'</span>)</div><div class="line">            <span class="built_in">document</span>.body.appendChild(link)</div><div class="line">            link.click()</div><div class="line">            <span class="built_in">document</span>.body.removeChild(link); <span class="comment">//下载完成移除元素</span></div><div class="line">            <span class="built_in">window</span>.URL.revokeObjectURL(url); <span class="comment">//释放掉blob对象</span></div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样就可以在不跳转的情况下，下载ajax请求的二进制文件</p>
-<p>但这时的文件名是需要前端定义的，如何知道后端的这个文件是什么名称？可以通过后端的配合，设置响应头一个属性，前端取响应头的属性然后赋值即可</p>
-<p>例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$axios(&#123;</div><div class="line">   <span class="attr">method</span>: params.method,</div><div class="line">   <span class="attr">url</span>: params.url,</div><div class="line">   <span class="attr">data</span>: params.data,</div><div class="line">   <span class="attr">responseType</span>: <span class="string">'blob'</span> <span class="comment">// 指明返回格式,</span></div><div class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</div><div class="line">   <span class="comment">// 这里尤其需要注意, '\ufeff' 用于解决乱码问题, blob可以解决数据量大导致网络失败.</span></div><div class="line">   <span class="keyword">const</span> blob = <span class="keyword">new</span> Blob([<span class="string">'\ufeff'</span> + res.data], &#123; <span class="attr">type</span>: <span class="string">'text/csv;charset=utf-8'</span> &#125;)</div><div class="line">   <span class="keyword">const</span> url = <span class="built_in">window</span>.URL.createObjectURL(blob)</div><div class="line">   <span class="comment">// 通过创建a标签实现</span></div><div class="line">   <span class="keyword">const</span> link = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>)</div><div class="line">   link.href = url</div><div class="line">   <span class="comment">// 对下载的文件命名</span></div><div class="line">   link.download = <span class="built_in">decodeURI</span>(res.headers[<span class="string">'content-disposition'</span>].split(<span class="string">'='</span>)[<span class="number">1</span>]) || <span class="string">'发货单导出数据表.csv'</span></div><div class="line">   <span class="built_in">document</span>.body.appendChild(link)</div><div class="line">   link.click()</div><div class="line">   <span class="built_in">document</span>.body.removeChild(link)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>注意<code>content-disposition</code>这个属性能在请求调试里看到，但如果res.headers怎么都取不到的话，需要在服务器端配置一个属性：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Access-Control-Expose-Headers: Content-Disposition</div></pre></td></tr></table></figure>
-<p>参考：<br><a href="https://stackoverflow.com/questions/37897523/axios-get-access-to-response-header-fields" target="_blank" rel="noopener">https://stackoverflow.com/questions/37897523/axios-get-access-to-response-header-fields</a></p>
-<p>In case of CORS requests, browsers can only access the following response headers by default:</p>
-<ul>
-<li>Cache-Control</li>
-<li>Content-Language</li>
-<li>Content-Type</li>
-<li>Expires</li>
-<li>Last-Modified</li>
-<li>Pragma</li>
-</ul>
-<p>If you would like your client app to be able to access other headers, you need to set the <code>Access-Control-Expose-Headers</code> header on the server:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Access-Control-Expose-Headers: Access-Token, Uid</div></pre></td></tr></table></figure>
-<h3 id="获取布局信息的操作时，会强制队列刷新"><a href="#获取布局信息的操作时，会强制队列刷新" class="headerlink" title="获取布局信息的操作时，会强制队列刷新"></a>获取布局信息的操作时，会强制队列刷新</h3><p>比如当你访问以下属性或者使用以下方法：</p>
-<ul>
-<li>offsetTop、offsetLeft、offsetWidth、offsetHeight</li>
-<li>scrollTop、scrollLeft、scrollWidth、scrollHeight</li>
-<li>clientTop、clientLeft、clientWidth、clientHeight</li>
-<li>getComputedStyle()</li>
-<li>getBoundingClientRect</li>
-</ul>
-<p>以上属性和方法都需要返回最新的布局信息，因此浏览器不得不清空队列，触发回流重绘来返回正确的值。因此，我们在修改样式的时候，最好避免使用上面列出的属性，他们都会刷新渲染队列。如果要使用它们，最好将值缓存起来。</p>
-<p>但强制清空队列也有好处，可以解决display:none转场的transition失效问题：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">el.style.display = <span class="string">'block'</span>;</div><div class="line">el.offsetHeight;</div><div class="line">el.style.transform = <span class="string">'translate3d(100px, 0, 0)'</span>;</div></pre></td></tr></table></figure>
-<p>假如元素设置了transition，且display为none，如果不使用<code>el.offsetHeight</code>这句强制刷新队列，那么转场的动画就会失效</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/26/JS工作经验总结（3）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1660,6 +1480,142 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/03/04/ubuntu和nginx常用命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/03/04/ubuntu和nginx常用命令/" itemprop="url">
+                  ubuntu和nginx常用命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T00:10:51+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>配置host：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/hosts</div></pre></td></tr></table></figure>
+<p>安装nginx：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install nginx</div></pre></td></tr></table></figure>
+<p>查看有没有nginx占用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep nginx</div></pre></td></tr></table></figure>
+<p>强制删除所有nginx进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pkill -9 nginx</div></pre></td></tr></table></figure>
+<p>获取root权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo su</div></pre></td></tr></table></figure>
+<p>退出root权限模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ctrl+d</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/04/ubuntu和nginx常用命令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1709,7 +1665,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
