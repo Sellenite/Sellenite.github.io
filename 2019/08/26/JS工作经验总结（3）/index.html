@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="JS工作经验总结（2） JS拿到图片实际宽高方法其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高 1234567891011121314151617181920if (typeof el.naturalWidth == undefined) &amp;#123;    // LTE">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-08T02:05:41.812Z">
+<meta property="og:updated_time" content="2019-10-08T02:44:26.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS工作经验总结（3）">
 <meta name="twitter:description" content="JS工作经验总结（2） JS拿到图片实际宽高方法其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高 1234567891011121314151617181920if (typeof el.naturalWidth == undefined) &amp;#123;    // LTE">
@@ -395,6 +395,39 @@
 <p>但强制清空队列也有好处，可以解决display:none转场的transition失效问题：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">el.style.display = <span class="string">'block'</span>;</div><div class="line">el.offsetHeight;</div><div class="line">el.style.transform = <span class="string">'translate3d(100px, 0, 0)'</span>;</div></pre></td></tr></table></figure>
 <p>假如元素设置了transition，且display为none，如果不使用<code>el.offsetHeight</code>这句强制刷新队列，那么转场的动画就会失效</p>
+<h3 id="混合开发时web端和原生端的请求的不同"><a href="#混合开发时web端和原生端的请求的不同" class="headerlink" title="混合开发时web端和原生端的请求的不同"></a>混合开发时web端和原生端的请求的不同</h3><blockquote>
+<p>web端请求</p>
+</blockquote>
+<ul>
+<li>web端发送请求是基于XMLHttpRequest或fetch</li>
+<li>浏览器同源政策CORS安全限制，需要后端设置请求头或设置服务器代理转发</li>
+<li>不够安全，无法网络优化，原生端无法对请求进行监控或加密</li>
+</ul>
+<blockquote>
+<p>原生端请求，web端利用JSBridge调起原生端请求</p>
+</blockquote>
+<ul>
+<li>没有浏览器跨域限制</li>
+<li>安全加密，签名校验</li>
+<li>弱网优化，流量优化</li>
+<li>原生端可以对请求进行压缩</li>
+<li>甚至可以将http请求替换成rpc（远程过程调用）这种节省流量的方法，利用私有协议请求数据（底层变了）</li>
+</ul>
+<h3 id="混合开发的JSBridge实现原理"><a href="#混合开发的JSBridge实现原理" class="headerlink" title="混合开发的JSBridge实现原理"></a>混合开发的JSBridge实现原理</h3><p>web端调用原生端方法：</p>
+<ul>
+<li>拦截URL Schema，可使用alert等，原生端会对其进行拦截</li>
+<li>原生端注入JSAPI，注入一个全局对象，web端可以直接调用</li>
+</ul>
+<p>原生端调用web端方法：</p>
+<ul>
+<li>web端定义一个全局对象，原生端直接执行js字符串代码</li>
+</ul>
+<p>带有回调的原理：</p>
+<ul>
+<li>web端发起时，利用JSBridge调用原生端方法，原生端又执行web端的js字符串代码，进行两次跨端的操作，是需要两边都约定好协议和全局对象</li>
+<li>原生端发起原理与上面相同</li>
+<li>由于代码繁琐或有坑，一般采用开源里比较成熟的JSBridge，会带有封装好的webview和JSAPI</li>
+</ul>
 
       
     </div>
@@ -582,7 +615,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS拿到图片实际宽高方法"><span class="nav-number">1.</span> <span class="nav-text">JS拿到图片实际宽高方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于使用formData传送的类型"><span class="nav-number">2.</span> <span class="nav-text">关于使用formData传送的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清空input文件的值"><span class="nav-number">3.</span> <span class="nav-text">清空input文件的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-in循环时，使用数值作为键值遍历的问题"><span class="nav-number">4.</span> <span class="nav-text">for-in循环时，使用数值作为键值遍历的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack打包体积过大，使用cdn引入依赖"><span class="nav-number">5.</span> <span class="nav-text">webpack打包体积过大，使用cdn引入依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串模板换行的情况"><span class="nav-number">6.</span> <span class="nav-text">字符串模板换行的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#url存在特殊字符的情况"><span class="nav-number">7.</span> <span class="nav-text">url存在特殊字符的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getBoundingClientRect获取的高度问题"><span class="nav-number">8.</span> <span class="nav-text">getBoundingClientRect获取的高度问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端登录RSA加密流程"><span class="nav-number">9.</span> <span class="nav-text">前端登录RSA加密流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#offsetTop的相对偏移问题"><span class="nav-number">10.</span> <span class="nav-text">offsetTop的相对偏移问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用ajax的方式下载文件"><span class="nav-number">11.</span> <span class="nav-text">使用ajax的方式下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取布局信息的操作时，会强制队列刷新"><span class="nav-number">12.</span> <span class="nav-text">获取布局信息的操作时，会强制队列刷新</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS拿到图片实际宽高方法"><span class="nav-number">1.</span> <span class="nav-text">JS拿到图片实际宽高方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于使用formData传送的类型"><span class="nav-number">2.</span> <span class="nav-text">关于使用formData传送的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清空input文件的值"><span class="nav-number">3.</span> <span class="nav-text">清空input文件的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-in循环时，使用数值作为键值遍历的问题"><span class="nav-number">4.</span> <span class="nav-text">for-in循环时，使用数值作为键值遍历的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack打包体积过大，使用cdn引入依赖"><span class="nav-number">5.</span> <span class="nav-text">webpack打包体积过大，使用cdn引入依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串模板换行的情况"><span class="nav-number">6.</span> <span class="nav-text">字符串模板换行的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#url存在特殊字符的情况"><span class="nav-number">7.</span> <span class="nav-text">url存在特殊字符的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getBoundingClientRect获取的高度问题"><span class="nav-number">8.</span> <span class="nav-text">getBoundingClientRect获取的高度问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端登录RSA加密流程"><span class="nav-number">9.</span> <span class="nav-text">前端登录RSA加密流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#offsetTop的相对偏移问题"><span class="nav-number">10.</span> <span class="nav-text">offsetTop的相对偏移问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用ajax的方式下载文件"><span class="nav-number">11.</span> <span class="nav-text">使用ajax的方式下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取布局信息的操作时，会强制队列刷新"><span class="nav-number">12.</span> <span class="nav-text">获取布局信息的操作时，会强制队列刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混合开发时web端和原生端的请求的不同"><span class="nav-number">13.</span> <span class="nav-text">混合开发时web端和原生端的请求的不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混合开发的JSBridge实现原理"><span class="nav-number">14.</span> <span class="nav-text">混合开发的JSBridge实现原理</span></a></li></ol></div>
             
 
           </div>
