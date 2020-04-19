@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue = val;    &amp;#125;&amp;#125; elementUI里">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-19T12:31:29.251Z">
+<meta property="og:updated_time" content="2020-04-19T13:36:22.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue工作经验总结（3）">
 <meta name="twitter:description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue = val;    &amp;#125;&amp;#125; elementUI里">
@@ -351,6 +351,8 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 通过 $props 将父组件的 props 一起传给子组件 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">child-component</span> <span class="attr">v-bind</span>=<span class="string">"$props"</span>&gt;</span><span class="tag">&lt;/<span class="name">child-component</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>bind也可以一次性绑定多个属性：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 绑定一个有属性的对象 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind</span>=<span class="string">"&#123; id: someProp, 'other-attr': otherProp &#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>如果不使用额外的prop传入，可以直接传入attrs和listeners，这样就可以传入不确定的属性和绑定函数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">child-component</span> <span class="attr">v-bind</span>=<span class="string">"$attrs"</span> <span class="attr">v-on</span>=<span class="string">"$listeners"</span>&gt;</span><span class="tag">&lt;/<span class="name">child-component</span>&gt;</span></div></pre></td></tr></table></figure>
 <h3 id="当ElementUI的form里面只有一个input元素，使用-keyup-enter-native会导致刷新页面的问题"><a href="#当ElementUI的form里面只有一个input元素，使用-keyup-enter-native会导致刷新页面的问题" class="headerlink" title="当ElementUI的form里面只有一个input元素，使用@keyup.enter.native会导致刷新页面的问题"></a>当ElementUI的form里面只有一个input元素，使用@keyup.enter.native会导致刷新页面的问题</h3><p>由于ElementUI在定义组件的时候，遵循以下规则：</p>
 <blockquote>
 <p>当一个 form 元素中只有一个输入框时，在该输入框中按下回车应提交该表单。如果希望阻止这一默认行为，可以在 <code>&lt;el-form&gt;</code> 标签上添加 <code>@submit.native.prevent</code>。</p>
