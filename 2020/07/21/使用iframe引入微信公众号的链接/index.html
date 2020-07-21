@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuuhei&#39;s Home">
 <meta property="og:description" content="本文实现了以下功能：  iframe可加载微信公众号内容 可加载微信的视频或外链的视频 可绕过微信图片的防盗链 iframe里的微信公众号的跳转链接实现浏览器新窗口跳转  前言：由于微信前端页面的的服务器设置了Content-Security-Policy，导致他的资源如果在非白名单的网页被引用，就会拒绝返回资源，导致iframe加载内容失败  注：开启了CSP的时候要记得配置一下unsafe-e">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-21T14:23:16.439Z">
+<meta property="og:updated_time" content="2020-07-21T14:31:50.002Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用iframe引入微信公众号的链接">
 <meta name="twitter:description" content="本文实现了以下功能：  iframe可加载微信公众号内容 可加载微信的视频或外链的视频 可绕过微信图片的防盗链 iframe里的微信公众号的跳转链接实现浏览器新窗口跳转  前言：由于微信前端页面的的服务器设置了Content-Security-Policy，导致他的资源如果在非白名单的网页被引用，就会拒绝返回资源，导致iframe加载内容失败  注：开启了CSP的时候要记得配置一下unsafe-e">
@@ -345,6 +345,7 @@
 <p>注：开启了CSP的时候要记得配置一下<code>unsafe-eval</code>和<code>unsafe-inline</code>，否则一些eval()，setTimeout，setInterval会无法执行；内联script，内联样式，内联事件都会失效</p>
 </blockquote>
 <p>关于CSP的一些详细说明：</p>
+<a id="more"></a>
 <p><a href="https://blog.csdn.net/qq_25623257/article/details/90473859" target="_blank" rel="noopener">https://blog.csdn.net/qq_25623257/article/details/90473859</a></p>
 <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP</a></p>
 <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy</a></p>
@@ -359,7 +360,7 @@
 <p><a href="https://github.com/Rob--W/cors-anywhere" target="_blank" rel="noopener">https://github.com/Rob--W/cors-anywhere</a></p>
 <p>该项目可以允许任意跨域请求，且基于nodejs开发，很好地解决了本地部署的问题，因为不可能使用他提供的服务器，很慢且很不稳定，把源码下载下来后可以直接本地部署。用法：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">axios.get(process.env.VUE_APP_CORS_ANYWHERE_API_URL + <span class="string">'/'</span> + website)</div></pre></td></tr></table></figure>
-<p>这样就可以返回请求的内容，我们把website替换成微信公众号的链接<code>https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg</code>，这时候返回了html到前端，完成了成功的第一步</p>
+<p>这样就可以返回请求的内容，我们把website替换成微信公众号的链接，这时候返回了html到前端，完成了成功的第一步</p>
 <p>拿到html后，尝试使用write写入资源（必须，因为有一些script需要加载，使用<code>appendChild</code>会导致这些script无法执行）后，会发现除了标题，其他一片空白，因为很多<code>visibility</code>属性都被设置为<code>hidden</code>了，需要全局替换一些改为<code>visible</code></p>
 <blockquote>
 <p> 注：iframe的src不要使用<code>&#39;data:text/html;charset=utf-8,&#39; + html</code>的方式加载，使用<code>container.contentWindow.document.write(html)</code>写入资源</p>
@@ -370,7 +371,7 @@
 <p>但有个坑点，如果是gif，需要在后面加上一些参数<code>&amp;output=gif&amp;n=-1</code>，说明他以gif返回，否则返回的图片是不会动的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://images.weserv.nl/?url=https://mmbiz.qpic.cn/mmbiz_gif/iblvrvduDqxFibk6bianDue1Ygn2t0k1Cs8dmKjwcibxIesKWwDZwrib0aNxOxpZQyo4MxUPag0Cgz3dCrTMW6prHGA/640?wx_fmt=gif&amp;output=gif&amp;n=-1</div></pre></td></tr></table></figure>
 <p>或者使用文章里绕过图片防盗链的node方法，放在自己的服务器更放心。</p>
-<p>微信的图片链接：【<a href="https://mmbiz.qpic.cn/mmbiz_jpg/iblvrvduDqxFibk6bianDue1Ygn2t0k1Cs8jalhhMfMyP7qdVM5GVskHI06lMPdpOEHnHQyPVQsicGn0jwvZglxibzQ/640?wx_fmt=jpeg】一般都会有一个参数说明这个图片是什么类型：`wx_fmt`，否则其实微信这个mmbiz.qpic.cn接口，也只是请求文件流，并不是访问服务器的真实地址，通过这个`wx_fmt`决定了返回的`Content-Type`是什么，这样直接浏览才会显示图片类型，而不是变成了下载这个文件" target="_blank" rel="noopener">https://mmbiz.qpic.cn/mmbiz_jpg/iblvrvduDqxFibk6bianDue1Ygn2t0k1Cs8jalhhMfMyP7qdVM5GVskHI06lMPdpOEHnHQyPVQsicGn0jwvZglxibzQ/640?wx_fmt=jpeg】一般都会有一个参数说明这个图片是什么类型：`wx_fmt`，否则其实微信这个mmbiz.qpic.cn接口，也只是请求文件流，并不是访问服务器的真实地址，通过这个`wx_fmt`决定了返回的`Content-Type`是什么，这样直接浏览才会显示图片类型，而不是变成了下载这个文件</a></p>
+<p>微信的图片链接一般都会有一个参数说明这个图片是什么类型：<code>wx_fmt</code>，否则其实微信这个mmbiz.qpic.cn接口，也只是请求文件流，并不是访问服务器的真实地址，通过这个<code>wx_fmt</code>决定了返回的<code>Content-Type</code>是什么，这样直接浏览才会显示图片类型，而不是变成了下载这个文件</p>
 <blockquote>
 <p>注：不要在html增加<code>&lt;meta name=&quot;referrer&quot; content=&quot;never&quot;&gt;</code>的方法处理这类事件</p>
 </blockquote>
