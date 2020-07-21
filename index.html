@@ -248,6 +248,558 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2020/07/21/使用iframe引入微信公众号的链接/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/07/21/使用iframe引入微信公众号的链接/" itemprop="url">
+                  使用iframe引入微信公众号的链接
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-21T21:56:10+08:00">
+                2020-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>由于微信前端页面的的服务器设置了<code>Content-Security-Policy</code>，导致他的资源如果在非白名单的网页被引用，就会拒绝返回资源，导致iframe加载内容失败</p>
+<blockquote>
+<p>注：开启了CSP的时候要记得配置一下<code>unsafe-eval</code>和<code>unsafe-inline</code>，否则一些eval()，setTimeout，setInterval会无法执行；内联script，内联样式，内联事件都会失效</p>
+</blockquote>
+<p>关于CSP的一些详细说明：</p>
+<p><a href="https://blog.csdn.net/qq_25623257/article/details/90473859" target="_blank" rel="noopener">https://blog.csdn.net/qq_25623257/article/details/90473859</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy</a></p>
+<p>微信的CSP配置如下（检查前端html的响应头返回，微信这里是一个服务端渲染）：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">content-security-policy: script-src 'self' 'unsafe-inline' 'unsafe-eval' http://*.qq.com https://*.qq.com http://*.weishi.com https://*.weishi.com http://*.m.tencent.com https://*.m.tencent.com http://*.weixin.qq.com https://*.weixin.qq.com https://midas.gtimg.cn 'nonce-505653230';style-src 'self' 'unsafe-inline' http://*.qq.com https://*.qq.com;object-src 'self' http://*.qq.com https://*.qq.com http://*.qpic.cn https://*.qpic.cn http://*.qlogo.cn https://*.qlogo.cn;font-src 'self' data: http://*.qq.com https://*.qq.com http://fonts.gstatic.com https://fonts.gstatic.com;frame-ancestors 'self' http://wx.qq.com https://wx.qq.com http://wx2.qq.com https://wx2.qq.com  http://wx8.qq.com https://wx8.qq.com http://web.wechat.com https://web.wechat.com http://web1.wechat.com https://web1.wechat.com http://web2.wechat.com https://web2.wechat.com http://sticker.weixin.qq.com https://sticker.weixin.qq.com http://bang.qq.com https://bang.qq.com http://app.work.weixin.qq.com https://app.work.weixin.qq.com http://work.weixin.qq.com https://work.weixin.qq.com http://finance.qq.com https://finance.qq.com http://gu.qq.com https://gu.qq.com http://wzq.tenpay.com https://wzq.tenpay.com http://test.tcp.tencent.com https://test.tcp.tencent.com http://dev.tcp.tencent.com https://dev.tcp.tencent.com http://tcp.tencent.com https://tcp.tencent.com http://mail.qq.com https://mail.qq.com http://wx.mail.qq.com https://wx.mail.qq.com http://iwx.mail.qq.com https://iwx.mail.qq.com http://dev.mail.qq.com https://dev.mail.qq.com;report-uri https://mp.weixin.qq.com/mp/fereport?action=csp_report</div></pre></td></tr></table></figure>
+<p>看到配置还配置到了一个<code>report-uri</code>，如果触发了拦截，会主动发送POST请求到这个uri里，发送的payload字段如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"csp-report"</span>: &#123;</div><div class="line">		<span class="attr">"document-uri"</span>: <span class="string">"https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg"</span>,</div><div class="line">		<span class="attr">"referrer"</span>: <span class="string">""</span>,</div><div class="line">		<span class="attr">"violated-directive"</span>: <span class="string">"frame-ancestors"</span>,</div><div class="line">		<span class="attr">"effective-directive"</span>: <span class="string">"frame-ancestors"</span>,</div><div class="line">		<span class="attr">"original-policy"</span>: <span class="string">"script-src 'self' 'unsafe-inline' 'unsafe-eval' http://*.qq.com https://*.qq.com http://*.weishi.com https://*.weishi.com http://*.m.tencent.com https://*.m.tencent.com http://*.weixin.qq.com https://*.weixin.qq.com https://midas.gtimg.cn 'nonce-1034686668';style-src 'self' 'unsafe-inline' http://*.qq.com https://*.qq.com;object-src 'self' http://*.qq.com https://*.qq.com http://*.qpic.cn https://*.qpic.cn http://*.qlogo.cn https://*.qlogo.cn;font-src 'self' data: http://*.qq.com https://*.qq.com http://fonts.gstatic.com https://fonts.gstatic.com;frame-ancestors 'self' http://wx.qq.com https://wx.qq.com http://wx2.qq.com https://wx2.qq.com  http://wx8.qq.com https://wx8.qq.com http://web.wechat.com https://web.wechat.com http://web1.wechat.com https://web1.wechat.com http://web2.wechat.com https://web2.wechat.com http://sticker.weixin.qq.com https://sticker.weixin.qq.com http://bang.qq.com https://bang.qq.com http://app.work.weixin.qq.com https://app.work.weixin.qq.com http://work.weixin.qq.com https://work.weixin.qq.com http://finance.qq.com https://finance.qq.com http://gu.qq.com https://gu.qq.com http://wzq.tenpay.com https://wzq.tenpay.com http://test.tcp.tencent.com https://test.tcp.tencent.com http://dev.tcp.tencent.com https://dev.tcp.tencent.com http://tcp.tencent.com https://tcp.tencent.com http://mail.qq.com https://mail.qq.com http://wx.mail.qq.com https://wx.mail.qq.com http://iwx.mail.qq.com https://iwx.mail.qq.com http://dev.mail.qq.com https://dev.mail.qq.com;report-uri https://mp.weixin.qq.com/mp/fereport?action=csp_report"</span>,</div><div class="line">		<span class="attr">"disposition"</span>: <span class="string">"enforce"</span>,</div><div class="line">		<span class="attr">"blocked-uri"</span>: <span class="string">"https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg"</span>,</div><div class="line">		<span class="attr">"status-code"</span>: <span class="number">0</span>,</div><div class="line">		<span class="attr">"script-sample"</span>: <span class="string">""</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>并且使用了iframe的前端会报一个错：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Refused to display <span class="string">'https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg'</span> <span class="keyword">in</span> a frame because an ancestor violates the following Content Security Policy directive: <span class="string">"frame-ancestors 'self' http://wx.qq.com https://wx.qq.com http://wx2.qq.com https://wx2.qq.com  http://wx8.qq.com https://wx8.qq.com http://web.wechat.com https://web.wechat.com http://web1.wechat.com https://web1.wechat.com http://web2.wechat.com https://web2.wechat.com http://sticker.weixin.qq.com https://sticker.weixin.qq.com http://bang.qq.com https://bang.qq.com http://app.work.weixin.qq.com https://app.work.weixin.qq.com http://work.weixin.qq.com https://work.weixin.qq.com http://finance.qq.com https://finance.qq.com http://gu.qq.com https://gu.qq.com http://wzq.tenpay.com https://wzq.tenpay.com http://test.tcp.tencent.com https://test.tcp.tencent.com http://dev.tcp.tencent.com https://dev.tcp.tencent.com http://tcp.tencent.com https://tcp.tencent.com http://mail.qq.com https://mail.qq.com http://wx.mail.qq.com https://wx.mail.qq.com http://iwx.mail.qq.com https://iwx.mail.qq.com http://dev.mail.qq.com https://dev.mail.qq.com"</span>.</div></pre></td></tr></table></figure>
+<p>如果网页不在白名单里，这时候前端就不能够直接引用微信公众号的资源了，只能够将微信本身的html内容返回后，做处理后再渲染出来</p>
+<p>寻找了网上的方案，所有的方案都指向了以下项目：</p>
+<p><a href="https://github.com/Rob--W/cors-anywhere" target="_blank" rel="noopener">https://github.com/Rob--W/cors-anywhere</a></p>
+<p>该项目可以允许任意跨域请求，且基于nodejs开发，很好地解决了本地部署的问题，因为不可能使用他提供的服务器，很慢且很不稳定，把源码下载下来后可以直接本地部署。用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">axios.get(process.env.VUE_APP_CORS_ANYWHERE_API_URL + <span class="string">'/'</span> + website)</div></pre></td></tr></table></figure>
+<p>这样就可以返回请求的内容，我们把website替换成微信公众号的链接<code>https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg</code>，这时候返回了html到前端，完成了成功的第一步</p>
+<p>拿到html后，尝试使用write写入资源（必须，因为有一些script需要加载，使用<code>appendChild</code>会导致这些script无法执行）后，会发现除了标题，其他一片空白，因为很多<code>visibility</code>属性都被设置为<code>hidden</code>了，需要全局替换一些改为<code>visible</code></p>
+<blockquote>
+<p> 注：iframe的src不要使用<code>&#39;data:text/html;charset=utf-8,&#39; + html</code>的方式加载，使用<code>container.contentWindow.document.write(html)</code>写入资源</p>
+</blockquote>
+<p>然后又会发现图片全部都有一个<code>data-src</code>属性，原本的<code>src</code>属性只是一个默认图，这时候也需要将他们的属性进行替换，<code>data-src</code>是用来作为懒加载的，有些js并不能够好好运行，只能改成直接显示</p>
+<p>图片显示出来后，会发现微信居然对图片也做了防盗链处理，只能够处理防盗链的问题才能够显示。图片防盗链的原理是在放图片的服务器上加了对<code>Referer</code>的验证，资源在请求的时候，会带上<code>Referer</code>这个请求头（自动带上，且前端不可以设置这个请求头），那么解决方法就是请求自己的服务器，然后在自己的服务器再请求图片的服务器，自己的服务器置空<code>Referer</code>这个请求头，这样图片的服务器就会认为你只是简单的加载图片，而不是通过项目请求的图片，就会成功返回这个图片文件流，然后自己的服务器将这个文件流返回给前端，就可以完成绕过图片防盗链</p>
+<p>网上有很多绕过图片防盗链的请求链接，这里推荐使用<a href="https://images.weserv.nl，速度很快" target="_blank" rel="noopener">https://images.weserv.nl，速度很快</a></p>
+<p>但有个坑点，如果是gif，需要在后面加上一些参数<code>&amp;output=gif&amp;n=-1</code>，说明他以gif返回，否则返回的图片是不会动的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://images.weserv.nl/?url=https://mmbiz.qpic.cn/mmbiz_gif/iblvrvduDqxFibk6bianDue1Ygn2t0k1Cs8dmKjwcibxIesKWwDZwrib0aNxOxpZQyo4MxUPag0Cgz3dCrTMW6prHGA/640?wx_fmt=gif&amp;output=gif&amp;n=-1</div></pre></td></tr></table></figure>
+<p>微信的图片链接：【<a href="https://mmbiz.qpic.cn/mmbiz_jpg/iblvrvduDqxFibk6bianDue1Ygn2t0k1Cs8jalhhMfMyP7qdVM5GVskHI06lMPdpOEHnHQyPVQsicGn0jwvZglxibzQ/640?wx_fmt=jpeg】一般都会有一个参数说明这个图片是什么类型：`wx_fmt`，否则其实微信这个mmbiz.qpic.cn接口，也只是请求文件流，并不是访问服务器的真实地址，通过这个`wx_fmt`决定了返回的`Content-Type`是什么，这样直接浏览才会显示图片类型，而不是变成了下载这个文件" target="_blank" rel="noopener">https://mmbiz.qpic.cn/mmbiz_jpg/iblvrvduDqxFibk6bianDue1Ygn2t0k1Cs8jalhhMfMyP7qdVM5GVskHI06lMPdpOEHnHQyPVQsicGn0jwvZglxibzQ/640?wx_fmt=jpeg】一般都会有一个参数说明这个图片是什么类型：`wx_fmt`，否则其实微信这个mmbiz.qpic.cn接口，也只是请求文件流，并不是访问服务器的真实地址，通过这个`wx_fmt`决定了返回的`Content-Type`是什么，这样直接浏览才会显示图片类型，而不是变成了下载这个文件</a></p>
+<blockquote>
+<p>注：不要在html增加<code>&lt;meta name=&quot;referrer&quot; content=&quot;never&quot;&gt;</code>的方法处理这类事件</p>
+</blockquote>
+<p>解决了图片的外链问题后，会发现上传到微信服务器的视频的视频链接是无法加载的，且前端报了以下错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">moon4df393.js:275 [TryCatch]Error: Blocked a frame with origin &quot;https://mp.weixin.qq.com&quot; from accessing a cross-origin frame.</div></pre></td></tr></table></figure>
+<p>意思就是这个加载的视频链接，里面加载的js有进行xhr请求，在我们域名进行请求就会造成跨域。</p>
+<p>由于在上一个获取微信内容的步骤中，已经有允许跨域请求的接口，我们查找出这个视频链接进行了什么xhr请求，然后使用这个跨域接口将它请求返回到前端即可。这个请求实际是为了返回视频的资源地址，返回了资源地址后，直接修改dom使用video加载这个src即可解决微信视频无法播放的问题</p>
+<p>以下为具体细节实现源码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">id</span>=<span class="string">"wx_iframe"</span> <span class="attr">frameborder</span>=<span class="string">"0"</span> <span class="attr">scrolling</span>=<span class="string">"no"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> timer = <span class="literal">null</span>;</div><div class="line"><span class="keyword">const</span> website = <span class="string">'https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg'</span>;</div><div class="line"><span class="keyword">const</span> imgPrefix = <span class="string">'https://images.weserv.nl/?url='</span>; <span class="comment">// 绕过微信公众号图片的防盗链，如果是加载gif，需要加上参数&amp;output=gif&amp;n=-1，必须加上n=-1，不然不生效</span></div><div class="line"></div><div class="line"><span class="comment">// ...</span></div><div class="line">_getWeixinNews() &#123;</div><div class="line">  <span class="keyword">this</span>.$client.showLoading();</div><div class="line">  axios.get(process.env.VUE_APP_CORS_ANYWHERE_API_URL + <span class="string">'/'</span> + website).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 处理DOMString</span></div><div class="line">    <span class="keyword">let</span> data = res.data</div><div class="line">    <span class="comment">// data-src是图片的预加载机制，visible是返回后默认是hidden</span></div><div class="line">    data = data.replace(<span class="regexp">/data-src/gi</span>, <span class="string">'src'</span>).replace(<span class="regexp">/hidden/gi</span>, <span class="string">'visible'</span>);</div><div class="line">    <span class="comment">// 在img前面加上反倒链的请求链接</span></div><div class="line">    data = data.replace(<span class="regexp">/&lt;img [^&gt;]*src=['"]([^'"]+)[^&gt;]*&gt;/gi</span>, (match, capture) =&gt; &#123;</div><div class="line">      <span class="comment">// gif必须加上额外参数</span></div><div class="line">      <span class="keyword">if</span> (match.indexOf(<span class="string">'data-type="gif"'</span>) !== <span class="number">-1</span>) &#123;</div><div class="line">        <span class="keyword">return</span> match.replace(capture, imgPrefix + capture + <span class="string">'&amp;output=gif&amp;n=-1'</span>)</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> match.replace(capture, imgPrefix + capture)</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="comment">// 将DOMString转换为DOM，以便操作DOM</span></div><div class="line">    <span class="keyword">const</span> wx_dom = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">    wx_dom.innerHTML = data;</div><div class="line">    <span class="comment">// 删除加载失败的二维码，要想加载成功需要代理地址</span></div><div class="line">    <span class="keyword">const</span> qrcode = wx_dom.querySelector(<span class="string">'#js_pc_qr_code'</span>);</div><div class="line">    qrcode &amp;&amp; qrcode.parentNode.removeChild(qrcode);</div><div class="line">    <span class="comment">// 删除再看人数，功能不能正常执行</span></div><div class="line">    <span class="keyword">const</span> watching = wx_dom.querySelector(<span class="string">'#js_like_btn'</span>);</div><div class="line">    watching &amp;&amp; watching.parentNode.removeChild(watching);</div><div class="line">    <span class="comment">// 删除点击外链的时候会出现的弹框</span></div><div class="line">    <span class="keyword">const</span> js_link_dialog = wx_dom.querySelector(<span class="string">'#js_link_dialog'</span>);</div><div class="line">    js_link_dialog &amp;&amp; js_link_dialog.parentNode.removeChild(js_link_dialog);</div><div class="line">    <span class="comment">// 处理微信的视频iframe</span></div><div class="line">    <span class="keyword">const</span> videoElList = <span class="built_in">Array</span>.from(wx_dom.querySelectorAll(<span class="string">'.video_iframe.rich_pages'</span>));</div><div class="line">    <span class="keyword">const</span> _videoInfoList = videoElList.map(<span class="function">(<span class="params">el, index</span>) =&gt;</span> &#123;</div><div class="line">      <span class="comment">// 有一些视频是外链，vidtype是1，例如https://mp.weixin.qq.com/s/sMzUXCsPUH1PvtiK3BDU8w，是没有el.dataset.mpvid的，这时候请求会返回的url_info是一个空数组</span></div><div class="line">      <span class="comment">// 微信本身的视频的vidtype是为2</span></div><div class="line">      <span class="keyword">return</span> &#123;</div><div class="line">        index,</div><div class="line">        <span class="attr">container</span>: el.parentNode,</div><div class="line">        <span class="attr">mpvid</span>: el.dataset.mpvid, <span class="comment">// 微信视频的id</span></div><div class="line">        cover: imgPrefix + <span class="built_in">decodeURIComponent</span>(el.dataset.cover), <span class="comment">// 封面</span></div><div class="line">        requestUrl: <span class="string">`http://mp.weixin.qq.com/mp/videoplayer?action=get_mp_video_play_url&amp;preview=0&amp;__biz=&amp;mid=&amp;idx=&amp;vid=<span class="subst">$&#123;el.dataset.mpvid&#125;</span>&amp;uin=&amp;key=&amp;pass_ticket=&amp;wxtoken=&amp;appmsg_token=&amp;x5=0&amp;f=json`</span> <span class="comment">// 请求视频真实地址的请求</span></div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">const</span> requestVideoInfoPromiseList = _videoInfoList.map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</div><div class="line">      <span class="keyword">if</span> (item.mpvid) &#123;</div><div class="line">        <span class="keyword">return</span> axios.get(process.env.VUE_APP_CORS_ANYWHERE_API_URL + <span class="string">'/'</span> + item.requestUrl);</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(&#123; <span class="attr">data</span>: <span class="literal">null</span> &#125;);</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="comment">// 渲染函数，在最后一步执行</span></div><div class="line">    <span class="keyword">const</span> next = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      <span class="comment">// 必须使用iframe的write进行写入资源，否则script不会运行，一些微信引用的外链视频就会无法执行</span></div><div class="line">      <span class="keyword">const</span> container = <span class="built_in">document</span>.getElementById(<span class="string">'wx_iframe'</span>);</div><div class="line">      container.contentWindow.document.write(wx_dom.innerHTML);</div><div class="line">      <span class="comment">// iframe无法冒泡出去</span></div><div class="line">      container.contentWindow.document.addEventListener(<span class="string">'click'</span>, <span class="keyword">this</span>.handleUnActiveMobileEdit);</div><div class="line">      <span class="comment">// 处理点击a标签外链链接跳转</span></div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'------- a_link inject -------'</span>);</div><div class="line">      <span class="keyword">const</span> aList = <span class="built_in">Array</span>.from(container.contentWindow.document.querySelectorAll(<span class="string">'a'</span>));</div><div class="line">      <span class="keyword">const</span> aLinkList = [];</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> aItem <span class="keyword">of</span> aList) &#123;</div><div class="line">        <span class="keyword">if</span> (aItem.getAttribute(<span class="string">'tab'</span>) === <span class="string">'outerlink'</span> &amp;&amp; aItem.href) &#123;</div><div class="line">          <span class="comment">// pc监听，必须使用捕获</span></div><div class="line">          aItem.addEventListener(<span class="string">'click'</span>, (e) =&gt; &#123;</div><div class="line">            e.preventDefault();</div><div class="line">            e.stopImmediatePropagation();</div><div class="line">            <span class="built_in">window</span>.open(aItem.href);</div><div class="line">          &#125;, <span class="literal">true</span>);</div><div class="line">          <span class="comment">// 移动端监听，必须使用捕获</span></div><div class="line">          aItem.addEventListener(<span class="string">'touchend'</span>, (e) =&gt; &#123;</div><div class="line">            e.preventDefault();</div><div class="line">            e.stopImmediatePropagation();</div><div class="line">            <span class="built_in">window</span>.open(aItem.href);</div><div class="line">          &#125;, <span class="literal">true</span>);</div><div class="line">          aLinkList.push(aItem);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      <span class="built_in">console</span>.log(aLinkList);</div><div class="line">      <span class="comment">// 处理微信的page_share_img模式，由于body的class是通过js生成的，会导致部分样式不生效，需要手动添加</span></div><div class="line">      <span class="keyword">const</span> body = container.contentWindow.document.documentElement || container.contentWindow.document.body;</div><div class="line">      body &amp;&amp; addClass(body, <span class="string">'page_share_img'</span>);</div><div class="line">      <span class="comment">// 持续监听iframe的高度，由于图片显示的关系，高度会一直变化</span></div><div class="line">      timer = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        <span class="keyword">if</span> (container.contentWindow) &#123;</div><div class="line">          <span class="comment">// 使用内容的高度作为iframe的高度，以达到自适应的效果</span></div><div class="line">          <span class="keyword">const</span> inner = container.contentWindow.document.querySelector(<span class="string">'#js_article'</span>);</div><div class="line">          container.style.height = inner.scrollHeight + <span class="string">'px'</span>;</div><div class="line">        &#125;</div><div class="line">      &#125;, <span class="number">1000</span>);</div><div class="line">      <span class="keyword">this</span>.$client.hideLoading();</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 获取微信video真实播放地址</span></div><div class="line">    <span class="built_in">Promise</span>.all(requestVideoInfoPromiseList).then(<span class="function"><span class="params">arr</span> =&gt;</span> &#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'------- wx_video inject -------'</span>);</div><div class="line">      <span class="keyword">const</span> videoInfoList = _videoInfoList.map(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">          ...item,</div><div class="line">          <span class="attr">videoUrl</span>: (arr[index].data &amp;&amp; arr[index].data.url_info &amp;&amp; arr[index].data.url_info[<span class="number">0</span>]) ? arr[index].data.url_info[<span class="number">0</span>].url : <span class="string">''</span></div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> videoInfoList) &#123;</div><div class="line">        <span class="keyword">if</span> (!item.videoUrl) &#123;</div><div class="line">          <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 安卓微信X5内核浏览器，假如有poster无法显示，video标签加上x5-video-player-type="h5"试试</span></div><div class="line">        item.container.innerHTML = <span class="string">`</span></div><div class="line">          &lt;div&gt;</div><div class="line">            &lt;video src="<span class="subst">$&#123;item.videoUrl&#125;</span>" width="100%" style="object-fit: contain;" poster="<span class="subst">$&#123;item.cover&#125;</span>" controls="controls"&gt;&lt;/video&gt;</div><div class="line">          &lt;/div&gt;</div><div class="line">        `;</div><div class="line">      &#125;</div><div class="line">      <span class="built_in">console</span>.log(videoInfoList);</div><div class="line">      next();</div><div class="line">    &#125;).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</div><div class="line">      <span class="keyword">this</span>.$client.error(&#123; <span class="attr">message</span>: err.message &#125;);</div><div class="line">      next();</div><div class="line">    &#125;);</div><div class="line">  &#125;).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">this</span>.$client.error(&#123; <span class="attr">message</span>: err.message &#125;);</div><div class="line">    <span class="keyword">this</span>.$client.hideLoading();</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2020/07/21/node实现上传文件并保存到硬盘/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/07/21/node实现上传文件并保存到硬盘/" itemprop="url">
+                  node实现上传文件并保存到硬盘
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-21T21:54:17+08:00">
+                2020-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="上传文件到node服务器保存并返回文件信息"><a href="#上传文件到node服务器保存并返回文件信息" class="headerlink" title="上传文件到node服务器保存并返回文件信息"></a>上传文件到node服务器保存并返回文件信息</h3><p>关键是要使用一个中间件<code>multer</code></p>
+<p>使用express：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</div><div class="line"><span class="keyword">const</span> app = express()</div><div class="line"><span class="keyword">const</span> port = <span class="number">3000</span></div><div class="line"><span class="keyword">const</span> multer = <span class="built_in">require</span>(<span class="string">'multer'</span>)</div><div class="line"></div><div class="line"><span class="keyword">const</span> storage = multer.diskStorage(&#123;</div><div class="line">  <span class="comment">// 注意这里，需要具体处理文件的路径</span></div><div class="line">  destination: <span class="function"><span class="keyword">function</span> (<span class="params">req, file, cb</span>) </span>&#123;</div><div class="line">    cb(<span class="literal">null</span>, <span class="string">'./uploads/'</span>)</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// 注意这里，需要具体处理文件的名称，因为存在中文等</span></div><div class="line">  filename: <span class="function"><span class="keyword">function</span> (<span class="params">req, file, cb</span>) </span>&#123;</div><div class="line">    cb(<span class="literal">null</span>, <span class="built_in">Date</span>.now() + <span class="string">'-'</span> + file.originalname)</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="keyword">const</span> upload = multer(&#123; <span class="attr">storage</span>: storage &#125;)</div><div class="line"></div><div class="line"><span class="comment">// 多文件就要 upload.array(),单文件就用 upload.single()</span></div><div class="line"><span class="comment">// single要与const form = new FormData();form.append('file', event.target.files[0])的key一致；</span></div><div class="line"><span class="comment">// single要与&lt;input id='upload' type="file" name="file" /&gt;name属性一致</span></div><div class="line">app.post(<span class="string">'/upload'</span>, upload.single(<span class="string">'file'</span>), (req, res, next) =&gt; &#123;</div><div class="line">  <span class="comment">// 这里的req.file返回的是一个json对象</span></div><div class="line">  <span class="keyword">if</span> (req.file) &#123;</div><div class="line">    <span class="keyword">return</span> res.status(<span class="number">200</span>).json(&#123;</div><div class="line">      <span class="attr">code</span>: <span class="number">0</span>,</div><div class="line">      <span class="attr">msg</span>: <span class="string">'上传成功'</span>,</div><div class="line">      <span class="attr">data</span>: req.file</div><div class="line">    &#125;);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> res.status(<span class="number">200</span>).json(&#123;</div><div class="line">      <span class="attr">code</span>: <span class="number">1</span>,</div><div class="line">      <span class="attr">msg</span>: <span class="string">'上传失败'</span>,</div><div class="line">      <span class="attr">data</span>: <span class="literal">null</span></div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// node console.log(req.file)</span></div><div class="line"><span class="comment">// &#123;</span></div><div class="line"><span class="comment">//   fieldname: 'file',</span></div><div class="line"><span class="comment">//   originalname: '19730B75-15AF-4ede-9852-0392DEDD96A4.png',</span></div><div class="line"><span class="comment">//   encoding: '7bit',</span></div><div class="line"><span class="comment">//   mimetype: 'image/png',</span></div><div class="line"><span class="comment">//   destination: './uploads/',</span></div><div class="line"><span class="comment">//   filename: '1591588463244-19730B75-15AF-4ede-9852-0392DEDD96A4.png',</span></div><div class="line"><span class="comment">//   // 文件保存的路径，这里是由于本机服务器是windows的问题，真实项目需要统一处理路径问题</span></div><div class="line"><span class="comment">//   path: 'uploads\\1591588463244-19730B75-15AF-4ede-9852-0392DEDD96A4.png',</span></div><div class="line"><span class="comment">//   size: 107642</span></div><div class="line"><span class="comment">// &#125;</span></div></pre></td></tr></table></figure>
+<p>前端代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> @<span class="attr">change</span>=<span class="string">"loadFile"</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">loadFile(event) &#123;</div><div class="line">  <span class="keyword">const</span> form = <span class="keyword">new</span> FormData();</div><div class="line">  form.append(<span class="string">'file'</span>, event.target.files[<span class="number">0</span>])</div><div class="line">  axios(&#123;</div><div class="line">    <span class="attr">method</span>: <span class="string">'POST'</span>,</div><div class="line">    <span class="attr">url</span>: <span class="string">'http://localhost:3000/upload'</span>,</div><div class="line">    <span class="comment">// request headers的content-type必须设置为multipart/form-data</span></div><div class="line">    headers: &#123;</div><div class="line">      <span class="string">'Content-Type'</span>: <span class="string">'multipart/form-data'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">data</span>: form</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>返回的data里会有path的属性，是中间件写上去的，是文件保存的路径</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2020/07/21/node实现绕过图片防盗链/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/07/21/node实现绕过图片防盗链/" itemprop="url">
+                  node实现绕过图片防盗链
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-21T21:51:46+08:00">
+                2020-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>绕过图片防盗链的关键就是要伪造请求头的<code>Referer</code>，将<code>Referer</code>置为空即可</p>
+<p>不要在html增加<code>&lt;meta name=&quot;referrer&quot; content=&quot;never&quot;&gt;</code>的方法处理这类事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</div><div class="line"><span class="keyword">const</span> app = express()</div><div class="line"><span class="keyword">const</span> port = <span class="number">3000</span></div><div class="line"><span class="keyword">const</span> superagent = <span class="built_in">require</span>(<span class="string">'superagent'</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getQueryObject</span>(<span class="params">url</span>) </span>&#123;</div><div class="line">  url = url == <span class="literal">null</span> ? <span class="built_in">window</span>.location.href : url</div><div class="line">  <span class="keyword">const</span> search = url.substring(url.lastIndexOf(<span class="string">'?'</span>) + <span class="number">1</span>)</div><div class="line">  <span class="keyword">const</span> obj = &#123;&#125;</div><div class="line">  <span class="keyword">const</span> reg = <span class="regexp">/([^?&amp;=]+)=([^?&amp;=]*)/g</span></div><div class="line">  search.replace(reg, (rs, $<span class="number">1</span>, $<span class="number">2</span>) =&gt; &#123;</div><div class="line">    <span class="keyword">const</span> name = <span class="built_in">decodeURIComponent</span>($<span class="number">1</span>)</div><div class="line">    <span class="keyword">let</span> val = <span class="built_in">decodeURIComponent</span>($<span class="number">2</span>)</div><div class="line">    val = <span class="built_in">String</span>(val)</div><div class="line">    obj[name] = val</div><div class="line">    <span class="keyword">return</span> rs</div><div class="line">  &#125;)</div><div class="line">  <span class="keyword">return</span> obj</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 前端无法修改请求头的Referer，只能通过接口修改，做一个转发请求</span></div><div class="line">app.get(<span class="string">'/imgBridge'</span>, <span class="keyword">async</span> (req, res, next) =&gt; &#123;</div><div class="line">  <span class="keyword">let</span> url = req.query.url;</div><div class="line">  <span class="keyword">if</span> (!url) &#123;</div><div class="line">    res.send(<span class="string">''</span>);</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 微信的链接自带说明是什么格式，可以直接取，不用再额外分析文件的格式是什么</span></div><div class="line">  <span class="keyword">const</span> wx_query = getQueryObject(url);</div><div class="line"></div><div class="line">  superagent.get(req.query.url)</div><div class="line">    .set(<span class="string">'Referer'</span>, <span class="string">''</span>)</div><div class="line">    .end(<span class="function"><span class="keyword">function</span>(<span class="params">err, result</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (err) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="comment">// 返回头必须写入对应的文件类型，直接在浏览器打开才会显示正确的图片而不是下载</span></div><div class="line">      res.set(&#123;</div><div class="line">        <span class="string">'Content-Type'</span>: <span class="string">`image/<span class="subst">$&#123;query.wx_fmt&#125;</span>`</span></div><div class="line">      &#125;);</div><div class="line">    	<span class="comment">// 返回文件流</span></div><div class="line">      res.end(result.body);</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    &#125;);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>使用方法，直接赋值到img的src上或background的url上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080?url=https://mmbiz.qpic.cn/mmbiz_gif/iblvrvduDqxFibk6bianDue1Ygn2t0k1Cs8dmKjwcibxIesKWwDZwrib0aNxOxpZQyo4MxUPag0Cgz3dCrTMW6prHGA/640?wx_fmt=gif</div></pre></td></tr></table></figure>
+<p>即可显示出图片</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2020/07/21/git常用错误解决方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/07/21/git常用错误解决方案/" itemprop="url">
+                  git常用错误解决方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-21T21:48:01+08:00">
+                2020-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="git常用错误解决方案"><a href="#git常用错误解决方案" class="headerlink" title="git常用错误解决方案"></a>git常用错误解决方案</h3><h3 id="git被墙，需要设置代理"><a href="#git被墙，需要设置代理" class="headerlink" title="git被墙，需要设置代理"></a>git被墙，需要设置代理</h3><p>假如<code>git push</code>等操作出现<code>Timed out</code>等，无法对远端的代码进行操作，且访问github的时候无法访问，就要考虑是被墙的问题。浏览器可以通过SwitchyOmega进行代理，git同样需要进行配置代理才能够访问</p>
+<p>我用的是ByWave，是V2ray的机场。注册购买登录后进入系统设置面板，主要看Socks5端口和HTTP端口，然后在需要进行配置的项目执行以下配置命令（不建议使用–global命令，不同项目的地址可能都不同，不需要所有都代理）</p>
+<p>使用Socks5：（设配置定义的端口是1081）</p>
+<p><code>git config http.proxy &quot;socks5://127.0.0.1:1081&quot;</code></p>
+<p><code>git config https.proxy &quot;socks5://127.0.0.1:1081&quot;</code></p>
+<p>使用HTTP：</p>
+<p><code>git config http.proxy &quot;http://127.0.0.1:1081&quot;</code><br><code>git config https.proxy &quot;http://127.0.0.1:1081&quot;</code></p>
+<p>然后开启代理，即可进行<code>git push</code>等操作</p>
+<p>如果要取消代理配置，执行以下命令即可：</p>
+<p><code>git config --unset http.proxy</code></p>
+<p><code>git config --unset https.proxy</code></p>
+<h3 id="github连接报”ssh-connect-to-host-github-com-port-22-Connection-timed-out”错误"><a href="#github连接报”ssh-connect-to-host-github-com-port-22-Connection-timed-out”错误" class="headerlink" title="github连接报”ssh: connect to host github.com port 22: Connection timed out”错误"></a>github连接报”ssh: connect to host github.com port 22: Connection timed out”错误</h3><p>先测试是不是由于这个问题无法进行一系列的git操作：</p>
+<p>在连接github时，执行”ssh -T git@github.com” 命令时，出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh: connect to host github.com port 22: Connection timed out</div></pre></td></tr></table></figure>
+<p>解决方法：</p>
+<p>首先设置好ssh key</p>
+<p>然后找到git的安装目录，找到/etc/ssh/ssh_config文件，然后再把以下这段写入到文本即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Host github.com // 或者使用默认的Host *</div><div class="line">User YourEmail@163.com // 设置成自己ssh定义的email</div><div class="line">Hostname ssh.github.com</div><div class="line">PreferredAuthentications publickey</div><div class="line">IdentityFile ~/.ssh/id_rsa</div><div class="line">Port 443</div></pre></td></tr></table></figure>
+<p>Ubuntu就在根目录找到.ssh和直接找/etc路径即可，注意需要使用sudo权限去修改</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2020/07/21/记一次钉钉鉴权验证过程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1106,541 +1658,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/03/26/call-apply-bind-new-create-instanceof原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/03/26/call-apply-bind-new-create-instanceof原理/" itemprop="url">
-                  call/apply/bind/new/create/instanceof原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-26T00:42:53+08:00">
-                2019-03-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="call"><a href="#call" class="headerlink" title="call"></a>call</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Error'</span>);</div><div class="line">    &#125;</div><div class="line">    context = context || <span class="built_in">window</span>;</div><div class="line">    <span class="keyword">const</span> args = [...arguments].slice(<span class="number">1</span>);</div><div class="line">    <span class="comment">// 将函数绑定到上下文</span></div><div class="line">    context.fn = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">const</span> result = context.fn(...args);</div><div class="line">    <span class="keyword">delete</span> context.fn;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Error'</span>);</div><div class="line">    &#125;</div><div class="line">    context = context || <span class="built_in">window</span>;</div><div class="line">    context.fn = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">let</span> result;</div><div class="line">    <span class="keyword">if</span> (<span class="built_in">arguments</span>[<span class="number">1</span>]) &#123;</div><div class="line">        result = context.fn(...arguments[<span class="number">1</span>]);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        result = context.fn();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">delete</span> context.fn;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/26/call-apply-bind-new-create-instanceof原理/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/03/14/Vue工作经验总结（2）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/03/14/Vue工作经验总结（2）/" itemprop="url">
-                  Vue工作经验总结（2）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-14T18:04:19+08:00">
-                2019-03-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="props可以控制传入的限制，使用validator"><a href="#props可以控制传入的限制，使用validator" class="headerlink" title="props可以控制传入的限制，使用validator"></a>props可以控制传入的限制，使用validator</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> oneOf = <span class="function">(<span class="params">value, validList</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; validList.length; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (value === validList[i]) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">props: &#123;</div><div class="line">    <span class="attr">size</span>: &#123;</div><div class="line">        validator(value) &#123;</div><div class="line">            <span class="keyword">return</span> oneOf(value, [<span class="string">'large'</span>, <span class="string">'small'</span>, <span class="string">'default'</span>])</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">default</span>: <span class="string">'default'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="provide-inject允许支持上下文特性，共享数据（类似react的context）"><a href="#provide-inject允许支持上下文特性，共享数据（类似react的context）" class="headerlink" title="provide/inject允许支持上下文特性，共享数据（类似react的context）"></a>provide/inject允许支持上下文特性，共享数据（类似react的context）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 祖先组件</span></div><div class="line">provide() &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">form</span>: <span class="keyword">this</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 子组件，这样子组件就可以使用this.form访问到祖先组件的实例了</span></div><div class="line">inject: [<span class="string">'form'</span>]</div></pre></td></tr></table></figure>
-<h4 id="使用mixins高度抽象各类方法，方便复用"><a href="#使用mixins高度抽象各类方法，方便复用" class="headerlink" title="使用mixins高度抽象各类方法，方便复用"></a>使用mixins高度抽象各类方法，方便复用</h4><p>使用mixins时，如果有定义created等函数的，会先执行mixins里的created，然后再执行组件里的created。如果mixins里有定义方法，然后组件里也定义了一个同样名称的方法，组件里的方法会覆盖mixins里的方法。</p>
-<h4 id="组件内使用-emit出来的事件，同样可以在本组件使用-on监听到"><a href="#组件内使用-emit出来的事件，同样可以在本组件使用-on监听到" class="headerlink" title="组件内使用$emit出来的事件，同样可以在本组件使用$on监听到"></a>组件内使用$emit出来的事件，同样可以在本组件使用$on监听到</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 同一个组件</span></div><div class="line"><span class="keyword">this</span>.$emit(<span class="string">'on-select'</span>, selectValue);</div><div class="line"><span class="keyword">this</span>.$on(<span class="string">'on-select'</span>, (selectValue) =&gt; &#123;&#125;);</div></pre></td></tr></table></figure>
-<h4 id="Vue2-x废除了Vue1-x的-dispatch和-broadcast的方法，可以使用现有的-on和-emit实现"><a href="#Vue2-x废除了Vue1-x的-dispatch和-broadcast的方法，可以使用现有的-on和-emit实现" class="headerlink" title="Vue2.x废除了Vue1.x的$dispatch和$broadcast的方法，可以使用现有的$on和$emit实现"></a>Vue2.x废除了Vue1.x的$dispatch和$broadcast的方法，可以使用现有的$on和$emit实现</h4>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/14/Vue工作经验总结（2）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/03/08/Promise、Promise.all、Promise.race实现原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/03/08/Promise、Promise.all、Promise.race实现原理/" itemprop="url">
-                  Promise、Promise.all、Promise.race实现原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-08T22:50:21+08:00">
-                2019-03-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><ul>
-<li>简易版Promise</li>
-<li>实现原理，执行从闭包带出来的resolve和reject函数</li>
-<li>然后再执行then，将函数压到执行栈中</li>
-<li>然后第一步的异步函数执行好了，就会利用resolve或reject传入参数并执行栈中的函数</li>
-</ul>
-<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> PENDING = <span class="string">'pending'</span>;</div><div class="line"><span class="keyword">const</span> RESOLVED = <span class="string">'resolved'</span>;</div><div class="line"><span class="keyword">const</span> REJECTED = <span class="string">'rejected'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> MyPromise = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">this</span>.state = PENDING;</div><div class="line">    <span class="keyword">this</span>.value = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">this</span>.resolvedCallbacks = [];</div><div class="line">    <span class="keyword">this</span>.rejectedCallbacks = [];</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">        <span class="comment">// 执行环境不同，需要使用闭包变量</span></div><div class="line">        <span class="keyword">if</span> (that.state === PENDING) &#123;</div><div class="line">            that.state = RESOLVED;</div><div class="line">            that.value = value;</div><div class="line">            that.resolvedCallbacks.forEach(<span class="function"><span class="params">cb</span> =&gt;</span> cb(that.value));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">reject</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (that.state === PENDING) &#123;</div><div class="line">            that.state = REJECTED;</div><div class="line">            that.value = value;</div><div class="line">            that.rejectedCallbacks.forEach(<span class="function"><span class="params">cb</span> =&gt;</span> cb(that.value));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        fn(resolve, reject);</div><div class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">        reject(e);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">MyPromise.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">onFulfilled, onRejected</span>) </span>&#123;</div><div class="line">    onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">'function'</span> ? onFulfilled : <span class="function"><span class="params">v</span> =&gt;</span> v;</div><div class="line">    onRejected = <span class="keyword">typeof</span> onRejected === <span class="string">'function'</span> ? onRejected : <span class="function"><span class="params">r</span> =&gt;</span> &#123;</div><div class="line">        <span class="keyword">throw</span> r</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state === PENDING) &#123;</div><div class="line">        <span class="keyword">this</span>.resolvedCallbacks.push(onFulfilled);</div><div class="line">        <span class="keyword">this</span>.rejectedCallbacks.push(onRejected);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 如果在new Promise的时候就已经处理的resolve，直接执行函数</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state === RESOLVED) &#123;</div><div class="line">        onFulfilled(<span class="keyword">this</span>.value);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state === REJECTED) &#123;</div><div class="line">        onRejected(<span class="keyword">this</span>.value);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all"></a>Promise.all</h3><h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><ul>
-<li>返回新的promise，遍历循环传入的数组，处理每一个promise的then和catch</li>
-<li>then里处理将返回的内容写入对应的位置，如果判断所有结果已经处理，就将数组集合resolve</li>
-<li>catch里处理错误，只要有一个错误，就直接将错误reject</li>
-</ul>
-<h4 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> promiseAll = <span class="function">(<span class="params">arr</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">let</span> result = <span class="keyword">new</span> <span class="built_in">Array</span>(arr.length).fill(<span class="literal">undefined</span>),</div><div class="line">        count = arr.length;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</div><div class="line">            arr[i].then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</div><div class="line">                <span class="comment">// 按顺序写入结果</span></div><div class="line">                result[i] = res;</div><div class="line">                <span class="keyword">if</span> (--count === <span class="number">0</span>) &#123;</div><div class="line">                    resolve(result);</div><div class="line">                &#125;</div><div class="line">            &#125;).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</div><div class="line">                reject(err);</div><div class="line">            &#125;)</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race"></a>Promise.race</h3><h4 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h4><ul>
-<li>返回新的promise，遍历循环传入的数组，处理每一个promise的then和catch</li>
-<li>then里处理返回的内容，只要有返回，立即将结果resolve</li>
-<li>catch里处理错误，只要捕获到错误，立即将错误reject</li>
-</ul>
-<h4 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> promiseRace = <span class="function">(<span class="params">arr</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</div><div class="line">            <span class="comment">// 一个成功直接返回</span></div><div class="line">            arr[i].then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</div><div class="line">                resolve(res);</div><div class="line">            &#125;).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</div><div class="line">                reject(err);</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/03/04/ubuntu和nginx常用命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/03/04/ubuntu和nginx常用命令/" itemprop="url">
-                  ubuntu和nginx常用命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T00:10:51+08:00">
-                2019-03-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>配置host：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/hosts</div></pre></td></tr></table></figure>
-<p>安装nginx：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install nginx</div></pre></td></tr></table></figure>
-<p>查看有没有nginx占用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep nginx</div></pre></td></tr></table></figure>
-<p>强制删除所有nginx进程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pkill -9 nginx</div></pre></td></tr></table></figure>
-<p>获取root权限</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo su</div></pre></td></tr></table></figure>
-<p>退出root权限模式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ctrl+d</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/04/ubuntu和nginx常用命令/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1685,7 +1707,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1698,7 +1720,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
