@@ -248,6 +248,138 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/06/20/JS工作经验总结（1）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/06/20/JS工作经验总结（1）/" itemprop="url">
+                  JS工作经验总结（1）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T22:47:49+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>本文主要记录工作时JS问题或经验</p>
+</blockquote>
+<h4 id="html里自定义属性的赋值和取出问题"><a href="#html里自定义属性的赋值和取出问题" class="headerlink" title="html里自定义属性的赋值和取出问题"></a>html里自定义属性的赋值和取出问题</h4><p>给html元素写入<code>data-type</code>这样的格式，可以使用<code>el.dataset.type</code>进行相对应的访问；\<br>在不兼容dataset的情况下，可以使用更原始的<code>el.getAttribute(name)</code>进行取值，使用<code>el.setAttribute(name, value)</code>进行赋值</p>
+<h4 id="document-activeElement的应用（焦点问题）"><a href="#document-activeElement的应用（焦点问题）" class="headerlink" title="document.activeElement的应用（焦点问题）"></a>document.activeElement的应用（焦点问题）</h4><p><code>document.activeElement.tagName</code>可获得当前获得焦点的元素，<code>document.activeElement.blur()</code>使当前获得焦点的元素失焦</p>
+<h4 id="关闭webApp中的调起的系统键盘"><a href="#关闭webApp中的调起的系统键盘" class="headerlink" title="关闭webApp中的调起的系统键盘"></a>关闭webApp中的调起的系统键盘</h4><p><code>window.nativeKeyboradCancel()</code>，在webApp里取消调起系统的键盘，如果有的话</p>
+<h4 id="循环遍历父元素的方法"><a href="#循环遍历父元素的方法" class="headerlink" title="循环遍历父元素的方法"></a>循环遍历父元素的方法</h4><p>以下可以使用while一直遍历父元素：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTagName</span>(<span class="params">ele</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> parent = ele.parentElement;</div><div class="line">    <span class="keyword">var</span> string = <span class="string">''</span>;</div><div class="line">    <span class="keyword">while</span> (parent !== <span class="literal">null</span>) &#123;</div><div class="line">        string += parent.tagName + <span class="string">' '</span>;</div><div class="line">        parent = parent.parentElement；</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> string;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/20/JS工作经验总结（1）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/03/19/Vue工作经验总结（1）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1223,314 +1355,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/12/关于webpack-babel-ES6在IE8运行时出现的问题汇总/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/01/12/关于webpack-babel-ES6在IE8运行时出现的问题汇总/" itemprop="url">
-                  关于webpack+babel+ES6在IE8运行时出现的问题汇总
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-12T18:40:22+08:00">
-                2018-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>使用babel，babel-polyfill和es5-shim依然不能够在IE8运行，并且合并报错的原因是，合并js中含有javascript的保留字delete和catch等问题，会报“SCRIPT1010: 缺少标识符”</li>
-</ul>
-<ul>
-<li><p>同样会报“SCRIPT1010: 缺少标识符”的另一个原因是JSON的格式，如下json的格式也会报这个错误，结尾那个逗号，在IE下会报错，注意：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"firstName"</span>:<span class="string">"John"</span> , </div><div class="line">    <span class="string">"lastName"</span>:<span class="string">"Doe"</span> ,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>IE10不支持条件注释，条件注释会被当做一般注释，处理方法，使用meta采用IE9行为：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=EmulateIE9"</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!--[if IE]&gt;</span></div><div class="line">    This content is ignored in Internet Explorer 10 and other browsers.</div><div class="line">    In older versions of Internet Explorer, it renders as part of the page.</div><div class="line">  &lt;![endif]--&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>在webpack的dev环境中增加对编译文件的sourcemap，可以很方便的在调试工具中跳转到打包前的js运行错误或打印的地方，方便调试</p>
-</li>
-<li><p>使用插件做兼容手段：</p>
-</li>
-</ul>
-<ol>
-<li>webpack 进行babel对ES6，7语法的转码。</li>
-<li>webpack 引用es3ify-loader 解决es3语法兼容问题（解决react的babel会把 export(非import) 编译成 </li>
-<li>Object.defineProperty的方式）。<br>模块导出不能使用 export default ，改为export { xxx } （default关键字）</li>
-<li>使用add-module-exports，仅仅解决default的问题</li>
-<li>全局引用babel-polyfill,es5-shim/es5-sham,console-polyfill,JSON的polyfill等</li>
-<li>不要在代码中用Object.defineProperty设置访问器属性，不要使用Object.create()的第二个参数定义属性操作符，因为ES5以前有着polyfill无法模拟的Object.defineProperty</li>
-<li>IE8的defineProperty只存在于DOM上，尝试对Object访问该方法会报错</li>
-</ol>
-<p>参考资料：<a href="http://note.youdao.com/" target="_blank" rel="noopener">http://blog.csdn.net/deng_gene/article/details/53004735</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/09/使用respond-js-IE6-8响应式方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sellenite">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuuhei's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/01/09/使用respond-js-IE6-8响应式方案/" itemprop="url">
-                  使用respond.js(IE6-8响应式方案)注意事项
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T22:16:42+08:00">
-                2018-01-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>只有IE9+才支持CSS媒体查询，IE6-8使用媒体查询需要以下插件：</p>
-<p>respond.js。文件下载地址：<a href="http://note.youdao.com/" target="_blank" rel="noopener">https://github.com/scottjehl/Respond</a></p>
-<p>关于respond.js的使用，有一些需要注意的地方，一旦不注意，在IE6-8中就无法显示出来。</p>
-<h4 id="插件原理"><a href="#插件原理" class="headerlink" title="插件原理"></a>插件原理</h4><p>接下来，需要理解respond.js的实现思路：</p>
-<ul>
-<li><p>第一步，将head中所有外部引入的CSS文件路径取出来存储到一个数组当中；</p>
-</li>
-<li><p>第二步，遍历数组，并一个个发送AJAX请求<br>；</p>
-</li>
-<li><p>第三步，AJAX回调后，分析response中的media query的min-width和max-width语法（注意，仅仅支持min-width和max-width），分析出viewport变化区间对应相应的css块；</p>
-</li>
-<li><p>第四步，页面初始化时和window.resize时，根据当前viewport使用相应的css块。</p>
-</li>
-</ul>
-<h4 id="核心结论"><a href="#核心结论" class="headerlink" title="核心结论"></a>核心结论</h4><p>那么此时，就可以根据基本的实现思路，得到一些书写代码时要注意的地方：</p>
-<ul>
-<li><p>需要启动本地服务器（localhost），不能使用普通本地的url地址（file://开头）；</p>
-</li>
-<li><p>需要外部引入CSS文件，将CSS样式书写在style中是无效的；</p>
-</li>
-<li><p>由于respond插件是查找CSS文件，再进行处理，所以respond文件一定要放置在CSS文件的后面</p>
-</li>
-<li><p>另外，虽然把respond放置在head里还是在body后面都能够实现，但是建议放置在head中（具体原因在下面的文档提示中有提到）</p>
-</li>
-<li><p>可以使用js条件加载respond.js或css</p>
-</li>
-<li><p>最好不要为CSS设置utf-8的编码，使用默认（原因详见下面的文档提示部分）</p>
-</li>
-</ul>
-<h4 id="文档提示"><a href="#文档提示" class="headerlink" title="文档提示"></a>文档提示</h4><p>在官方文档当中的一些提示：</p>
-<p>1、越早的引入respond.js文件，也就越可能避免IE下出现的闪屏。</p>
-<p>2、不支持嵌套的媒体查询</p>
-<p>3、只支持CSS with screen and min/max-width media queries</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">480px</span>)&#123;</div><div class="line">    <span class="comment">/** ...styles for 480px and up go here **/</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">media</span> (min-width: <span class="number">3200px</span>) and (max-width: <span class="number">720px</span>)&#123;</div><div class="line">    <span class="comment">/** ...styles for 480px and up go here **/</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>4、utf-8的字符编码对respond.js文件的运行有影响。<br>官方API原文：if CSS files are encoded in UTF-8 with Byte-Order-Mark, they will not work with Respond.js in IE7 or IE8.</p>
-<p>基本含义就是：utf-8格式的CSS文件字符编码会对插件造成影响。</p>
-<p>但是在我使用IE6-8进行测试的时候，都能够正常显示（无论是在css文件中增加charset设置还是在link标签中增加charset设置）。因此，并不是太清楚这个位置bug的含义。</p>
-<p>4、跨域可能会出现闪屏（还没有测试，具体情况不详）</p>
-<blockquote>
-<p>其他的支持响应式布局的插件-css3-mediaqueries-js</p>
-</blockquote>
-<p>css3-mediaqueries-js官方文档和demo都没有，相对于respond.js，css3-mediaqueries-js支持几乎所有的media query的语法。</p>
-<p>但是会出现闪屏。并不是很推荐使用，虽然能够支持全部的mediaqueries，但min-width和max-width其实就可以满足我们对响应式布局的需要。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/09/JS简单碰撞原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1660,11 +1484,143 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/11/21/工作时制作移动端的技巧/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sellenite">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/11/21/工作时制作移动端的技巧/" itemprop="url">
+                  工作时制作移动端的技巧
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T09:08:43+08:00">
+                2017-11-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"><a href="#简单的利用JS来判断页面是在手机端还是在PC端打开的方法" class="headerlink" title="简单的利用JS来判断页面是在手机端还是在PC端打开的方法"></a>简单的利用JS来判断页面是在手机端还是在PC端打开的方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="regexp">/Android|webOS|iPhone|iPod|BlackBerry/i</span>.test(navigator.userAgent)) &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"https://www.baidu.com/"</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"http://news.baidu.com/"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="在微信浏览器关闭当前页面的方法"><a href="#在微信浏览器关闭当前页面的方法" class="headerlink" title="在微信浏览器关闭当前页面的方法"></a>在微信浏览器关闭当前页面的方法</h3><ul>
+<li>需要在微信公众号签名才能够使用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WeixinJSBridge.call(&apos;closeWindow&apos;)</div></pre></td></tr></table></figure>
+<h3 id="移动端图片模糊的问题"><a href="#移动端图片模糊的问题" class="headerlink" title="移动端图片模糊的问题"></a>移动端图片模糊的问题</h3><ul>
+<li>在移动端需要使用PC端两倍尺寸的图片，然后用background-size:50%;来还原本来的尺寸，这样移动端的图片才会清晰，不模糊</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/21/工作时制作移动端的技巧/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1709,7 +1665,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JS," />
+  <meta name="keywords" content="JS,钉钉," />
 
 
 
@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="使用babel，babel-polyfill和es5-shim依然不能够在IE8运行，并且合并报错的原因是，合并js中含有javascript的保留字delete和catch等问题，会报“SCRIPT1010: 缺少标识符”   同样会报“SCRIPT1010: 缺少标识符”的另一个原因是JSON的格式，如下json的格式也会报这个错误，结尾那个逗号，在IE下会报错，注意： 1234&amp;#123;">
-<meta name="keywords" content="JS">
+<meta name="description" content="在使用jsapi中，出现以下错误的原因是：1&amp;#123;&quot;errorMessage&quot;:&quot;对应企业没有某域名微应用&quot;, &quot;errorCode&quot;:&quot;3&quot;&amp;#125;  微应用管理的基础信息，应用首页地址或PC端首页地址必须要和打开的地址匹配，不然就会报上面的错  鉴权的时候也必须使用对应的corpId，公司ID一般是不变的，可以写死，在开发者后台的首页就能看到  必须由最高管理员授权管理员对应的应用权">
+<meta name="keywords" content="JS,钉钉">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于webpack+babel+ES6在IE8运行时出现的问题汇总">
-<meta property="og:url" content="https://sellenite.github.io/2018/01/12/关于webpack-babel-ES6在IE8运行时出现的问题汇总/index.html">
+<meta property="og:title" content="记一次钉钉鉴权验证过程">
+<meta property="og:url" content="https://sellenite.github.io/2020/07/21/记一次钉钉鉴权验证过程/index.html">
 <meta property="og:site_name" content="yuuhei&#39;s Home">
-<meta property="og:description" content="使用babel，babel-polyfill和es5-shim依然不能够在IE8运行，并且合并报错的原因是，合并js中含有javascript的保留字delete和catch等问题，会报“SCRIPT1010: 缺少标识符”   同样会报“SCRIPT1010: 缺少标识符”的另一个原因是JSON的格式，如下json的格式也会报这个错误，结尾那个逗号，在IE下会报错，注意： 1234&amp;#123;">
+<meta property="og:description" content="在使用jsapi中，出现以下错误的原因是：1&amp;#123;&quot;errorMessage&quot;:&quot;对应企业没有某域名微应用&quot;, &quot;errorCode&quot;:&quot;3&quot;&amp;#125;  微应用管理的基础信息，应用首页地址或PC端首页地址必须要和打开的地址匹配，不然就会报上面的错  鉴权的时候也必须使用对应的corpId，公司ID一般是不变的，可以写死，在开发者后台的首页就能看到  必须由最高管理员授权管理员对应的应用权">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-12T11:06:27.339Z">
+<meta property="og:updated_time" content="2020-07-21T13:00:15.190Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于webpack+babel+ES6在IE8运行时出现的问题汇总">
-<meta name="twitter:description" content="使用babel，babel-polyfill和es5-shim依然不能够在IE8运行，并且合并报错的原因是，合并js中含有javascript的保留字delete和catch等问题，会报“SCRIPT1010: 缺少标识符”   同样会报“SCRIPT1010: 缺少标识符”的另一个原因是JSON的格式，如下json的格式也会报这个错误，结尾那个逗号，在IE下会报错，注意： 1234&amp;#123;">
+<meta name="twitter:title" content="记一次钉钉鉴权验证过程">
+<meta name="twitter:description" content="在使用jsapi中，出现以下错误的原因是：1&amp;#123;&quot;errorMessage&quot;:&quot;对应企业没有某域名微应用&quot;, &quot;errorCode&quot;:&quot;3&quot;&amp;#125;  微应用管理的基础信息，应用首页地址或PC端首页地址必须要和打开的地址匹配，不然就会报上面的错  鉴权的时候也必须使用对应的corpId，公司ID一般是不变的，可以写死，在开发者后台的首页就能看到  必须由最高管理员授权管理员对应的应用权">
 
 
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://sellenite.github.io/2018/01/12/关于webpack-babel-ES6在IE8运行时出现的问题汇总/"/>
+  <link rel="canonical" href="https://sellenite.github.io/2020/07/21/记一次钉钉鉴权验证过程/"/>
 
 
 
 
 
-  <title> 关于webpack+babel+ES6在IE8运行时出现的问题汇总 | yuuhei's Home </title>
+  <title> 记一次钉钉鉴权验证过程 | yuuhei's Home </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +251,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/12/关于webpack-babel-ES6在IE8运行时出现的问题汇总/">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2020/07/21/记一次钉钉鉴权验证过程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sellenite">
@@ -272,7 +272,7 @@
             
             
               
-                关于webpack+babel+ES6在IE8运行时出现的问题汇总
+                记一次钉钉鉴权验证过程
               
             
           </h1>
@@ -287,8 +287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-12T18:40:22+08:00">
-                2018-01-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-21T20:06:08+08:00">
+                2020-07-21
               </time>
             
 
@@ -306,7 +306,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2018/01/12/关于webpack-babel-ES6在IE8运行时出现的问题汇总/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2020/07/21/记一次钉钉鉴权验证过程/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -333,31 +333,32 @@
       
 
       
-        <ul>
-<li>使用babel，babel-polyfill和es5-shim依然不能够在IE8运行，并且合并报错的原因是，合并js中含有javascript的保留字delete和catch等问题，会报“SCRIPT1010: 缺少标识符”</li>
-</ul>
+        <h4 id="在使用jsapi中，出现以下错误的原因是："><a href="#在使用jsapi中，出现以下错误的原因是：" class="headerlink" title="在使用jsapi中，出现以下错误的原因是："></a>在使用jsapi中，出现以下错误的原因是：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">"errorMessage"</span>:<span class="string">"对应企业没有某域名微应用"</span>, <span class="string">"errorCode"</span>:<span class="string">"3"</span>&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>同样会报“SCRIPT1010: 缺少标识符”的另一个原因是JSON的格式，如下json的格式也会报这个错误，结尾那个逗号，在IE下会报错，注意：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"firstName"</span>:<span class="string">"John"</span> , </div><div class="line">    <span class="string">"lastName"</span>:<span class="string">"Doe"</span> ,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>微应用管理的基础信息，应用首页地址或PC端首页地址必须要和打开的地址匹配，不然就会报上面的错</p>
 </li>
-<li><p>IE10不支持条件注释，条件注释会被当做一般注释，处理方法，使用meta采用IE9行为：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=EmulateIE9"</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!--[if IE]&gt;</span></div><div class="line">    This content is ignored in Internet Explorer 10 and other browsers.</div><div class="line">    In older versions of Internet Explorer, it renders as part of the page.</div><div class="line">  &lt;![endif]--&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<li><p>鉴权的时候也必须使用对应的corpId，公司ID一般是不变的，可以写死，在开发者后台的首页就能看到</p>
 </li>
-<li><p>在webpack的dev环境中增加对编译文件的sourcemap，可以很方便的在调试工具中跳转到打包前的js运行错误或打印的地方，方便调试</p>
-</li>
-<li><p>使用插件做兼容手段：</p>
+<li><p>必须由最高管理员授权管理员对应的应用权限，才能进入应用拿到最新的AgentId，AppKey，AppSecret，不然有可能是旧的，就会造成鉴权错误</p>
 </li>
 </ul>
-<ol>
-<li>webpack 进行babel对ES6，7语法的转码。</li>
-<li>webpack 引用es3ify-loader 解决es3语法兼容问题（解决react的babel会把 export(非import) 编译成 </li>
-<li>Object.defineProperty的方式）。<br>模块导出不能使用 export default ，改为export { xxx } （default关键字）</li>
-<li>使用add-module-exports，仅仅解决default的问题</li>
-<li>全局引用babel-polyfill,es5-shim/es5-sham,console-polyfill,JSON的polyfill等</li>
-<li>不要在代码中用Object.defineProperty设置访问器属性，不要使用Object.create()的第二个参数定义属性操作符，因为ES5以前有着polyfill无法模拟的Object.defineProperty</li>
-<li>IE8的defineProperty只存在于DOM上，尝试对Object访问该方法会报错</li>
-</ol>
-<p>参考资料：<a href="http://note.youdao.com/" target="_blank" rel="noopener">http://blog.csdn.net/deng_gene/article/details/53004735</a></p>
+<blockquote>
+<p>附：移动端调试钉钉详细步骤</p>
+</blockquote>
+<ul>
+<li>连续点击版本号6次</li>
+<li>进入系统和更新菜单，打开开发人员选项</li>
+<li>在开发者选项中，先把“仅充电模式下允许ADB调试”打开，然后再打开“USB调试”</li>
+<li>连接USB，选择充电模式，必须是充电模式</li>
+<li>自动会打开RSA验证菜单，确认</li>
+<li>下载钉钉android开发版，在开发者后台，工具与资源下载，pc和android都有</li>
+<li>进入手机dev钉钉版，设置-通用-开发者选项，勾选微应用调试</li>
+<li>应用稳定性管理增加开发负责人和APPOPS为自己</li>
+<li>手机连接到电脑，打开chrome，chrome://inspect 开始调试，必须翻墙</li>
+<li>如果无法翻墙，使用UC Devtools也可以进行inspect，如果UC无法inspcet，考虑进入设置，切换InspectorURI Resource为默认资源</li>
+<li>这时候无论是微应用还是在里面打开的h5页面，都能够监听调试，查看网络请求或错误信息</li>
+<li>开发一般会接入vConsole，就是微信开发的移动端调试工具，点击浮窗即可查看信息</li>
+</ul>
 
       
     </div>
@@ -389,6 +390,8 @@
           
             <a href="/tags/JS/" rel="tag"># JS</a>
           
+            <a href="/tags/钉钉/" rel="tag"># 钉钉</a>
+          
         </div>
       
 
@@ -400,8 +403,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/09/使用respond-js-IE6-8响应式方案/" rel="next" title="使用respond.js(IE6-8响应式方案)注意事项">
-                <i class="fa fa-chevron-left"></i> 使用respond.js(IE6-8响应式方案)注意事项
+              <a href="/2019/08/26/Vue工作经验总结（3）/" rel="next" title="Vue工作经验总结（3）">
+                <i class="fa fa-chevron-left"></i> Vue工作经验总结（3）
               </a>
             
           </div>
@@ -409,10 +412,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/13/前端切图技巧汇总/" rel="prev" title="前端切图技巧汇总">
-                前端切图技巧汇总 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -461,8 +460,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://puu.sh/uoJbK/033c9ae781.jpg"
@@ -477,7 +485,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -526,6 +534,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#在使用jsapi中，出现以下错误的原因是："><span class="nav-number">1.</span> <span class="nav-text">在使用jsapi中，出现以下错误的原因是：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
