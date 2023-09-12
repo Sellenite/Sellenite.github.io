@@ -1,0 +1,743 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一、JS原生AJAXajax：一种请求数据的方式，不需要刷新整个页面； ajax的技术核心是 XMLHttpRequest 对象； ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据； 封装基本ajax函数： 123456789101112131415161718192021222324252627282930313233343536373839404">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS实现Ajax和Jsonp">
+<meta property="og:url" content="https://sellenite.github.io/2017/07/13/JS%E5%AE%9E%E7%8E%B0Ajax%E5%92%8CJsonp/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="一、JS原生AJAXajax：一种请求数据的方式，不需要刷新整个页面； ajax的技术核心是 XMLHttpRequest 对象； ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据； 封装基本ajax函数： 123456789101112131415161718192021222324252627282930313233343536373839404">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-07-13T12:12:16.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.104Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2017/07/13/JS实现Ajax和Jsonp/"/>
+
+
+
+
+
+  <title> JS实现Ajax和Jsonp | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/07/13/JS%E5%AE%9E%E7%8E%B0Ajax%E5%92%8CJsonp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JS实现Ajax和Jsonp
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T20:12:16+08:00">
+                2017-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/07/13/JS%E5%AE%9E%E7%8E%B0Ajax%E5%92%8CJsonp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、JS原生AJAX"><a href="#一、JS原生AJAX" class="headerlink" title="一、JS原生AJAX"></a>一、JS原生AJAX</h3><p>ajax：一种请求数据的方式，不需要刷新整个页面；</p>
+<p>ajax的技术核心是 XMLHttpRequest 对象；</p>
+<p>ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据；</p>
+<p>封装基本ajax函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通回调</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">ajax</span>(<span class="params">options</span>) &#123;</span><br><span class="line">    options = options || &#123;&#125;;</span><br><span class="line">    options.<span class="property">data</span> = options.<span class="property">data</span> || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  请求方式，默认是GET</span></span><br><span class="line">    options.<span class="property">type</span> = (options.<span class="property">type</span> || <span class="string">&#x27;GET&#x27;</span>).<span class="title function_">toUpperCase</span>();</span><br><span class="line">    <span class="comment">// 避免有特殊字符，必须格式化传输数据  </span></span><br><span class="line">    options.<span class="property">data</span> = <span class="title function_">formatParams</span>(options.<span class="property">data</span>);</span><br><span class="line">    <span class="keyword">var</span> xhr = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 实例化XMLHttpRequest对象   </span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">XMLHttpRequest</span>) &#123;</span><br><span class="line">        xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// IE6及其以下版本   </span></span><br><span class="line">        xhr = <span class="keyword">new</span> <span class="title class_">ActiveXObjcet</span>(<span class="string">&#x27;Microsoft.XMLHTTP&#x27;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监听事件，只要 readyState 的值变化，就会调用 readystatechange 事件 </span></span><br><span class="line">    xhr.<span class="property">onreadystatechange</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">//  readyState属性表示请求/响应过程的当前活动阶段，4为完成，已经接收到全部响应数据</span></span><br><span class="line">        <span class="keyword">if</span> (xhr.<span class="property">readyState</span> == <span class="number">4</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> status = xhr.<span class="property">status</span>;</span><br><span class="line">            <span class="comment">//  status：响应的HTTP状态码，以2开头的都是成功</span></span><br><span class="line">            <span class="keyword">if</span> (status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> response = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">                <span class="comment">// 判断接受数据的内容类型  </span></span><br><span class="line">                <span class="keyword">var</span> type = xhr.<span class="title function_">getResponseHeader</span>(<span class="string">&#x27;Content-type&#x27;</span>);</span><br><span class="line">                <span class="keyword">if</span> (type.<span class="title function_">indexOf</span>(<span class="string">&#x27;xml&#x27;</span>) !== -<span class="number">1</span> &amp;&amp; xhr.<span class="property">responseXML</span>) &#123;</span><br><span class="line">                    response = xhr.<span class="property">responseXML</span>; <span class="comment">//Document对象响应   </span></span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;application/json&#x27;</span>) &#123;</span><br><span class="line">                    response = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(xhr.<span class="property">responseText</span>); <span class="comment">//JSON响应   </span></span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    response = xhr.<span class="property">responseText</span>; <span class="comment">//字符串响应   </span></span><br><span class="line">                &#125;;</span><br><span class="line">                <span class="comment">// 成功回调函数 </span></span><br><span class="line">                options.<span class="property">success</span> &amp;&amp; options.<span class="title function_">success</span>(response);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                options.<span class="property">error</span> &amp;&amp; options.<span class="title function_">error</span>(status);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 连接和传输数据   </span></span><br><span class="line">    <span class="keyword">if</span> (options.<span class="property">type</span> == <span class="string">&#x27;GET&#x27;</span>) &#123;</span><br><span class="line">        <span class="comment">// 三个参数：请求方式、请求地址(get方式时，传输数据是加在地址后的)、是否异步请求(同步请求的情况极少)；</span></span><br><span class="line">        xhr.<span class="title function_">open</span>(options.<span class="property">type</span>, options.<span class="property">url</span> + <span class="string">&#x27;?&#x27;</span> + options.<span class="property">data</span>, <span class="literal">true</span>);</span><br><span class="line">        xhr.<span class="title function_">send</span>(<span class="literal">null</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        xhr.<span class="title function_">open</span>(options.<span class="property">type</span>, options.<span class="property">url</span>, <span class="literal">true</span>);</span><br><span class="line">        <span class="comment">//必须，设置提交时的内容类型   </span></span><br><span class="line">        xhr.<span class="title function_">setRequestHeader</span>(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;application/x-www-form-urlencoded; charset=UTF-8&#x27;</span>);</span><br><span class="line">        <span class="comment">// 传输数据  </span></span><br><span class="line">        xhr.<span class="title function_">send</span>(options.<span class="property">data</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//格式化参数   </span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">formatParams</span>(<span class="params">data</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> arr = [];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> data) &#123;</span><br><span class="line">            <span class="comment">//   encodeURIComponent() ：用于对 URI 中的某一部分进行编码</span></span><br><span class="line">            arr.<span class="title function_">push</span>(<span class="built_in">encodeURIComponent</span>(name) + <span class="string">&#x27;=&#x27;</span> + <span class="built_in">encodeURIComponent</span>(data[name]));</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">// 添加一个随机数参数，防止缓存   </span></span><br><span class="line">        arr.<span class="title function_">push</span>(<span class="string">&#x27;v=&#x27;</span> + <span class="title function_">random</span>());</span><br><span class="line">        <span class="keyword">return</span> arr.<span class="title function_">join</span>(<span class="string">&#x27;&amp;&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取随机数   </span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">random</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10000</span> + <span class="number">500</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用</span></span><br><span class="line"><span class="title function_">ajax</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;test.php&#x27;</span>,   <span class="comment">// 请求地址</span></span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;POST&#x27;</span>,   <span class="comment">// 请求类型，默认&quot;GET&quot;，还可以是&quot;POST&quot;</span></span><br><span class="line">    <span class="attr">data</span>: &#123; <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;异步请求&#x27;</span> &#125;,   <span class="comment">// 传输数据</span></span><br><span class="line">    <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">res</span>) &#123;   <span class="comment">// 请求成功的回调函数</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">parse</span>(res));</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">error</span>: <span class="keyword">function</span> (<span class="params">error</span>) &#123; &#125;   <span class="comment">// 请求失败的回调函数</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h4 id="1、创建"><a href="#1、创建" class="headerlink" title="1、创建"></a>1、创建</h4><p>1.1、IE7及其以上版本中支持原生的 XHR 对象，因此可以直接用： var oAjax &#x3D; new XMLHttpRequest();</p>
+<p>1.2、IE6及其之前的版本中，XHR对象是通过MSXML库中的一个ActiveX对象实现的。有的书中细化了IE中此类对象的三种不同版本，即MSXML2.XMLHttp、MSXML2.XMLHttp.3.0 和 MSXML2.XMLHttp.6.0；个人感觉太麻烦，可以直接使用下面的语句创建： var oAjax&#x3D;new ActiveXObject(’Microsoft.XMLHTTP’);</p>
+<h4 id="2、连接和发送"><a href="#2、连接和发送" class="headerlink" title="2、连接和发送"></a>2、连接和发送</h4><p>2.1、open()函数的三个参数：请求方式、请求地址、是否异步请求(同步请求的情况极少，至今还没用到过)；</p>
+<p>2.2、GET 请求方式是通过URL参数将数据提交到服务器的，POST则是通过将数据作为 send 的参数提交到服务器；</p>
+<p>2.3、POST 请求中，在发送数据之前，要设置表单提交的内容类型；</p>
+<p>2.4、提交到服务器的参数必须经过 encodeURIComponent() 方法进行编码，实际上在参数列表”key&#x3D;value”的形式中，key 和 value 都需要进行编码，因为会包含特殊字符。每次请求的时候都会在参数列表中拼入一个 “v&#x3D;xx” 的字符串，这样是为了拒绝缓存，每次都直接请求到服务器上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">encodeURI() ：用于整个 URI 的编码，不会对本身属于 URI 的特殊字符进行编码，如冒号、正斜杠、问号和井号；其对应的解码函数 decodeURI()；</span><br><span class="line"></span><br><span class="line">encodeURIComponent() ：用于对 URI 中的某一部分进行编码，会对它发现的任何非标准字符进行编码；其对应的解码函数 decodeURIComponent()；</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、接收"><a href="#3、接收" class="headerlink" title="3、接收"></a>3、接收</h4><p>3.1、接收到响应后，响应的数据会自动填充XHR对象，相关属性如下<br>responseText：响应返回的主体内容，为字符串类型；<br>responseXML：如果响应的内容类型是 “text&#x2F;xml” 或 “application&#x2F;xml”，这个属性中将保存着相应的xml 数据，是 XML 对应的 document 类型；<br>status：响应的HTTP状态码；<br>statusText：HTTP状态的说明；</p>
+<p>3.2、XHR对象的readyState属性表示请求&#x2F;响应过程的当前活动阶段，这个属性的值如下</p>
+<ul>
+<li><p>0-未初始化，尚未调用open()方法；</p>
+</li>
+<li><p>1-启动，调用了open()方法，未调用send()方法；</p>
+</li>
+<li><p>2-发送，已经调用了send()方法，未接收到响应；</p>
+</li>
+<li><p>3-接收，已经接收到部分响应数据；</p>
+</li>
+<li><p>4-完成，已经接收到全部响应数据；</p>
+</li>
+</ul>
+<p>只要 readyState 的值变化，就会调用 readystatechange 事件，(其实为了逻辑上通顺，可以把readystatechange放到send之后，因为send时请求服务器，会进行网络通信，需要时间，在send之后指定readystatechange事件处理程序也是可以的，我一般都是这样用，但为了规范和跨浏览器兼容性，还是在open之前进行指定吧)。</p>
+<p>3.3、在readystatechange事件中，先判断响应是否接收完成，然后判断服务器是否成功处理请求，xhr.status 是状态码，状态码以2开头的都是成功，304表示从缓存中获取，上面的代码在每次请求的时候都加入了随机数，所以不会从缓存中取值，故该状态不需判断。</p>
+<h4 id="4、ajax请求是不能跨域的！"><a href="#4、ajax请求是不能跨域的！" class="headerlink" title="4、ajax请求是不能跨域的！"></a>4、ajax请求是不能跨域的！</h4><h3 id="二、JSONP跨域"><a href="#二、JSONP跨域" class="headerlink" title="二、JSONP跨域"></a>二、JSONP跨域</h3><p>JSONP(JSON with Padding) 是一种跨域请求方式。主要原理是利用了script 标签可以跨域请求的特点，由其 src 属性发送请求到服务器，服务器返回 js 代码，网页端接受响应，然后就直接执行了，这和通过 script 标签引用外部文件的原理是一样的。</p>
+<p>JSONP由两部分组成：回调函数和数据，回调函数一般是由网页端控制，作为参数发往服务器端，服务器端把该函数和数据拼成字符串返回。<br>　　<br>比如网页端创建一个 script 标签，并给其 src 赋值为 <a target="_blank" rel="noopener" href="http://www.superfiresun.com/json/?callback=process%EF%BC%8C">http://www.superfiresun.com/json/?callback=process，</a> 此时网页端就发起一个请求。服务端将要返回的数据拼好最为函数的参数传入，服务端返回的数据格式类似<code>process(&#123;&#39;name&#39;&#39;:&#39;superfiresun&#39;&#125;)</code>，网页端接收到了响应值，因为请求者是 script，所以相当于直接调用 process 方法，并且传入了一个参数。<br>　　<br>单看响应返回的数据，JSONP 比 ajax 方式就多了一个回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * jsonp请求 原理</span></span><br><span class="line"><span class="comment"> * 服务端返回类似test(&#123;&quot;q&quot;:&quot;测试&quot;&#125;)这样的执行函数</span></span><br><span class="line"><span class="comment"> * 前端只需定义test这个函数处理传入返回的数据即可</span></span><br><span class="line"><span class="comment"> * 有些后台还支持定义返回的函数名是什么，但是需要约定好字段传入</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">jsonp</span> = (<span class="params">&#123; url, params, callbackKey, callback, overtime &#125;</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> script = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;script&#x27;</span>);</span><br><span class="line">        <span class="keyword">let</span> head = <span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&#x27;head&#x27;</span>)[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">let</span> arr = [];</span><br><span class="line">        <span class="comment">// 随机数防止缓存</span></span><br><span class="line">        params = &#123; ...params, <span class="attr">v</span>: <span class="title class_">Math</span>.<span class="title function_">random</span>(), [callbackKey]: callback &#125;;</span><br><span class="line">        head.<span class="title function_">appendChild</span>(script);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> params) &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(<span class="string">`<span class="subst">$&#123;<span class="built_in">encodeURIComponent</span>(key)&#125;</span>=<span class="subst">$&#123;<span class="built_in">encodeURIComponent</span>(params[key])&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 回调函数</span></span><br><span class="line">        <span class="variable language_">window</span>[callback] = <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">            <span class="title function_">resolve</span>(data);</span><br><span class="line">            <span class="built_in">clearTimeout</span>(script.<span class="property">timer</span>);</span><br><span class="line">            head.<span class="title function_">removeChild</span>(script);</span><br><span class="line">            <span class="variable language_">window</span>[callback] = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发送请求</span></span><br><span class="line">        script.<span class="property">src</span> = <span class="string">`<span class="subst">$&#123;url&#125;</span>?<span class="subst">$&#123;arr.join(<span class="string">&#x27;&amp;&#x27;</span>)&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 前端控制超时处理</span></span><br><span class="line">        <span class="keyword">if</span> (overtime) &#123;</span><br><span class="line">            script.<span class="property">timer</span> = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                head.<span class="title function_">removeChild</span>(script);</span><br><span class="line">                <span class="comment">// 删除回调，不能直接赋值null，假如之后请求回来后会执行null()，导致报错</span></span><br><span class="line">                <span class="variable language_">window</span>[callback] = <span class="function">() =&gt;</span> &#123; <span class="variable language_">window</span>[callback] = <span class="literal">null</span>; &#125;;</span><br><span class="line">                <span class="title function_">reject</span>(<span class="string">&#x27;前端限制时间内请求超时&#x27;</span>);</span><br><span class="line">            &#125;, overtime);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>1、因为 script 标签的 src 属性只在第一次设置的时候起作用，导致 script 标签没法重用，所以每次完成操作之后要移除；</p>
+<p>2、JSONP这种请求方式中，参数依旧需要编码；</p>
+<p>3、如果不设置超时，就无法得知此次请求是成功还是失败；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 执行</span></span><br><span class="line"><span class="title function_">jsonp</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su&#x27;</span>, <span class="comment">// 请求地址</span></span><br><span class="line">    <span class="attr">params</span>: &#123;</span><br><span class="line">        <span class="attr">json</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">wd</span>: <span class="string">&#x27;测试&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">overtime</span>: <span class="number">5000</span>, <span class="comment">// 超时</span></span><br><span class="line">    <span class="attr">callbackKey</span>: <span class="string">&#x27;cb&#x27;</span>, <span class="comment">// 后端约定字段</span></span><br><span class="line">    <span class="attr">callback</span>: <span class="string">&#x27;test&#x27;</span> <span class="comment">// 返回时的执行函数名称</span></span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/21/JS%E5%BC%80%E5%8F%91datepicker/" rel="next" title="JS开发datepicker">
+                <i class="fa fa-chevron-left"></i> JS开发datepicker
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/21/JS%E5%87%BD%E6%95%B0%E8%8A%82%E6%B5%81%E5%92%8C%E5%87%BD%E6%95%B0%E5%8E%BB%E6%8A%96%E5%92%8C%E5%88%86%E6%97%B6%E5%87%BD%E6%95%B0/" rel="prev" title="JS函数节流和函数去抖和分时函数">
+                JS函数节流和函数去抖和分时函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81JS%E5%8E%9F%E7%94%9FAJAX"><span class="nav-number">1.</span> <span class="nav-text">一、JS原生AJAX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">1、创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E8%BF%9E%E6%8E%A5%E5%92%8C%E5%8F%91%E9%80%81"><span class="nav-number">1.2.</span> <span class="nav-text">2、连接和发送</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E6%8E%A5%E6%94%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3、接收</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81ajax%E8%AF%B7%E6%B1%82%E6%98%AF%E4%B8%8D%E8%83%BD%E8%B7%A8%E5%9F%9F%E7%9A%84%EF%BC%81"><span class="nav-number">1.4.</span> <span class="nav-text">4、ajax请求是不能跨域的！</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81JSONP%E8%B7%A8%E5%9F%9F"><span class="nav-number">2.</span> <span class="nav-text">二、JSONP跨域</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

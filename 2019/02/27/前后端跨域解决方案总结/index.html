@@ -1,0 +1,804 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS,Nginx," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="产生跨域的原因 浏览器限制 请求链接跨域 请求类型是XMLHttpRequest  跨域解决方法之一：JSONP​	实现jsonp，需要前后端都需要改造，后端需要增加支持返回js函数，主要约定是url的key字段，由于jquery默认的jsonp请求的关键字key默认是callback，后端一般都会使用callback关键字，当然也可以定义另一个名称，而这个key对应的value使用什么都可以，j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前后端跨域解决方案总结">
+<meta property="og:url" content="https://sellenite.github.io/2019/02/27/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="产生跨域的原因 浏览器限制 请求链接跨域 请求类型是XMLHttpRequest  跨域解决方法之一：JSONP​	实现jsonp，需要前后端都需要改造，后端需要增加支持返回js函数，主要约定是url的key字段，由于jquery默认的jsonp请求的关键字key默认是callback，后端一般都会使用callback关键字，当然也可以定义另一个名称，而这个key对应的value使用什么都可以，j">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-02-27T15:19:11.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.137Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2019/02/27/前后端跨域解决方案总结/"/>
+
+
+
+
+
+  <title> 前后端跨域解决方案总结 | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/02/27/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前后端跨域解决方案总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-27T23:19:11+08:00">
+                2019-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2019/02/27/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="产生跨域的原因"><a href="#产生跨域的原因" class="headerlink" title="产生跨域的原因"></a>产生跨域的原因</h3><ul>
+<li>浏览器限制</li>
+<li>请求链接跨域</li>
+<li>请求类型是XMLHttpRequest</li>
+</ul>
+<h3 id="跨域解决方法之一：JSONP"><a href="#跨域解决方法之一：JSONP" class="headerlink" title="跨域解决方法之一：JSONP"></a>跨域解决方法之一：JSONP</h3><p>​	实现jsonp，需要前后端都需要改造，后端需要增加支持返回js函数，主要约定是url的key字段，由于jquery默认的jsonp请求的关键字key默认是callback，后端一般都会使用callback关键字，当然也可以定义另一个名称，而这个key对应的value使用什么都可以，jquery是使用随机数，后台会获取这个随机数，作为返回js函数的函数名。这是大多数情况，原理是如此，但可能有所不同。</p>
+<p>​	除此之外，还需要注意要使用随机数，不然jsonp由于是js脚本，如果请求参数相同，就会使用缓存的结果，而不会使用最新的结果，jquery的jsonp默认有随机数参数</p>
+<p>​	jsonp有以下弊端：服务端也需要改造，请求只能是get。由于请求是get，一般只能用来请求一些获取数据的接口，而不能用于修改用户信息等类型的接口（需要用到post）。由于这个缺点，一般很少接口会用到jsonp，解决跨域问题还需要找其他解决办法</p>
+<h3 id="网络请求的路径和解决思路"><a href="#网络请求的路径和解决思路" class="headerlink" title="网络请求的路径和解决思路"></a>网络请求的路径和解决思路</h3><p>​	一般请求路径是：Client(调用方) - Apache&#x2F;Nginx(http服务器) - Tomcat(被调用方后台应用服务器)。其中Apache&#x2F;Nginx会处理来自client的请求，判断该请求为什么类型的请求，如果是静态请求，则直接处理返回给client，如果是动态请求，则转发给后台的应用服务器，处理完毕后则原路返回。</p>
+<p>​	动态请求指，跟用户数据有关的请求，xhr等</p>
+<p>​	静态请求指，跟用户数据无关的请求，例如img，js，css</p>
+<p>​	解决跨域的思路有两种，一种是在被调用方后台应用服务器上做处理，在响应头上增加字段，告诉浏览器允许对方调用，浏览器就不会报跨域问题；第二种是隐藏跨域的思路，在http服务器上做处理，做一个http请求转发，浏览器发现所有的请求都是同一个域，就不会报跨域问题。</p>
+<span id="more"></span>
+
+<h3 id="被调用方解决-支持跨域（应用服务器配置响应头、Apache-Nginx服务器配置响应头CORS）"><a href="#被调用方解决-支持跨域（应用服务器配置响应头、Apache-Nginx服务器配置响应头CORS）" class="headerlink" title="被调用方解决 - 支持跨域（应用服务器配置响应头、Apache&#x2F;Nginx服务器配置响应头CORS）"></a>被调用方解决 - 支持跨域（应用服务器配置响应头、Apache&#x2F;Nginx服务器配置响应头CORS）</h3><p>​	当浏览器进行跨域请求时，会在预检请求的时候在请求头加上Origin字段，对应的值是当前域的信息。然后返回的时候会检查响应头里有没有允许跨域的字段，如果没有，浏览器就会报错拦截。具体检查的响应头字段是<code>Access-Control-Allow-Origin</code>，它是html5新增的一项标准，IE10以下是不支持的。如果需要IE10以下都完美支持跨域，请使用http服务器转发(http反向代理)解决问题。</p>
+<p>​	一般这个方法，后台应用服务器简称为filter，添加filter组件后，再在响应头里添加<code>Access-Control-Allow-Origin</code>(允许跨域的域名)，<code>Access-Control-Allow-Methods</code>(允许跨域的请求类型)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 后台设定返回</span></span><br><span class="line">res.<span class="title function_">addHeader</span>(<span class="string">&#x27;Access-Control-Allow-Methods&#x27;</span>, <span class="string">&#x27;*&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="简单请求和复杂请求（跨域时才区分）"><a href="#简单请求和复杂请求（跨域时才区分）" class="headerlink" title="简单请求和复杂请求（跨域时才区分）"></a>简单请求和复杂请求（跨域时才区分）</h3><p>​	浏览器在进行跨域请求时，会判断该请求是简单请求还是非简单请求，如果是简单请求，则会先执行，后判断；如果是非简单请求，浏览器就会先发一个预检命令（OPTIONS），通过之后再发跨域请求。</p>
+<p><strong>工作中比较常见的【简单请求】：</strong></p>
+<ul>
+<li><p>方法为GET、HEAD、POST</p>
+</li>
+<li><p>请求header里无自定义请求</p>
+</li>
+<li><p><code>Content-Type</code>为以下几种：</p>
+<ul>
+<li>text&#x2F;plain（表单数据以纯文本形式进行编码）</li>
+<li>multipart&#x2F;form-data（一般上传文件时会用到）</li>
+<li>application&#x2F;x-www-form-urlencoded（表单数据编码为键值对，&amp;分隔）</li>
+</ul>
+</li>
+</ul>
+<p><strong>工作中比较常见的【非简单请求】：</strong></p>
+<ul>
+<li>put、delete方法的ajax请求</li>
+<li>发送json格式的ajax请求（<code>Content-Type</code>为appliation&#x2F;json;charset&#x3D;utf-8）</li>
+<li>带自定义头的ajax请求</li>
+</ul>
+<p>​	发送json格式的ajax请求时，预检命令，请求头会加上一个<code>Access-Control-Allow-Headers</code>为Content-Type，询问后台应用服务器是否允许这个头。如果后台没有在filter里加上这个响应头告诉浏览器允许这个header，浏览器发现没有通过的信息就会报错</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 后台设定返回</span></span><br><span class="line">res.<span class="title function_">addHeader</span>(<span class="string">&#x27;Access-Control-Allow-Headers&#x27;</span>, <span class="string">&#x27;Content-Type&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​	非简单请求一共会发送两次请求，第一次是OPTIONS预检命令，第二次才是真正的跨域请求</p>
+<p>​	OPTIONS预检命令是可以做缓存的，由于非简单请求每次都会发送两次请求，这样会比较影响性能。后台应用服务器可以通过在响应头里增加<code>Access-Control-Max-Age</code>，值是毫秒数，这样浏览器在规定时间内，这个接口的请求就不会再进行OPTIONS预检命令，直接执行下一个请求。如果用户在浏览器开发模式中将Disable cache开启，那么就会清掉这个缓存，重新验证OPTIONS预检命令</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// OPTIONS请求设置3600毫秒缓存</span></span><br><span class="line">res.<span class="title function_">addHeader</span>(<span class="string">&#x27;Access-Control-Max-Age&#x27;</span>, <span class="string">&#x27;3600&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​	注意，如果使用了反向代理解决跨域问题的时候，那么这些请求实际上都没有跨域，都在同一个域名上请求，不存在简单请求和复杂请求，就没有了OPTIONS这个预检请求了，直接进行请求</p>
+<h3 id="带cookie的跨域"><a href="#带cookie的跨域" class="headerlink" title="带cookie的跨域"></a>带cookie的跨域</h3><p>​	ajax会自动带上同源的cookie，不会带上不同源的cookie。前端如果需要发起跨域的带有cookie的请求，需要将<code>XMLHttpRequest.withCredentials</code>置为true，修改方法为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">xhrFields</span>:&#123; <span class="attr">withCredentials</span>:<span class="literal">true</span> &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>​	这个修改永远不会影响到同源请求，不同域下的<code>XmlHttpRequest</code> 响应，不论其header 设置什么值，都无法为它自身站点设置cookie值，除非它在请求之前将<code>withCredentials</code> 设为true。</p>
+<p>​	以上是前端需要做的改造，后端需要做的改造如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="title function_">addHeader</span>(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>, <span class="string">&#x27;具体网址&#x27;</span>);</span><br><span class="line">res.<span class="title function_">addHeader</span>(<span class="string">&#x27;Access-Control-Allow-Credentials&#x27;</span>, <span class="string">&#x27;true&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​	注意，这时候后端应用服务器就不能将 <code>Access-Control-Allow-Origin</code>置为<code>*</code>这样的通配符形式，一定要用全匹配的地址，而且需要额外配置<code>Access-Control-Allow-Credentials</code>，通过这样的参数设置，就可以保持跨域ajax时传递cookies。</p>
+<p>​	这时注意，这也不是后台应用服务器将<code>Access-Control-Allow-Origin</code>写死，由前面得知，浏览器在跨域请求时，会在预检请求OPTIONS里增加一个Origin字段，这时候后台就可以取到这个字段，然后将它赋值给<code>Access-Control-Allow-Origin</code>，这也就变相得实现通配符的功能～</p>
+<p>​	需要非常注意，我们发送的cookie，是被调用方域名的cookie，cookie要加在被调用方的域名上，而不是调用方的cookie</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="property">cookie</span> = <span class="string">&quot;name=yuuhei; path=/&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="带自定义头的跨域"><a href="#带自定义头的跨域" class="headerlink" title="带自定义头的跨域"></a>带自定义头的跨域</h3><p>​	jquery的ajax自定义请求有两种方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">headers</span>: &#123; <span class="attr">token</span>: <span class="string">&#x27;ASDFGH&#x27;</span> &#125;,</span><br><span class="line">    <span class="comment">// 或</span></span><br><span class="line">    <span class="attr">beforeSend</span>: <span class="keyword">function</span>(<span class="params">xhr</span>) &#123;</span><br><span class="line">        xhr.<span class="title function_">setRequestHeader</span>(<span class="string">&#x27;token&#x27;</span>, <span class="string">&#x27;ASDFGH&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>​	后端也要做响应处理，不然浏览器会报<code>Access-Control-Allow-Headers</code>的问题，需要在后台代码加上对应名称的header（像加之前Content-Type的时候那样加），可以先获取由发起方得到的自定义header，再赋值这样的套路（像之前设定Origin时的方法），这样后台代码就不会写死。</p>
+<h3 id="express作为后台应用服务器解决方案总结（被调用方解决）："><a href="#express作为后台应用服务器解决方案总结（被调用方解决）：" class="headerlink" title="express作为后台应用服务器解决方案总结（被调用方解决）："></a>express作为后台应用服务器解决方案总结（被调用方解决）：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nginx反向代理解决后这些都不用设置了</span></span><br><span class="line"><span class="keyword">var</span> allowCrossDomain = <span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> origin = req.<span class="property">headers</span>.<span class="property">origin</span>;</span><br><span class="line">    <span class="comment">// 允许域名</span></span><br><span class="line">    res.<span class="title function_">header</span>(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>, origin);</span><br><span class="line">    <span class="comment">// 允许方法</span></span><br><span class="line">    res.<span class="title function_">header</span>(<span class="string">&#x27;Access-Control-Allow-Methods&#x27;</span>, <span class="string">&#x27;GET, POST, PUT, DELETE&#x27;</span>);</span><br><span class="line">    <span class="comment">// 允许发json，客户端强制发送contentType为appliation/json;charset=utf-8，会有OPTIONS预检请求</span></span><br><span class="line">    res.<span class="title function_">header</span>(<span class="string">&#x27;Access-Control-Allow-Headers&#x27;</span>, <span class="string">&#x27;Content-Type, Token&#x27;</span>);</span><br><span class="line">    <span class="comment">// 允许跨域带cookie</span></span><br><span class="line">    res.<span class="title function_">header</span>(<span class="string">&#x27;Access-Control-Allow-Credentials&#x27;</span>,<span class="string">&#x27;true&#x27;</span>);</span><br><span class="line">    <span class="comment">// 预检命令缓存</span></span><br><span class="line">    res.<span class="title function_">header</span>(<span class="string">&#x27;Access-Control-Max-Age&#x27;</span>,<span class="string">&#x27;3600&#x27;</span>);</span><br><span class="line">    <span class="title function_">next</span>();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(allowCrossDomain);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="被调用方-Nginx解决方案"><a href="#被调用方-Nginx解决方案" class="headerlink" title="被调用方- Nginx解决方案"></a>被调用方- Nginx解决方案</h3><p>​	nginx有一个虚拟主机的概念，什么是虚拟主机：</p>
+<blockquote>
+<p>多个域名指向同一个服务器，nginx服务器根据不同的域名，转发到不同的应用服务器</p>
+</blockquote>
+<p>​	虚拟主机的配置：配置host文件，设定如下类似代码，这样nginx就可以配置多个虚拟域名，其实访问的都是同一个ip地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 127.0.0.1就是本地的ip，b.com就是映射的虚拟主机ip</span><br><span class="line"># linux下使用sudo vim /etc/hosts修改保存</span><br><span class="line">127.0.0.1 b.com</span><br></pre></td></tr></table></figure>
+
+<p>​	配置nginx：打开nginx目录，打开conf目录，新建一个vhost文件夹，然后修改nginx.conf</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nginx.conf 在http块区域里最后面增加</span></span><br><span class="line"><span class="attribute">include</span> vhost/<span class="regexp">*.conf</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​	在vhost文件夹创建一个conf文件，配置如下：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vhost文件夹新增.conf</span></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="comment"># 浏览器请求地址端口</span></span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="comment"># 浏览器请求地址</span></span><br><span class="line">    <span class="attribute">server_name</span> b.com;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="comment"># 后台应用服务器地址</span></span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080/;</span><br><span class="line">        <span class="comment"># 在次修改响应头</span></span><br><span class="line">        </span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Methods *;</span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Credentials <span class="literal">true</span>;</span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Max-Age <span class="number">3600</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Origin <span class="variable">$http_origin</span>;</span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Headers <span class="variable">$http_access_control_request_headers</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 处理OPTIONS命令直接返回，不需要转发到应用服务器</span></span><br><span class="line">        if (<span class="variable">$request_method</span> = OPTIONS)&#123;</span><br><span class="line">            <span class="attribute">return</span> <span class="number">200</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置完之后前端请求的地址可以从<code>http://localhost:8080/user.do</code>变为<code>http://b.com/user.do</code>，这样就完成了应用服务器的虚拟服务器映射，此时cookies需要加在<code>http://b.com</code>这个被调用方域名上，像之前所说的</p>
+<h3 id="调用方-隐藏跨域解决方案，反向代理（目前最好解决方案）"><a href="#调用方-隐藏跨域解决方案，反向代理（目前最好解决方案）" class="headerlink" title="调用方 - 隐藏跨域解决方案，反向代理（目前最好解决方案）"></a>调用方 - 隐藏跨域解决方案，反向代理（目前最好解决方案）</h3><p>反向代理的意思是，<strong>访问统一域名的两个不同的url，会去到两个不同的服务器</strong></p>
+<p>nginx目录下，新建vhost文件夹，新增配置a.com.conf，host已做映射</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># host配置虚拟地址，模拟线上地址</span><br><span class="line">127.0.0.1 a.com</span><br></pre></td></tr></table></figure>
+
+<p>配置nginx.conf</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nginx.conf 在http块区域里最后面增加</span></span><br><span class="line"><span class="attribute">include</span> vhost/<span class="regexp">*.conf</span>;</span><br></pre></td></tr></table></figure>
+
+<p>nginx.conf目录下新建一个vhost文件夹，新建a.com.conf</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a.com </span></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> a.com;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="comment"># 本地客户端代理</span></span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8081/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> <span class="regexp">~ .*\.do$</span> &#123;</span><br><span class="line">        <span class="comment"># 注意，使用了正则匹配代理路径就不能包含uri，即/</span></span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:3000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>现在所有的.do请求都会经过3000端口的这个代理</p>
+<p>开启nginx（ubuntu下）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -c /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<p>​	就可以通过<code>a.com</code>和<code>a.com/user.do</code>就可以同时访问客户端和后台应用服务器，解决跨域问题</p>
+<p>​	这样解决的最大区别是，请求的地址，之前必须是一个绝对地址，现在是一个相对地址。比如之前请求的地址是<code>http://localhost:3000/users.do</code>，现在只需要请求<code>/users.do</code>即可</p>
+<p>​	这样的解决方法，之前前后端做的跨域设置都不用做，因为现在经过nginx反向代理后，两个地址都指向同一个域名，无跨域问题，cookie也能够发送到后台应用服务器～</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/25/JS%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0%E5%90%8E%E5%8F%B0%E5%B9%B6%E8%BF%94%E5%9B%9E/" rel="next" title="JS上传文件到后台并返回">
+                <i class="fa fa-chevron-left"></i> JS上传文件到后台并返回
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/01/%E9%A1%B9%E7%9B%AE%E4%B8%8A%E7%BA%BF%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/" rel="prev" title="项目上线流程总结">
+                项目上线流程总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">产生跨域的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%E4%B9%8B%E4%B8%80%EF%BC%9AJSONP"><span class="nav-number">2.</span> <span class="nav-text">跨域解决方法之一：JSONP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E7%9A%84%E8%B7%AF%E5%BE%84%E5%92%8C%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="nav-number">3.</span> <span class="nav-text">网络请求的路径和解决思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A2%AB%E8%B0%83%E7%94%A8%E6%96%B9%E8%A7%A3%E5%86%B3-%E6%94%AF%E6%8C%81%E8%B7%A8%E5%9F%9F%EF%BC%88%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%93%8D%E5%BA%94%E5%A4%B4%E3%80%81Apache-Nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%93%8D%E5%BA%94%E5%A4%B4CORS%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">被调用方解决 - 支持跨域（应用服务器配置响应头、Apache&#x2F;Nginx服务器配置响应头CORS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82%E5%92%8C%E5%A4%8D%E6%9D%82%E8%AF%B7%E6%B1%82%EF%BC%88%E8%B7%A8%E5%9F%9F%E6%97%B6%E6%89%8D%E5%8C%BA%E5%88%86%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">简单请求和复杂请求（跨域时才区分）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6cookie%E7%9A%84%E8%B7%A8%E5%9F%9F"><span class="nav-number">6.</span> <span class="nav-text">带cookie的跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%B4%E7%9A%84%E8%B7%A8%E5%9F%9F"><span class="nav-number">7.</span> <span class="nav-text">带自定义头的跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#express%E4%BD%9C%E4%B8%BA%E5%90%8E%E5%8F%B0%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93%EF%BC%88%E8%A2%AB%E8%B0%83%E7%94%A8%E6%96%B9%E8%A7%A3%E5%86%B3%EF%BC%89%EF%BC%9A"><span class="nav-number">8.</span> <span class="nav-text">express作为后台应用服务器解决方案总结（被调用方解决）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A2%AB%E8%B0%83%E7%94%A8%E6%96%B9-Nginx%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">9.</span> <span class="nav-text">被调用方- Nginx解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E6%96%B9-%E9%9A%90%E8%97%8F%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%88%E7%9B%AE%E5%89%8D%E6%9C%80%E5%A5%BD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%89"><span class="nav-number">10.</span> <span class="nav-text">调用方 - 隐藏跨域解决方案，反向代理（目前最好解决方案）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

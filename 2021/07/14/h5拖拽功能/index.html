@@ -1,0 +1,678 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="直接上html例子，分为任意悬停和磁吸悬停">
+<meta property="og:type" content="article">
+<meta property="og:title" content="h5拖拽功能">
+<meta property="og:url" content="https://sellenite.github.io/2021/07/14/h5%E6%8B%96%E6%8B%BD%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="直接上html例子，分为任意悬停和磁吸悬停">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-07-14T09:23:54.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.122Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2021/07/14/h5拖拽功能/"/>
+
+
+
+
+
+  <title> h5拖拽功能 | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2021/07/14/h5%E6%8B%96%E6%8B%BD%E5%8A%9F%E8%83%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                h5拖拽功能
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-14T17:23:54+08:00">
+                2021-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2021/07/14/h5%E6%8B%96%E6%8B%BD%E5%8A%9F%E8%83%BD/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>直接上html例子，分为任意悬停和磁吸悬停</p>
+<span id="more"></span>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    * &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.draggable</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">bottom</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">right</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">background-color</span>: gold;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">width</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">height</span>: <span class="number">60px</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;draggable&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">function</span> <span class="title function_">isAndroid</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> u = navigator.<span class="property">userAgent</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> u.<span class="title function_">indexOf</span>(<span class="string">&#x27;Android&#x27;</span>) &gt; -<span class="number">1</span> || u.<span class="title function_">indexOf</span>(<span class="string">&#x27;Adr&#x27;</span>) &gt; -<span class="number">1</span></span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> raf = <span class="variable language_">window</span>.<span class="property">requestAnimationFrame</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="comment">/**</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">   * 封装拖拽函数</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">   * <span class="doctag">@param</span> $ele 需要拖拽的元素</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">   * <span class="doctag">@param</span> isAnywhere 是否可以任意位置悬停，false的话则表现为松手就贴边</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">   * <span class="doctag">@param</span> adsorb &#123; x = 20, y = 80 &#125; 上下左右吸附的边距</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">   * <span class="doctag">@return</span> Function 返回移除监听器的函数</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">   */</span></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">function</span> <span class="title function_">draggable</span>(<span class="params">$ele, isAnywhere = <span class="literal">false</span>, adsorb = &#123; x: <span class="number">20</span>, y: <span class="number">20</span> &#125;</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">if</span> (!$ele) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;必须是可拖拽元素&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 开始时候的位置</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> startX = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> startY = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 移动过程中的 left 和 top，其实通过这俩参数，就能确定元素位置</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> left = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> top = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 屏幕的宽高</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> cw = <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="property">clientWidth</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> ch = <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="property">clientHeight</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 获取到元素自身的宽高</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> &#123; width, height &#125; = $ele.<span class="title function_">getBoundingClientRect</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">touchStart</span>(<span class="params">event</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      startX = event.<span class="property">targetTouches</span>[<span class="number">0</span>].<span class="property">pageX</span>;</span></span><br><span class="line"><span class="language-javascript">      startY = event.<span class="property">targetTouches</span>[<span class="number">0</span>].<span class="property">pageY</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      top = $ele.<span class="property">offsetTop</span>;</span></span><br><span class="line"><span class="language-javascript">      left = $ele.<span class="property">offsetLeft</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      event.<span class="title function_">preventDefault</span>();</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">touchMove</span>(<span class="params">event</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 偏移距离</span></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> offsetX = event.<span class="property">targetTouches</span>[<span class="number">0</span>].<span class="property">pageX</span> - startX;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> offsetY = event.<span class="property">targetTouches</span>[<span class="number">0</span>].<span class="property">pageY</span> - startY;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="property">style</span>.<span class="property">top</span> = <span class="string">`<span class="subst">$&#123;top + offsetY&#125;</span>px`</span>;</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="property">style</span>.<span class="property">left</span> = <span class="string">`<span class="subst">$&#123;left + offsetX&#125;</span>px`</span>;</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="property">style</span>.<span class="property">right</span> = <span class="string">&quot;auto&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="property">style</span>.<span class="property">bottom</span> = <span class="string">&quot;auto&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      event.<span class="title function_">preventDefault</span>();</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">touchDone</span>(<span class="params">event</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> dx = event.<span class="property">changedTouches</span>[<span class="number">0</span>].<span class="property">pageX</span> - startX;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> dy = event.<span class="property">changedTouches</span>[<span class="number">0</span>].<span class="property">pageY</span> - startY;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> ty = top + dy;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> tx = left + dx;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="property">style</span>.<span class="property">top</span> = <span class="string">`<span class="subst">$&#123;ty&#125;</span>px`</span>;</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="property">style</span>.<span class="property">left</span> = <span class="string">`<span class="subst">$&#123;tx&#125;</span>px`</span>;</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="property">style</span>.<span class="property">right</span> = <span class="string">&quot;auto&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="property">style</span>.<span class="property">bottom</span> = <span class="string">&quot;auto&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> adsorb_safe_x = cw - width - adsorb.<span class="property">x</span>;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> adsorb_safe_y = ch - height - adsorb.<span class="property">y</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">raf</span>(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> nx = tx;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> ny = ty;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 处理不同的悬停方式</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (isAnywhere) &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">if</span> (tx &lt; adsorb.<span class="property">x</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            nx = adsorb.<span class="property">x</span>;</span></span><br><span class="line"><span class="language-javascript">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (tx &gt; (cw - width - adsorb.<span class="property">x</span>))  &#123;</span></span><br><span class="line"><span class="language-javascript">            nx = adsorb_safe_x;</span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">if</span> (ty &lt; adsorb.<span class="property">y</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            ny = adsorb.<span class="property">y</span>;</span></span><br><span class="line"><span class="language-javascript">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ty &gt; (ch - height - adsorb.<span class="property">y</span>)) &#123;</span></span><br><span class="line"><span class="language-javascript">            ny = adsorb_safe_y;</span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">if</span> (tx + width / <span class="number">2</span> &lt; cw / <span class="number">2</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            nx = adsorb.<span class="property">x</span>;</span></span><br><span class="line"><span class="language-javascript">          &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            nx = adsorb_safe_x;</span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">if</span> (ty &lt; adsorb.<span class="property">y</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            ny = adsorb.<span class="property">y</span>;</span></span><br><span class="line"><span class="language-javascript">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ty &gt; adsorb_safe_y) &#123;</span></span><br><span class="line"><span class="language-javascript">            ny = adsorb_safe_y;</span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 无需移动，并且认为进行了一次点击</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// click兼容处理</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (<span class="title class_">Math</span>.<span class="title function_">abs</span>(dx) &lt; <span class="number">5</span> &amp;&amp; <span class="title class_">Math</span>.<span class="title function_">abs</span>(dy) &lt; <span class="number">5</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">          $ele.<span class="title function_">click</span>();</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> <span class="variable constant_">MOVE_ANIM_INTER</span> = <span class="title function_">isAndroid</span>() ?</span></span><br><span class="line"><span class="language-javascript">          <span class="title class_">Math</span>.<span class="title function_">abs</span>(((<span class="number">250</span> * (tx - nx)) / <span class="number">800</span>) | <span class="number">0</span>) :</span></span><br><span class="line"><span class="language-javascript">          <span class="number">200</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        $ele.<span class="property">style</span>.<span class="property">webkitTransition</span> = <span class="string">`left <span class="subst">$&#123;MOVE_ANIM_INTER&#125;</span>ms linear, top <span class="subst">$&#123;MOVE_ANIM_INTER&#125;</span>ms linear`</span>;</span></span><br><span class="line"><span class="language-javascript">        $ele.<span class="property">style</span>.<span class="property">transition</span> = <span class="string">`left <span class="subst">$&#123;MOVE_ANIM_INTER&#125;</span>ms linear, top <span class="subst">$&#123;MOVE_ANIM_INTER&#125;</span>ms linear`</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> <span class="title function_">onAnimationDone</span> = (<span class="params"></span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">          $ele.<span class="property">style</span>.<span class="property">webkitTransition</span> = $ele.<span class="property">style</span>.<span class="property">transition</span> = <span class="string">&quot;none&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">          $ele.<span class="title function_">removeEventListener</span>(<span class="string">&quot;webkitTransitionEnd&quot;</span>, onAnimationDone, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">          $ele.<span class="title function_">removeEventListener</span>(<span class="string">&quot;transitionend&quot;</span>, onAnimationDone, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        $ele.<span class="title function_">addEventListener</span>(<span class="string">&quot;webkitTransitionEnd&quot;</span>, onAnimationDone, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">        $ele.<span class="title function_">addEventListener</span>(<span class="string">&quot;transitionend&quot;</span>, onAnimationDone, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        $ele.<span class="property">style</span>.<span class="property">top</span> = <span class="string">`<span class="subst">$&#123;ny&#125;</span>px`</span>;</span></span><br><span class="line"><span class="language-javascript">        $ele.<span class="property">style</span>.<span class="property">left</span> = <span class="string">`<span class="subst">$&#123;nx&#125;</span>px`</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $ele.<span class="title function_">addEventListener</span>(<span class="string">&quot;touchstart&quot;</span>, touchStart, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">    $ele.<span class="title function_">addEventListener</span>(<span class="string">&quot;touchmove&quot;</span>, touchMove, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">    $ele.<span class="title function_">addEventListener</span>(<span class="string">&quot;touchend&quot;</span>, touchDone, <span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript">    $ele.<span class="title function_">addEventListener</span>(<span class="string">&quot;touchcancel&quot;</span>, touchDone, <span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="title function_">removeEventListener</span>(<span class="string">&quot;touchstart&quot;</span>, touchStart, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="title function_">removeEventListener</span>(<span class="string">&quot;touchmove&quot;</span>, touchMove, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="title function_">removeEventListener</span>(<span class="string">&quot;touchend&quot;</span>, touchDone, <span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript">      $ele.<span class="title function_">removeEventListener</span>(<span class="string">&quot;touchcancel&quot;</span>, touchDone, <span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">window</span>.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> dragDom = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.draggable&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// touch和click互不冲突，里面已经做了click的兼容处理</span></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">alert</span>(<span class="string">&#x27;click event&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;)</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">draggable</span>(dragDom, <span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/06/30/APP%E9%80%82%E9%85%8DiPhoneX%E5%AE%89%E5%85%A8%E5%8C%BA%E5%9F%9F/" rel="next" title="APP适配iPhoneX安全区域">
+                <i class="fa fa-chevron-left"></i> APP适配iPhoneX安全区域
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/12/22/%E5%85%B3%E4%BA%8Ehtml2canvasc%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" rel="prev" title="关于html2canvasc生成图片的注意事项">
+                关于html2canvasc生成图片的注意事项 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,809 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Vue," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue &#x3D; val;    &amp;#125;&amp;#125;   elementU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue工作经验总结（3）">
+<meta property="og:url" content="https://sellenite.github.io/2019/08/26/Vue%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%883%EF%BC%89/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="v-model语法糖时，可以使用watch进行数据初始化之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了： 123456value: &amp;#123;    immediate: true,    handler(val) &amp;#123;        this.currentValue &#x3D; val;    &amp;#125;&amp;#125;   elementU">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-08-26T14:18:15.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.119Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2019/08/26/Vue工作经验总结（3）/"/>
+
+
+
+
+
+  <title> Vue工作经验总结（3） | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/08/26/Vue%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%883%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Vue工作经验总结（3）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-26T22:18:15+08:00">
+                2019-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2019/08/26/Vue%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%883%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="v-model语法糖时，可以使用watch进行数据初始化"><a href="#v-model语法糖时，可以使用watch进行数据初始化" class="headerlink" title="v-model语法糖时，可以使用watch进行数据初始化"></a>v-model语法糖时，可以使用watch进行数据初始化</h3><p>之前一直都是使用created+watch进行里面数据的初始化，其实可以直接使用watch就可以了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">value</span>: &#123;</span><br><span class="line">    <span class="attr">immediate</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="title function_">handler</span>(<span class="params">val</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">currentValue</span> = val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="elementUI里的table，template里不要使用ref"><a href="#elementUI里的table，template里不要使用ref" class="headerlink" title="elementUI里的table，template里不要使用ref"></a>elementUI里的table，template里不要使用ref</h3><p>elementUI里的table，template里不要使用ref，引用的结果会与预期有差距，暂时无法找出什么原因</p>
+<span id="more"></span>
+
+<h3 id="使用v-model进行双向绑定时，oninput可以立即修改数据"><a href="#使用v-model进行双向绑定时，oninput可以立即修改数据" class="headerlink" title="使用v-model进行双向绑定时，oninput可以立即修改数据"></a>使用v-model进行双向绑定时，oninput可以立即修改数据</h3><p>其实v-model就是emit一个input事件的语法糖，根据这个我们可以通过监听input事件，在修改之前就将它拦截修改就可以了，不用根据watch这个绑定值然后再手动修改一次，因为这样会有一个闪烁的问题，直接拦截input事件就不会出现这个问题，具体实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">components</span> <span class="attr">v-model</span>=<span class="string">&quot;test&quot;</span> @<span class="attr">input</span>=<span class="string">&quot;value=value.replace(/[^\d]/g, &#x27;&#x27;)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">components</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样绑定的test值就是经过执行函数后的值</p>
+<h3 id="fixed定位的浮动框，在滚动时依然能跟随屏幕移动"><a href="#fixed定位的浮动框，在滚动时依然能跟随屏幕移动" class="headerlink" title="fixed定位的浮动框，在滚动时依然能跟随屏幕移动"></a>fixed定位的浮动框，在滚动时依然能跟随屏幕移动</h3><p>参考elementUI在处理pop组件，这些组件一般都是放在body下，然后使用fixed定位的，如果不进行处理，在进行滚动的时候会一直定在同一个地方，很奇怪。</p>
+<p>参考popper.js 227行左右的监听滚动函数</p>
+<h3 id="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"><a href="#elementUI的table固定高度时，如何将里面滚动内容跳到顶部" class="headerlink" title="elementUI的table固定高度时，如何将里面滚动内容跳到顶部"></a>elementUI的table固定高度时，如何将里面滚动内容跳到顶部</h3><p>可以看一下源码，里面存了dom</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">table</span>.<span class="property">bodyWrapper</span>.<span class="property">scrollTop</span> = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="父元素和子元素的渲染时机和顺序"><a href="#父元素和子元素的渲染时机和顺序" class="headerlink" title="父元素和子元素的渲染时机和顺序"></a>父元素和子元素的渲染时机和顺序</h3><p>父子组件在加载的时候，执行的先后顺序为父beforeCreate-&gt;父created-&gt;父beforeMount-&gt;子beforeCreate-&gt;子created-&gt;子beforeMount-&gt;子mounted-&gt;父mounted</p>
+<h3 id="UI组件二次封装时传值的问题"><a href="#UI组件二次封装时传值的问题" class="headerlink" title="UI组件二次封装时传值的问题"></a>UI组件二次封装时传值的问题</h3><p>前端可能有这样的需求，使用第三方UI组件时，如ElementUI时，里面的钩子函数等不能满足业务需求，这时候就需要在外面再套一层。这时候由于里面有很多props，如果一个一个对应地去赋值，就会很烦，而且有可能会漏，以下是为了解决这个问题的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-select</span> <span class="attr">v-bind</span>=<span class="string">&quot;$props&quot;</span> @<span class="attr">change</span>=<span class="string">&quot;changeEmit&quot;</span> @<span class="attr">visible-change</span>=<span class="string">&#x27;visibleChangeEmit&#x27;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-option</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-for</span>=<span class="string">&quot;item in options&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:key</span>=<span class="string">&quot;item[propsAlias.value]&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:label</span>=<span class="string">&quot;item[propsAlias.label]&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:value</span>=<span class="string">&quot;item[propsAlias.label] + &#x27;·&#x27; + item[propsAlias.value]&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; <span class="title class_">Select</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;element-ui&#x27;</span></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">name</span>: <span class="string">&#x27;em-select&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">    ...<span class="title class_">Select</span>.<span class="property">props</span>, <span class="comment">// 这里继承原 UI 组件的 props</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 配置</span></span></span><br><span class="line"><span class="language-javascript">    <span class="attr">options</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">type</span>: <span class="title class_">Array</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">default</span>: <span class="function">() =&gt;</span> [</span></span><br><span class="line"><span class="language-javascript">        &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">value</span>: <span class="string">&#x27;选项1&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">label</span>: <span class="string">&#x27;黄金糕&#x27;</span></span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">value</span>: <span class="string">&#x27;选项2&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">label</span>: <span class="string">&#x27;双皮奶&#x27;</span></span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">      ]</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 数据项属性别名</span></span></span><br><span class="line"><span class="language-javascript">    <span class="attr">propsAlias</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">type</span>: <span class="title class_">Object</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">default</span>: <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">value</span>: <span class="string">&#x27;value&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">label</span>: <span class="string">&#x27;label&#x27;</span></span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> &#123;&#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">changeEmit</span>(<span class="params">val</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;change&#x27;</span>, val);    <span class="comment">// 选中值发生变化时触发</span></span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">visibleChangeEmit</span>(<span class="params">isVisible</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;visible-change&#x27;</span>, isVisible);  <span class="comment">// 下拉框出现/隐藏时触发</span></span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样就可以实现一次二次封装，在二次封装的组件里进行props的注册和传值。里面传什么，都会传到ElementUI的原组件里，注意$props的用法，官网给出的demo：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 通过 $props 将父组件的 props 一起传给子组件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">child-component</span> <span class="attr">v-bind</span>=<span class="string">&quot;$props&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">child-component</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>bind也可以一次性绑定多个属性：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 绑定一个有属性的对象 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind</span>=<span class="string">&quot;&#123; id: someProp, &#x27;other-attr&#x27;: otherProp &#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不使用额外的prop传入，可以直接传入attrs和listeners，这样就可以传入不确定的属性和绑定函数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">child-component</span> <span class="attr">v-bind</span>=<span class="string">&quot;$attrs&quot;</span> <span class="attr">v-on</span>=<span class="string">&quot;$listeners&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">child-component</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="当ElementUI的form里面只有一个input元素，使用-keyup-enter-native会导致刷新页面的问题"><a href="#当ElementUI的form里面只有一个input元素，使用-keyup-enter-native会导致刷新页面的问题" class="headerlink" title="当ElementUI的form里面只有一个input元素，使用@keyup.enter.native会导致刷新页面的问题"></a>当ElementUI的form里面只有一个input元素，使用@keyup.enter.native会导致刷新页面的问题</h3><p>由于ElementUI在定义组件的时候，遵循以下规则：</p>
+<blockquote>
+<p>当一个 form 元素中只有一个输入框时，在该输入框中按下回车应提交该表单。如果希望阻止这一默认行为，可以在 <code>&lt;el-form&gt;</code> 标签上添加 <code>@submit.native.prevent</code>。</p>
+</blockquote>
+<p>所以会出现第一次回车就会刷新页面，再次回车，才出发回车事件。</p>
+<p>当一个 form 元素中只有一个输入框时，在该输入框中按下回车应提交该表单。如果希望阻止这一默认行为，可以在 标签上添加 @submit.native.prevent。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span> @<span class="attr">submit.native.prevent</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;inpulValue&quot;</span> @<span class="attr">keyup.enter.native</span>=<span class="string">&quot;searchKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ElementUI的table高度自适应问题"><a href="#ElementUI的table高度自适应问题" class="headerlink" title="ElementUI的table高度自适应问题"></a>ElementUI的table高度自适应问题</h3><p>之前一直做了一件蠢事，为了解决ElementUI的table自适应问题，一直使用了resize事件，然后重新计算了当前剩余高度，然后赋值给table的height。其实不用这么干，只需要利用flex，在table加一个垂直方向的<code>flex: 1 0 auto</code>即可</p>
+<h3 id="ElementUI的table二次封装，支持配置render定制化"><a href="#ElementUI的table二次封装，支持配置render定制化" class="headerlink" title="ElementUI的table二次封装，支持配置render定制化"></a>ElementUI的table二次封装，支持配置render定制化</h3><p>这个技巧比较重要，利用了之前一直没用过的scopedSlots。由于ElementUI本来的table配置定制化全部是使用template来实现的。在这里完成的组件里，可以直接通过配置定制render，支持jsx和h()</p>
+<p>table.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table</span> <span class="attr">:data</span>=<span class="string">&quot;tableData&quot;</span> <span class="attr">v-bind</span>=<span class="string">&quot;tableConfig&quot;</span> <span class="attr">v-on</span>=<span class="string">&quot;tableEvent&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table-column</span> <span class="attr">v-for</span>=<span class="string">&quot;(item, index) in columnConfigComputed&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span> <span class="attr">:config</span>=<span class="string">&quot;item&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">watch</span>: &#123;</span><br><span class="line">  <span class="attr">columnConfig</span>: &#123;</span><br><span class="line">    <span class="attr">deep</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">immediate</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="title function_">handler</span>(<span class="params">nVal, oVal</span>) &#123;</span><br><span class="line">      <span class="comment">// 对特殊的type进行改造，避免多次重复写代码</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">columnConfigComputed</span> = nVal.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> <span class="variable constant_">SELECTION_WIDTH</span> = <span class="number">40</span>; <span class="comment">// 固定选择的宽度</span></span><br><span class="line">        <span class="keyword">if</span> (item.<span class="property">type</span> === <span class="string">&#x27;selection&#x27;</span>) &#123;</span><br><span class="line">          item.<span class="property">width</span> = <span class="variable constant_">SELECTION_WIDTH</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 官方没有单选的type，只有多选的type（selection），所以单选需要额外改造</span></span><br><span class="line">        <span class="keyword">if</span> (item.<span class="property">type</span> === <span class="string">&#x27;radio&#x27;</span>) &#123;</span><br><span class="line">          item.<span class="property">width</span> = <span class="variable constant_">SELECTION_WIDTH</span>;</span><br><span class="line">          item.<span class="property">render</span> = <span class="function">(<span class="params">scoped</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">this</span>.$createElement(<span class="string">&#x27;el-checkbox&#x27;</span>, &#123;</span><br><span class="line">              <span class="attr">props</span>: &#123;</span><br><span class="line">                <span class="attr">value</span>: scoped.<span class="property">row</span>.<span class="property">id</span> === <span class="variable language_">this</span>.<span class="property">currentRow</span>.<span class="property">id</span></span><br><span class="line">              &#125;,</span><br><span class="line">              <span class="attr">nativeOn</span>: &#123;</span><br><span class="line">                <span class="comment">// 点击checkbox的时候，如果有定义点击行事件，会导致触发行事件，这里禁止冒泡</span></span><br><span class="line">                <span class="attr">click</span>: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">                  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">currentRow</span>.<span class="property">id</span>) &#123;</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">currentRow</span> = &#123;&#125;;</span><br><span class="line">                  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">currentRow</span> = _.<span class="title function_">cloneDeep</span>(scoped.<span class="property">row</span>);</span><br><span class="line">                  &#125;</span><br><span class="line">                  e.<span class="title function_">stopImmediatePropagation</span>();</span><br><span class="line">                  e.<span class="title function_">preventDefault</span>();</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> item;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>table-column.vue</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;table-column&#x27;</span>,</span><br><span class="line">  <span class="attr">functional</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">config</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">Object</span>,</span><br><span class="line">      <span class="attr">default</span>: <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">render</span>: <span class="function">(<span class="params">h, context</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">h</span>(<span class="string">&#x27;el-table-column&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">props</span>: context.<span class="property">props</span>.<span class="property">config</span>,</span><br><span class="line">      <span class="attr">scopedSlots</span>: &#123;</span><br><span class="line">        <span class="attr">default</span>: context.<span class="property">props</span>.<span class="property">config</span>.<span class="property">render</span> <span class="comment">// 使用scopedSlots，这里会传入本来的props，在这里也就是scoped，可以通过scoped.row.xx拿到数据</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用的时候，这样配置即可定制column的内容，就可以利用render属性，返回一个jsx，CLI3的本来配置就有支持jsx的transformer，可以直接使用，如果不是使用CLI3启动的项目，需要额外配置babel：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">list-table</span> <span class="attr">:column-config</span>=<span class="string">&quot;columnConfig&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">columnConfig</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">type</span>: <span class="string">&#x27;radio&#x27;</span> <span class="comment">// 额外定义的type</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">type</span>: <span class="string">&#x27;index&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">prop</span>: <span class="string">&#x27;date&#x27;</span>, <span class="comment">// 支持本来的直接传入prop渲染数据的配置</span></span><br><span class="line">          <span class="attr">label</span>: <span class="string">&#x27;日期&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">label</span>: <span class="string">&#x27;姓名&#x27;</span>,</span><br><span class="line">          <span class="attr">render</span>: <span class="function">(<span class="params">scoped</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&#x27;color: red;&#x27;</span>&gt;</span>&#123; scoped.row.name &#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="v-bind和v-on绑定一个对象，一次性将属性传入"><a href="#v-bind和v-on绑定一个对象，一次性将属性传入" class="headerlink" title="v-bind和v-on绑定一个对象，一次性将属性传入"></a>v-bind和v-on绑定一个对象，一次性将属性传入</h3><p>v-bind和v-on绑定一个对象，二次封装时可以一下子将所有需要传入的属性传入，不用一个一个定义</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table</span> <span class="attr">:data</span>=<span class="string">&quot;tableData&quot;</span> <span class="attr">v-bind</span>=<span class="string">&quot;tableConfig&quot;</span> <span class="attr">v-on</span>=<span class="string">&quot;tableEvent&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table-column</span> <span class="attr">v-for</span>=<span class="string">&quot;(item, index) in columnConfigComputed&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span> <span class="attr">:config</span>=<span class="string">&quot;item&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="v-model后面可以加一个修饰符-trim，防止仅输入空格"><a href="#v-model后面可以加一个修饰符-trim，防止仅输入空格" class="headerlink" title="v-model后面可以加一个修饰符.trim，防止仅输入空格"></a>v-model后面可以加一个修饰符.trim，防止仅输入空格</h3><p>具体的情况有：</p>
+<p>element ui 中自带的表单必填项校验输入空格时，依然能逃过验证（required: true还是可以通过），</p>
+<p>需要再在 v-model 加上 .trim 来禁止输入空格字符，加上之后则不能只输入空格。</p>
+<h3 id="vue项目的env文件配置"><a href="#vue项目的env文件配置" class="headerlink" title="vue项目的env文件配置"></a>vue项目的env文件配置</h3><p>在vue-cli3的项目中，<br>npm run serve时会把process.env.NODE_ENV设置为development；<br>npm run build 时会把process.env.NODE_ENV设置为production；</p>
+<p>其实通过改变process.env.NODE_ENV值区分打包环境是有问题的，因为webpack打包时针对process.env.NODE_ENV&#x3D;&#x3D;&#x3D;production和其他情况打出来的包结构和大小都不一样；</p>
+<p>如果需要设置env文件，例如.env.sit，然后npm run sit<br>务必在文件里添加NODE_ENV&#x3D;production，不然cli会以development模式打包，打出来的结构和大小都不一样</p>
+<h3 id="使用render的时候，绑定带有修饰符native的事件时，需要写在nativeOn的对象里"><a href="#使用render的时候，绑定带有修饰符native的事件时，需要写在nativeOn的对象里" class="headerlink" title="使用render的时候，绑定带有修饰符native的事件时，需要写在nativeOn的对象里"></a>使用render的时候，绑定带有修饰符native的事件时，需要写在nativeOn的对象里</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="variable language_">this</span>.$createElement(<span class="string">&#x27;el-checkbox&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">value</span>: scoped.<span class="property">row</span>.<span class="property">id</span> === <span class="variable language_">this</span>.<span class="property">currentRow</span>.<span class="property">id</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">nativeOn</span>: &#123;</span><br><span class="line">    <span class="comment">// 点击checkbox的时候，如果有定义点击行事件，会导致触发行事件，这里禁止冒泡</span></span><br><span class="line">    <span class="attr">click</span>: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">currentRow</span>.<span class="property">id</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">currentRow</span> = &#123;&#125;;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">currentRow</span> = _.<span class="title function_">cloneDeep</span>(scoped.<span class="property">row</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      e.<span class="title function_">stopImmediatePropagation</span>();</span><br><span class="line">      e.<span class="title function_">preventDefault</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="el-radio-el-checkbox，关于ElementUI组件使用-click-native时，绑定的事件会触发2次的问题"><a href="#el-radio-el-checkbox，关于ElementUI组件使用-click-native时，绑定的事件会触发2次的问题" class="headerlink" title="el-radio,el-checkbox，关于ElementUI组件使用@click.native时，绑定的事件会触发2次的问题"></a>el-radio,el-checkbox，关于ElementUI组件使用@click.native时，绑定的事件会触发2次的问题</h3><p>解决方法：在click.native中执行e.preventDefault();<br>原因：原因是阻止了element组件里的radio里的label的默认事件，就不会触发两次了</p>
+<h3 id="如何使用computed的值去作为v-model的值"><a href="#如何使用computed的值去作为v-model的值" class="headerlink" title="如何使用computed的值去作为v-model的值"></a>如何使用computed的值去作为v-model的值</h3><p>首先computed的原理：computed如果只写函数，只会在get这个属性的时候才会触发函数，然后return一个值。如果在任何情况都不获取这个值，这个函数是永远不会执行的</p>
+<p>如果想使用computed的返回值作为v-model，要同时设定get()和set()</p>
+<p>但一般不会这么写，一般会使用watch去监听这个属性，然后在里面对真正的值进行赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">computed</span>: &#123;</span><br><span class="line">  <span class="attr">currentValue</span>: &#123;</span><br><span class="line">    <span class="attr">get</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">value</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">set</span>: <span class="keyword">function</span>(<span class="params">newValue</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.$emit(<span class="string">&quot;input&quot;</span>, newValue); <span class="comment">// 通过 input 事件更新 model</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使用fonts-size去控制svg的大小"><a href="#如何使用fonts-size去控制svg的大小" class="headerlink" title="如何使用fonts-size去控制svg的大小"></a>如何使用fonts-size去控制svg的大小</h3><p>svg本身添加css：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">1em</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">1em</span>;</span><br><span class="line"><span class="attribute">font-size</span>: <span class="number">23px</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这样才能够通过font-size控制大小</p>
+<p>填充svg使用fill css，如果里面没有指定颜色的话就可以生效</p>
+<h3 id="关于项目发布后，第一次加载项目会白屏，清除缓存后才可以的问题"><a href="#关于项目发布后，第一次加载项目会白屏，清除缓存后才可以的问题" class="headerlink" title="关于项目发布后，第一次加载项目会白屏，清除缓存后才可以的问题"></a>关于项目发布后，第一次加载项目会白屏，清除缓存后才可以的问题</h3><p>打包后，js的hash更改，仍然有缓存的原因是，服务器缓存了html文件，导致即使打包后，html引用的还是缓存里的文件，加载了不存在的js文件，导致白屏。解决方案：服务器里配置html文件永不缓存</p>
+<h3 id="使用axios-ajax-的post方式下载文件"><a href="#使用axios-ajax-的post方式下载文件" class="headerlink" title="使用axios(ajax)的post方式下载文件"></a>使用axios(ajax)的post方式下载文件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="title function_">httpPost</span>(&#123;</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&#x27;/download&#x27;</span>,</span><br><span class="line">  <span class="attr">responseType</span>: <span class="string">&#x27;blob&#x27;</span>, <span class="comment">// important</span></span><br><span class="line">  <span class="attr">data</span>: params,</span><br><span class="line">  <span class="attr">onSuccess</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="variable language_">window</span>.<span class="property">URL</span>.<span class="title function_">createObjectURL</span>(<span class="keyword">new</span> <span class="title class_">Blob</span>([res]));</span><br><span class="line">    <span class="keyword">const</span> link = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">    link.<span class="property">href</span> = url;</span><br><span class="line">    link.<span class="title function_">setAttribute</span>(<span class="string">&#x27;download&#x27;</span>, <span class="string">&#x27;自定义文件名&#x27;</span>);</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(link);</span><br><span class="line">    link.<span class="title function_">click</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="路由对象不可进行深复制的问题"><a href="#路由对象不可进行深复制的问题" class="headerlink" title="路由对象不可进行深复制的问题"></a>路由对象不可进行深复制的问题</h3><p>路由中的component属性必须保留render函数和name，才能正确地被keep-alive缓存下来，千万不要对路由本身进行深复制，会将函数给过滤掉</p>
+<h3 id="关于ElementUI的Form组件的多行list进行表单验证的方法"><a href="#关于ElementUI的Form组件的多行list进行表单验证的方法" class="headerlink" title="关于ElementUI的Form组件的多行list进行表单验证的方法"></a>关于ElementUI的Form组件的多行list进行表单验证的方法</h3><p>首先看Form组件系列的源码，原理是使用Form组件的model传入的对象，然后利用FormItem的prop进行属性的查找。属性值的查找ElementUI进行了一个函数封装，源码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">getPropByPath</span>(<span class="params">obj, path, strict</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> tempObj = obj;</span><br><span class="line">  path = path.<span class="title function_">replace</span>(<span class="regexp">/\[(\w+)\]/g</span>, <span class="string">&#x27;.$1&#x27;</span>);</span><br><span class="line">  path = path.<span class="title function_">replace</span>(<span class="regexp">/^\./</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> keyArr = path.<span class="title function_">split</span>(<span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">  <span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> len = keyArr.<span class="property">length</span>; i &lt; len - <span class="number">1</span>; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!tempObj &amp;&amp; !strict) <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">let</span> key = keyArr[i];</span><br><span class="line">    <span class="keyword">if</span> (key <span class="keyword">in</span> tempObj) &#123;</span><br><span class="line">      tempObj = tempObj[key];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (strict) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;please transfer a valid prop path to form item!&#x27;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">o</span>: tempObj,</span><br><span class="line">    <span class="attr">k</span>: keyArr[i],</span><br><span class="line">    <span class="attr">v</span>: tempObj ? tempObj[keyArr[i]] : <span class="literal">null</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中传入的obj就是model的属性，path是传入的prop属性，使用查找到之后对本身进行赋值，一层一层地找下去，使得这一的写法也可以进行找到属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// model =&gt; &#123; list: [&#123; a: 1 &#125;] &#125;</span></span><br><span class="line"><span class="comment">// prop =&gt; &quot;list.0.a&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，in操作符也能判断元素在不在这个数组里，和indexOf一样可以判断，但这里的in不仅能判断元素在不在数组，还能判断元素在不在对象，所以<code>lisy.0.a</code>能够查找成功</p>
+<p>那么既然这样，在list进行遍历的时候，将index作为拼接传入prop，就能找到对应的属性，进行表单验证：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span> <span class="attr">class</span>=<span class="string">&quot;form&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;form&quot;</span> <span class="attr">:model</span>=<span class="string">&quot;form&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;rules&quot;</span> <span class="attr">label-width</span>=<span class="string">&quot;100px&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 700px;&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-col</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;申请原因&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;remark&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">type</span>=<span class="string">&quot;textarea&quot;</span> <span class="attr">:placeholder</span>=<span class="string">&quot;inputPlaceHolder()&quot;</span> <span class="attr">resize</span>=<span class="string">&quot;none&quot;</span> <span class="attr">:autosize</span>=<span class="string">&quot;&#123; minRows: 5, maxRows: 5&#125;&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;form.remark&quot;</span> <span class="attr">:disabled</span>=<span class="string">&quot;!editable&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 列表的表单验证方法 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-for</span>=<span class="string">&quot;(item, index) in form.purchaseItems&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">:key</span>=<span class="string">&quot;`$&#123;index&#125;-0`&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-col</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;类别&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;rules.typeName&quot;</span> <span class="attr">:prop</span>=<span class="string">&quot;`purchaseItems.$&#123;index&#125;.typeName`&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;item.typeName&quot;</span> <span class="attr">:disabled</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">form</span>: &#123;</span><br><span class="line">      <span class="attr">remark</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">      <span class="attr">purchaseItems</span>: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>小知识，传入的prop，与进行表单验证的时候，自定义规则validator，传入的函数，rule的参数，与rule.field是一样的，灵活利用这些属性，可以进行一些比较复杂的表单验证方法，看源码是比较直接的方法</p>
+<p>如果有通过v-if进行显示el-form-item的，需要在el-form-item上加上key值，否则会出现一些奇怪的bug，例如表单校验不成功</p>
+<p>小知识2，element-ui是利用prop属性找到值，vant则是利用传入value</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">formValue</span>: <span class="keyword">function</span> <span class="title function_">formValue</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">children</span> &amp;&amp; (<span class="variable language_">this</span>.<span class="property">$scopedSlots</span>.<span class="property">input</span> || <span class="variable language_">this</span>.<span class="property">$slots</span>.<span class="property">input</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">children</span>.<span class="property">value</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">value</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="vuex带有命名空间的属性的取法"><a href="#vuex带有命名空间的属性的取法" class="headerlink" title="vuex带有命名空间的属性的取法"></a>vuex带有命名空间的属性的取法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">computed</span>: &#123;</span><br><span class="line">  <span class="comment">// 重新进行命名</span></span><br><span class="line">  ...<span class="title function_">mapGetters</span>(<span class="string">&#x27;user&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;userName&#x27;</span></span><br><span class="line">  &#125;),</span><br><span class="line">  ...<span class="title function_">mapGetters</span>(<span class="string">&#x27;user&#x27;</span>, [<span class="string">&#x27;userName&#x27;</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="vue-router获得完整路径的方法"><a href="#vue-router获得完整路径的方法" class="headerlink" title="vue-router获得完整路径的方法"></a>vue-router获得完整路径的方法</h3><p>使用router自带的resolve的方法，可以获得绝对地址</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> routeData = <span class="variable language_">this</span>.<span class="property">$router</span>.<span class="title function_">resolve</span>(&#123; <span class="attr">path</span>: <span class="string">&#x27;/home&#x27;</span>, <span class="attr">query</span>: &#123;  <span class="attr">id</span>: <span class="number">1</span> &#125; &#125;);</span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">open</span>(routeData.<span class="property">href</span>, <span class="string">&#x27;_blank&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="在vue里使用lodash的防抖功能"><a href="#在vue里使用lodash的防抖功能" class="headerlink" title="在vue里使用lodash的防抖功能"></a>在vue里使用lodash的防抖功能</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line"> <span class="attr">remoteMethod</span>: _.<span class="title function_">debounce</span>(<span class="keyword">function</span>(<span class="params">query</span>) &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">  <span class="comment">// 不要传入箭头函数</span></span><br><span class="line">  <span class="comment">// 这里可以使用this访问vue里面的属性，this指向vm</span></span><br><span class="line"> &#125;, <span class="number">500</span>),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，lodash的debounce的callback，最好用function，不要使用箭头函数，原因是他绑定了调用方法的那个this，在里面的this就是vm实例本身。传入<br>箭头函数后，箭头函数绑定this的优先度最高，这时候的this是指向全局，在严格模式时是undefined。所以传入箭头函数后，如果要访问vm实例本身，只能另外定义一个变量储存this，然后使用这个变量去访问实例的属性</p>
+<h3 id="v-bind里也可以使用filter"><a href="#v-bind里也可以使用filter" class="headerlink" title="v-bind里也可以使用filter"></a>v-bind里也可以使用filter</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:value=&quot;form.usesCarType | useCarTypeFilter&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关于vue-admin类的页面缓存方法"><a href="#关于vue-admin类的页面缓存方法" class="headerlink" title="关于vue-admin类的页面缓存方法"></a>关于vue-admin类的页面缓存方法</h3><p>单页面admin有一种比较容易的方法，就是实际上就算维护了多级的路由，在addRoutes的时候弄成平级就可以了，这样不管是多少级路由，始终只有一个router-view，不是多级router-view了。只是要从后台进行一个路由树的配置，来渲染菜单栏，然后弄成平面的数组，放到addRouters里</p>
+<h3 id="在vue实例外获取当前vue-router路由的信息及有关应用"><a href="#在vue实例外获取当前vue-router路由的信息及有关应用" class="headerlink" title="在vue实例外获取当前vue-router路由的信息及有关应用"></a>在vue实例外获取当前vue-router路由的信息及有关应用</h3><p>引入项目中export default出来的router实例，router对Vue实例有引用，可以据此访问到$route。其实dom树也引用了Vue实例，所以可以从dom的访问到所有的Vue相关的东西，比如组件等</p>
+<p>具体代码为<code>router.app.$route</code></p>
+<p>这个一般应用在一些工具js，需要获取当前路由对应的组件信息进行一些操作，例如请求中断后跳转到对应的错误页面，放在axios的全局响应拦截器上</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;@/router/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">toErrorPage</span>(<span class="params">config = &#123;&#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> pageName = router.<span class="property">app</span>.<span class="property">$route</span>.<span class="property">name</span>;</span><br><span class="line">  <span class="comment">// 防止递归错误</span></span><br><span class="line">  <span class="keyword">if</span> (pageName !== <span class="string">&#x27;ErrorPage&#x27;</span>) &#123;</span><br><span class="line">    router.<span class="title function_">replace</span>(&#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;ErrorPage&#x27;</span>,</span><br><span class="line">      <span class="attr">query</span>: &#123;</span><br><span class="line">        pageName,</span><br><span class="line">        <span class="attr">message</span>: config.<span class="property">message</span>,</span><br><span class="line">        <span class="attr">type</span>: config.<span class="property">type</span>,</span><br><span class="line">        <span class="attr">originQuery</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(router.<span class="property">app</span>.<span class="property">$route</span>.<span class="property">query</span> || &#123;&#125;),</span><br><span class="line">        <span class="attr">originParams</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(router.<span class="property">app</span>.<span class="property">$route</span>.<span class="property">params</span> || &#123;&#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/26/JS%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%883%EF%BC%89/" rel="next" title="JS工作经验总结（3）">
+                <i class="fa fa-chevron-left"></i> JS工作经验总结（3）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/21/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%92%89%E9%92%89%E9%89%B4%E6%9D%83%E9%AA%8C%E8%AF%81%E8%BF%87%E7%A8%8B/" rel="prev" title="记一次钉钉鉴权验证过程">
+                记一次钉钉鉴权验证过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model%E8%AF%AD%E6%B3%95%E7%B3%96%E6%97%B6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8watch%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">v-model语法糖时，可以使用watch进行数据初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elementUI%E9%87%8C%E7%9A%84table%EF%BC%8Ctemplate%E9%87%8C%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8ref"><span class="nav-number">2.</span> <span class="nav-text">elementUI里的table，template里不要使用ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8v-model%E8%BF%9B%E8%A1%8C%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E6%97%B6%EF%BC%8Coninput%E5%8F%AF%E4%BB%A5%E7%AB%8B%E5%8D%B3%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">使用v-model进行双向绑定时，oninput可以立即修改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fixed%E5%AE%9A%E4%BD%8D%E7%9A%84%E6%B5%AE%E5%8A%A8%E6%A1%86%EF%BC%8C%E5%9C%A8%E6%BB%9A%E5%8A%A8%E6%97%B6%E4%BE%9D%E7%84%B6%E8%83%BD%E8%B7%9F%E9%9A%8F%E5%B1%8F%E5%B9%95%E7%A7%BB%E5%8A%A8"><span class="nav-number">4.</span> <span class="nav-text">fixed定位的浮动框，在滚动时依然能跟随屏幕移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elementUI%E7%9A%84table%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%BA%A6%E6%97%B6%EF%BC%8C%E5%A6%82%E4%BD%95%E5%B0%86%E9%87%8C%E9%9D%A2%E6%BB%9A%E5%8A%A8%E5%86%85%E5%AE%B9%E8%B7%B3%E5%88%B0%E9%A1%B6%E9%83%A8"><span class="nav-number">5.</span> <span class="nav-text">elementUI的table固定高度时，如何将里面滚动内容跳到顶部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%88%B6%E5%85%83%E7%B4%A0%E5%92%8C%E5%AD%90%E5%85%83%E7%B4%A0%E7%9A%84%E6%B8%B2%E6%9F%93%E6%97%B6%E6%9C%BA%E5%92%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">6.</span> <span class="nav-text">父元素和子元素的渲染时机和顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI%E7%BB%84%E4%BB%B6%E4%BA%8C%E6%AC%A1%E5%B0%81%E8%A3%85%E6%97%B6%E4%BC%A0%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">UI组件二次封装时传值的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93ElementUI%E7%9A%84form%E9%87%8C%E9%9D%A2%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AAinput%E5%85%83%E7%B4%A0%EF%BC%8C%E4%BD%BF%E7%94%A8-keyup-enter-native%E4%BC%9A%E5%AF%BC%E8%87%B4%E5%88%B7%E6%96%B0%E9%A1%B5%E9%9D%A2%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">当ElementUI的form里面只有一个input元素，使用@keyup.enter.native会导致刷新页面的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ElementUI%E7%9A%84table%E9%AB%98%E5%BA%A6%E8%87%AA%E9%80%82%E5%BA%94%E9%97%AE%E9%A2%98"><span class="nav-number">9.</span> <span class="nav-text">ElementUI的table高度自适应问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ElementUI%E7%9A%84table%E4%BA%8C%E6%AC%A1%E5%B0%81%E8%A3%85%EF%BC%8C%E6%94%AF%E6%8C%81%E9%85%8D%E7%BD%AErender%E5%AE%9A%E5%88%B6%E5%8C%96"><span class="nav-number">10.</span> <span class="nav-text">ElementUI的table二次封装，支持配置render定制化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-bind%E5%92%8Cv-on%E7%BB%91%E5%AE%9A%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%B8%80%E6%AC%A1%E6%80%A7%E5%B0%86%E5%B1%9E%E6%80%A7%E4%BC%A0%E5%85%A5"><span class="nav-number">11.</span> <span class="nav-text">v-bind和v-on绑定一个对象，一次性将属性传入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model%E5%90%8E%E9%9D%A2%E5%8F%AF%E4%BB%A5%E5%8A%A0%E4%B8%80%E4%B8%AA%E4%BF%AE%E9%A5%B0%E7%AC%A6-trim%EF%BC%8C%E9%98%B2%E6%AD%A2%E4%BB%85%E8%BE%93%E5%85%A5%E7%A9%BA%E6%A0%BC"><span class="nav-number">12.</span> <span class="nav-text">v-model后面可以加一个修饰符.trim，防止仅输入空格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue%E9%A1%B9%E7%9B%AE%E7%9A%84env%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">13.</span> <span class="nav-text">vue项目的env文件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8render%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E7%BB%91%E5%AE%9A%E5%B8%A6%E6%9C%89%E4%BF%AE%E9%A5%B0%E7%AC%A6native%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%97%B6%EF%BC%8C%E9%9C%80%E8%A6%81%E5%86%99%E5%9C%A8nativeOn%E7%9A%84%E5%AF%B9%E8%B1%A1%E9%87%8C"><span class="nav-number">14.</span> <span class="nav-text">使用render的时候，绑定带有修饰符native的事件时，需要写在nativeOn的对象里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#el-radio-el-checkbox%EF%BC%8C%E5%85%B3%E4%BA%8EElementUI%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8-click-native%E6%97%B6%EF%BC%8C%E7%BB%91%E5%AE%9A%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BC%9A%E8%A7%A6%E5%8F%912%E6%AC%A1%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">15.</span> <span class="nav-text">el-radio,el-checkbox，关于ElementUI组件使用@click.native时，绑定的事件会触发2次的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8computed%E7%9A%84%E5%80%BC%E5%8E%BB%E4%BD%9C%E4%B8%BAv-model%E7%9A%84%E5%80%BC"><span class="nav-number">16.</span> <span class="nav-text">如何使用computed的值去作为v-model的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8fonts-size%E5%8E%BB%E6%8E%A7%E5%88%B6svg%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">17.</span> <span class="nav-text">如何使用fonts-size去控制svg的大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83%E5%90%8E%EF%BC%8C%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%8A%A0%E8%BD%BD%E9%A1%B9%E7%9B%AE%E4%BC%9A%E7%99%BD%E5%B1%8F%EF%BC%8C%E6%B8%85%E9%99%A4%E7%BC%93%E5%AD%98%E5%90%8E%E6%89%8D%E5%8F%AF%E4%BB%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">18.</span> <span class="nav-text">关于项目发布后，第一次加载项目会白屏，清除缓存后才可以的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8axios-ajax-%E7%9A%84post%E6%96%B9%E5%BC%8F%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6"><span class="nav-number">19.</span> <span class="nav-text">使用axios(ajax)的post方式下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%AF%B9%E8%B1%A1%E4%B8%8D%E5%8F%AF%E8%BF%9B%E8%A1%8C%E6%B7%B1%E5%A4%8D%E5%88%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">20.</span> <span class="nav-text">路由对象不可进行深复制的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EElementUI%E7%9A%84Form%E7%BB%84%E4%BB%B6%E7%9A%84%E5%A4%9A%E8%A1%8Clist%E8%BF%9B%E8%A1%8C%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">21.</span> <span class="nav-text">关于ElementUI的Form组件的多行list进行表单验证的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vuex%E5%B8%A6%E6%9C%89%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E7%9A%84%E5%B1%9E%E6%80%A7%E7%9A%84%E5%8F%96%E6%B3%95"><span class="nav-number">22.</span> <span class="nav-text">vuex带有命名空间的属性的取法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-router%E8%8E%B7%E5%BE%97%E5%AE%8C%E6%95%B4%E8%B7%AF%E5%BE%84%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">23.</span> <span class="nav-text">vue-router获得完整路径的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8vue%E9%87%8C%E4%BD%BF%E7%94%A8lodash%E7%9A%84%E9%98%B2%E6%8A%96%E5%8A%9F%E8%83%BD"><span class="nav-number">24.</span> <span class="nav-text">在vue里使用lodash的防抖功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-bind%E9%87%8C%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8filter"><span class="nav-number">25.</span> <span class="nav-text">v-bind里也可以使用filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Evue-admin%E7%B1%BB%E7%9A%84%E9%A1%B5%E9%9D%A2%E7%BC%93%E5%AD%98%E6%96%B9%E6%B3%95"><span class="nav-number">26.</span> <span class="nav-text">关于vue-admin类的页面缓存方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8vue%E5%AE%9E%E4%BE%8B%E5%A4%96%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8Dvue-router%E8%B7%AF%E7%94%B1%E7%9A%84%E4%BF%A1%E6%81%AF%E5%8F%8A%E6%9C%89%E5%85%B3%E5%BA%94%E7%94%A8"><span class="nav-number">27.</span> <span class="nav-text">在vue实例外获取当前vue-router路由的信息及有关应用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

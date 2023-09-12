@@ -1,0 +1,15 @@
+<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><link rel="icon" href="favicon.ico"><title>Memo List</title><script>(function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          var htmlFontSize = 16 * (clientWidth / 375)
+          htmlFontSize = htmlFontSize > 20 ? 20 : htmlFontSize
+          docEl.style.fontSize = htmlFontSize + 'px';
+        };
+
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);</script><script defer="defer" src="static/js/chunk-vendors.6f02f519.js"></script><script defer="defer" src="static/js/app.b899fa4b.js"></script><link href="static/css/app.853d9f52.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but Memo List doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>

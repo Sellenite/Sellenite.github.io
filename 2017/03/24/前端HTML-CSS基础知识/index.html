@@ -1,0 +1,947 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CSS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1.行内元素和块级元素?img算什么?行内元素怎么转化为块级元素?行内元素：和有他元素都在一行上，高度、行高及外边距和内边距都不可改变，文字图片的宽度不可改变，只能容纳文本或者其他行内元素；其中img是行元素 块级元素：总是在新行上开始，高度、行高及外边距和内边距都可控制，可以容纳内敛元素和其他元素； 行元素转换为块级元素方式：display：block； 2.将多个元素设置为同一行?清除浮动有几">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端HTML+CSS基础知识">
+<meta property="og:url" content="https://sellenite.github.io/2017/03/24/%E5%89%8D%E7%AB%AFHTML-CSS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="1.行内元素和块级元素?img算什么?行内元素怎么转化为块级元素?行内元素：和有他元素都在一行上，高度、行高及外边距和内边距都不可改变，文字图片的宽度不可改变，只能容纳文本或者其他行内元素；其中img是行元素 块级元素：总是在新行上开始，高度、行高及外边距和内边距都可控制，可以容纳内敛元素和其他元素； 行元素转换为块级元素方式：display：block； 2.将多个元素设置为同一行?清除浮动有几">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-03-24T11:58:52.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.139Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2017/03/24/前端HTML-CSS基础知识/"/>
+
+
+
+
+
+  <title> 前端HTML+CSS基础知识 | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2017/03/24/%E5%89%8D%E7%AB%AFHTML-CSS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端HTML+CSS基础知识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-24T19:58:52+08:00">
+                2017-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/03/24/%E5%89%8D%E7%AB%AFHTML-CSS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-行内元素和块级元素-img算什么-行内元素怎么转化为块级元素"><a href="#1-行内元素和块级元素-img算什么-行内元素怎么转化为块级元素" class="headerlink" title="1.行内元素和块级元素?img算什么?行内元素怎么转化为块级元素?"></a>1.行内元素和块级元素?img算什么?行内元素怎么转化为块级元素?</h3><p>行内元素：和有他元素都在一行上，高度、行高及外边距和内边距都不可改变，文字图片的宽度不可改变，只能容纳文本或者其他行内元素；其中img是行元素</p>
+<p>块级元素：总是在新行上开始，高度、行高及外边距和内边距都可控制，可以容纳内敛元素和其他元素；</p>
+<p>行元素转换为块级元素方式：display：block；</p>
+<h3 id="2-将多个元素设置为同一行-清除浮动有几种方式"><a href="#2-将多个元素设置为同一行-清除浮动有几种方式" class="headerlink" title="2.将多个元素设置为同一行?清除浮动有几种方式?"></a>2.将多个元素设置为同一行?清除浮动有几种方式?</h3><p>将多个元素设置为同一行：float，inline-block</p>
+<p>清除浮动的方式：方法一：添加新的元素 、应用 clear：both；</p>
+<p>方法二：父级div定义 overflow: hidden；</p>
+<p>方法三：利用:after和:before来在元素内部插入两个元素块，从面达到清除浮动的效果。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clear</span>&#123;</span><br><span class="line">    zoom:<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.clear</span><span class="selector-pseudo">:after</span>&#123;</span><br><span class="line">    <span class="attribute">content</span>:””;</span><br><span class="line">    <span class="attribute">clear</span>:both;</span><br><span class="line">    <span class="attribute">display</span>:block;</span><br><span class="line">    <span class="attribute">height</span>:<span class="number">0</span>;</span><br><span class="line">    <span class="attribute">overflow</span>:hidden;</span><br><span class="line">    <span class="attribute">visibility</span>:hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-什么是盒模型box-sizing？弹性盒模型-盒布局"><a href="#3-什么是盒模型box-sizing？弹性盒模型-盒布局" class="headerlink" title="3.什么是盒模型box-sizing？弹性盒模型|盒布局?"></a>3.什么是盒模型box-sizing？弹性盒模型|盒布局?</h3><span id="more"></span>
+
+<p>在标准模式下的盒模型：盒子总宽度&#x2F;高度&#x3D;width&#x2F;height+padding+border+margin</p>
+<p>在怪异模式下的盒模型下，盒子的总宽度和高度是包含内边距padding和边框border宽度在内的，盒子总宽度&#x2F;高度&#x3D;width&#x2F;height + margin &#x3D; 内容区宽度&#x2F;高度 + padding + border + margin;</p>
+<p>box-sizing有两个值一个是content-box，另一个是border-box。</p>
+<p>当设置为box-sizing:content-box时，将采用标准模式解析计算；</p>
+<p>当设置为box-sizing:border-box时，将采用IE盒子解析计算。</p>
+<h3 id="5-href和src区别-title和alt"><a href="#5-href和src区别-title和alt" class="headerlink" title="5.href和src区别? title和alt"></a>5.href和src区别? title和alt</h3><p>href (Hypertext Reference)指定网络资源的位置（超文本引用），从而在当前元素或者当前文档和由当前属性定义的需要的锚点或资源之间定义一个链接或者关系，在 link和a 等元素上使用。</p>
+<p>src (Source)属性仅仅嵌入当前资源到当前文档元素定义的位置，是页面必不可少的一部分，是引入。在 img、script、iframe 等元素上使用。</p>
+<p>title：既是html标签，又是html属性，title作为属性时，用来为元素提供额外说明信息.</p>
+<p>alt：alt是html标签的属性，alt属性则是用来指定替换文字，只能用在img、area和input元素中（包括applet元素），用于网页中图片无法正常显示时给用户提供文字说明使其了解图像信息.</p>
+<h3 id="6-transform？animation？区别-animation-duration"><a href="#6-transform？animation？区别-animation-duration" class="headerlink" title="6.transform？animation？区别?animation-duration"></a>6.transform？animation？区别?animation-duration</h3><p>Transform:它和width、left一样，定义了元素很多静态样式实现变形、旋转、缩放、移位及透视等功能，通过一系列功能的组合我们可以实现很炫酷的静态效果（非动画)。 </p>
+<p>Animation:作用于元素本身而不是样式属性,属于关键帧动画的范畴，它本身被用来替代一些纯粹表现的javascript代码而实现动画,可以通过keyframe显式控制当前帧的属性值.</p>
+<p>animation-duration：规定完成动画所花费的时间，以秒或毫秒计。</p>
+<h3 id="7-nth-of-type-nth-child"><a href="#7-nth-of-type-nth-child" class="headerlink" title="7.nth-of-type | nth-child?"></a>7.nth-of-type | nth-child?</h3><p>举例说明： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt; </span><br><span class="line">    &lt;p&gt;111&lt;/p&gt; </span><br><span class="line">    &lt;span&gt;222&lt;/span&gt; </span><br><span class="line">    &lt;li&gt;1&lt;/li&gt; </span><br><span class="line">    &lt;li&gt;2&lt;/li&gt; </span><br><span class="line">    &lt;li&gt;3&lt;/li&gt; </span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<p>li:nth-of-type(2):表示ul下的第二个li元素<br>li:nth-child(2)：表示既是li元素又是在ul下的第二个元素（找不到）。 </p>
+<p>建议一般使用nth-of-type，不容易出问题。</p>
+<h3 id="8-before-和-before-区别"><a href="#8-before-和-before-区别" class="headerlink" title="8. :before 和 ::before 区别?"></a>8. :before 和 ::before 区别?</h3><p>单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素。 对于CSS2之前已有的伪元素，比如:before，单冒号和双冒号的写法::before作用是一样的。</p>
+<h3 id="9-如何让一个div-上下左右居中"><a href="#9-如何让一个div-上下左右居中" class="headerlink" title="9.如何让一个div 上下左右居中?"></a>9.如何让一个div 上下左右居中?</h3><p>答：有三种方法。</p>
+<p>方法1： .div1{ width:400px;  height:400px;  border:#CCC 1px solid;   background:#99f;  position:absolute;  left:50%;   top:50%;   transform: translate(-50%,-50%); }   <div class="div1"></div> </p>
+<p>方法2： .div2{ width:400px;  height:400px;  border:#CCC 1px solid;  background:#99f;  position: absolute;  left:0;  top: 0;  bottom: 0;  right: 0;  margin: auto; }  <div class="div2"></div> </p>
+<p>方法3： .div3{ width:400px;  height:400px;  border:#CCC 1px solid;  background:#9f9;  position: absolute;  left: 50%;  top:50%;  margin-left:-200px;  margin-top: -200px;  }   <div class="div3"></div> </p>
+<h3 id="10-css2-0-和css3-0"><a href="#10-css2-0-和css3-0" class="headerlink" title="10.css2.0 和css3.0"></a>10.css2.0 和css3.0</h3><p>答：css3加强了css2的功能，增加了新的属性和新的标签，并且删除了一些冗余的标签，在布局方面减少了代码量。以前比较复杂的布局现在一个属性就搞定了（columns之类的属性）。在效果方面加入了更多的效果(圆角，动画之类的)，还有在盒子模型和列表模块都进行了改进。不过CSS3兼容性不好，只有一些高级版本的浏览器支持。</p>
+<h3 id="11-弹性盒子模型-flex-box区别"><a href="#11-弹性盒子模型-flex-box区别" class="headerlink" title="11.弹性盒子模型?flex|box区别?"></a>11.弹性盒子模型?flex|box区别?</h3><p>(1) 引入弹性盒布局模型的目的是提供一种更加有效的方式来对一个容器中的条目进行排列、对齐和分配空白空间。</p>
+<p>即便容器中条目的尺寸未知或是动态变化的，弹性盒布局模型也能正常的工作。在该布局模型中，容器会根据布局的需要，调整其中包含的条目的尺寸和顺序来最好地填充所有可用的空间。</p>
+<p>当容器的尺寸由于屏幕大小或窗口尺寸发生变化时，其中包含的条目也会被动态地调整。比如当容器尺寸变大时，其中包含的条目会被拉伸以占满多余的空白空间；当容器尺寸变小时，条目会被缩小以防止超出容器的范围。弹性盒布局是与方向无关的。</p>
+<p>在传统的布局方式中，block 布局是把块在垂直方向从上到下依次排列的；<br>而 inline 布局则是在水平方向来排列。弹性盒布局并没有这样内在的方向限制，可以由开发人员自由操作。 </p>
+<p>(2) flex和box的区别: display：box 是老规范，要兼顾古董机子就加上它； 父级元素有display:box;属性之后。他的子元素里面加上box-flex属性。可以让子元素按照父元素的宽度进行一定比例的分占空间。 flex是最新的，董机老机子不支持的；</p>
+<p>父元素设置display:flex后，子元素宽度会随父元素宽度的改变而改变，而display:box不会。 Android UC浏览器只支持display: box语法；而iOS UC浏览器则支持两种方式。</p>
+<h3 id="12-viewport-所有属性-？"><a href="#12-viewport-所有属性-？" class="headerlink" title="12.viewport 所有属性 ？"></a>12.viewport 所有属性 ？</h3><p>(1)width :设置layout viewport的宽度，为一个正整数，或字符串’device-width’;</p>
+<p>(2)initial-scale:设置页面的初始缩放值，为一个数字，可以带小数。</p>
+<p>(3)minimum-scale:允许用户的最小缩放值，为一个数字，可以带小数。</p>
+<p>(4)maximum-scale:允许用户的最大缩放值，为一个数字，可以带小数。</p>
+<p>(5)height:设置layout viewport的高度，这个属性对我们并不重要，很少使用</p>
+<p>(6)user-scalable:是否允许用户进行缩放，值为‘no’或者‘yes’。</p>
+<p>安卓中还支持：target-densitydpi，表示目标设备的密度等级，作用是决定css中的1px 代表多少物理像素</p>
+<p>(7)target-densitydpi:值可以为一个数值或者 high-dpi 、 medium-dpi、 low-dpi、 device-dpi 这几个字符串中的一个</p>
+<h3 id="13-如何理解HTML结构的语义化？"><a href="#13-如何理解HTML结构的语义化？" class="headerlink" title="13.如何理解HTML结构的语义化？"></a>13.如何理解HTML结构的语义化？</h3><p>所谓标签语义化，就是指标签的含义。语义化的主要目的就是让大家直观的认识标签(markup)和属性(attribute)的用途和作用，对搜索引擎友好，有了良好的结构和语义我们的网页内容便自然容易被搜索引擎抓取，这种符合搜索引擎收索规则的做法，网站的推广便可以省下不少的功夫，而且可维护性更高，因为结构清晰,十分易于阅读。这也是搜索引擎优化SEO重要的一步。</p>
+<h3 id="14-伪类选择器和伪元素？c3中引入的伪类选择器有？c3中伪元素有"><a href="#14-伪类选择器和伪元素？c3中引入的伪类选择器有？c3中伪元素有" class="headerlink" title="14.伪类选择器和伪元素？c3中引入的伪类选择器有？c3中伪元素有?"></a>14.伪类选择器和伪元素？c3中引入的伪类选择器有？c3中伪元素有?</h3><p>伪类用一个冒号来表示，而伪元素则用两个冒号来表示。</p>
+<p>伪类选择器：<br>由于状态是动态变化的，所以一个元素达到一个特定状态时，它可能得到一个伪类的样式；当状态改变时，它又会失去这个样式。</p>
+<p>伪元素选择器：<br>并不是针对真正的元素使用的选择器，而是针对CSS中已经定义好的伪元素使用的选择器；</p>
+<p>c3中引入的伪类选择器：<br>:root()选择器，根选择器，匹配元素E所在文档的根元素。在HTML文档中，根元素始终是<html>。:root选择器等同于<html>元素。</p>
+<p>:not()选择器称为否定选择器，和jQuery中的:not选择器一模一样，可以选择除某个元素之外的所有元素。</p>
+<p>:empty()选择器表示的就是空。用来选择没有任何内容的元素，这里没有内容指的是一点内容都没有，哪怕是一个空格。</p>
+<p>:target()选择器来对页面某个target元素(该元素的id被当做页面中的超链接来使用)指定样式，该样式只在用户点击了页面中的超链接，并且跳转到target元素后起作用。</p>
+<p>:first-child()选择器表示的是选择父元素的第一个子元素的元素E。简单点理解就是选择元素中的第一个子元素，记住是子元素，而不是后代元素。</p>
+<p>:nth-child()选择某个元素的一个或多个特定的子元素。</p>
+<p>:nth-last-child()从某父元素的最后一个子元素开始计算，来选择特定的元素</p>
+<p>:nth-of-type(n)选择器和:nth-child(n)选择器非常类似，不同的是它只计算父元素中指定的某种类型的子元素。</p>
+<p>:only-child表示的是一个元素是它的父元素的唯一一个子元素。</p>
+<p>:first-line为某个元素的第一行文字使用样式。</p>
+<p>:first-letter 为某个元素中的文字的首字母或第一个字使用样式。</p>
+<p>:before 在某个元素之前插入一些内容。</p>
+<p>:after 在某个元素之后插入一些内容。 </p>
+<p>c3中伪元素：<br>::first-line选择元素的第一行，比如说改变每个段落的第一行文本的样式<br>::before和::after这两个主要用来给元素的前面或后面插入内容，这两个常用”content”配合使用，见过最多的就是清除浮动<br>::selection用来改变浏览网页选中文的默认效果</p>
+<h3 id="15-html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分-HTML-和-HTML5？"><a href="#15-html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分-HTML-和-HTML5？" class="headerlink" title="15.html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？"></a>15.html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？</h3><ul>
+<li>HTML5 现在已经不是 SGML 的子集，主要是关于图像，位置，存储，多任务等功能的增加。 </li>
+<li>拖拽释放(Drag and drop) API 语义化更好的内容标签(header,nav,footer,aside,article,section) 音频、视频API(audio,video) 画布(Canvas) API 地理(Geolocation) API 本地离线存储 localStorage 长期存储数据，浏览器关闭后数据不丢失；<br>sessionStorage 的数据在浏览器关闭后自动删除 表单控件，calendar、date、time、email、url、search 新的技术webworker, websocket, Geolocation </li>
+<li>移除的元素 纯表现的元素：basefont，big，center，font, s，strike，tt，u；<br>对可用性产生负面影响的元素：frame，frameset，noframes；<br>支持HTML5新标签： </li>
+<li>IE8&#x2F;IE7&#x2F;IE6支持通过document.createElement方法产生的标签， 可以利用这一特性让这些浏览器支持HTML5新标签， 浏览器支持新标签后，还需要添加标签默认的样式： </li>
+<li>当然最好的方式是直接使用成熟的框架、使用最多的是html5shim框架 <!--[if lt IE 9]> <script> src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script> <![endif]--> </li>
+<li>如何区分： DOCTYPE声明\新增的结构元素\功能元素</li>
+</ul>
+<h3 id="16-placeholder-如何在ie8上兼容placeholder这个效果"><a href="#16-placeholder-如何在ie8上兼容placeholder这个效果" class="headerlink" title="16.placeholder?如何在ie8上兼容placeholder这个效果"></a>16.placeholder?如何在ie8上兼容placeholder这个效果</h3><p>方法一：<br>首先判断浏览器是否支持placeholder属性，如果不支持的话，就遍历所有input输入框，获取placeholder属性的值填充进输入框作为提示信息，同时字体设置成灰色。</p>
+<p>当输入框获得焦点( focus )同时输入框内文字等于设置的提示信息时，就把输入框内清空；</p>
+<p>当输入框失去焦点( blur )同时输入框内文字为空时，再把获取的placeholder属性的值填充<br>进输入框作为提示信息，同时字体设置成灰色；</p>
+<p>当输入框内有输入( keydown )时，此时输入框内的提示信息已经由focus事件清除，此时只需要把字体再恢复成黑色即可</p>
+<p>此方法的缺点是，不适用于加载完DOM时即获得焦点的输入框，因为在用户的角度，加载完页面时看到的获得焦点的那个输入框，它的提示文字是看不到的。<br>HTML：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;uname&quot;</span> <span class="attr">name</span>=<span class="string">&quot;uname&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入用户名&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>CSS：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.phcolor&#123; color:#999;&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>JS</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="keyword">function</span>(<span class="params"></span>)&#123;  </span><br><span class="line">  <span class="comment">//判断浏览器是否支持placeholder属性</span></span><br><span class="line">  supportPlaceholder=<span class="string">&#x27;placeholder&#x27;</span><span class="keyword">in</span> <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;input&#x27;</span>),</span><br><span class="line">  placeholder=<span class="keyword">function</span>(<span class="params">input</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> text = input.<span class="title function_">attr</span>(<span class="string">&#x27;placeholder&#x27;</span>),</span><br><span class="line">    defaultValue = input.<span class="property">defaultValue</span>;</span><br><span class="line">    <span class="keyword">if</span>(!defaultValue)&#123;</span><br><span class="line">      input.<span class="title function_">val</span>(text).<span class="title function_">addClass</span>(<span class="string">&quot;phcolor&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    input.<span class="title function_">focus</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(input.<span class="title function_">val</span>() == text)&#123;</span><br><span class="line">        $(<span class="variable language_">this</span>).<span class="title function_">val</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    input.<span class="title function_">blur</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(input.<span class="title function_">val</span>() == <span class="string">&quot;&quot;</span>)&#123;</span><br><span class="line">        $(<span class="variable language_">this</span>).<span class="title function_">val</span>(text).<span class="title function_">addClass</span>(<span class="string">&quot;phcolor&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//输入的字符不为灰色</span></span><br><span class="line">    input.<span class="title function_">keydown</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">      $(<span class="variable language_">this</span>).<span class="title function_">removeClass</span>(<span class="string">&quot;phcolor&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">//当浏览器不支持placeholder属性时，调用placeholder函数</span></span><br><span class="line">  <span class="keyword">if</span>(!supportPlaceholder)&#123;</span><br><span class="line">    $(<span class="string">&#x27;input&#x27;</span>).<span class="title function_">each</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">      text = $(<span class="variable language_">this</span>).<span class="title function_">attr</span>(<span class="string">&quot;placeholder&quot;</span>);</span><br><span class="line">      <span class="keyword">if</span>($(<span class="variable language_">this</span>).<span class="title function_">attr</span>(<span class="string">&quot;type&quot;</span>) == <span class="string">&quot;text&quot;</span>)&#123;</span><br><span class="line">        <span class="title function_">placeholder</span>($(<span class="variable language_">this</span>));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>方法二：</p>
+<p>此方法的思路是做一张含有提示文字的图片作为input输入框的背景图，初始时获得焦点同时加载背景图；</p>
+<p>当输入框不为空时，去掉背景图；</p>
+<p>当输入框为空时，加载背景图；</p>
+<p>当用户键盘按键且输入框不为空( 输入字符 )时，去掉背景图；</p>
+<p>当用户键盘按键且输入框为空( 删除字符 )时，加载背景图。</p>
+<p>此方法的缺点是：需要为每一个提示文字不同的input制作背景图片，并且设置input的样式。</p>
+<p>CSS：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.phbg&#123; background:url(img/bg.jpg) 0 0 no-repeat;&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>JS</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="keyword">function</span>(<span class="params"></span>)&#123;  </span><br><span class="line">   <span class="comment">//判断浏览器是否支持placeholder属性</span></span><br><span class="line">   supportPlaceholder=<span class="string">&#x27;placeholder&#x27;</span> <span class="keyword">in</span> <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;input&#x27;</span>);</span><br><span class="line">   <span class="keyword">if</span>(!supportPlaceholder)&#123;</span><br><span class="line">     <span class="comment">//初始状态添加背景图片</span></span><br><span class="line">     $(<span class="string">&quot;#uname&quot;</span>).<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;phbg&quot;</span>);</span><br><span class="line">     <span class="comment">//初始状态获得焦点</span></span><br><span class="line">     $(<span class="string">&quot;#uname&quot;</span>).<span class="property">focus</span>;</span><br><span class="line">     <span class="keyword">function</span> <span class="title function_">destyle</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>($(<span class="string">&quot;#uname&quot;</span>).<span class="title function_">val</span>() != <span class="string">&quot;&quot;</span>)&#123;</span><br><span class="line">        $(<span class="string">&quot;#uname&quot;</span>).<span class="title function_">removeClass</span>(<span class="string">&quot;phbg&quot;</span>);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        $(<span class="string">&quot;#uname&quot;</span>).<span class="title function_">attr</span>(<span class="string">&quot;class&quot;</span>,<span class="string">&quot;phbg&quot;</span>);</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="comment">//当输入框为空时，添加背景图片；有值时去掉背景图片</span></span><br><span class="line">     <span class="title function_">destyle</span>();</span><br><span class="line">     $(<span class="string">&quot;#uname&quot;</span>).<span class="title function_">keyup</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="comment">//当输入框有按键输入同时输入框不为空时，去掉背景图片；有按键输入同时为空时（删除字符），添加背景图片</span></span><br><span class="line">      <span class="title function_">destyle</span>();</span><br><span class="line">     &#125;);</span><br><span class="line">     $(<span class="string">&quot;#uname&quot;</span>).<span class="title function_">keydown</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="comment">//keydown事件可以在按键按下的第一时间去掉背景图片</span></span><br><span class="line">      $(<span class="string">&quot;#uname&quot;</span>).<span class="title function_">removeClass</span>(<span class="string">&quot;phbg&quot;</span>);</span><br><span class="line">     &#125;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>方法三：<br>使用插件：Placeholders.js</p>
+<h3 id="17-常见兼容性问题？"><a href="#17-常见兼容性问题？" class="headerlink" title="17.常见兼容性问题？"></a>17.常见兼容性问题？</h3><ul>
+<li><p>png24位的图片在iE6浏览器上出现背景，解决方案是做成PNG8.也可以引用一段脚本处理。</p>
+</li>
+<li><p>浏览器默认的margin和padding不同。解决方案是加一个全局的*{margin:0;padding:0;}来统一。</p>
+</li>
+<li><p>IE6双边距bug:块属性标签float后，又有横行的margin情况下，在ie6显示margin比设置的大。</p>
+</li>
+<li><p>浮动ie产生的双倍距离（IE6双边距问题：在IE6下，如果对元素设置了浮动，同时又设置了margin-left或margin-right，margin值会加倍。） #box{ float:left; width:10px; margin:0 0 0 100px;} 这种情况之下IE会产生20px的距离，解决方案是在float的标签样式控制中加入 ——_display:inline;将其转化为行内属性。(_这个符号只有ie6会识别)</p>
+</li>
+<li><p>渐进识别的方式，从总体中逐渐排除局部。 首先，巧妙的使用“\9”这一标记，将IE游览器从所有情况中分离出来。 接着，再次使用“+”将IE8和IE7、IE6分离开来，这样IE8已经独立识别。<br>css&#x2F;&#x2F; .bb{ background-color:#f1ee18; .background-color:#00deff\9; +background-color:#a200ff; _background-color:#1e0bd1; } </p>
+</li>
+<li><p>IE下,可以使用获取常规属性的方法来获取自定义属性, 也可以使用getAttribute()获取自定义属性; Firefox下,只能使用getAttribute()获取自定义属性. 解决方法:统一通过getAttribute()获取自定义属性。</p>
+</li>
+<li><p>IE下,event对象有x,y属性,但是没有pageX,pageY属性; Firefox下,event对象有pageX,pageY属性,但是没有x,y属性. * 解决方法：（条件注释）缺点是在IE浏览器下可能会增加额外的HTTP请求数。</p>
+</li>
+<li><p>Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示, 可通过加入 CSS 属性 -webkit-text-size-adjust: none; 解决。</p>
+</li>
+<li><p>超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不在具有hover和active了解决方法是改变CSS属性的排列顺序: L-V-H-A : a:link {} a:visited {} a:hover {} a:active {}</p>
+</li>
+<li><p>怪异模式问题：漏写DTD声明，Firefox仍然会按照标准模式来解析网页，但在IE中会触发怪异模式。为避免怪异模式给我们带来不必要的麻烦，最好养成书写DTD声明的好习惯。现在可以使用<a target="_blank" rel="noopener" href="http://www.w3.org/TR/html5/single-page.html">html5</a>推荐的写法：<code>&lt;doctype html&gt;</code></p>
+</li>
+<li><p>上下margin重合问题<br>ie和ff都存在，相邻的两个div的margin-left和margin-right不会重合，但是margin-top和margin-bottom却会发生重合。<br>解决方法，养成良好的代码编写习惯，同时采用margin-top或者同时采用margin-bottom。</p>
+</li>
+<li><p>ie6对png图片格式支持不好(引用一段脚本处理)</p>
+</li>
+</ul>
+<h3 id="18-简述前端优化的方式-旧的雅虎34条-h5新添加的方式"><a href="#18-简述前端优化的方式-旧的雅虎34条-h5新添加的方式" class="headerlink" title="18.简述前端优化的方式 旧的雅虎34条|h5新添加的方式"></a>18.简述前端优化的方式 旧的雅虎34条|h5新添加的方式</h3><ul>
+<li>尽量减少HTTP请求次数</li>
+<li>减少DNS查找次数</li>
+<li>避免跳转</li>
+<li>可缓存的AJAX</li>
+<li>推迟加载内容</li>
+<li>预加载</li>
+<li>减少DOM元素数量</li>
+<li>根据域名划分页面内容</li>
+<li>使iframe的数量最小</li>
+<li>不要出现404错误</li>
+<li>使用内容分发网络</li>
+<li>为文件头指定Expires或Cache-Control</li>
+<li>Gzip压缩文件内容</li>
+<li>配置ETag</li>
+<li>尽早刷新输出缓冲</li>
+<li>使用GET来完成AJAX请求</li>
+<li>把样式表置于顶部</li>
+<li>避免使用CSS表达式（Expression）</li>
+<li>使用外部JavaScript和CSS</li>
+<li>削减JavaScript和CSS</li>
+<li>用<link>代替@import</li>
+<li>避免使用滤镜</li>
+<li>把脚本置于页面底部</li>
+<li>剔除重复脚本</li>
+</ul>
+<h3 id="19-jquery版本-1-11兼容"><a href="#19-jquery版本-1-11兼容" class="headerlink" title="19.jquery版本?1.11兼容?"></a>19.jquery版本?1.11兼容?</h3><p>Query 2.x系列和 jQuery 1.x拥有同样的API，但是不再支持IE6、7、8。</p>
+<p>推荐使用 1.x version，除非你确定IE6、7、8用户不再访问网站。</p>
+<p>jquery1.11属于1.x 版本，其兼容IE6、7、8，所以也支持IE9.</p>
+<h3 id="20-块级？行内？空元素"><a href="#20-块级？行内？空元素" class="headerlink" title="20.块级？行内？空元素?"></a>20.块级？行内？空元素?</h3><p>行内元素：和有他元素都在一行上，高度、行高及外边距和内边距都不可改变，文字图片的宽度不可改变，只能容纳文本或者其他行内元素</p>
+<p>块级元素：总是在新行上开始，高度、行高及外边距和内边距都可控制，可以容纳内敛元素和其他元素；</p>
+<p>空元素：在HTML元素中，没有内容的 HTML 元素被称为空元素。空元素是在开始标签中关闭的。<br> 就是没有关闭标签的空元素。</p>
+<h3 id="21-media属性？screen？All？max-width-min-width"><a href="#21-media属性？screen？All？max-width-min-width" class="headerlink" title="21.media属性？screen？All？max-width?min-width?"></a>21.media属性？screen？All？max-width?min-width?</h3><p>media 属性规定被链接文档将显示在什么设备上。media 属性用于为不同的媒介类型规定不同的样式。Screen计算机默认屏幕，all适用于所有设备，max-width超过最大宽度就不执行，min-width必须大于最小宽度才执行。</p>
+<h3 id="22-meta标签的name属性值？"><a href="#22-meta标签的name属性值？" class="headerlink" title="22.meta标签的name属性值？"></a>22.meta标签的name属性值？</h3><p>name 属性主要用于描述网页，与之对应的属性值为content，content中的内容主要是便于搜索引擎机器人查找信息和分类信息用的。</p>
+<p>meta标签的name属性语法格式是：＜meta name&#x3D;”参数” content&#x3D;”具体的参数值”＞。</p>
+<p>其中name属性主要有以下几种参数：</p>
+<p>A 、Keywords(关键字)说明：keywords用来告诉搜索引擎你网页的关键字是什么。</p>
+<p>B 、description(网站内容描述) 说明：description用来告诉搜索引擎你的网站主要内容.</p>
+<p>C 、robots(机器人向导)说明：robots用来告诉搜索机器人哪些页面需要索引，哪些页面不需要索引。</p>
+<p>content的参数有all,none,index,noindex,follow,nofollow,默认是all。</p>
+<p>举例：＜meta name&#x3D;”robots” content&#x3D;”none”＞D 、author(作者)</p>
+<h3 id="23-一般做手机页面切图有几种方式"><a href="#23-一般做手机页面切图有几种方式" class="headerlink" title="23.一般做手机页面切图有几种方式?"></a>23.一般做手机页面切图有几种方式?</h3><p>响应式布局，弹性布局display：flex，利用js编写设定比例，给根元素设定像素，使用rem为单位。</p>
+<h3 id="24-px-em-rem有什么区别？-为什么通常给font-size-设置的字体为62-5"><a href="#24-px-em-rem有什么区别？-为什么通常给font-size-设置的字体为62-5" class="headerlink" title="24.px&#x2F;em&#x2F;rem有什么区别？ 为什么通常给font-size 设置的字体为62.5%"></a>24.px&#x2F;em&#x2F;rem有什么区别？ 为什么通常给font-size 设置的字体为62.5%</h3><p>相对于当前对象内文本的字体尺寸。如当前对行内文本的字体尺寸未被人为设置，则相对于浏览器的默认字体尺寸。</p>
+<p>1、em的值并不是固定的；</p>
+<p>2、em会继承父级元素的字体大小。使用rem为元素设定字体大小时，仍然是相对大小，但相对的只是HTML根元素。这个单位可谓集相对大小和绝对大小的优点于一身，通过它既可以做到只修改根元素就成比例地调整所有字体大小，又可以避免字体大小逐层复合的连锁反应。</p>
+<p>rem是相对于浏览器进行缩放的。1rem默认是16px，在响应式布局中，一个个除来转换成rem，太麻烦，所以重置rem</p>
+<p>body{font-size&#x3D;62.5% } 此时1rem &#x3D; 10px;若是12px则是1.2rem.</p>
+<h3 id="25-sass和scss有什么区别-sass一般怎么样编译的"><a href="#25-sass和scss有什么区别-sass一般怎么样编译的" class="headerlink" title="25.sass和scss有什么区别?sass一般怎么样编译的"></a>25.sass和scss有什么区别?sass一般怎么样编译的</h3><p>文件扩展名不同，Sass 是以“.sass”后缀为扩展名，而 SCSS 是以“.scss”后缀为扩展名；语法书写方式不同，Sass 是以严格的缩进式语法规则来书写，不带大括号({})和分号(;)，而 SCSS 的语法书写和我们的 CSS 语法书写方式非常类似。</p>
+<h3 id="26-如果对css进行优化如何处理？"><a href="#26-如果对css进行优化如何处理？" class="headerlink" title="26.如果对css进行优化如何处理？"></a>26.如果对css进行优化如何处理？</h3><p>压缩打包，图片整合，避免使用Hack，解决兼容问题，使用简写，让CSS能保证日后的维护。</p>
+<h3 id="27-如何对css文件进行压缩合并-gulp"><a href="#27-如何对css文件进行压缩合并-gulp" class="headerlink" title="27.如何对css文件进行压缩合并? gulp ?"></a>27.如何对css文件进行压缩合并? gulp ?</h3><p>使用gulp, 首页全局安装gulp。</p>
+<p>1、npm install –global gulp </p>
+<p>2、其次局部安装gulp。npm install gulp –save-dev</p>
+<p>3、在项目根目录下创建一个名为 gulpfile.js 的文件<br>var gulp &#x3D; require(‘gulp’);<br>gulp.task(‘default’, function() {<br>&#x2F;&#x2F; 将你的默认的任务代码放在这});</p>
+<p>4、运行gulp。（默认的名为 default 的任务（task）将会被运行，想要单独执行特定的任务（task），请输入 gulp <task> <othertask>）</p>
+<p>压缩JS，CSS文件需要引用如下组件：<br>gulp-minify-css: 压缩css</p>
+<h3 id="28-组件-模块化编程？"><a href="#28-组件-模块化编程？" class="headerlink" title="28.组件? 模块化编程？"></a>28.组件? 模块化编程？</h3><p>组件化编程: 将js css html包装一起提供方法和效果；<br>模块化化: 将相同的功能抽取出来 存放在一个位置进行编程</p>
+<h3 id="29-图片和文字在同一行显示"><a href="#29-图片和文字在同一行显示" class="headerlink" title="29.图片和文字在同一行显示?"></a>29.图片和文字在同一行显示?</h3><p>1 在css中给div添加上“vertical-align:middle”属性。 </p>
+<p>2 分别把图片和文字放入不同的div中，然后用“margin”属性进行定位，就可以使他们显示在同一行。</p>
+<p>3 把图片设置为背景图片。</p>
+<h3 id="30-禁止事件冒泡"><a href="#30-禁止事件冒泡" class="headerlink" title="30.禁止事件冒泡"></a>30.禁止事件冒泡</h3><p>event.stopPropagation()</p>
+<h3 id="31-禁止默认事件"><a href="#31-禁止默认事件" class="headerlink" title="31.禁止默认事件"></a>31.禁止默认事件</h3><p>event.preventDefault()</p>
+<h3 id="32-a标签中-active-hover-link-visited-正确的设置顺序是什么"><a href="#32-a标签中-active-hover-link-visited-正确的设置顺序是什么" class="headerlink" title="32.a标签中 active hover link visited 正确的设置顺序是什么?"></a>32.a标签中 active hover link visited 正确的设置顺序是什么?</h3><p>a标签的link、visited、hover、active是有一定顺序的<br>a:link<br>a:visited<br>a:hover<br>a:active</p>
+<h3 id="33-a标签中-如何禁用href-跳转页面-或-定位链接"><a href="#33-a标签中-如何禁用href-跳转页面-或-定位链接" class="headerlink" title="33.a标签中 如何禁用href 跳转页面 或 定位链接"></a>33.a标签中 如何禁用href 跳转页面 或 定位链接</h3><p>e.preventDefault();<br>href&#x3D;”javascript:void(0);</p>
+<h3 id="34-手机端上-图片长时间点击会选中图片，如何处理"><a href="#34-手机端上-图片长时间点击会选中图片，如何处理" class="headerlink" title="34.手机端上 图片长时间点击会选中图片，如何处理?"></a>34.手机端上 图片长时间点击会选中图片，如何处理?</h3><p>onselect&#x3D;function() {<br>return false<br>}</p>
+<h3 id="35-video标签的几个个属性方法"><a href="#35-video标签的几个个属性方法" class="headerlink" title="35.video标签的几个个属性方法"></a>35.video标签的几个个属性方法</h3><p>src：视频的URL poster：视频封面，没有播放时显示的图片 preload：预加载 autoplay：自动播放 loop：循环播放 controls：浏览器自带的控制条 width：视频宽度 height：视频高度</p>
+<h3 id="36-常见的视频编码格式有几种-视频格式有几种"><a href="#36-常见的视频编码格式有几种-视频格式有几种" class="headerlink" title="36.常见的视频编码格式有几种?视频格式有几种?"></a>36.常见的视频编码格式有几种?视频格式有几种?</h3><p>视频格式：MPEG-1、MPEG-2和MPEG4 、AVI 、RM、ASF和WMV格式<br>视频编码格式：H.264、MPEG-4、MPEG-2、WMA-HD以及VC-1</p>
+<h3 id="37-canvas在标签上设置宽高-和在style中设置宽高有什么区别？"><a href="#37-canvas在标签上设置宽高-和在style中设置宽高有什么区别？" class="headerlink" title="37.canvas在标签上设置宽高 和在style中设置宽高有什么区别？"></a>37.canvas在标签上设置宽高 和在style中设置宽高有什么区别？</h3><p>canvas标签的width和height是画布实际宽度和高度，绘制的图形都是在这个上面。而style的width和height是canvas在浏览器中被渲染的高度和宽度。如果canvas的width和height没指定或值不正确，就被设置成默认值 。</p>
+<h3 id="38-border-image？box-sizing"><a href="#38-border-image？box-sizing" class="headerlink" title="38.border-image？box-sizing?"></a>38.border-image？box-sizing?</h3><p>Border-image : 图形化边框</p>
+<p>Box-sizing : 属性允许您以特定的方式定义匹配某个区域的特定元素。</p>
+<p>语法 ：box-sizing：content-box | border-box</p>
+<p>Content-box : padding和border不被包含在定义的width和height之内。对象的实际宽度等于设置的width值和border、padding之和，即 ( Element width &#x3D; width + border + padding) 此属性表现为标准模式下的盒模型 .</p>
+<p>Border-box : padding和border被包含在定义的width和height之内。对象的实际宽度就等于设置的width值，即使定义有border和padding也不会改变对象的实际宽度，即 ( Element width &#x3D; width ) 此属性表现为怪异模式下的盒模型。</p>
+<h3 id="39-渐进增强和优雅降级"><a href="#39-渐进增强和优雅降级" class="headerlink" title="39.渐进增强和优雅降级"></a>39.渐进增强和优雅降级</h3><p>渐进增强 progressive enhancement：针对低版本浏览器进行构建页面，保证最基本的功能，然后再针对高级浏览器进行效果、交互等改进和追加功能达到更好的用户体验。</p>
+<p>优雅降级 graceful degradation：一开始就构建完整的功能，然后再针对低版本浏览器进行兼容。</p>
+<p>区别：优雅降级是从复杂的现状开始，并试图减少用户体验的供给，而渐进增强则是从一个非常基础的，能够起作用的版本开始，并不断扩充，以适应未来环境的需要。</p>
+<p>降级（功能衰减）意味着往回看；而渐进增强则意味着朝前看，同时保证其根基处于安全地带。</p>
+<p>“优雅降级”观点认为应该针对那些最高级、最完善的浏览器来设计网站。而将那些被认为“过时”或有功能缺失的浏览器下的测试工作安排在开发周期的最后阶段，并把测试对象限定为主流浏览器（如 IE、Mozilla 等）的前一个版本。</p>
+<p>在这种设计范例下，旧版的浏览器被认为仅能提供“简陋却无妨 (poor, but passable)” 的浏览体验。你可以做一些小的调整来适应某个特定的浏览器。但由于它们并非我们所关注的焦点，因此除了修复较大的错误之外，其它的差异将被直接忽略。</p>
+<p>“渐进增强”观点则认为应关注于内容本身。<br>内容是我们建立网站的诱因。有的网站展示它，有的则收集它，有的寻求，有的操作，还有的网站甚至会包含以上的种种，但相同点是它们全都涉及到内容。这使得“渐进增强”成为一种更为合理的设计范例。这也是它立即被 Yahoo! 所采纳并用以构建其“分级式浏览器支持 (Graded Browser Support)”策略的原因所在。</p>
+<p>那么问题来了。现在产品经理看到IE6,7,8网页效果相对高版本现代浏览器少了很多圆角，阴影（CSS3），要求兼容（使用图片背景，放弃CSS3），你会如何说服他？</p>
+<h3 id="41-animation对应的属性"><a href="#41-animation对应的属性" class="headerlink" title="41.animation对应的属性"></a>41.animation对应的属性</h3><p>写法：animation: name duration timing-function delay iteration-count direction; </p>
+<p>下面是对应的属性的介绍 </p>
+<p>animation-name 规定需要绑定到选择器的 keyframe 名称。</p>
+<p>animation-duration<br>规定完成动画所花费的时间，以秒或毫秒计。</p>
+<p>animation-timing-function<br>规定动画的速度曲线。 </p>
+<p>animation-delay<br>规定在动画开始之前的延迟。 </p>
+<p>animation-iteration-count 规定动画应该播放的次数。 </p>
+<p>animation-direction 规定是否应该轮流反向播放动画。</p>
+<h3 id="42-transition"><a href="#42-transition" class="headerlink" title="42.transition?"></a>42.transition?</h3><p>css的transition允许css的属性值在一定的时间区间内平滑地过渡。这种效果可以在鼠标单击、获得焦点、被点击或对元素任何改变中触发，并圆滑地以动画效果改变CSS的属性值 注意区别transform，transform是进行2D转换的 如移动，比例化，反过来，旋转，和拉伸元素。</p>
+<h3 id="43-h5新特性？"><a href="#43-h5新特性？" class="headerlink" title="43.h5新特性？"></a>43.h5新特性？</h3><p>1、绘画的 canvas 元素<br>2、用于媒介回放的 video 和 audio 元素<br>3、对本地离线存储的更好的支持<br>4、新的特殊内容元素，比如 article、footer、header、nav、section 5、新的表单控件，比如 calendar、date、time、email、url、search</p>
+<h3 id="44-canvas-如何绘制一个三角形-正方形"><a href="#44-canvas-如何绘制一个三角形-正方形" class="headerlink" title="44.canvas 如何绘制一个三角形|正方形"></a>44.canvas 如何绘制一个三角形|正方形</h3><p>moveto 是移动到某个坐标， lineto 是从当前坐标连线到某个坐标。</p>
+<p>这两个函数加起来就是画一条直线。 画线要用“笔”，那么MoveTo()把笔要画的起始位置固定了（x,y）然后要固定终止位置要用到LineTo函数确定终止位置（xend,yend）,这样一条线就画出来了。 每次与前面一个坐标相连 。 </p>
+<p>stroke() 方法会实际地绘制出通过 moveTo() 和 lineTo() 方法定义的路径。默认颜色是黑色。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">HTML5</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=utf-8&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>画布<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">&quot;myCanvas&quot;</span> <span class="attr">width</span>=<span class="string">&quot;200&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100&quot;</span> <span class="attr">style</span>=<span class="string">&quot;border:1px solid #c3c3c3;&quot;</span>&gt;</span></span><br><span class="line">     Your browser does not support the canvas element.</span><br><span class="line">     <span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">         <span class="keyword">var</span> c=<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;myCanvas&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"><span class="comment">//三角形</span></span></span><br><span class="line"><span class="language-javascript">         <span class="keyword">var</span> cxt=c.<span class="title function_">getContext</span>(<span class="string">&quot;2d&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt.<span class="title function_">moveTo</span>(<span class="number">10</span>,<span class="number">10</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt.<span class="title function_">lineTo</span>(<span class="number">50</span>,<span class="number">50</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt.<span class="title function_">lineTo</span>(<span class="number">10</span>,<span class="number">50</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt.<span class="title function_">lineTo</span>(<span class="number">10</span>,<span class="number">10</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt.<span class="title function_">stroke</span>();</span></span><br><span class="line"><span class="language-javascript"><span class="comment">//正方形</span></span></span><br><span class="line"><span class="language-javascript">         <span class="keyword">var</span> cxt2=c.<span class="title function_">getContext</span>(<span class="string">&quot;2d&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt2.<span class="title function_">moveTo</span>(<span class="number">60</span>,<span class="number">10</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt2.<span class="title function_">lineTo</span>(<span class="number">100</span>,<span class="number">10</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt2.<span class="title function_">lineTo</span>(<span class="number">100</span>,<span class="number">50</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt2.<span class="title function_">lineTo</span>(<span class="number">60</span>,<span class="number">50</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt2.<span class="title function_">lineTo</span>(<span class="number">60</span>,<span class="number">10</span>);</span></span><br><span class="line"><span class="language-javascript">         cxt2.<span class="title function_">stroke</span>(); </span></span><br><span class="line"><span class="language-javascript">     </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="45-所用bootstap版本？"><a href="#45-所用bootstap版本？" class="headerlink" title="45.所用bootstap版本？"></a>45.所用bootstap版本？</h3><p>3.0</p>
+<h3 id="46-css清除浮动的几种方式？"><a href="#46-css清除浮动的几种方式？" class="headerlink" title="46.css清除浮动的几种方式？"></a>46.css清除浮动的几种方式？</h3><ul>
+<li>父级div定义 height </li>
+<li>结尾处加空div标签 clear:both </li>
+<li>父级div定义 伪类:after 和 zoom </li>
+<li>父级div定义 overflow:hidden </li>
+<li>父级div定义 overflow:auto </li>
+<li>父级div 也一起浮动 </li>
+<li>父级div定义 display:table</li>
+</ul>
+<h3 id="47-为什么要初始化CSS样式。"><a href="#47-为什么要初始化CSS样式。" class="headerlink" title="47.为什么要初始化CSS样式。"></a>47.为什么要初始化CSS样式。</h3><p>因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。</p>
+<h3 id="48-CSS3有哪些新特性？"><a href="#48-CSS3有哪些新特性？" class="headerlink" title="48.CSS3有哪些新特性？"></a>48.CSS3有哪些新特性？</h3><p>CSS3实现圆角（border-radius），阴影（box-shadow）</p>
+<p>对文字加特效（text-shadow、），线性渐变（gradient），旋转（transform）</p>
+<p>transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);</p>
+<p>&#x2F;&#x2F;旋转,缩放,定位,倾斜增加了更多的CSS选择器 多背景 rgba</p>
+<p>在CSS3中唯一引入的伪元素是::selection.媒体查询，多栏布局 border-image</p>
+<h3 id="49-解释下-CSS-sprites，以及你要如何在页面或网站中使用它。"><a href="#49-解释下-CSS-sprites，以及你要如何在页面或网站中使用它。" class="headerlink" title="49.解释下 CSS sprites，以及你要如何在页面或网站中使用它。"></a>49.解释下 CSS sprites，以及你要如何在页面或网站中使用它。</h3><p>CSS Sprites其实就是把网页中一些背景图片整合到一张图片文件中，再利用CSS的“background-image”，“background- repeat”，“background-position”的组合进行背景定位，background-position可以用数字能精确的定位出背景图片的位置。这样可以减少很多图片请求的开销，因为请求耗时比较长；请求虽然可以并发，但是也有限制，一般浏览器都是6个。对于未来而言，就不需要这样做了，因为有了<code>http2</code>。</p>
+<h2 id="50-什么是-FOUC（无样式内容闪烁）？你如何来避免-FOUC？"><a href="#50-什么是-FOUC（无样式内容闪烁）？你如何来避免-FOUC？" class="headerlink" title="50.什么是 FOUC（无样式内容闪烁）？你如何来避免 FOUC？"></a>50.什么是 FOUC（无样式内容闪烁）？你如何来避免 FOUC？</h2><p>FOUC - Flash Of Unstyled Content 文档样式闪烁</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot; media=&quot;all&quot;&gt;@import &quot;../fouc.css&quot;;&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+
+<p>而引用CSS文件的@import就是造成这个问题的罪魁祸首。IE会先加载整个HTML文档的DOM，然后再去导入外部的CSS文件，因此，在页面DOM加载完成到CSS导入完成中间会有一段时间页面上的内容是没有样式的，这段时间的长短跟网速，电脑速度都有关系。<br>解决方法：只要在<head>之间加入一个<link>或者<script>元素就可以了。</p>
+<h3 id="51-a点击出现框，解决方法"><a href="#51-a点击出现框，解决方法" class="headerlink" title="51.a点击出现框，解决方法:"></a>51.a点击出现框，解决方法:</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span>,</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span>,</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:active</span>,</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span>,</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:link</span>,</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:focus</span>&#123; </span><br><span class="line">     -webkit-tap-highlight-<span class="attribute">color</span>:<span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">     -webkit-tap-highlight-<span class="attribute">color</span>: transparent;</span><br><span class="line">     <span class="attribute">outline</span>:none;<span class="attribute">background</span>: none;</span><br><span class="line">     <span class="attribute">text-decoration</span>: none;<span class="attribute">border</span>:none;</span><br><span class="line">     -webkit-appearance: none; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/02/Falcom%202017%20%E6%97%A5%E5%8E%86/" rel="next" title="Falcom 2017 Calendar">
+                <i class="fa fa-chevron-left"></i> Falcom 2017 Calendar
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/20/%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" rel="prev" title="垂直居中方法总结">
+                垂直居中方法总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E5%92%8C%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0-img%E7%AE%97%E4%BB%80%E4%B9%88-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%80%8E%E4%B9%88%E8%BD%AC%E5%8C%96%E4%B8%BA%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0"><span class="nav-number">1.</span> <span class="nav-text">1.行内元素和块级元素?img算什么?行内元素怎么转化为块级元素?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%B0%86%E5%A4%9A%E4%B8%AA%E5%85%83%E7%B4%A0%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%90%8C%E4%B8%80%E8%A1%8C-%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">2.将多个元素设置为同一行?清除浮动有几种方式?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BB%80%E4%B9%88%E6%98%AF%E7%9B%92%E6%A8%A1%E5%9E%8Bbox-sizing%EF%BC%9F%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B-%E7%9B%92%E5%B8%83%E5%B1%80"><span class="nav-number">3.</span> <span class="nav-text">3.什么是盒模型box-sizing？弹性盒模型|盒布局?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-href%E5%92%8Csrc%E5%8C%BA%E5%88%AB-title%E5%92%8Calt"><span class="nav-number">4.</span> <span class="nav-text">5.href和src区别? title和alt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-transform%EF%BC%9Fanimation%EF%BC%9F%E5%8C%BA%E5%88%AB-animation-duration"><span class="nav-number">5.</span> <span class="nav-text">6.transform？animation？区别?animation-duration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-nth-of-type-nth-child"><span class="nav-number">6.</span> <span class="nav-text">7.nth-of-type | nth-child?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-before-%E5%92%8C-before-%E5%8C%BA%E5%88%AB"><span class="nav-number">7.</span> <span class="nav-text">8. :before 和 ::before 区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E5%A6%82%E4%BD%95%E8%AE%A9%E4%B8%80%E4%B8%AAdiv-%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3%E5%B1%85%E4%B8%AD"><span class="nav-number">8.</span> <span class="nav-text">9.如何让一个div 上下左右居中?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-css2-0-%E5%92%8Ccss3-0"><span class="nav-number">9.</span> <span class="nav-text">10.css2.0 和css3.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E5%BC%B9%E6%80%A7%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B-flex-box%E5%8C%BA%E5%88%AB"><span class="nav-number">10.</span> <span class="nav-text">11.弹性盒子模型?flex|box区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-viewport-%E6%89%80%E6%9C%89%E5%B1%9E%E6%80%A7-%EF%BC%9F"><span class="nav-number">11.</span> <span class="nav-text">12.viewport 所有属性 ？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3HTML%E7%BB%93%E6%9E%84%E7%9A%84%E8%AF%AD%E4%B9%89%E5%8C%96%EF%BC%9F"><span class="nav-number">12.</span> <span class="nav-text">13.如何理解HTML结构的语义化？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8%E5%92%8C%E4%BC%AA%E5%85%83%E7%B4%A0%EF%BC%9Fc3%E4%B8%AD%E5%BC%95%E5%85%A5%E7%9A%84%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8%E6%9C%89%EF%BC%9Fc3%E4%B8%AD%E4%BC%AA%E5%85%83%E7%B4%A0%E6%9C%89"><span class="nav-number">13.</span> <span class="nav-text">14.伪类选择器和伪元素？c3中引入的伪类选择器有？c3中伪元素有?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-html5%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7%E3%80%81%E7%A7%BB%E9%99%A4%E4%BA%86%E9%82%A3%E4%BA%9B%E5%85%83%E7%B4%A0%EF%BC%9F%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86HTML5%E6%96%B0%E6%A0%87%E7%AD%BE%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98%EF%BC%9F%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86-HTML-%E5%92%8C-HTML5%EF%BC%9F"><span class="nav-number">14.</span> <span class="nav-text">15.html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-placeholder-%E5%A6%82%E4%BD%95%E5%9C%A8ie8%E4%B8%8A%E5%85%BC%E5%AE%B9placeholder%E8%BF%99%E4%B8%AA%E6%95%88%E6%9E%9C"><span class="nav-number">15.</span> <span class="nav-text">16.placeholder?如何在ie8上兼容placeholder这个效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-%E5%B8%B8%E8%A7%81%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-number">16.</span> <span class="nav-text">17.常见兼容性问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-%E7%AE%80%E8%BF%B0%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F-%E6%97%A7%E7%9A%84%E9%9B%85%E8%99%8E34%E6%9D%A1-h5%E6%96%B0%E6%B7%BB%E5%8A%A0%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">17.</span> <span class="nav-text">18.简述前端优化的方式 旧的雅虎34条|h5新添加的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-jquery%E7%89%88%E6%9C%AC-1-11%E5%85%BC%E5%AE%B9"><span class="nav-number">18.</span> <span class="nav-text">19.jquery版本?1.11兼容?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-%E5%9D%97%E7%BA%A7%EF%BC%9F%E8%A1%8C%E5%86%85%EF%BC%9F%E7%A9%BA%E5%85%83%E7%B4%A0"><span class="nav-number">19.</span> <span class="nav-text">20.块级？行内？空元素?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21-media%E5%B1%9E%E6%80%A7%EF%BC%9Fscreen%EF%BC%9FAll%EF%BC%9Fmax-width-min-width"><span class="nav-number">20.</span> <span class="nav-text">21.media属性？screen？All？max-width?min-width?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-meta%E6%A0%87%E7%AD%BE%E7%9A%84name%E5%B1%9E%E6%80%A7%E5%80%BC%EF%BC%9F"><span class="nav-number">21.</span> <span class="nav-text">22.meta标签的name属性值？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-%E4%B8%80%E8%88%AC%E5%81%9A%E6%89%8B%E6%9C%BA%E9%A1%B5%E9%9D%A2%E5%88%87%E5%9B%BE%E6%9C%89%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">22.</span> <span class="nav-text">23.一般做手机页面切图有几种方式?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-px-em-rem%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%9A%E5%B8%B8%E7%BB%99font-size-%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%AD%97%E4%BD%93%E4%B8%BA62-5"><span class="nav-number">23.</span> <span class="nav-text">24.px&#x2F;em&#x2F;rem有什么区别？ 为什么通常给font-size 设置的字体为62.5%</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#25-sass%E5%92%8Cscss%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB-sass%E4%B8%80%E8%88%AC%E6%80%8E%E4%B9%88%E6%A0%B7%E7%BC%96%E8%AF%91%E7%9A%84"><span class="nav-number">24.</span> <span class="nav-text">25.sass和scss有什么区别?sass一般怎么样编译的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-%E5%A6%82%E6%9E%9C%E5%AF%B9css%E8%BF%9B%E8%A1%8C%E4%BC%98%E5%8C%96%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-number">25.</span> <span class="nav-text">26.如果对css进行优化如何处理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#27-%E5%A6%82%E4%BD%95%E5%AF%B9css%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%8E%8B%E7%BC%A9%E5%90%88%E5%B9%B6-gulp"><span class="nav-number">26.</span> <span class="nav-text">27.如何对css文件进行压缩合并? gulp ?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#28-%E7%BB%84%E4%BB%B6-%E6%A8%A1%E5%9D%97%E5%8C%96%E7%BC%96%E7%A8%8B%EF%BC%9F"><span class="nav-number">27.</span> <span class="nav-text">28.组件? 模块化编程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#29-%E5%9B%BE%E7%89%87%E5%92%8C%E6%96%87%E5%AD%97%E5%9C%A8%E5%90%8C%E4%B8%80%E8%A1%8C%E6%98%BE%E7%A4%BA"><span class="nav-number">28.</span> <span class="nav-text">29.图片和文字在同一行显示?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#30-%E7%A6%81%E6%AD%A2%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1"><span class="nav-number">29.</span> <span class="nav-text">30.禁止事件冒泡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#31-%E7%A6%81%E6%AD%A2%E9%BB%98%E8%AE%A4%E4%BA%8B%E4%BB%B6"><span class="nav-number">30.</span> <span class="nav-text">31.禁止默认事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#32-a%E6%A0%87%E7%AD%BE%E4%B8%AD-active-hover-link-visited-%E6%AD%A3%E7%A1%AE%E7%9A%84%E8%AE%BE%E7%BD%AE%E9%A1%BA%E5%BA%8F%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">31.</span> <span class="nav-text">32.a标签中 active hover link visited 正确的设置顺序是什么?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#33-a%E6%A0%87%E7%AD%BE%E4%B8%AD-%E5%A6%82%E4%BD%95%E7%A6%81%E7%94%A8href-%E8%B7%B3%E8%BD%AC%E9%A1%B5%E9%9D%A2-%E6%88%96-%E5%AE%9A%E4%BD%8D%E9%93%BE%E6%8E%A5"><span class="nav-number">32.</span> <span class="nav-text">33.a标签中 如何禁用href 跳转页面 或 定位链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#34-%E6%89%8B%E6%9C%BA%E7%AB%AF%E4%B8%8A-%E5%9B%BE%E7%89%87%E9%95%BF%E6%97%B6%E9%97%B4%E7%82%B9%E5%87%BB%E4%BC%9A%E9%80%89%E4%B8%AD%E5%9B%BE%E7%89%87%EF%BC%8C%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86"><span class="nav-number">33.</span> <span class="nav-text">34.手机端上 图片长时间点击会选中图片，如何处理?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#35-video%E6%A0%87%E7%AD%BE%E7%9A%84%E5%87%A0%E4%B8%AA%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%96%B9%E6%B3%95"><span class="nav-number">34.</span> <span class="nav-text">35.video标签的几个个属性方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#36-%E5%B8%B8%E8%A7%81%E7%9A%84%E8%A7%86%E9%A2%91%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D-%E8%A7%86%E9%A2%91%E6%A0%BC%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D"><span class="nav-number">35.</span> <span class="nav-text">36.常见的视频编码格式有几种?视频格式有几种?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#37-canvas%E5%9C%A8%E6%A0%87%E7%AD%BE%E4%B8%8A%E8%AE%BE%E7%BD%AE%E5%AE%BD%E9%AB%98-%E5%92%8C%E5%9C%A8style%E4%B8%AD%E8%AE%BE%E7%BD%AE%E5%AE%BD%E9%AB%98%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">36.</span> <span class="nav-text">37.canvas在标签上设置宽高 和在style中设置宽高有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#38-border-image%EF%BC%9Fbox-sizing"><span class="nav-number">37.</span> <span class="nav-text">38.border-image？box-sizing?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#39-%E6%B8%90%E8%BF%9B%E5%A2%9E%E5%BC%BA%E5%92%8C%E4%BC%98%E9%9B%85%E9%99%8D%E7%BA%A7"><span class="nav-number">38.</span> <span class="nav-text">39.渐进增强和优雅降级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#41-animation%E5%AF%B9%E5%BA%94%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">39.</span> <span class="nav-text">41.animation对应的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#42-transition"><span class="nav-number">40.</span> <span class="nav-text">42.transition?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#43-h5%E6%96%B0%E7%89%B9%E6%80%A7%EF%BC%9F"><span class="nav-number">41.</span> <span class="nav-text">43.h5新特性？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#44-canvas-%E5%A6%82%E4%BD%95%E7%BB%98%E5%88%B6%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2-%E6%AD%A3%E6%96%B9%E5%BD%A2"><span class="nav-number">42.</span> <span class="nav-text">44.canvas 如何绘制一个三角形|正方形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#45-%E6%89%80%E7%94%A8bootstap%E7%89%88%E6%9C%AC%EF%BC%9F"><span class="nav-number">43.</span> <span class="nav-text">45.所用bootstap版本？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#46-css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="nav-number">44.</span> <span class="nav-text">46.css清除浮动的几种方式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#47-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%9D%E5%A7%8B%E5%8C%96CSS%E6%A0%B7%E5%BC%8F%E3%80%82"><span class="nav-number">45.</span> <span class="nav-text">47.为什么要初始化CSS样式。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#48-CSS3%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7%EF%BC%9F"><span class="nav-number">46.</span> <span class="nav-text">48.CSS3有哪些新特性？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#49-%E8%A7%A3%E9%87%8A%E4%B8%8B-CSS-sprites%EF%BC%8C%E4%BB%A5%E5%8F%8A%E4%BD%A0%E8%A6%81%E5%A6%82%E4%BD%95%E5%9C%A8%E9%A1%B5%E9%9D%A2%E6%88%96%E7%BD%91%E7%AB%99%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AE%83%E3%80%82"><span class="nav-number">47.</span> <span class="nav-text">49.解释下 CSS sprites，以及你要如何在页面或网站中使用它。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#50-%E4%BB%80%E4%B9%88%E6%98%AF-FOUC%EF%BC%88%E6%97%A0%E6%A0%B7%E5%BC%8F%E5%86%85%E5%AE%B9%E9%97%AA%E7%83%81%EF%BC%89%EF%BC%9F%E4%BD%A0%E5%A6%82%E4%BD%95%E6%9D%A5%E9%81%BF%E5%85%8D-FOUC%EF%BC%9F"><span class="nav-number"></span> <span class="nav-text">50.什么是 FOUC（无样式内容闪烁）？你如何来避免 FOUC？</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

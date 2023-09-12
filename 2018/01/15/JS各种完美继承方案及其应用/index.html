@@ -1,0 +1,705 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="ES5组合继承方案（首选）12345678910111213141516171819202122232425262728var Parent &#x3D; function (name, age) &amp;#123;    this.name &#x3D; name    this.age &#x3D; age    this.say &#x3D; function () &amp;#123;        console.log(&amp;#x27;say">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS各种完美继承方案及其应用">
+<meta property="og:url" content="https://sellenite.github.io/2018/01/15/JS%E5%90%84%E7%A7%8D%E5%AE%8C%E7%BE%8E%E7%BB%A7%E6%89%BF%E6%96%B9%E6%A1%88%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="ES5组合继承方案（首选）12345678910111213141516171819202122232425262728var Parent &#x3D; function (name, age) &amp;#123;    this.name &#x3D; name    this.age &#x3D; age    this.say &#x3D; function () &amp;#123;        console.log(&amp;#x27;say">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-01-15T12:55:19.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.103Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2018/01/15/JS各种完美继承方案及其应用/"/>
+
+
+
+
+
+  <title> JS各种完美继承方案及其应用 | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/01/15/JS%E5%90%84%E7%A7%8D%E5%AE%8C%E7%BE%8E%E7%BB%A7%E6%89%BF%E6%96%B9%E6%A1%88%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JS各种完美继承方案及其应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-15T20:55:19+08:00">
+                2018-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2018/01/15/JS%E5%90%84%E7%A7%8D%E5%AE%8C%E7%BE%8E%E7%BB%A7%E6%89%BF%E6%96%B9%E6%A1%88%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="ES5组合继承方案（首选）"><a href="#ES5组合继承方案（首选）" class="headerlink" title="ES5组合继承方案（首选）"></a>ES5组合继承方案（首选）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Parent</span> = <span class="keyword">function</span> (<span class="params">name, age</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">say</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;say from parent constructor&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayALL</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;sayALL from parent prototype&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 完美继承</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Child</span> = <span class="keyword">function</span> (<span class="params">name, age, type</span>) &#123;</span><br><span class="line">    <span class="comment">// 调用父元素构造函数</span></span><br><span class="line">    <span class="title class_">Parent</span>.<span class="title function_">apply</span>(<span class="variable language_">this</span>, [name, age])</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">type</span> = type</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Object.create(..)它会创建一个对象并把这个对象的[[Prototype]]关联到指定的对象</span></span><br><span class="line"><span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span>)</span><br><span class="line"><span class="comment">// 这里直接赋值会造成constructor在实例中能在原型链上被枚举</span></span><br><span class="line"><span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Child</span></span><br><span class="line"><span class="comment">/* 可选，通过以下方式使constructor不能被枚举 */</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(<span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span>, <span class="string">&#x27;constructor&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">configurable</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">value</span>: <span class="title class_">Child</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Child</span> = <span class="keyword">new</span> <span class="title class_">Child</span>(<span class="string">&#x27;yuuhei&#x27;</span>, <span class="string">&#x27;23&#x27;</span>, <span class="string">&#x27;Child&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ES5寄生组合继承方案（候选）"><a href="#ES5寄生组合继承方案（候选）" class="headerlink" title="ES5寄生组合继承方案（候选）"></a>ES5寄生组合继承方案（候选）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Parent</span> = <span class="keyword">function</span> (<span class="params">name, age</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">say</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;say from parent constructor&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayALL</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;sayALL from parent prototype&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 完美继承</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Child</span> = <span class="keyword">function</span> (<span class="params">name, age, type</span>) &#123;</span><br><span class="line">    <span class="comment">// 调用父元素构造函数</span></span><br><span class="line">    <span class="title class_">Parent</span>.<span class="title function_">apply</span>(<span class="variable language_">this</span>, [name, age])</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">type</span> = type</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 重点</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Super</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="title class_">Super</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line"><span class="comment">// 这时候Super实例化就没有Parent的构造函数的内容了</span></span><br><span class="line"><span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Super</span>()</span><br><span class="line"><span class="comment">// 这里直接赋值会造成constructor在实例中能在原型链上被枚举</span></span><br><span class="line"><span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Child</span></span><br><span class="line"><span class="comment">/* 可选，通过以下方式使constructor不能被枚举 */</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(<span class="title class_">Child</span>.<span class="property"><span class="keyword">prototype</span></span>, <span class="string">&#x27;constructor&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">configurable</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">value</span>: <span class="title class_">Child</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Child</span> = <span class="keyword">new</span> <span class="title class_">Child</span>(<span class="string">&#x27;yuuhei&#x27;</span>, <span class="string">&#x27;23&#x27;</span>, <span class="string">&#x27;Child&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ES6的class实现继承方案（首选）"><a href="#ES6的class实现继承方案（首选）" class="headerlink" title="ES6的class实现继承方案（首选）"></a>ES6的class实现继承方案（首选）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Parent</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">say</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;this is parent&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6语法糖继承</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Child</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Parent</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">name, age, type</span>) &#123;</span><br><span class="line">        <span class="comment">// super必须放在第一行</span></span><br><span class="line">        <span class="variable language_">super</span>(name, age)</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">type</span> = type</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">sayChild</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 利用super调用父构造函数</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">super</span>.<span class="title function_">say</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> children = <span class="keyword">new</span> <span class="title class_">Child</span>(<span class="string">&#x27;yuuhei&#x27;</span>, <span class="number">23</span>, <span class="string">&#x27;child&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="class扩展阅读参考（伪多态等）"><a href="#class扩展阅读参考（伪多态等）" class="headerlink" title="class扩展阅读参考（伪多态等）"></a>class扩展阅读参考（伪多态等）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* Orbment.prototype.call(this, ...)是伪多态 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Orbment</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">name</span> = name || <span class="string">&#x27;Orbment&#x27;</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">message</span> = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setSize</span>(<span class="params">width, height</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">width</span> = width || <span class="number">50</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">height</span> = height || <span class="number">50</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">message</span> = <span class="string">`The <span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span> `</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">getMessage</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">message</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ENIGMA</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Orbment</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">name, width, height</span>) &#123;</span><br><span class="line">        <span class="comment">// super()在constructor必须在this调用前执行</span></span><br><span class="line">        <span class="variable language_">super</span>(name);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">width</span> = width || <span class="number">50</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">height</span> = height || <span class="number">50</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setSize</span>(<span class="params">width, height</span>) &#123;</span><br><span class="line">        <span class="comment">// 以前的伪多态写法：Orbment.prototype.setSize.apply(this, [width, height])</span></span><br><span class="line">        <span class="comment">// 注意你不知道的javascript出版书上的super(width, height)在constructor外使用已被禁止，改为替换以下方式实现相对多态</span></span><br><span class="line">        <span class="comment">// 对父元素的setSize的基础上进行重写</span></span><br><span class="line">        <span class="variable language_">super</span>.<span class="title function_">setSize</span>(width, height);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">message</span> += <span class="string">`size is width <span class="subst">$&#123;<span class="variable language_">this</span>.width&#125;</span> and height <span class="subst">$&#123;<span class="variable language_">this</span>.height&#125;</span>`</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ARCUS</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Orbment</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">name, width, height</span>) &#123;</span><br><span class="line">        <span class="comment">// super()在constructor必须在this调用前执行</span></span><br><span class="line">        <span class="variable language_">super</span>(name);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">width</span> = width || <span class="number">50</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">height</span> = height || <span class="number">50</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setSize</span>(<span class="params">width, height</span>) &#123;</span><br><span class="line">        <span class="comment">// 以前的伪多态写法：Orbment.prototype.setSize.apply(this, [width, height])</span></span><br><span class="line">        <span class="comment">// 注意你不知道的javascript出版书上的super(width, height)在constructor外使用已被禁止，改为替换以下方式实现相对多态</span></span><br><span class="line">        <span class="comment">// 对父元素的setSize的基础上进行重写</span></span><br><span class="line">        <span class="variable language_">super</span>.<span class="title function_">setSize</span>(width, height);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">message</span> += <span class="string">`size is width <span class="subst">$&#123;<span class="variable language_">this</span>.width&#125;</span> and height <span class="subst">$&#123;<span class="variable language_">this</span>.height&#125;</span>`</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable constant_">ENIGMA_I</span> = <span class="keyword">new</span> <span class="title function_">ARCUS</span>(<span class="string">&#x27;ENIGMA_I&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable constant_">ENIGMA_I_SIZE_MESSAGE</span> = <span class="variable constant_">ENIGMA_I</span></span><br><span class="line">    .<span class="title function_">setSize</span>()</span><br><span class="line">    .<span class="title function_">getMessage</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable constant_">ARCUS_I</span> = <span class="keyword">new</span> <span class="title function_">ARCUS</span>(<span class="string">&#x27;ARCUS_I&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable constant_">ARCUS_I_SIZE_MESSAGE</span> = <span class="variable constant_">ARCUS_I</span></span><br><span class="line">    .<span class="title function_">setSize</span>(<span class="number">100</span>, <span class="number">70</span>)</span><br><span class="line">    .<span class="title function_">getMessage</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable constant_">ENIGMA_I_SIZE_MESSAGE</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable constant_">ARCUS_I_SIZE_MESSAGE</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/15/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%B8%B8%E7%94%A8%E5%85%83%E7%B4%A0%E7%AD%89%E6%AF%94%E7%BC%A9%E6%94%BE%E5%8E%9F%E7%90%86/" rel="next" title="移动端常用元素等比缩放原理">
+                <i class="fa fa-chevron-left"></i> 移动端常用元素等比缩放原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/15/%E5%85%B3%E4%BA%8EES6%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%9A%84%E5%85%B3%E4%BA%8E-Prototype-%E7%9A%84%E5%87%A0%E4%B8%AAAPI/" rel="prev" title="关于ES6的几个新的关于[[Prototype]]的几个API">
+                关于ES6的几个新的关于[[Prototype]]的几个API <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES5%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF%E6%96%B9%E6%A1%88%EF%BC%88%E9%A6%96%E9%80%89%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">ES5组合继承方案（首选）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES5%E5%AF%84%E7%94%9F%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF%E6%96%B9%E6%A1%88%EF%BC%88%E5%80%99%E9%80%89%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">ES5寄生组合继承方案（候选）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6%E7%9A%84class%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF%E6%96%B9%E6%A1%88%EF%BC%88%E9%A6%96%E9%80%89%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">ES6的class实现继承方案（首选）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#class%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB%E5%8F%82%E8%80%83%EF%BC%88%E4%BC%AA%E5%A4%9A%E6%80%81%E7%AD%89%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">class扩展阅读参考（伪多态等）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

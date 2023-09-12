@@ -1,0 +1,741 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="微信," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文实现了以下功能：  iframe可加载微信公众号内容 可加载微信的视频或外链的视频 可绕过微信图片的防盗链 iframe里的微信公众号的跳转链接实现浏览器新窗口跳转  前言：由于微信前端页面的的服务器设置了Content-Security-Policy，导致他的资源如果在非白名单的网页被引用，就会拒绝返回资源，导致iframe加载内容失败  注：开启了CSP的时候要记得配置一下unsafe-e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用iframe引入微信公众号的链接">
+<meta property="og:url" content="https://sellenite.github.io/2020/07/21/%E4%BD%BF%E7%94%A8iframe%E5%BC%95%E5%85%A5%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E7%9A%84%E9%93%BE%E6%8E%A5/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="本文实现了以下功能：  iframe可加载微信公众号内容 可加载微信的视频或外链的视频 可绕过微信图片的防盗链 iframe里的微信公众号的跳转链接实现浏览器新窗口跳转  前言：由于微信前端页面的的服务器设置了Content-Security-Policy，导致他的资源如果在非白名单的网页被引用，就会拒绝返回资源，导致iframe加载内容失败  注：开启了CSP的时候要记得配置一下unsafe-e">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-07-21T13:56:10.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.132Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="微信">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2020/07/21/使用iframe引入微信公众号的链接/"/>
+
+
+
+
+
+  <title> 使用iframe引入微信公众号的链接 | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2020/07/21/%E4%BD%BF%E7%94%A8iframe%E5%BC%95%E5%85%A5%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E7%9A%84%E9%93%BE%E6%8E%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用iframe引入微信公众号的链接
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-21T21:56:10+08:00">
+                2020-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2020/07/21/%E4%BD%BF%E7%94%A8iframe%E5%BC%95%E5%85%A5%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E7%9A%84%E9%93%BE%E6%8E%A5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文实现了以下功能：</p>
+<ul>
+<li>iframe可加载微信公众号内容</li>
+<li>可加载微信的视频或外链的视频</li>
+<li>可绕过微信图片的防盗链</li>
+<li>iframe里的微信公众号的跳转链接实现浏览器新窗口跳转</li>
+</ul>
+<p>前言：由于微信前端页面的的服务器设置了<code>Content-Security-Policy</code>，导致他的资源如果在非白名单的网页被引用，就会拒绝返回资源，导致iframe加载内容失败</p>
+<blockquote>
+<p>注：开启了CSP的时候要记得配置一下<code>unsafe-eval</code>和<code>unsafe-inline</code>，否则一些eval()，setTimeout，setInterval会无法执行；内联script，内联样式，内联事件都会失效</p>
+</blockquote>
+<p>关于CSP的一些详细说明：</p>
+<span id="more"></span>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25623257/article/details/90473859">https://blog.csdn.net/qq_25623257/article/details/90473859</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy</a></p>
+<p>微信的CSP配置如下（检查前端html的响应头返回，微信这里是一个服务端渲染）：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content-security-policy: script-<span class="attribute">src</span> <span class="string">&#x27;self&#x27;</span> <span class="string">&#x27;unsafe-inline&#x27;</span> <span class="string">&#x27;unsafe-eval&#x27;</span> http://*.qq.com https://*.qq.com http://*.weishi.com https://*.weishi.com http://*.m.tencent.com https://*.m.tencent.com http://*.weixin.qq.com https://*.weixin.qq.com https://midas.gtimg.cn <span class="string">&#x27;nonce-505653230&#x27;</span>;style-<span class="attribute">src</span> <span class="string">&#x27;self&#x27;</span> <span class="string">&#x27;unsafe-inline&#x27;</span> http://*.qq.com https://*.qq.com;object-<span class="attribute">src</span> <span class="string">&#x27;self&#x27;</span> http://*.qq.com https://*.qq.com http://*.qpic.cn https://*.qpic.cn http://*.qlogo.cn https://*.qlogo.cn;font-<span class="attribute">src</span> <span class="string">&#x27;self&#x27;</span> data: http://*.qq.com https://*.qq.com http://fonts.gstatic.com https://fonts.gstatic.com;frame-<span class="attribute">ancestors</span> <span class="string">&#x27;self&#x27;</span> http://wx.qq.com https://wx.qq.com http://wx2.qq.com https://wx2.qq.com  http://wx8.qq.com https://wx8.qq.com http://web.wechat.com https://web.wechat.com http://web1.wechat.com https://web1.wechat.com http://web2.wechat.com https://web2.wechat.com http://sticker.weixin.qq.com https://sticker.weixin.qq.com http://bang.qq.com https://bang.qq.com http://app.work.weixin.qq.com https://app.work.weixin.qq.com http://work.weixin.qq.com https://work.weixin.qq.com http://finance.qq.com https://finance.qq.com http://gu.qq.com https://gu.qq.com http://wzq.tenpay.com https://wzq.tenpay.com http://test.tcp.tencent.com https://test.tcp.tencent.com http://dev.tcp.tencent.com https://dev.tcp.tencent.com http://tcp.tencent.com https://tcp.tencent.com http://mail.qq.com https://mail.qq.com http://wx.mail.qq.com https://wx.mail.qq.com http://iwx.mail.qq.com https://iwx.mail.qq.com http://dev.mail.qq.com https://dev.mail.qq.com;report-<span class="attribute">uri</span> https://mp.weixin.qq.com/mp/fereport?action=csp_report</span><br></pre></td></tr></table></figure>
+
+<p>看到配置还配置到了一个<code>report-uri</code>，如果触发了拦截，会主动发送POST请求到这个uri里，发送的payload字段如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;csp-report&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;document-uri&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;referrer&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;violated-directive&quot;</span><span class="punctuation">:</span> <span class="string">&quot;frame-ancestors&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;effective-directive&quot;</span><span class="punctuation">:</span> <span class="string">&quot;frame-ancestors&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;original-policy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; http://*.qq.com https://*.qq.com http://*.weishi.com https://*.weishi.com http://*.m.tencent.com https://*.m.tencent.com http://*.weixin.qq.com https://*.weixin.qq.com https://midas.gtimg.cn &#x27;nonce-1034686668&#x27;;style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; http://*.qq.com https://*.qq.com;object-src &#x27;self&#x27; http://*.qq.com https://*.qq.com http://*.qpic.cn https://*.qpic.cn http://*.qlogo.cn https://*.qlogo.cn;font-src &#x27;self&#x27; data: http://*.qq.com https://*.qq.com http://fonts.gstatic.com https://fonts.gstatic.com;frame-ancestors &#x27;self&#x27; http://wx.qq.com https://wx.qq.com http://wx2.qq.com https://wx2.qq.com  http://wx8.qq.com https://wx8.qq.com http://web.wechat.com https://web.wechat.com http://web1.wechat.com https://web1.wechat.com http://web2.wechat.com https://web2.wechat.com http://sticker.weixin.qq.com https://sticker.weixin.qq.com http://bang.qq.com https://bang.qq.com http://app.work.weixin.qq.com https://app.work.weixin.qq.com http://work.weixin.qq.com https://work.weixin.qq.com http://finance.qq.com https://finance.qq.com http://gu.qq.com https://gu.qq.com http://wzq.tenpay.com https://wzq.tenpay.com http://test.tcp.tencent.com https://test.tcp.tencent.com http://dev.tcp.tencent.com https://dev.tcp.tencent.com http://tcp.tencent.com https://tcp.tencent.com http://mail.qq.com https://mail.qq.com http://wx.mail.qq.com https://wx.mail.qq.com http://iwx.mail.qq.com https://iwx.mail.qq.com http://dev.mail.qq.com https://dev.mail.qq.com;report-uri https://mp.weixin.qq.com/mp/fereport?action=csp_report&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;disposition&quot;</span><span class="punctuation">:</span> <span class="string">&quot;enforce&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;blocked-uri&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;status-code&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;script-sample&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>并且使用了iframe的前端会报一个错：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Refused</span> to display <span class="string">&#x27;https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg&#x27;</span> <span class="keyword">in</span> a frame because an ancestor violates the following <span class="title class_">Content</span> <span class="title class_">Security</span> <span class="title class_">Policy</span> <span class="attr">directive</span>: <span class="string">&quot;frame-ancestors &#x27;self&#x27; http://wx.qq.com https://wx.qq.com http://wx2.qq.com https://wx2.qq.com  http://wx8.qq.com https://wx8.qq.com http://web.wechat.com https://web.wechat.com http://web1.wechat.com https://web1.wechat.com http://web2.wechat.com https://web2.wechat.com http://sticker.weixin.qq.com https://sticker.weixin.qq.com http://bang.qq.com https://bang.qq.com http://app.work.weixin.qq.com https://app.work.weixin.qq.com http://work.weixin.qq.com https://work.weixin.qq.com http://finance.qq.com https://finance.qq.com http://gu.qq.com https://gu.qq.com http://wzq.tenpay.com https://wzq.tenpay.com http://test.tcp.tencent.com https://test.tcp.tencent.com http://dev.tcp.tencent.com https://dev.tcp.tencent.com http://tcp.tencent.com https://tcp.tencent.com http://mail.qq.com https://mail.qq.com http://wx.mail.qq.com https://wx.mail.qq.com http://iwx.mail.qq.com https://iwx.mail.qq.com http://dev.mail.qq.com https://dev.mail.qq.com&quot;</span>.</span><br></pre></td></tr></table></figure>
+
+<p>如果网页不在白名单里，这时候前端就不能够直接引用微信公众号的资源了，只能够将微信本身的html内容返回后，做处理后再渲染出来</p>
+<p>寻找了网上的方案，所有的方案都指向了以下项目：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Rob--W/cors-anywhere">https://github.com/Rob--W/cors-anywhere</a></p>
+<p>该项目可以允许任意跨域请求，且基于nodejs开发，很好地解决了本地部署的问题，因为不可能使用他提供的服务器，很慢且很不稳定，把源码下载下来后可以直接本地部署。用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axios.<span class="title function_">get</span>(process.<span class="property">env</span>.<span class="property">VUE_APP_CORS_ANYWHERE_API_URL</span> + <span class="string">&#x27;/&#x27;</span> + website)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这样就可以返回请求的内容，我们把website替换成微信公众号的链接，这时候返回了html到前端，完成了成功的第一步</p>
+<p>拿到html后，尝试使用write写入资源（必须，因为有一些script需要加载，使用<code>appendChild</code>会导致这些script无法执行）后，会发现除了标题，其他一片空白，因为很多<code>visibility</code>属性都被设置为<code>hidden</code>了，需要全局替换一些改为<code>visible</code></p>
+<blockquote>
+<p> 注：iframe的src不要使用<code>&#39;data:text/html;charset=utf-8,&#39; + html</code>的方式加载，使用<code>container.contentWindow.document.write(html)</code>写入资源</p>
+</blockquote>
+<p>然后又会发现图片全部都有一个<code>data-src</code>属性，原本的<code>src</code>属性只是一个默认图，这时候也需要将他们的属性进行替换，<code>data-src</code>是用来作为懒加载的，有些js并不能够好好运行，只能改成直接显示</p>
+<p>图片显示出来后，会发现微信居然对图片也做了防盗链处理，只能够处理防盗链的问题才能够显示。图片防盗链的原理是在放图片的服务器上加了对<code>Referer</code>的验证，资源在请求的时候，会带上<code>Referer</code>这个请求头（自动带上，且前端不可以设置这个请求头），那么解决方法就是请求自己的服务器，然后在自己的服务器再请求图片的服务器，自己的服务器置空<code>Referer</code>这个请求头，这样图片的服务器就会认为你只是简单的加载图片，而不是通过项目请求的图片，就会成功返回这个图片文件流，然后自己的服务器将这个文件流返回给前端，就可以完成绕过图片防盗链</p>
+<p>网上有很多绕过图片防盗链的请求链接，这里推荐使用<a target="_blank" rel="noopener" href="https://images.weserv.nl,速度很快/">https://images.weserv.nl，速度很快</a></p>
+<p>但有个坑点，如果是gif，需要在后面加上一些参数<code>&amp;output=gif&amp;n=-1</code>，说明他以gif返回，否则返回的图片是不会动的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://images.weserv.nl/?url=https://mmbiz.qpic.cn/mmbiz_gif/iblvrvduDqxFibk6bianDue1Ygn2t0k1Cs8dmKjwcibxIesKWwDZwrib0aNxOxpZQyo4MxUPag0Cgz3dCrTMW6prHGA/640?wx_fmt=gif&amp;output=gif&amp;n=-1</span><br></pre></td></tr></table></figure>
+
+<p>或者使用文章里绕过图片防盗链的node方法，放在自己的服务器更放心。</p>
+<p>微信的图片链接一般都会有一个参数说明这个图片是什么类型：<code>wx_fmt</code>，否则其实微信这个mmbiz.qpic.cn接口，也只是请求文件流，并不是访问服务器的真实地址，通过这个<code>wx_fmt</code>决定了返回的<code>Content-Type</code>是什么，这样直接浏览才会显示图片类型，而不是变成了下载这个文件</p>
+<blockquote>
+<p>注：不要在html增加<code>&lt;meta name=&quot;referrer&quot; content=&quot;never&quot;&gt;</code>的方法处理这类事件</p>
+</blockquote>
+<p>解决了图片的外链问题后，会发现上传到微信服务器的视频的视频链接是无法加载的，且前端报了以下错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moon4df393.js:275 [TryCatch]Error: Blocked a frame with origin &quot;https://mp.weixin.qq.com&quot; from accessing a cross-origin frame.</span><br></pre></td></tr></table></figure>
+
+<p>意思就是这个加载的视频链接，里面加载的js有进行xhr请求，在我们域名进行请求就会造成跨域。</p>
+<p>由于在上一个获取微信内容的步骤中，已经有允许跨域请求的接口，我们查找出这个视频链接进行了什么xhr请求，然后使用这个跨域接口将它请求返回到前端即可。这个请求实际是为了返回视频的资源地址，返回了资源地址后，直接修改dom使用video加载这个src即可解决微信视频无法播放的问题</p>
+<p>还有一个问题，就是微信对跳转链接【有图片跳转和文字跳转】也做了处理，通过这种方法加载出来的文章点击这个链接是无法跳转的，且需求是需要在浏览器新窗口进行跳转，这就需要特殊处理一下：</p>
+<p>大体方向是取到需要跳转链接的a标签的dom，然后addEventListener，分别加入click和touch事件，且必须使用捕获的监听事件，才能正确执行回调的方法且不执行其他微信加了的监听事件</p>
+<blockquote>
+<p>以下为具体细节实现源码：</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">id</span>=<span class="string">&quot;wx_iframe&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span> <span class="attr">scrolling</span>=<span class="string">&quot;no&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">const</span> website = <span class="string">&#x27;https://mp.weixin.qq.com/s/84wXnUBr1oE4D9z9oScRmg&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> imgPrefix = <span class="string">&#x27;https://images.weserv.nl/?url=&#x27;</span>; <span class="comment">// 绕过微信公众号图片的防盗链，如果是加载gif，需要加上参数&amp;output=gif&amp;n=-1，必须加上n=-1，不然不生效</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="title function_">_getWeixinNews</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">$client</span>.<span class="title function_">showLoading</span>();</span><br><span class="line">  axios.<span class="title function_">get</span>(process.<span class="property">env</span>.<span class="property">VUE_APP_CORS_ANYWHERE_API_URL</span> + <span class="string">&#x27;/&#x27;</span> + website).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 处理DOMString</span></span><br><span class="line">    <span class="keyword">let</span> data = res.<span class="property">data</span></span><br><span class="line">    <span class="comment">// data-src是图片的预加载机制，visible是返回后默认是hidden</span></span><br><span class="line">    data = data.<span class="title function_">replace</span>(<span class="regexp">/data-src/gi</span>, <span class="string">&#x27;src&#x27;</span>).<span class="title function_">replace</span>(<span class="regexp">/hidden/gi</span>, <span class="string">&#x27;visible&#x27;</span>);</span><br><span class="line">    <span class="comment">// 在img前面加上反倒链的请求链接</span></span><br><span class="line">    data = data.<span class="title function_">replace</span>(<span class="regexp">/&lt;img [^&gt;]*src=[&#x27;&quot;]([^&#x27;&quot;]+)[^&gt;]*&gt;/gi</span>, <span class="function">(<span class="params">match, capture</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// gif必须加上额外参数</span></span><br><span class="line">      <span class="keyword">if</span> (match.<span class="title function_">indexOf</span>(<span class="string">&#x27;data-type=&quot;gif&quot;&#x27;</span>) !== -<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> match.<span class="title function_">replace</span>(capture, imgPrefix + capture + <span class="string">&#x27;&amp;output=gif&amp;n=-1&#x27;</span>)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> match.<span class="title function_">replace</span>(capture, imgPrefix + capture)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 将DOMString转换为DOM，以便操作DOM</span></span><br><span class="line">    <span class="keyword">const</span> wx_dom = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">    wx_dom.<span class="property">innerHTML</span> = data;</span><br><span class="line">    <span class="comment">// 删除加载失败的二维码，要想加载成功需要代理地址</span></span><br><span class="line">    <span class="keyword">const</span> qrcode = wx_dom.<span class="title function_">querySelector</span>(<span class="string">&#x27;#js_pc_qr_code&#x27;</span>);</span><br><span class="line">    qrcode &amp;&amp; qrcode.<span class="property">parentNode</span>.<span class="title function_">removeChild</span>(qrcode);</span><br><span class="line">    <span class="comment">// 删除再看人数，功能不能正常执行</span></span><br><span class="line">    <span class="keyword">const</span> watching = wx_dom.<span class="title function_">querySelector</span>(<span class="string">&#x27;#js_like_btn&#x27;</span>);</span><br><span class="line">    watching &amp;&amp; watching.<span class="property">parentNode</span>.<span class="title function_">removeChild</span>(watching);</span><br><span class="line">    <span class="comment">// 删除点击外链的时候会出现的弹框</span></span><br><span class="line">    <span class="keyword">const</span> js_link_dialog = wx_dom.<span class="title function_">querySelector</span>(<span class="string">&#x27;#js_link_dialog&#x27;</span>);</span><br><span class="line">    js_link_dialog &amp;&amp; js_link_dialog.<span class="property">parentNode</span>.<span class="title function_">removeChild</span>(js_link_dialog);</span><br><span class="line">    <span class="comment">// 处理微信的视频iframe</span></span><br><span class="line">    <span class="keyword">const</span> videoElList = <span class="title class_">Array</span>.<span class="title function_">from</span>(wx_dom.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.video_iframe.rich_pages&#x27;</span>));</span><br><span class="line">    <span class="keyword">const</span> _videoInfoList = videoElList.<span class="title function_">map</span>(<span class="function">(<span class="params">el, index</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 有一些视频是外链，vidtype是1，例如https://mp.weixin.qq.com/s/sMzUXCsPUH1PvtiK3BDU8w，是没有el.dataset.mpvid的，这时候请求会返回的url_info是一个空数组</span></span><br><span class="line">      <span class="comment">// 微信本身的视频的vidtype是为2</span></span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        index,</span><br><span class="line">        <span class="attr">container</span>: el.<span class="property">parentNode</span>,</span><br><span class="line">        <span class="attr">mpvid</span>: el.<span class="property">dataset</span>.<span class="property">mpvid</span>, <span class="comment">// 微信视频的id</span></span><br><span class="line">        <span class="attr">cover</span>: imgPrefix + <span class="built_in">decodeURIComponent</span>(el.<span class="property">dataset</span>.<span class="property">cover</span>), <span class="comment">// 封面</span></span><br><span class="line">        <span class="attr">requestUrl</span>: <span class="string">`http://mp.weixin.qq.com/mp/videoplayer?action=get_mp_video_play_url&amp;preview=0&amp;__biz=&amp;mid=&amp;idx=&amp;vid=<span class="subst">$&#123;el.dataset.mpvid&#125;</span>&amp;uin=&amp;key=&amp;pass_ticket=&amp;wxtoken=&amp;appmsg_token=&amp;x5=0&amp;f=json`</span> <span class="comment">// 请求视频真实地址的请求</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">const</span> requestVideoInfoPromiseList = _videoInfoList.<span class="title function_">map</span>(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (item.<span class="property">mpvid</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> axios.<span class="title function_">get</span>(process.<span class="property">env</span>.<span class="property">VUE_APP_CORS_ANYWHERE_API_URL</span> + <span class="string">&#x27;/&#x27;</span> + item.<span class="property">requestUrl</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(&#123; <span class="attr">data</span>: <span class="literal">null</span> &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 渲染函数，在最后一步执行</span></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">next</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">      <span class="comment">// 必须使用iframe的write进行写入资源，否则script不会运行，一些微信引用的外链视频就会无法执行</span></span><br><span class="line">      <span class="keyword">const</span> container = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;wx_iframe&#x27;</span>);</span><br><span class="line">      container.<span class="property">contentWindow</span>.<span class="property">document</span>.<span class="title function_">write</span>(wx_dom.<span class="property">innerHTML</span>);</span><br><span class="line">      <span class="comment">// iframe无法冒泡出去</span></span><br><span class="line">      container.<span class="property">contentWindow</span>.<span class="property">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="variable language_">this</span>.<span class="property">handleUnActiveMobileEdit</span>);</span><br><span class="line">      <span class="comment">// 处理点击a标签外链链接跳转</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;------- a_link inject -------&#x27;</span>);</span><br><span class="line">      <span class="keyword">const</span> aList = <span class="title class_">Array</span>.<span class="title function_">from</span>(container.<span class="property">contentWindow</span>.<span class="property">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;a&#x27;</span>));</span><br><span class="line">      <span class="keyword">const</span> aLinkList = [];</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> aItem <span class="keyword">of</span> aList) &#123;</span><br><span class="line">        <span class="keyword">if</span> (aItem.<span class="title function_">getAttribute</span>(<span class="string">&#x27;tab&#x27;</span>) === <span class="string">&#x27;outerlink&#x27;</span> &amp;&amp; aItem.<span class="property">href</span>) &#123;</span><br><span class="line">          <span class="comment">// pc监听，必须使用捕获</span></span><br><span class="line">          aItem.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">            e.<span class="title function_">preventDefault</span>();</span><br><span class="line">            e.<span class="title function_">stopImmediatePropagation</span>();</span><br><span class="line">            <span class="variable language_">window</span>.<span class="title function_">open</span>(aItem.<span class="property">href</span>);</span><br><span class="line">          &#125;, <span class="literal">true</span>);</span><br><span class="line">          <span class="comment">// 移动端监听，必须使用捕获</span></span><br><span class="line">          aItem.<span class="title function_">addEventListener</span>(<span class="string">&#x27;touchend&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">            e.<span class="title function_">preventDefault</span>();</span><br><span class="line">            e.<span class="title function_">stopImmediatePropagation</span>();</span><br><span class="line">            <span class="variable language_">window</span>.<span class="title function_">open</span>(aItem.<span class="property">href</span>);</span><br><span class="line">          &#125;, <span class="literal">true</span>);</span><br><span class="line">          aLinkList.<span class="title function_">push</span>(aItem);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(aLinkList);</span><br><span class="line">      <span class="comment">// 处理微信的page_share_img模式，由于body的class是通过js生成的，会导致部分样式不生效，需要手动添加</span></span><br><span class="line">      <span class="keyword">const</span> body = container.<span class="property">contentWindow</span>.<span class="property">document</span>.<span class="property">documentElement</span> || container.<span class="property">contentWindow</span>.<span class="property">document</span>.<span class="property">body</span>;</span><br><span class="line">      body &amp;&amp; <span class="title function_">addClass</span>(body, <span class="string">&#x27;page_share_img&#x27;</span>);</span><br><span class="line">      <span class="comment">// 持续监听iframe的高度，由于图片显示的关系，高度会一直变化</span></span><br><span class="line">      timer = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (container.<span class="property">contentWindow</span>) &#123;</span><br><span class="line">          <span class="comment">// 使用内容的高度作为iframe的高度，以达到自适应的效果</span></span><br><span class="line">          <span class="keyword">const</span> inner = container.<span class="property">contentWindow</span>.<span class="property">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#js_article&#x27;</span>);</span><br><span class="line">          container.<span class="property">style</span>.<span class="property">height</span> = inner.<span class="property">scrollHeight</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;, <span class="number">1000</span>);</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$client</span>.<span class="title function_">hideLoading</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 获取微信video真实播放地址</span></span><br><span class="line">    <span class="title class_">Promise</span>.<span class="title function_">all</span>(requestVideoInfoPromiseList).<span class="title function_">then</span>(<span class="function"><span class="params">arr</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;------- wx_video inject -------&#x27;</span>);</span><br><span class="line">      <span class="keyword">const</span> videoInfoList = _videoInfoList.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          ...item,</span><br><span class="line">          <span class="attr">videoUrl</span>: (arr[index].<span class="property">data</span> &amp;&amp; arr[index].<span class="property">data</span>.<span class="property">url_info</span> &amp;&amp; arr[index].<span class="property">data</span>.<span class="property">url_info</span>[<span class="number">0</span>]) ? arr[index].<span class="property">data</span>.<span class="property">url_info</span>[<span class="number">0</span>].<span class="property">url</span> : <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> videoInfoList) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!item.<span class="property">videoUrl</span>) &#123;</span><br><span class="line">          <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 安卓微信X5内核浏览器，假如有poster无法显示，video标签加上x5-video-player-type=&quot;h5&quot;试试</span></span><br><span class="line">        item.<span class="property">container</span>.<span class="property">innerHTML</span> = <span class="string">`</span></span><br><span class="line"><span class="string">          &lt;div&gt;</span></span><br><span class="line"><span class="string">            &lt;video src=&quot;<span class="subst">$&#123;item.videoUrl&#125;</span>&quot; width=&quot;100%&quot; style=&quot;object-fit: contain;&quot; poster=&quot;<span class="subst">$&#123;item.cover&#125;</span>&quot; controls=&quot;controls&quot;&gt;&lt;/video&gt;</span></span><br><span class="line"><span class="string">          &lt;/div&gt;</span></span><br><span class="line"><span class="string">        `</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(videoInfoList);</span><br><span class="line">      <span class="title function_">next</span>();</span><br><span class="line">    &#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$client</span>.<span class="title function_">error</span>(&#123; <span class="attr">message</span>: err.<span class="property">message</span> &#125;);</span><br><span class="line">      <span class="title function_">next</span>();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$client</span>.<span class="title function_">error</span>(&#123; <span class="attr">message</span>: err.<span class="property">message</span> &#125;);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$client</span>.<span class="title function_">hideLoading</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%BE%AE%E4%BF%A1/" rel="tag"># 微信</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/21/node%E5%AE%9E%E7%8E%B0%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0%E7%A1%AC%E7%9B%98/" rel="next" title="node实现上传文件并保存到硬盘">
+                <i class="fa fa-chevron-left"></i> node实现上传文件并保存到硬盘
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/05/22/%E6%8E%98%E9%87%91spam%E6%B2%B8%E7%82%B9%E8%84%9A%E6%9C%AC/" rel="prev" title="掘金spam沸点脚本">
+                掘金spam沸点脚本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

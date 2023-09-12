@@ -1,0 +1,775 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Vue," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原理进入页面后添加该页面至缓存。如果是replace进入的则不进行缓存操作； 退出页面的时候移除该页面的缓存； 添加缓存必须是进入页面后再加，这样下次进入才是缓存，而不是进入前加入缓存，进入后立刻获取上一个状态的缓存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-router前进刷新，后退缓存方案；路由动画">
+<meta property="og:url" content="https://sellenite.github.io/2021/06/29/vue-router%E5%89%8D%E8%BF%9B%E5%88%B7%E6%96%B0%EF%BC%8C%E5%90%8E%E9%80%80%E7%BC%93%E5%AD%98%E6%96%B9%E6%A1%88%EF%BC%9B%E8%B7%AF%E7%94%B1%E5%8A%A8%E7%94%BB/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="原理进入页面后添加该页面至缓存。如果是replace进入的则不进行缓存操作； 退出页面的时候移除该页面的缓存； 添加缓存必须是进入页面后再加，这样下次进入才是缓存，而不是进入前加入缓存，进入后立刻获取上一个状态的缓存">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-06-29T09:25:30.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.127Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2021/06/29/vue-router前进刷新，后退缓存方案；路由动画/"/>
+
+
+
+
+
+  <title> vue-router前进刷新，后退缓存方案；路由动画 | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2021/06/29/vue-router%E5%89%8D%E8%BF%9B%E5%88%B7%E6%96%B0%EF%BC%8C%E5%90%8E%E9%80%80%E7%BC%93%E5%AD%98%E6%96%B9%E6%A1%88%EF%BC%9B%E8%B7%AF%E7%94%B1%E5%8A%A8%E7%94%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vue-router前进刷新，后退缓存方案；路由动画
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-29T17:25:30+08:00">
+                2021-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2021/06/29/vue-router%E5%89%8D%E8%BF%9B%E5%88%B7%E6%96%B0%EF%BC%8C%E5%90%8E%E9%80%80%E7%BC%93%E5%AD%98%E6%96%B9%E6%A1%88%EF%BC%9B%E8%B7%AF%E7%94%B1%E5%8A%A8%E7%94%BB/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>进入页面后添加该页面至缓存。如果是replace进入的则不进行缓存操作；</p>
+<p>退出页面的时候移除该页面的缓存；</p>
+<p>添加缓存必须是进入页面后再加，这样下次进入才是缓存，而不是进入前加入缓存，进入后立刻获取上一个状态的缓存</p>
+<span id="more"></span>
+
+<h4 id="重新定义路由跳转的函数"><a href="#重新定义路由跳转的函数" class="headerlink" title="重新定义路由跳转的函数"></a>重新定义路由跳转的函数</h4><p>由于全局需要监听函数是否前进&#x2F;后退，需要重新编写路由的跳转函数，利用store，存储进入前的路由状态routerPushStatus，然后在全局路由守卫中获取这个值，以判断进入的是前进还是后退等：</p>
+<p>加上全局datetime的query的目的是使$route的fullPath每次都不同，绑在了router-view组件的key上，这样可以保证每下一个页面都能被缓存，即使push的是相同name的页面</p>
+<blockquote>
+<p>.&#x2F;store&#x2F;index.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vuex</span> <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">Vuex</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">  <span class="attr">routerPushStatus</span>: <span class="string">&#x27;push&#x27;</span>, <span class="comment">// 路由进入前的状态push, replace, back，用于判断动画和缓存的机制</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  state,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>.&#x2F;router.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store/index.js&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VueRouter</span> <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">useRouter</span> = <span class="title class_">VueRouter</span> =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> routerPush = <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">push</span></span><br><span class="line">  <span class="keyword">const</span> routerReplace = <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">replace</span></span><br><span class="line">  <span class="keyword">const</span> routerGo = <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">go</span></span><br><span class="line">  <span class="keyword">const</span> routerBack = <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">back</span></span><br><span class="line">  <span class="keyword">const</span> routerForward = <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">forward</span></span><br><span class="line"></span><br><span class="line">  <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">push</span> = <span class="keyword">function</span> <span class="title function_">push</span>(<span class="params">location, onComplete, onAbort</span>) &#123;</span><br><span class="line">    store.<span class="property">state</span>.<span class="property">routerPushStatus</span> = <span class="string">&#x27;push&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> location === <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (location.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;query&#x27;</span>)) &#123;</span><br><span class="line">        location.<span class="property">query</span>.<span class="property">__datetime</span> = +<span class="keyword">new</span> <span class="title class_">Date</span>()</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        location.<span class="property">query</span> = &#123; <span class="attr">__datetime</span>: +<span class="keyword">new</span> <span class="title class_">Date</span>() &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> routerPush.<span class="title function_">apply</span>(<span class="variable language_">this</span>, [location, onComplete, onAbort])</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">replace</span> = <span class="keyword">function</span> <span class="title function_">replace</span>(<span class="params">location, onComplete, onAbort</span>) &#123;</span><br><span class="line">    store.<span class="property">state</span>.<span class="property">routerPushStatus</span> = <span class="string">&#x27;replace&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> location === <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (location.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;query&#x27;</span>)) &#123;</span><br><span class="line">        location.<span class="property">query</span>.<span class="property">__datetime</span> = +<span class="keyword">new</span> <span class="title class_">Date</span>()</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        location.<span class="property">query</span> = &#123; <span class="attr">__datetime</span>: +<span class="keyword">new</span> <span class="title class_">Date</span>() &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> routerReplace.<span class="title function_">apply</span>(<span class="variable language_">this</span>, [location, onComplete, onAbort])</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">go</span> = <span class="keyword">function</span> <span class="title function_">go</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      store.<span class="property">state</span>.<span class="property">routerPushStatus</span> = <span class="string">&#x27;back&#x27;</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      store.<span class="property">state</span>.<span class="property">routerPushStatus</span> = <span class="string">&#x27;push&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> routerGo.<span class="title function_">apply</span>(<span class="variable language_">this</span>, [n])</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">back</span> = <span class="keyword">function</span> <span class="title function_">back</span>(<span class="params"></span>) &#123;</span><br><span class="line">    store.<span class="property">state</span>.<span class="property">routerPushStatus</span> = <span class="string">&#x27;back&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> routerBack.<span class="title function_">apply</span>(<span class="variable language_">this</span>, [])</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">VueRouter</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">forward</span> = <span class="keyword">function</span> <span class="title function_">forward</span>(<span class="params"></span>) &#123;</span><br><span class="line">    store.<span class="property">state</span>.<span class="property">routerPushStatus</span> = <span class="string">&#x27;push&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> routerForward.<span class="title function_">apply</span>(<span class="variable language_">this</span>, [])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">useRouter</span>(<span class="title class_">VueRouter</span>);</span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">VueRouter</span>)</span><br></pre></td></tr></table></figure>
+
+<p>手机端的后退有一个问题，就是如果使用原生的后退，是不会触发router的back()或go(-1)方法的，结果就是如果使用了浏览器原生的后退进行后退，就不会经过自定义的路由函数，无法得知他是后退状态，这时候需要监听popstate来解决这个问题</p>
+<blockquote>
+<p>main.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;popstate&#x27;</span>, <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span><br><span class="line">  store.<span class="property">state</span>.<span class="property">routerPushStatus</span> = <span class="string">&#x27;back&#x27;</span></span><br><span class="line">&#125;, <span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="在vuex中定义router缓存的相关module"><a href="#在vuex中定义router缓存的相关module" class="headerlink" title="在vuex中定义router缓存的相关module"></a>在vuex中定义router缓存的相关module</h4><blockquote>
+<p>.&#x2F;router-cache.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">  <span class="attr">includedComponents</span>: [],</span><br><span class="line">  <span class="attr">excludedComponents</span>: []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">  <span class="title function_">removeInclude</span>(<span class="params">state, str</span>) &#123;</span><br><span class="line">    state.<span class="property">includedComponents</span>.<span class="title function_">splice</span>(state.<span class="property">includedComponents</span>.<span class="title function_">indexOf</span>(str), <span class="number">1</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">addToInclude</span>(<span class="params">state, str</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (str &amp;&amp; state.<span class="property">includedComponents</span>.<span class="title function_">indexOf</span>(str) === -<span class="number">1</span>) &#123;</span><br><span class="line">      state.<span class="property">includedComponents</span>.<span class="title function_">push</span>(str);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">removeExclude</span>(<span class="params">state, str</span>) &#123;</span><br><span class="line">    state.<span class="property">excludedComponents</span>.<span class="title function_">splice</span>(state.<span class="property">excludedComponents</span>.<span class="title function_">indexOf</span>(str), <span class="number">1</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">addToExclude</span>(<span class="params">state, str</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (str &amp;&amp; state.<span class="property">excludedComponents</span>.<span class="title function_">indexOf</span>(str) === -<span class="number">1</span>) &#123;</span><br><span class="line">      state.<span class="property">excludedComponents</span>.<span class="title function_">push</span>(str);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  state,</span><br><span class="line">  mutations</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>.&#x2F;store&#x2F;index.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vuex</span> <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"><span class="keyword">import</span> routerCache <span class="keyword">from</span> <span class="string">&#x27;./modules/router-cache.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  <span class="attr">modules</span>: &#123;</span><br><span class="line">    routerCache,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="定义好进行缓存-移除缓存的函数"><a href="#定义好进行缓存-移除缓存的函数" class="headerlink" title="定义好进行缓存&#x2F;移除缓存的函数"></a>定义好进行缓存&#x2F;移除缓存的函数</h4><blockquote>
+<p>.&#x2F;util.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">addRouterCache</span> = routeName =&gt; &#123;</span><br><span class="line">  store.<span class="title function_">commit</span>(<span class="string">&#x27;addToInclude&#x27;</span>, routeName)</span><br><span class="line">  store.<span class="title function_">commit</span>(<span class="string">&#x27;removeExclude&#x27;</span>, routeName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">removeRouterCache</span> = routeName =&gt; &#123;</span><br><span class="line">  store.<span class="title function_">commit</span>(<span class="string">&#x27;removeInclude&#x27;</span>, routeName)</span><br><span class="line">  store.<span class="title function_">commit</span>(<span class="string">&#x27;addToExclude&#x27;</span>, routeName)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="路由要定义好name属性，引用的组件同样要定义相同的name"><a href="#路由要定义好name属性，引用的组件同样要定义相同的name" class="headerlink" title="路由要定义好name属性，引用的组件同样要定义相同的name"></a>路由要定义好name属性，引用的组件同样要定义相同的name</h4><blockquote>
+<p>.&#x2F;router.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">VueRouter</span> <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routers = [&#123;</span><br><span class="line">  <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Home&#x27;</span>,</span><br><span class="line">  <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;./views/Home.vue&#x27;</span>),</span><br><span class="line">&#125;]</span><br><span class="line">    </span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  routes,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure>
+
+<p>keep-alive的include和exclude实际需要的是组件内的name，设置为一样可以方便使用route的name进行管理</p>
+<blockquote>
+<p>.&#x2F;views&#x2F;Home.vue</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Home&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="在全局定义路由守卫，执行缓存相关函数"><a href="#在全局定义路由守卫，执行缓存相关函数" class="headerlink" title="在全局定义路由守卫，执行缓存相关函数"></a>在全局定义路由守卫，执行缓存相关函数</h4><blockquote>
+<p>.&#x2F;main.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VueRouter</span> <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; addRouterCache, removeRouterCache &#125; <span class="keyword">from</span> <span class="string">&#x27;./utils.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">_handleRouterCacheFn</span>(<span class="params">to, <span class="keyword">from</span></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> routerPushStatus = store.<span class="property">state</span>.<span class="property">routerPushStatus</span></span><br><span class="line">  <span class="keyword">if</span> (routerPushStatus === <span class="string">&#x27;back&#x27;</span>) &#123;</span><br><span class="line">    store.<span class="property">state</span>.<span class="property">routerAnimate</span> = <span class="string">&#x27;slide-right&#x27;</span></span><br><span class="line">    <span class="title function_">removeRouterCache</span>(<span class="keyword">from</span>.<span class="property">name</span>)</span><br><span class="line">    <span class="title function_">addRouterCache</span>(to.<span class="property">name</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    store.<span class="property">state</span>.<span class="property">routerAnimate</span> = <span class="string">&#x27;slide-left&#x27;</span></span><br><span class="line">    <span class="title function_">addRouterCache</span>(to.<span class="property">name</span>)</span><br><span class="line">    <span class="comment">// replace模式下将from不进行缓存</span></span><br><span class="line">    <span class="keyword">if</span> (routerPushStatus === <span class="string">&#x27;replace&#x27;</span>) &#123;</span><br><span class="line">      <span class="title function_">removeRouterCache</span>(<span class="keyword">from</span>.<span class="property">name</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理前进刷新，后退缓存的逻辑，beforeEach也可以，不限</span></span><br><span class="line">router.<span class="title function_">afterEach</span>(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">_handleRouterCacheFn</span>(to, <span class="keyword">from</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  router,</span><br><span class="line">  store,</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>),</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="处理keep-alive的逻辑"><a href="#处理keep-alive的逻辑" class="headerlink" title="处理keep-alive的逻辑"></a>处理keep-alive的逻辑</h4><p>router-view结构：</p>
+<blockquote>
+<p>注意要将router-view的样式使用定位对齐到同一水平线，mode使用同时进出的动画</p>
+</blockquote>
+<blockquote>
+<p>.&#x2F;App.vue</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">transition</span> <span class="attr">:name</span>=<span class="string">&quot;routerAnimate&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">keep-alive</span> <span class="attr">:include</span>=<span class="string">&quot;includedComponents&quot;</span> <span class="attr">:exclude</span>=<span class="string">&quot;excludedComponents&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">router-view</span> <span class="attr">class</span>=<span class="string">&quot;view-page&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;$route.fullPath&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">keep-alive</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">computed</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">    ...<span class="title function_">mapState</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">includedComponents</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.<span class="property">routerCache</span>.<span class="property">includedComponents</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">excludedComponents</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.<span class="property">routerCache</span>.<span class="property">excludedComponents</span>,</span></span><br><span class="line"><span class="language-javascript">    &#125;),</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-class">.app</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">right</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">left</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-class">.view-page</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">overflow</span>: auto;</span></span><br><span class="line"><span class="language-css">  -webkit-<span class="attribute">overflow</span>-scrolling: touch;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">right</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">left</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">overflow-x</span>: hidden;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-class">.slide-left-enter</span>,</span></span><br><span class="line"><span class="language-css"><span class="selector-class">.slide-right-leave-to</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">opacity</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">transform</span>: <span class="built_in">translate3d</span>(<span class="number">100%</span>, <span class="number">0</span>, <span class="number">0</span>);</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-class">.slide-left-leave-to</span>,</span></span><br><span class="line"><span class="language-css"><span class="selector-class">.slide-right-enter</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">opacity</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">transform</span>: <span class="built_in">translate3d</span>(-<span class="number">100%</span>, <span class="number">0</span>, <span class="number">0</span>);</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-class">.slide-left-enter-active</span>,</span></span><br><span class="line"><span class="language-css"><span class="selector-class">.slide-left-leave-active</span>,</span></span><br><span class="line"><span class="language-css"><span class="selector-class">.slide-right-enter-active</span>,</span></span><br><span class="line"><span class="language-css"><span class="selector-class">.slide-right-leave-active</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">transition</span>: <span class="number">0.4s</span>;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>自此为止完成了通用的APP使用vue&amp;vue-router&amp;vuex进行的前进刷新，后退缓存的方案，且切换路由对应动画。如果在提交某些订单返回后要删除缓存，使用utils.js里的removeRouterCache函数即可</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/05/29/node%E5%AF%BC%E5%87%BAjson%E7%9A%84key%E5%80%BC%E5%88%B0excel/" rel="next" title="node导出json的key值到excel">
+                <i class="fa fa-chevron-left"></i> node导出json的key值到excel
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/06/30/Hexo%E9%83%A8%E7%BD%B2%E9%97%AE%E9%A2%98/" rel="prev" title="Hexo部署问题">
+                Hexo部署问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">重新定义路由跳转的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8vuex%E4%B8%AD%E5%AE%9A%E4%B9%89router%E7%BC%93%E5%AD%98%E7%9A%84%E7%9B%B8%E5%85%B3module"><span class="nav-number">3.</span> <span class="nav-text">在vuex中定义router缓存的相关module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%A5%BD%E8%BF%9B%E8%A1%8C%E7%BC%93%E5%AD%98-%E7%A7%BB%E9%99%A4%E7%BC%93%E5%AD%98%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">定义好进行缓存&#x2F;移除缓存的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%A6%81%E5%AE%9A%E4%B9%89%E5%A5%BDname%E5%B1%9E%E6%80%A7%EF%BC%8C%E5%BC%95%E7%94%A8%E7%9A%84%E7%BB%84%E4%BB%B6%E5%90%8C%E6%A0%B7%E8%A6%81%E5%AE%9A%E4%B9%89%E7%9B%B8%E5%90%8C%E7%9A%84name"><span class="nav-number">5.</span> <span class="nav-text">路由要定义好name属性，引用的组件同样要定义相同的name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E5%85%A8%E5%B1%80%E5%AE%9A%E4%B9%89%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB%EF%BC%8C%E6%89%A7%E8%A1%8C%E7%BC%93%E5%AD%98%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">在全局定义路由守卫，执行缓存相关函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%84%E7%90%86keep-alive%E7%9A%84%E9%80%BB%E8%BE%91"><span class="nav-number">7.</span> <span class="nav-text">处理keep-alive的逻辑</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

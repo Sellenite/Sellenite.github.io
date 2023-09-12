@@ -1,0 +1,761 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文主要记录工作时JS问题或经验  html里自定义属性的赋值和取出问题给html元素写入data-type这样的格式，可以使用el.dataset.type进行相对应的访问；\在不兼容dataset的情况下，可以使用更原始的el.getAttribute(name)进行取值，使用el.setAttribute(name, value)进行赋值 document.activeElement的应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS工作经验总结（1）">
+<meta property="og:url" content="https://sellenite.github.io/2018/06/20/JS%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%881%EF%BC%89/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="本文主要记录工作时JS问题或经验  html里自定义属性的赋值和取出问题给html元素写入data-type这样的格式，可以使用el.dataset.type进行相对应的访问；\在不兼容dataset的情况下，可以使用更原始的el.getAttribute(name)进行取值，使用el.setAttribute(name, value)进行赋值 document.activeElement的应用">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-06-20T14:47:49.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.106Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2018/06/20/JS工作经验总结（1）/"/>
+
+
+
+
+
+  <title> JS工作经验总结（1） | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2018/06/20/JS%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%881%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JS工作经验总结（1）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T22:47:49+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2018/06/20/JS%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%881%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文主要记录工作时JS问题或经验</p>
+</blockquote>
+<h4 id="html里自定义属性的赋值和取出问题"><a href="#html里自定义属性的赋值和取出问题" class="headerlink" title="html里自定义属性的赋值和取出问题"></a>html里自定义属性的赋值和取出问题</h4><p>给html元素写入<code>data-type</code>这样的格式，可以使用<code>el.dataset.type</code>进行相对应的访问；\<br>在不兼容dataset的情况下，可以使用更原始的<code>el.getAttribute(name)</code>进行取值，使用<code>el.setAttribute(name, value)</code>进行赋值</p>
+<h4 id="document-activeElement的应用（焦点问题）"><a href="#document-activeElement的应用（焦点问题）" class="headerlink" title="document.activeElement的应用（焦点问题）"></a>document.activeElement的应用（焦点问题）</h4><p><code>document.activeElement.tagName</code>可获得当前获得焦点的元素，<code>document.activeElement.blur()</code>使当前获得焦点的元素失焦</p>
+<h4 id="关闭webApp中的调起的系统键盘"><a href="#关闭webApp中的调起的系统键盘" class="headerlink" title="关闭webApp中的调起的系统键盘"></a>关闭webApp中的调起的系统键盘</h4><p><code>window.nativeKeyboradCancel()</code>，在webApp里取消调起系统的键盘，如果有的话</p>
+<h4 id="循环遍历父元素的方法"><a href="#循环遍历父元素的方法" class="headerlink" title="循环遍历父元素的方法"></a>循环遍历父元素的方法</h4><p>以下可以使用while一直遍历父元素：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getTagName</span>(<span class="params">ele</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> parent = ele.<span class="property">parentElement</span>;</span><br><span class="line">    <span class="keyword">var</span> string = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">while</span> (parent !== <span class="literal">null</span>) &#123;</span><br><span class="line">        string += parent.<span class="property">tagName</span> + <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">        parent = parent.<span class="property">parentElement</span>；</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> string;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h4 id="CSS伪元素问题"><a href="#CSS伪元素问题" class="headerlink" title="CSS伪元素问题"></a>CSS伪元素问题</h4><p><code>:empty</code> 选择器匹配没有子元素（包括文本节点）的每个元素\<br>配合<code>before</code>和<code>after</code>伪元素，可以使用<code>content: attr(placeholder)</code>，将HTML里placeholder的属性写进伪元素里，属性随你定</p>
+<h4 id="window-pageYOffset和window-scrollY"><a href="#window-pageYOffset和window-scrollY" class="headerlink" title="window.pageYOffset和window.scrollY"></a>window.pageYOffset和window.scrollY</h4><p><code>window.pageYOffset</code>是<code>window.scrollY</code>的别名，都是同一种功能</p>
+<h4 id="input元素里的属性问题"><a href="#input元素里的属性问题" class="headerlink" title="input元素里的属性问题"></a>input元素里的属性问题</h4><p>input框的maxlength属性可以限制输入长度，但只有当type为text的时候才可以控制，当type为number等其他时长度不受控制时，还是需要js来控制长度。<br>如<code>&lt;input type=&quot;number&quot; oninput=&quot;if(value.length&gt;5)value=value.slice(0,5)&quot; /&gt;</code>，password类型可以限制长度</p>
+<p><strong>注意</strong>, type为number时监听oninput不能实时监听小数点，需要输入小数点后面的数后，才能获取到小数点的输入，需要将type改成text</p>
+<h4 id="onchange和oninput的不同"><a href="#onchange和oninput的不同" class="headerlink" title="onchange和oninput的不同"></a>onchange和oninput的不同</h4><p>有别于onchange事件，oninput 事件在元素值发生变化是立即触发， onchange 在元素失去焦点时触发。另外一点不同是 onchange 事件也可以作用于 <code>&lt;keygen&gt;</code> 和 <code>&lt;select&gt;</code> 元素</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">&quot;type&quot;</span> <span class="attr">onchange</span>=<span class="string">&quot;show_sub(this.options[this.options.selectedIndex].value)&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;0&quot;</span>&gt;</span>请选择主类别<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;2&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="string-charCodeAt和string-charAt的不同"><a href="#string-charCodeAt和string-charAt的不同" class="headerlink" title="string.charCodeAt和string.charAt的不同"></a>string.charCodeAt和string.charAt的不同</h4><p>string.charCodeAt(index) 方法可返回指定位置的字符的 Unicode 编码。这个返回值是 0 - 65535 之间的整数。方法 string.charCodeAt() 与 string.charAt() 方法执行的操作相似，只不过前者返回的是位于指定位置的字符的编码，而后者返回的是字符子串。charCodeAt可以使用该方法配合A-Z进行升降序排序等</p>
+<!-- more -->
+
+<h4 id="better-scroll使用问题（监听滚动）"><a href="#better-scroll使用问题（监听滚动）" class="headerlink" title="better-scroll使用问题（监听滚动）"></a>better-scroll使用问题（监听滚动）</h4><p>需要根据文档定义传入<code>probeType=&quot;3</code>，用于better-scroll监听swip等操作的scrollY，需要传入这个再选择:listen-scroll，即better-scroll的<code>this.scroll.on(&#39;scroll&#39;, (pos) =&gt; &#123;&#125;)</code>进行监听返回的scrollY</p>
+<h4 id="async和await的使用方法"><a href="#async和await的使用方法" class="headerlink" title="async和await的使用方法"></a>async和await的使用方法</h4><p>async和await，await必定是写在async函数里：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">testSync</span>(<span class="params"></span>) &#123;</span><br><span class="line">     <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">         <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">             <span class="title function_">resolve</span>(<span class="string">&quot;async await test...&quot;</span>);</span><br><span class="line">          &#125;, <span class="number">1000</span>);</span><br><span class="line">     &#125;);</span><br><span class="line">     <span class="variable language_">console</span>.<span class="title function_">log</span>(response);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">testSync</span>(); <span class="comment">// async await test...</span></span><br></pre></td></tr></table></figure>
+
+<p>声明式版：</p>
+<p><code>const testSync = async() =&gt; &#123;&#125;;</code></p>
+<h4 id="Promise-all使用方法及注意事项"><a href="#Promise-all使用方法及注意事项" class="headerlink" title="Promise.all使用方法及注意事项"></a>Promise.all使用方法及注意事项</h4><p>Promise.all是在会处理完then中的函数后（如果有执行后续then），再统一执行的，如果有返回数据则推进Promise.all的then中的res数组中，且返回顺序是确定的，传入all前的数组的顺序与后续返回的res的数组顺序是一致的；没有返回则里面推进undefined：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Promise1</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">resolve</span>(<span class="string">&#x27;success&#x27;</span>);</span><br><span class="line">        &#125;, <span class="number">3000</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Promise2</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">resolve</span>(<span class="string">&#x27;success 2&#x27;</span>);</span><br><span class="line">        &#125;, <span class="number">5000</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="title class_">Promise1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p2 = <span class="title class_">Promise2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="title function_">p1</span>().<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123; <span class="keyword">return</span> res &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="title function_">p2</span>().<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123; <span class="keyword">return</span> res &#125;)</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>([a, b]).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// 5秒之后打印 [&quot;success&quot;, &quot;success 2&quot;]</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>没有后续then版，直接resolve：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(<span class="string">&#x27;aaa&#x27;</span>);</span><br><span class="line">    &#125;, <span class="number">3000</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(<span class="string">&#x27;bbb&#x27;</span>);</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="title class_">Promise</span>.<span class="title function_">all</span>([a, b]);</span><br><span class="line"></span><br><span class="line">p.<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// 3秒后返回结果：[&#x27;aaa&#x27;,&#x27;bbb&#x27;]，数组的内容并不是谁先执行完谁在前面，而是按照之前传入的顺序</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>注意，如果进行Promise.all的Promise里进行了catch的处理，当一个Promise报错后，会优先处理具体Promise的catch，然后依然会走Promise.all的then，而不会走Promise.all的catch</p>
+<h4 id="字符串减法运算问题"><a href="#字符串减法运算问题" class="headerlink" title="字符串减法运算问题"></a>字符串减法运算问题</h4><p>数字的字符串版，他们之间是可以进行减法运算的，因为减号是作为数值运算，没有二义性(不像+号)，所以 解释器就将”123”和”1”通过 new Number() 转换成了 数值类型，在进行运算。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="string">&quot;123&quot;</span> - <span class="string">&quot;1&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(foo); <span class="comment">// 结果是122</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="和-运算符的用法与巧用"><a href="#和-运算符的用法与巧用" class="headerlink" title="~~和|运算符的用法与巧用"></a><code>~~</code>和<code>|</code>运算符的用法与巧用</h4><p>js中的<code>~~</code>其实是一种利用符号进行的类型转换，转换成数字类型；除此之外还可以进行数字的向下取整。向下取整还有一种方法是进行或0操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">~~<span class="literal">true</span> == <span class="number">1</span></span><br><span class="line">~~<span class="literal">false</span> == <span class="number">0</span></span><br><span class="line">~~<span class="string">&quot;&quot;</span> == <span class="number">0</span></span><br><span class="line">~~<span class="string">&quot;123&quot;</span> == <span class="number">123</span></span><br><span class="line">~~<span class="literal">undefined</span> ==<span class="number">0</span></span><br><span class="line">~~!<span class="literal">undefined</span> == <span class="number">1</span></span><br><span class="line">~~<span class="literal">null</span> == <span class="number">0</span></span><br><span class="line">~~!<span class="literal">null</span> == <span class="number">1</span></span><br><span class="line"></span><br><span class="line">~~<span class="number">1.9</span> == <span class="number">1</span></span><br><span class="line">~~<span class="number">1.1</span> == <span class="number">1</span></span><br><span class="line"><span class="number">1.9</span> | <span class="number">0</span> == <span class="number">1</span></span><br><span class="line"><span class="number">1.1</span> | <span class="number">0</span> == <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用正则判断是否存在特殊符号"><a href="#使用正则判断是否存在特殊符号" class="headerlink" title="使用正则判断是否存在特殊符号"></a>使用正则判断是否存在特殊符号</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">containSpecial (s) &#123;</span><br><span class="line">    <span class="keyword">let</span> containSpecials = <span class="title class_">RegExp</span>(<span class="regexp">/^[A-Za-z0-9\u4e00-\u9fa5]+$/</span>);</span><br><span class="line">    <span class="keyword">return</span> (!containSpecials.<span class="title function_">test</span>(s));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Object-assign是可以覆盖更改第一个引用对象的"><a href="#Object-assign是可以覆盖更改第一个引用对象的" class="headerlink" title="Object.assign是可以覆盖更改第一个引用对象的"></a>Object.assign是可以覆盖更改第一个引用对象的</h4><h4 id="Promise处理异常的情况"><a href="#Promise处理异常的情况" class="headerlink" title="Promise处理异常的情况"></a>Promise处理异常的情况</h4><p>处理异常分2种：</p>
+<ul>
+<li>then里的第二个参数，就近捕获的原则（reject），</li>
+<li>catch全局异常，所有流程异常都捕获，例如reject一个Error，但如果then的第二个参数没有写，reject就会在catch中被捕获，否则不处理</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> someAsyncThing = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="title function_">reject</span>(&#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>&#125;)</span><br><span class="line">     &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 由于then里没有写处理rejecte的函数，所以会在catch中处理</span></span><br><span class="line"><span class="title function_">someAsyncThing</span>().<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">     <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;everything is great&#x27;</span>);</span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">     <span class="title function_">alert</span>(err.<span class="property">a</span>)    <span class="comment">// 1</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="Date-parse-的使用"><a href="#Date-parse-的使用" class="headerlink" title="Date.parse()的使用"></a>Date.parse()的使用</h4><p>Date.parse()可以将特点格式的日期字符串转为输出从 1970&#x2F;01&#x2F;01 到一个具体日期的毫秒数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可处理格式，不带时分秒也可以</span></span><br><span class="line"><span class="keyword">var</span> d = <span class="title class_">Date</span>.<span class="title function_">parse</span>(<span class="string">&quot;2017/03/19 11:12:30&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> d = <span class="title class_">Date</span>.<span class="title function_">parse</span>(<span class="string">&quot;2017.03.19 11:12:30&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>Date还有类似于<code>getMonth()</code>和<code>setMonth()</code>的方法，进行特定的时间设定</p>
+<h4 id="git处理无法推送或pull下来很多冲突的方法"><a href="#git处理无法推送或pull下来很多冲突的方法" class="headerlink" title="git处理无法推送或pull下来很多冲突的方法"></a>git处理无法推送或pull下来很多冲突的方法</h4><p><code>git branch -D xxx</code> （删除本地分支）<br><code>git checkout xxx</code> （重新拉取远程分支）</p>
+<h4 id="git取回所有分支的更新并新建分支"><a href="#git取回所有分支的更新并新建分支" class="headerlink" title="git取回所有分支的更新并新建分支"></a>git取回所有分支的更新并新建分支</h4><p><code>git fetch</code><br><code>git branch -b xxx(本地) xxx(远端)</code></p>
+<h4 id="关于canvas的几条基础知识"><a href="#关于canvas的几条基础知识" class="headerlink" title="关于canvas的几条基础知识"></a>关于canvas的几条基础知识</h4><ul>
+<li>canvas画布的大小，需要用height和width直接设置元素，或setAttribute，使用css的width和height相当于将画布放大和缩小，也可以利用这个原理使在手机上的canvas更清晰，一般是css的属性是canvas画布大小的一半，然后canvas的画布大小也要根据屏幕的clientWidth进行适应</li>
+<li>canvas的画布坐标是从左上角开始算起0、0，之后递增坐标数</li>
+<li>canvas虚线绘制完后，使用ctx.setLineDash([])，传入空数组，可以切换回实线绘制</li>
+<li>ctx.globalCompositeOperation可以设置交替元素的显示方式</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/Vue%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%881%EF%BC%89/" rel="next" title="Vue工作经验总结（1）">
+                <i class="fa fa-chevron-left"></i> Vue工作经验总结（1）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/29/JS%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%882%EF%BC%89/" rel="prev" title="JS工作经验总结（2）">
+                JS工作经验总结（2） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#html%E9%87%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%E7%9A%84%E8%B5%8B%E5%80%BC%E5%92%8C%E5%8F%96%E5%87%BA%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">html里自定义属性的赋值和取出问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#document-activeElement%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E7%84%A6%E7%82%B9%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">document.activeElement的应用（焦点问题）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%97%ADwebApp%E4%B8%AD%E7%9A%84%E8%B0%83%E8%B5%B7%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%94%AE%E7%9B%98"><span class="nav-number">3.</span> <span class="nav-text">关闭webApp中的调起的系统键盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E7%88%B6%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">循环遍历父元素的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSS%E4%BC%AA%E5%85%83%E7%B4%A0%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">CSS伪元素问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#window-pageYOffset%E5%92%8Cwindow-scrollY"><span class="nav-number">6.</span> <span class="nav-text">window.pageYOffset和window.scrollY</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#input%E5%85%83%E7%B4%A0%E9%87%8C%E7%9A%84%E5%B1%9E%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">input元素里的属性问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#onchange%E5%92%8Coninput%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">8.</span> <span class="nav-text">onchange和oninput的不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-charCodeAt%E5%92%8Cstring-charAt%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">9.</span> <span class="nav-text">string.charCodeAt和string.charAt的不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#better-scroll%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%EF%BC%88%E7%9B%91%E5%90%AC%E6%BB%9A%E5%8A%A8%EF%BC%89"><span class="nav-number">10.</span> <span class="nav-text">better-scroll使用问题（监听滚动）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#async%E5%92%8Cawait%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">11.</span> <span class="nav-text">async和await的使用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Promise-all%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%8F%8A%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">12.</span> <span class="nav-text">Promise.all使用方法及注意事项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95%E8%BF%90%E7%AE%97%E9%97%AE%E9%A2%98"><span class="nav-number">13.</span> <span class="nav-text">字符串减法运算问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%92%8C-%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E7%94%A8%E6%B3%95%E4%B8%8E%E5%B7%A7%E7%94%A8"><span class="nav-number">14.</span> <span class="nav-text">~~和|运算符的用法与巧用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7"><span class="nav-number">15.</span> <span class="nav-text">使用正则判断是否存在特殊符号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-assign%E6%98%AF%E5%8F%AF%E4%BB%A5%E8%A6%86%E7%9B%96%E6%9B%B4%E6%94%B9%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%BC%95%E7%94%A8%E5%AF%B9%E8%B1%A1%E7%9A%84"><span class="nav-number">16.</span> <span class="nav-text">Object.assign是可以覆盖更改第一个引用对象的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Promise%E5%A4%84%E7%90%86%E5%BC%82%E5%B8%B8%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">17.</span> <span class="nav-text">Promise处理异常的情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Date-parse-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">18.</span> <span class="nav-text">Date.parse()的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git%E5%A4%84%E7%90%86%E6%97%A0%E6%B3%95%E6%8E%A8%E9%80%81%E6%88%96pull%E4%B8%8B%E6%9D%A5%E5%BE%88%E5%A4%9A%E5%86%B2%E7%AA%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">19.</span> <span class="nav-text">git处理无法推送或pull下来很多冲突的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git%E5%8F%96%E5%9B%9E%E6%89%80%E6%9C%89%E5%88%86%E6%94%AF%E7%9A%84%E6%9B%B4%E6%96%B0%E5%B9%B6%E6%96%B0%E5%BB%BA%E5%88%86%E6%94%AF"><span class="nav-number">20.</span> <span class="nav-text">git取回所有分支的更新并新建分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Ecanvas%E7%9A%84%E5%87%A0%E6%9D%A1%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">21.</span> <span class="nav-text">关于canvas的几条基础知识</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,706 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS,读书笔记," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="第一部分　作用域和闭包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不知道的JavaScript（上）读书笔记">
+<meta property="og:url" content="https://sellenite.github.io/2019/01/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%EF%BC%88%E4%B8%8A%EF%BC%89%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="第一部分　作用域和闭包">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-01-13T05:23:58.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.128Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="读书笔记">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2019/01/13/你不知道的JavaScript（上）读书笔记/"/>
+
+
+
+
+
+  <title> 你不知道的JavaScript（上）读书笔记 | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/01/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%EF%BC%88%E4%B8%8A%EF%BC%89%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                你不知道的JavaScript（上）读书笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-13T13:23:58+08:00">
+                2019-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2019/01/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%EF%BC%88%E4%B8%8A%EF%BC%89%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="第一部分-作用域和闭包"><a href="#第一部分-作用域和闭包" class="headerlink" title="第一部分　作用域和闭包"></a>第一部分　作用域和闭包</h3><span id="more"></span>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 你不知道的JavaScript(上卷) 第一部分 作用域和闭包</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="property">GLOBAL</span> = <span class="string">&#x27;ALL_ELEMENT&#x27;</span>;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 提交表单时永远不要使用eval，它可以执行任何传给它的字符串，很容易遭受XSS攻击 */</span></span><br><span class="line">    <span class="comment">// eval在严格模式下有自己的作用域</span></span><br><span class="line">    <span class="keyword">let</span> testEval = <span class="keyword">function</span>(<span class="params">str, b</span>) &#123;</span><br><span class="line">        <span class="comment">// &quot;use strict&quot;; 使用这句后会报ReferenceError，a is not defined</span></span><br><span class="line">        <span class="built_in">eval</span>(str); <span class="comment">// 欺诈行为</span></span><br><span class="line">        <span class="comment">// console.log(a, b);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">testEval</span>(<span class="string">&quot;var a = 2;&quot;</span>, <span class="number">4</span>); <span class="comment">// 2, 4 顺利改写a</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 永远不要使用with进行对象赋值，操作不当很有可能泄漏都全局变量 */</span></span><br><span class="line">    <span class="comment">// with在严格模式下被完全禁止，以下代码为泄漏全局变量的例子，在非严格模式下执行</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    let testWith = function(obj) &#123;</span></span><br><span class="line"><span class="comment">        with(obj) &#123;</span></span><br><span class="line"><span class="comment">            _a = &#x27;with revise successfully&#x27;;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    let obj1 = &#123;</span></span><br><span class="line"><span class="comment">        &quot;_a&quot;: 233</span></span><br><span class="line"><span class="comment">    &#125;;</span></span><br><span class="line"><span class="comment">    let obj2 = &#123;</span></span><br><span class="line"><span class="comment">        &quot;_b&quot;: 445</span></span><br><span class="line"><span class="comment">    &#125;;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    testWith(obj1); // obj1._a = with revise successfully</span></span><br><span class="line"><span class="comment">    testWith(obj2); // obj2._a = undefined</span></span><br><span class="line"><span class="comment">    console.log(window._a); // with revise successfully，由于作用域问题泄漏到全局变量</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 回调函数参数是函数表达式，并不是函数声明 */</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="keyword">function</span> <span class="title function_">timeoutHandler</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;global setTimeout&#x27;</span>)</span><br><span class="line">    &#125;, <span class="number">300</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">233</span>;</span><br><span class="line">    <span class="comment">/* 立即执行函数第一个括号里的内容被当作函数表达式 */</span></span><br><span class="line">    (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;inner IIFE&#x27;</span>, a);</span><br><span class="line">    &#125;)();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 立即执行函数也可以拥有函数名，也可以传参 */</span></span><br><span class="line">    (<span class="keyword">function</span> <span class="title function_">IIFE</span>(<span class="params">a</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;global IIFE&#x27;</span>, a);</span><br><span class="line">    &#125;)(a);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 以上代码语义上等同于下面，上面的IIFE全局下是无法访问的 */</span></span><br><span class="line">    <span class="keyword">var</span> <span class="variable constant_">IIFE</span> = <span class="keyword">function</span>(<span class="params">a</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;global IIFE2&#x27;</span>, a);</span><br><span class="line">    &#125;(a);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* UMD，将函数表达式传进IIFE的模式 */</span></span><br><span class="line">    (<span class="keyword">function</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">        <span class="title function_">fn</span>(<span class="variable language_">window</span>);</span><br><span class="line">    &#125;)(<span class="keyword">function</span> <span class="title function_">def</span>(<span class="params"><span class="variable language_">global</span></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;inner UMD&#x27;</span>, a);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;global UMD&#x27;</span>, <span class="variable language_">global</span>.<span class="property">GLOBAL</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* var变量声明提升 */</span></span><br><span class="line">    (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// undefined</span></span><br><span class="line">        <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">    &#125;)();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 以上代码等同于下面 */</span></span><br><span class="line">    (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> a;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">        <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">    &#125;)();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 函数声明可以提前，函数表达式的声明会像上面变量一样的提升成undefied */</span></span><br><span class="line">    <span class="title function_">foo</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 函数表达式提升成undefined，执行undefined会报TypeError，而不是ReferenceError */</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="title function_">bar</span>();</span><br><span class="line">        <span class="keyword">var</span> bar = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;bar&#x27;</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">/* 基础标准闭包 */</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> baz = <span class="title function_">foo</span>();</span><br><span class="line">        <span class="title function_">baz</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 闭包循环 */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">            (<span class="keyword">function</span>(<span class="params">j</span>) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="keyword">function</span> <span class="title function_">timeoutHandler</span>(<span class="params"></span>) &#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(j);</span><br><span class="line">                &#125;, j * <span class="number">300</span>);</span><br><span class="line">            &#125;)(i)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 基本模块设计模式 */</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">coolModule</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> something = <span class="string">&#x27;cool&#x27;</span>;</span><br><span class="line">            <span class="keyword">var</span> another = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">doSomething</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(something);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">doAnother</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(another.<span class="title function_">join</span>(<span class="string">&#x27;!&#x27;</span>));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">doSomething</span>: doSomething, <span class="attr">doAnother</span>: doAnother &#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> cool = <span class="title function_">coolModule</span>();</span><br><span class="line">        cool.<span class="title function_">doAnother</span>();</span><br><span class="line">        cool.<span class="title function_">doSomething</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 现代模块依赖加载器，类requireJS模式 */</span></span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">MyModules</span> = (<span class="keyword">function</span> <span class="title function_">Manager</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> modules = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">define</span>(<span class="params">name, deps, impl</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; deps.<span class="property">length</span>; i++) &#123;</span><br><span class="line">                    deps[i] = modules[deps[i]];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 最主要函数，使用函数返回值执行</span></span><br><span class="line">                modules[name] = impl.<span class="title function_">apply</span>(impl, deps);</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">get</span>(<span class="params">name</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> modules[name];</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">define</span>: define, <span class="attr">get</span>: get &#125;;</span><br><span class="line">        &#125;)();</span><br><span class="line"></span><br><span class="line">        <span class="title class_">MyModules</span>.<span class="title function_">define</span>(<span class="string">&#x27;foo&#x27;</span>, [], <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> _this = <span class="variable language_">this</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(_this);</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">hello</span>: hello &#125;;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="title class_">MyModules</span>.<span class="title function_">define</span>(<span class="string">&#x27;bar&#x27;</span>, [<span class="string">&#x27;foo&#x27;</span>], <span class="keyword">function</span>(<span class="params">foo</span>) &#123;</span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">hi</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;bar with foo&#x27;</span>);</span><br><span class="line">                foo.<span class="title function_">hello</span>();</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">hi</span>: hi &#125;;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">Foo</span> = <span class="title class_">MyModules</span>.<span class="title function_">get</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">Bar</span> = <span class="title class_">MyModules</span>.<span class="title function_">get</span>(<span class="string">&#x27;bar&#x27;</span>);</span><br><span class="line">        <span class="title class_">Bar</span>.<span class="title function_">hi</span>();</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">/* Traceur项目try-catch解决ES6以前的级作用域 */</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="literal">undefined</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (catchValue) &#123;</span><br><span class="line">            <span class="comment">// 外部无法访问或使用这个变量</span></span><br><span class="line">            catchValue = <span class="number">2</span>;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;try-catch block&#x27;</span>, catchValue);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 显式创建块级作用域 */</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">let</span> a = <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">const</span> readonly = <span class="string">&#x27;yuuhei&#x27;</span>;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(a, readonly)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* bind解决setTimeout等时被绑定window为上下文 */</span></span><br><span class="line">        <span class="keyword">var</span> obj = &#123;</span><br><span class="line">            <span class="attr">count</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="attr">cool</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">count</span> &lt; <span class="number">5</span>) &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">count</span>++;</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;more awesome: &#x27;</span>, <span class="variable language_">this</span>.<span class="property">count</span>);</span><br><span class="line">                    &#125;.<span class="title function_">bind</span>(<span class="variable language_">this</span>), <span class="variable language_">this</span>.<span class="property">count</span> * <span class="number">300</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        obj.<span class="title function_">cool</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 箭头函数绑定前后上下文 */</span></span><br><span class="line">        <span class="keyword">var</span> object = &#123;</span><br><span class="line">            <span class="attr">count</span>: <span class="number">3</span>,</span><br><span class="line">            <span class="attr">cool</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">count</span> &lt; <span class="number">5</span>) &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">count</span>++;</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;more awesome arrow: &#x27;</span>, <span class="variable language_">this</span>.<span class="property">count</span>);</span><br><span class="line">                    &#125;, <span class="variable language_">this</span>.<span class="property">count</span> * <span class="number">300</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        object.<span class="title function_">cool</span>();</span><br><span class="line">    &#125;)();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二部分-this和对象原型"><a href="#第二部分-this和对象原型" class="headerlink" title="第二部分　this和对象原型"></a>第二部分　this和对象原型</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 你不知道的JavaScript(上卷) 第二部分 this和对象原型</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">&#123;</span><br><span class="line">    (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> a = <span class="string">&#x27;ALL&#x27;</span>;</span><br><span class="line">        <span class="comment">/* arguments.callee可以用来引用正在运行的函数，包括匿名函数 */</span></span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">// 该方法是一种被废弃的方案，严格模式下会报错 console.log(arguments.callee);</span></span><br><span class="line">        &#125;, <span class="number">300</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 在函数普通模式下直接调用默认绑定的this为全局对象window */</span></span><br><span class="line">        (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">// 在严格模式下则不会默认绑定，this为undefined use strict一定要写在第一行</span></span><br><span class="line">            <span class="string">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>); <span class="comment">// undefined</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="title function_">foo</span>();</span><br><span class="line">        &#125;)();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 函数定义在非严格模式下，即使在严格模式下调用依然被默认绑定为window */</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="string">&#x27;use strict&#x27;</span>;</span><br><span class="line">            <span class="title function_">foo</span>(); <span class="comment">// window</span></span><br><span class="line">        &#125;)();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 隐式绑定例子 */</span></span><br><span class="line">        (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>);</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> obj = &#123;</span><br><span class="line">                <span class="attr">a</span>: <span class="number">233</span>,</span><br><span class="line">                <span class="attr">foo</span>: foo</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            obj.<span class="title function_">foo</span>() <span class="comment">// 2</span></span><br><span class="line">        &#125;)();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 把基本数据类型转换为对应的引用类型的操作称为装箱，把引用类型转换为基本的数据类型称为拆箱</span></span><br><span class="line"><span class="comment">         * 装箱的最大作用是将值作为对象来处理</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">// 简易装箱</span></span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">            &#125;;</span><br><span class="line">            foo.<span class="title function_">call</span>(<span class="literal">true</span>); <span class="comment">// Boolean &#123;[[PrimitiveValue]]: true&#125;</span></span><br><span class="line">            foo.<span class="title function_">call</span>(<span class="string">&#x27;123&#x27;</span>); <span class="comment">// String &#123;[[PrimitiveValue]]: &quot;123&quot;&#125;</span></span><br><span class="line">            <span class="keyword">let</span> num = foo.<span class="title function_">call</span>(<span class="number">456</span>); <span class="comment">// Number &#123;[[PrimitiveValue]]: 456&#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 简易拆箱</span></span><br><span class="line">            num.<span class="title function_">valueOf</span>();</span><br><span class="line">        &#125;)();</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">let</span> foo = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">let</span> abc = foo.<span class="title function_">bind</span>(<span class="literal">null</span>);</span><br><span class="line">            <span class="comment">/* 严格模式下，this指向是null，但非严格模式下，this指向是window，注意 */</span></span><br><span class="line">            <span class="title function_">abc</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 为了避免以上情况，使用DMZ来绑定更安全的this，避免默认绑定规则 */</span></span><br><span class="line">        (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>); <span class="comment">// ALL</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a: &#x27;</span> + a + <span class="string">&#x27;, b: &#x27;</span> + b);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 创建完全空的对象，DMZ</span></span><br><span class="line">            <span class="keyword">var</span> <span class="variable constant_">DMZ</span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="literal">null</span>);</span><br><span class="line">            <span class="keyword">var</span> bar = foo.<span class="title function_">bind</span>(<span class="variable constant_">DMZ</span>, <span class="number">2</span>);</span><br><span class="line">            <span class="title function_">bar</span>(<span class="number">4</span>);</span><br><span class="line">        &#125;)();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 箭头函数不适用于以上几条规则 */</span></span><br><span class="line">        (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="comment">// 返回一个箭头函数</span></span><br><span class="line">                <span class="keyword">return</span> <span class="function">(<span class="params">a</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// this继承自foo</span></span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">a</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">                <span class="attr">a</span>: <span class="number">2</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> obj2 = &#123;</span><br><span class="line">                <span class="attr">a</span>: <span class="number">4</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> bar = foo.<span class="title function_">call</span>(obj1);</span><br><span class="line">            bar.<span class="title function_">call</span>(obj2); <span class="comment">// 2，这里的call由于使用了箭头强制绑定了上下文，一直是obj1</span></span><br><span class="line">        &#125;)();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* forEach的第二个参数可以绑定上下文，和bind效果一样 */</span></span><br><span class="line">        (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            [<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>].<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">item, index</span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(item, <span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">            &#125;, &#123; <span class="attr">name</span>: <span class="string">&#x27;yuuhei&#x27;</span> &#125;);</span><br><span class="line">        &#125;)();</span><br><span class="line">    &#125;)();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> arr = [</span><br><span class="line">        <span class="number">23</span>,</span><br><span class="line">        <span class="number">1</span>,</span><br><span class="line">        <span class="number">6</span>,</span><br><span class="line">        <span class="number">78</span>,</span><br><span class="line">        <span class="number">9</span>,</span><br><span class="line">        <span class="number">22</span>,</span><br><span class="line">        <span class="number">3</span>,</span><br><span class="line">        <span class="number">100</span></span><br><span class="line">    ];</span><br><span class="line">    <span class="keyword">let</span> ret = [];</span><br><span class="line">    arr.<span class="title function_">every</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        ret.<span class="title function_">push</span>(item);</span><br><span class="line">        <span class="comment">/* 遍历每一个元素，直至返回false */</span></span><br><span class="line">        <span class="keyword">return</span> item % <span class="number">11</span> !== <span class="number">0</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(ret);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> arr = [</span><br><span class="line">        <span class="number">23</span>,</span><br><span class="line">        <span class="number">1</span>,</span><br><span class="line">        <span class="number">6</span>,</span><br><span class="line">        <span class="number">78</span>,</span><br><span class="line">        <span class="number">9</span>,</span><br><span class="line">        <span class="number">22</span>,</span><br><span class="line">        <span class="number">3</span>,</span><br><span class="line">        <span class="number">100</span></span><br><span class="line">    ];</span><br><span class="line">    <span class="keyword">let</span> ret = [];</span><br><span class="line">    arr.<span class="title function_">some</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        ret.<span class="title function_">push</span>(item);</span><br><span class="line">        <span class="comment">/* 遍历每一个元素，直至返回true */</span></span><br><span class="line">        <span class="keyword">return</span> item % <span class="number">9</span> === <span class="number">0</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(ret);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> arr = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> arr) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 数组自带迭代器，可以使用for-of遍历数组的值 */</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">    <span class="keyword">let</span> it = arr[<span class="title class_">Symbol</span>.<span class="property">iterator</span>]();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(it.<span class="title function_">next</span>());</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 对象本身没有迭代器，需要模仿后才能使用for-of */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 由于迭代器的属性就是Symbol.iterator，需要使用键值访问法 */</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> obj = &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;yuuhei&#x27;</span>,</span><br><span class="line">        <span class="attr">age</span>: <span class="string">&#x27;232&#x27;</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 这样定义可以不让Symbol被枚举，直接定义也是可以的 */</span></span><br><span class="line">    <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(obj, <span class="title class_">Symbol</span>.<span class="property">iterator</span>, &#123;</span><br><span class="line">        <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">configurable</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> o = <span class="variable language_">this</span>;</span><br><span class="line">            <span class="keyword">var</span> index = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">var</span> keys = <span class="title class_">Object</span>.<span class="title function_">keys</span>(o);</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> &#123;</span><br><span class="line">                        <span class="attr">value</span>: o[keys[index++]],</span><br><span class="line">                        <span class="attr">done</span>: (index &gt; keys.<span class="property">length</span>)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> k <span class="keyword">of</span> obj) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(k);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> obj = &#123;</span><br><span class="line">        <span class="attr">a</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">b</span>: <span class="number">233</span>,</span><br><span class="line">        <span class="attr">c</span>: <span class="number">445</span>,</span><br><span class="line">        [<span class="title class_">Symbol</span>.<span class="property">iterator</span>]: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> o = <span class="variable language_">this</span>;</span><br><span class="line">            <span class="keyword">var</span> idx = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">var</span> ks = <span class="title class_">Object</span>.<span class="title function_">keys</span>(o);</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                <span class="attr">next</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> &#123;</span><br><span class="line">                        <span class="attr">value</span>: o[ks[idx++]],</span><br><span class="line">                        <span class="attr">done</span>: (idx &gt; ks.<span class="property">length</span>)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> it = obj[<span class="title class_">Symbol</span>.<span class="property">iterator</span>]();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(it.<span class="title function_">next</span>());</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(it.<span class="title function_">next</span>());</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(it.<span class="title function_">next</span>());</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(it.<span class="title function_">next</span>());</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* Object.create(obj)会将[[prototype]]关联到指定对象，继承就由于这个原理 */</span></span><br><span class="line">    <span class="keyword">let</span> obj = &#123;</span><br><span class="line">        <span class="attr">a</span>: <span class="number">123</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> obj2 = <span class="title class_">Object</span>.<span class="title function_">create</span>(obj);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(obj2.<span class="property">a</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> obj = &#123;</span><br><span class="line">        <span class="attr">age</span>: <span class="number">23</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(obj, <span class="string">&#x27;name&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">configurable</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&#x27;yuuhei&#x27;</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(obj);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> obj) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(i) <span class="comment">// age</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 无论enumerable是什么，in操作符都能够判断key是否在obj中，并且寻找原型链 */</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;name&#x27;</span> <span class="keyword">in</span> obj);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* ES6拥有Object.setPrototypeOf进行原型链继承 */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Foo</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123; &#125;;</span><br><span class="line">    <span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">a</span> = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Bar</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123; &#125;;</span><br><span class="line">    <span class="title class_">Object</span>.<span class="title function_">setPrototypeOf</span>(<span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>, <span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line">    <span class="keyword">let</span> bar = <span class="keyword">new</span> <span class="title class_">Bar</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(bar.<span class="property">a</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 组合继承 */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Foo</span> = <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Bar</span> = <span class="keyword">function</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">        <span class="comment">/* 绑定父亲的构造属性 */</span></span><br><span class="line">        <span class="title class_">Foo</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 将Bar的[[prototype]]关联到Foo的，继承Foo的原型链属性 */</span></span><br><span class="line">    <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 修改过prototype后需要手动修复constructor的指向 */</span></span><br><span class="line">    <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Bar</span>;</span><br><span class="line">    <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">myName</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">name</span>;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> bar = <span class="keyword">new</span> <span class="title class_">Bar</span>(<span class="string">&#x27;yuuhei&#x27;</span>, <span class="number">23</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(bar.<span class="title function_">myName</span>());</span><br><span class="line">    <span class="comment">/* ES5直接获取一个对象的[[prototype]]的方式 */</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="title function_">getPrototypeOf</span>(bar) === <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line">    <span class="comment">/* 绝大多数浏览器（非标准获取方式）支持 */</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(bar.<span class="property">__proto__</span> === <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line">    <span class="comment">/* 继承也可以通过instanceof找到源头 */</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(bar <span class="keyword">instanceof</span> <span class="title class_">Foo</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* Object.create自带第二个参数可以定义属性描述符 */</span></span><br><span class="line">    <span class="keyword">let</span> obj = &#123;</span><br><span class="line">        <span class="attr">a</span>: <span class="number">2</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> obj2 = <span class="title class_">Object</span>.<span class="title function_">create</span>(obj, &#123;</span><br><span class="line">        <span class="attr">b</span>: &#123;</span><br><span class="line">            <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">configurable</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">value</span>: <span class="number">3</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">c</span>: &#123;</span><br><span class="line">            <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">configurable</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">value</span>: <span class="number">3</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// obj2的原型链上连接了obj的原型链</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(obj2.<span class="property">a</span>); <span class="comment">// 2</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(obj2.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;a&#x27;</span>)); <span class="comment">// false</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(obj.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;a&#x27;</span>));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 神奇的API设计，由于本身内部没有该函数，却能够运行，会变得怪怪的 */</span></span><br><span class="line">    <span class="comment">/* 面向委托模式来源于Object.create()这个特性 */</span></span><br><span class="line">    <span class="keyword">let</span> obj = &#123;</span><br><span class="line">        <span class="attr">cool</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;cool!&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> obj2 = <span class="title class_">Object</span>.<span class="title function_">create</span>(obj);</span><br><span class="line">    obj2.<span class="title function_">cool</span>(); <span class="comment">// cool!</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 经典类继承面向对象风格 */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Foo</span> = <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Bar</span> = <span class="keyword">function</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">        <span class="title class_">Foo</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line">    <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Bar</span>;</span><br><span class="line">    <span class="keyword">let</span> bar1 = <span class="keyword">new</span> <span class="title class_">Bar</span>(<span class="string">&#x27;yuuhei&#x27;</span>, <span class="number">22</span>);</span><br><span class="line">    <span class="keyword">let</span> bar2 = <span class="keyword">new</span> <span class="title class_">Bar</span>(<span class="string">&#x27;Sellenite&#x27;</span>, <span class="number">24</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(bar1, bar2);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 对象委托关联风格 */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Foo</span> = &#123;</span><br><span class="line">        <span class="attr">init</span>: <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">identify</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">`I am <span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span>`</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Bar</span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Foo</span>);</span><br><span class="line">    <span class="title class_">Bar</span>.<span class="property">speak</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="title function_">identify</span>());</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> b1 = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Bar</span>);</span><br><span class="line">    <span class="keyword">let</span> b2 = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Bar</span>);</span><br><span class="line">    b1.<span class="title function_">init</span>(<span class="string">&#x27;yuuhei&#x27;</span>);</span><br><span class="line">    b2.<span class="title function_">init</span>(<span class="string">&#x27;Sellenite&#x27;</span>);</span><br><span class="line">    b1.<span class="title function_">speak</span>();</span><br><span class="line">    b2.<span class="title function_">speak</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Bar</span>); <span class="comment">// &#123;speak:f()&#125;</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(b1); <span class="comment">// &#123;name: &#x27;yuuhei&#x27;&#125;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 反词法 */</span></span><br><span class="line">    <span class="comment">/* ES6以下的简洁写法会编译成匿名函数，无法进行递归 */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Foo</span> = &#123;</span><br><span class="line">        <span class="comment">// 最好不要使用this.bar()或Foo.bar()执行递归，因为可用实际情况比较少</span></span><br><span class="line">        <span class="title function_">bar</span>(<span class="params"></span>) &#123; &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 以上实际会编译成以下方式</span></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Foo1</span> = &#123;</span><br><span class="line">        <span class="attr">bar</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123; &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果要想使用递归，不要使用简介方式，需要使用具名函数表达式</span></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Foo2</span> = &#123;</span><br><span class="line">        <span class="attr">count</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">bar</span>: <span class="keyword">function</span> <span class="title function_">baroooo</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">count</span> &lt; <span class="number">10</span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;loading------&gt;&#x27;</span> + <span class="variable language_">this</span>.<span class="property">count</span>);</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">count</span>++;</span><br><span class="line">                <span class="comment">/* 具名函数进行自我递归 */</span></span><br><span class="line">                baroooo.<span class="title function_">call</span>(<span class="variable language_">this</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Foo2</span>.<span class="title function_">bar</span>();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Foo</span> = <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="title class_">Bar</span> = <span class="keyword">function</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">        <span class="title class_">Foo</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> bar = <span class="keyword">new</span> <span class="title class_">Bar</span>(<span class="string">&#x27;yuuhei&#x27;</span>, <span class="number">23</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 内省 */</span></span><br><span class="line">    <span class="comment">// 首先要纠正错误，Bar instanceof Foo是错的</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 构造函数之间Foo和Bar的内省 */</span></span><br><span class="line">    <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span> <span class="keyword">instanceof</span> <span class="title class_">Foo</span>; <span class="comment">// true</span></span><br><span class="line">    <span class="title class_">Object</span>.<span class="title function_">getPrototypeOf</span>(<span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>) === <span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>; <span class="comment">// true</span></span><br><span class="line">    <span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="title function_">isPrototypeOf</span>(<span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 实例和构造函数之间的内省 */</span></span><br><span class="line">    bar <span class="keyword">instanceof</span> <span class="title class_">Bar</span>; <span class="comment">// true</span></span><br><span class="line">    bar <span class="keyword">instanceof</span> <span class="title class_">Foo</span>; <span class="comment">// true</span></span><br><span class="line">    <span class="title class_">Object</span>.<span class="title function_">getPrototypeOf</span>(bar) === <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>; <span class="comment">/// true</span></span><br><span class="line">    <span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="title function_">isPrototypeOf</span>(bar); <span class="comment">// true</span></span><br><span class="line">    <span class="title class_">Bar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="title function_">isPrototypeOf</span>(bar); <span class="comment">// true</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* Orbment.prototype.call(this, ...)是伪多态 */</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Orbment</span> &#123;</span><br><span class="line">        <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">name</span> = name || <span class="string">&#x27;Orbment&#x27;</span>;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">message</span> = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">setSize</span>(<span class="params">width, height</span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">width</span> = width || <span class="number">50</span>;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">height</span> = height || <span class="number">50</span>;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">message</span> = <span class="string">`The <span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span> `</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">getMessage</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">message</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">ENIGMA</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Orbment</span> &#123;</span><br><span class="line">        <span class="title function_">constructor</span>(<span class="params">name, width, height</span>) &#123;</span><br><span class="line">            <span class="comment">// super()在constructor必须在this调用前执行</span></span><br><span class="line">            <span class="variable language_">super</span>(name);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">width</span> = width || <span class="number">50</span>;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">height</span> = height || <span class="number">50</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">setSize</span>(<span class="params">width, height</span>) &#123;</span><br><span class="line">            <span class="comment">// 以前的伪多态写法：Orbment.prototype.setSize.apply(this, [width, height])</span></span><br><span class="line">            <span class="comment">// 注意出版书上的super(width, height)在constructor外使用已被禁止，改为替换以下方式实现相对多态</span></span><br><span class="line">            <span class="variable language_">super</span>.<span class="title function_">setSize</span>(width, height);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">message</span> += <span class="string">`size is width <span class="subst">$&#123;<span class="variable language_">this</span>.width&#125;</span> and height <span class="subst">$&#123;<span class="variable language_">this</span>.height&#125;</span>`</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">ARCUS</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Orbment</span> &#123;</span><br><span class="line">        <span class="title function_">constructor</span>(<span class="params">name, width, height</span>) &#123;</span><br><span class="line">            <span class="comment">// super()在constructor必须在this调用前执行</span></span><br><span class="line">            <span class="variable language_">super</span>(name);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">width</span> = width || <span class="number">50</span>;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">height</span> = height || <span class="number">50</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">setSize</span>(<span class="params">width, height</span>) &#123;</span><br><span class="line">            <span class="comment">// 以前的伪多态写法：Orbment.prototype.setSize.apply(this, [width, height])</span></span><br><span class="line">            <span class="comment">// 注意出版书上的super(width, height)在constructor外使用已被禁止，改为替换以下方式实现相对多态</span></span><br><span class="line">            <span class="variable language_">super</span>.<span class="title function_">setSize</span>(width, height);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">message</span> += <span class="string">`size is width <span class="subst">$&#123;<span class="variable language_">this</span>.width&#125;</span> and height <span class="subst">$&#123;<span class="variable language_">this</span>.height&#125;</span>`</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable constant_">ENIGMA_I</span> = <span class="keyword">new</span> <span class="title function_">ENIGMA</span>(<span class="string">&#x27;ENIGMA_I&#x27;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable constant_">ENIGMA_I_SIZE_MESSAGE</span> = <span class="variable constant_">ENIGMA_I</span>.<span class="title function_">setSize</span>().<span class="title function_">getMessage</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable constant_">ARCUS_I</span> = <span class="keyword">new</span> <span class="title function_">ARCUS</span>(<span class="string">&#x27;ARCUS_I&#x27;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable constant_">ARCUS_I_SIZE_MESSAGE</span> = <span class="variable constant_">ARCUS_I</span>.<span class="title function_">setSize</span>(<span class="number">100</span>, <span class="number">70</span>).<span class="title function_">getMessage</span>();</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable constant_">ENIGMA_I_SIZE_MESSAGE</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable constant_">ARCUS_I_SIZE_MESSAGE</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* class并不是静态，只是一个prototype的语法糖，使用prototype仍可修改 */</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Random</span> &#123;</span><br><span class="line">        <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">num</span> = <span class="title class_">Math</span>.<span class="title function_">random</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="title function_">rand</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">num</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> r1 = <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line">    r1.<span class="title function_">rand</span>();</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Random</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">rand</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">num</span> * <span class="number">1000</span>);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> r2 = <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line">    r2.<span class="title function_">rand</span>();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/07/%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%AD%A5%E9%AA%A4%E6%9D%A1/" rel="next" title="简单实现一个步骤条">
+                <i class="fa fa-chevron-left"></i> 简单实现一个步骤条
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%EF%BC%88%E4%B8%AD%EF%BC%89%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="prev" title="你不知道的JavaScript（中）读书笔记">
+                你不知道的JavaScript（中）读书笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86-%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%97%AD%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">第一部分　作用域和闭包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86-this%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%8E%9F%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">第二部分　this和对象原型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

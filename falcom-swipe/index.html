@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <style type="text/css">
+        *{
+            padding: 0;
+            margin: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
+        ul{
+            list-style: none;
+        }
+
+        .container{
+            position: relative;
+            left: 50%;
+            top: 50%;
+            margin-left: -480px;
+            margin-top: -272px;
+            width: 960px;
+            height: 544px;
+            border: 1px solid #82CEF8;
+            box-shadow: 0 0 2px 2px #82CEF8;
+            overflow: hidden;
+        }
+
+        .falcom{
+            width: 14400px;
+            height: 544px;
+            position: absolute;
+        }
+
+        .falcom li img,.button li{
+            float: left;
+        }
+
+        .left,.right{
+            text-decoration: none;
+            color: #FFF;
+            text-align: center;
+            display: block;
+            width: 60px;
+            height: 60px;
+            font-size: 40px;
+            line-height: 60px;
+            background: rgba(0,0,0,0.6);
+            z-index: 10;
+            position: absolute;
+            display: none;
+        }
+
+        .left{
+            top: 247px;
+            left: 32px;
+        }
+
+        .right{
+            top: 247px;
+            right: 32px;
+        }
+
+        .container:hover .left,.container:hover .right{
+            display: block;
+        }
+
+        .left:hover,.right:hover{
+            background: rgba(0,0,0,0.7);
+        }
+
+        .button{
+            position: absolute;
+            bottom: 60px;
+            left: 342px;
+        }
+
+        .button li span{
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #333333;
+            margin: 0 5px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .button li span:hover{
+            background: rgba(0,0,0,0.8);
+        }
+
+        .active{
+            background: orange !important;
+        }
+    </style>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var container = document.getElementsByClassName("container")[0];
+            var falcom = document.getElementsByClassName("falcom")[0];
+            var prev = document.getElementsByClassName("left")[0];
+            var next = document.getElementsByClassName("right")[0];
+            var buttons = document.getElementsByClassName("button")[0].getElementsByTagName("span");
+            //index是用来做小按钮点亮的标记
+            var index = 1;
+            //定义传入偏移量的函数
+            function Switch(offset){
+                var newLeft = parseInt(falcom.style.left) + offset;
+                //切换关键
+                if( offset < 0){
+                    offset = "-=" + Math.abs(offset);
+                }else{
+                    offset = "+=" + offset;
+                };
+                $(".falcom").stop(true,false).animate({"left":offset},300,function(){
+                    //以下代码可以造成无限循环
+                    if( newLeft == -12480){
+                        $(".falcom").css("left",-960);
+                    }else if( newLeft == 0){
+                        $(".falcom").css("left",-11520);
+                    }
+                });
+            };
+            //点亮按钮的函数
+            function showButton(){
+                //先遍历将所有的激活状态取消然后再重新给激活
+                for(var i = 0;i < buttons.length;i++){
+                    if(buttons[i].className == "active"){
+                        buttons[i].className = "";
+                        //找到后就退出，不再循环if语句
+                        break;
+                    };
+                };
+                buttons[index - 1].className = "active";
+            }
+            prev.onclick = function(){
+                //防止多次触发动画和时小按钮对应跟不上动画的变化造成的不对应bug
+                if( $(".falcom").is(":animated")){
+                    //如果检查到falcom正在进行动画，就立即返回
+                    return;
+                };
+                index--;
+                if( index < 1){
+                    index = 12;
+                };
+                showButton();
+                Switch(960);
+            };
+            next.onclick = function(){
+                //防止多次触发动画和时小按钮对应跟不上动画的变化造成的不对应bug
+                if( $(".falcom").is(":animated")){
+                    //如果检查到falcom正在进行动画，就立即返回
+                    return;
+                };
+                index++;
+                if( index > 12){
+                    index = 1;
+                };
+                showButton();
+                Switch(-960);
+            };
+            //重要，这个遍历是用来按小按钮时点亮并切换到对应的位置，index一定要在左右切换和小按钮切换互相公用，不然会有bug
+            for( var i = 0;i <   buttons.length;i++){
+                buttons[i].onclick = function(){
+                    //代码优化，当按钮时激活状态时，再次点击让它不跑以下代码
+                    if(this.className == "active"){
+                        return;
+                    };
+                    //得到按鼠标时的index值，这行间index是自定义的属性，只能用getAttribute()
+                    var myIndex = parseInt(this.getAttribute("index"));
+                    var indexFix = myIndex * (-960);
+                    $(".falcom").animate({"left":indexFix},300);
+                    //重要，更新index的值
+                    index = myIndex;
+                    showButton();
+                };
+            };
+            var timer = null;
+            function play(){
+                timer = setInterval(function(){
+                    next.onclick();
+                }, 3000);
+            };
+            function stop(){
+                clearInterval(timer);
+            };
+            container.onmouseout = play;
+            container.onmouseover = stop;
+            $(".container").trigger("onmouseout");
+        })
+    </script>
+    <title>Flacom Calendar</title>
+</head>
+<body>
+    <div class="container">
+        <div class="falcom" style="left: -960px">
+            <ul>
+                <li><img src="images/12.jpg" alt="12" /></li>
+                <li><img src="images/1.jpg" alt="1" /></li>
+                <li><img src="images/2.jpg" alt="2" /></li>
+                <li><img src="images/3.jpg" alt="3" /></li>
+                <li><img src="images/4.jpg" alt="4" /></li>
+                <li><img src="images/5.jpg" alt="5" /></li>
+                <li><img src="images/6.jpg" alt="6" /></li>
+                <li><img src="images/7.jpg" alt="7" /></li>
+                <li><img src="images/8.jpg" alt="8" /></li>
+                <li><img src="images/9.jpg" alt="9" /></li>
+                <li><img src="images/10.jpg" alt="10" /></li>
+                <li><img src="images/11.jpg" alt="11" /></li>
+                <li><img src="images/12.jpg" alt="12" /></li>
+                <li><img src="images/1.jpg" alt="1" /></li>
+            </ul>
+        </div>
+        <div class="button">
+            <ul>
+                <li><span index="1" class="active"></span></li>
+                <li><span index="2"></span></li>
+                <li><span index="3"></span></li>
+                <li><span index="4"></span></li>
+                <li><span index="5"></span></li>
+                <li><span index="6"></span></li>
+                <li><span index="7"></span></li>
+                <li><span index="8"></span></li>
+                <li><span index="9"></span></li>
+                <li><span index="10"></span></li>
+                <li><span index="11"></span></li>
+                <li><span index="12"></span></li>
+            </ul>
+        </div>
+        <a href="javascript:;" title="左移" class="left">&lt</a>
+        <a href="javascript:;" title="右移" class="right">&gt</a>
+    </div>
+</body>
+</html>

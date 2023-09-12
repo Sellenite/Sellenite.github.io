@@ -1,0 +1,844 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="JS工作经验总结（2） JS拿到图片实际宽高方法其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高 1234567891011121314151617181920if (typeof el.naturalWidth &#x3D;&#x3D; undefined) &amp;#123;    &#x2F;&#x2F; LTE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS工作经验总结（3）">
+<meta property="og:url" content="https://sellenite.github.io/2019/08/26/JS%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%883%EF%BC%89/index.html">
+<meta property="og:site_name" content="yuuhei&#39;s Home">
+<meta property="og:description" content="JS工作经验总结（2） JS拿到图片实际宽高方法其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高 1234567891011121314151617181920if (typeof el.naturalWidth &#x3D;&#x3D; undefined) &amp;#123;    &#x2F;&#x2F; LTE">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-08-26T13:53:30.000Z">
+<meta property="article:modified_time" content="2023-09-12T10:53:32.110Z">
+<meta property="article:author" content="Sellenite">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sellenite.github.io/2019/08/26/JS工作经验总结（3）/"/>
+
+
+
+
+
+  <title> JS工作经验总结（3） | yuuhei's Home </title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuuhei's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://sellenite.github.io/2019/08/26/JS%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%883%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://puu.sh/uoJbK/033c9ae781.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuuhei's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JS工作经验总结（3）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-26T21:53:30+08:00">
+                2019-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2019/08/26/JS%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%883%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JS工作经验总结（2）</p>
+<h3 id="JS拿到图片实际宽高方法"><a href="#JS拿到图片实际宽高方法" class="headerlink" title="JS拿到图片实际宽高方法"></a>JS拿到图片实际宽高方法</h3><p>其实IE9+和其他浏览器都有原生的api可以取得到图片的实际宽高，用于做一些图片放大插件等有用处。如果api不兼容，可以使用图片onload后，取得到的宽高也是图片的实际宽高</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> el.<span class="property">naturalWidth</span> == <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="comment">// LTE 8</span></span><br><span class="line">    <span class="keyword">var</span> i = <span class="keyword">new</span> <span class="title class_">Image</span>();</span><br><span class="line">    <span class="keyword">var</span> rw, rh;</span><br><span class="line">    i.<span class="property">src</span> = el.<span class="property">src</span>;</span><br><span class="line">    <span class="comment">// 判断是否有缓存</span></span><br><span class="line">    <span class="keyword">if</span> (i.<span class="property">complete</span>) &#123;</span><br><span class="line">        rw = i.<span class="property">width</span>;</span><br><span class="line">        rh = i.<span class="property">height</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        i.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            rw = i.<span class="property">width</span>;</span><br><span class="line">            rh = i.<span class="property">height</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// GTE IE9</span></span><br><span class="line">    rw = el.<span class="property">naturalWidth</span>;</span><br><span class="line">    rh = el.<span class="property">naturalHeight</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关于使用formData传送的类型"><a href="#关于使用formData传送的类型" class="headerlink" title="关于使用formData传送的类型"></a>关于使用formData传送的类型</h3><p>formData可以直接传file，也可以通过Blob二进制类型转成二进制，然后放到formData里。一些压缩的原理就是经过转换后，存成二进制，然后发到后台，后台收到的仍然是文件类型</p>
+<p>注意formData传图片文件的时候，是不能直接传base64的，因为它不是文件类型。</p>
+<h3 id="清空input文件的值"><a href="#清空input文件的值" class="headerlink" title="清空input文件的值"></a>清空input文件的值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inputEl.<span class="property">files</span>.<span class="property">value</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="for-in循环时，使用数值作为键值遍历的问题"><a href="#for-in循环时，使用数值作为键值遍历的问题" class="headerlink" title="for-in循环时，使用数值作为键值遍历的问题"></a>for-in循环时，使用数值作为键值遍历的问题</h3><p>使用for in循环时，如果对象的键值为数值，会根据数值的大小顺序，从低到高进行遍历，遍历的顺序不可信，不要使用遍历对象然后直接push到数组，会有排序问题，需要额外的方法对数组进行排序</p>
+<h3 id="webpack打包体积过大，使用cdn引入依赖"><a href="#webpack打包体积过大，使用cdn引入依赖" class="headerlink" title="webpack打包体积过大，使用cdn引入依赖"></a>webpack打包体积过大，使用cdn引入依赖</h3><p>由于我们常引用依赖的方法是import xx from ‘xxx’，但由于引用的cdn是通过全局变量进行引用的，如果想要使用cdn，同时使用import的方法，可以采用cdn和webpack的externals</p>
+<span id="more"></span>
+
+<h3 id="字符串模板换行的情况"><a href="#字符串模板换行的情况" class="headerlink" title="字符串模板换行的情况"></a>字符串模板换行的情况</h3><p>在模板字符串里换行的时候，实际上会的确存在换行符\n的，想要字符串进行换行，记得设置一下元素的white-space属性，设置为pre-wrap或pre-line进行换行</p>
+<h3 id="url存在特殊字符的情况"><a href="#url存在特殊字符的情况" class="headerlink" title="url存在特殊字符的情况"></a>url存在特殊字符的情况</h3><p>get请求，后端定义路由时，注意不要用到可能带有【.】作为路由url，会导致【.】后面的都会被忽略，且【.】属于安全字符，不会被转义。如果有这种情况，只能够使用参数方式传参，这样带【.】是无问题的</p>
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/api/goods/<span class="number">100445.2</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/api/goods?id=<span class="number">100445.2</span></span><br></pre></td></tr></table></figure>
+
+<p>第一种就是路由方式去传参，100445.2会被浏览器忽略成100445去请求后端</p>
+<p>第二种是参数方式传参，就没有问题</p>
+<p>如果有各类特殊字符，对参数进行一个encodeURIComponent()操作即可，这是一个编码标准，后端也很容易将它解码，当get请求传入json字符串的时候，必须使用这个编码转码发到后端</p>
+<h3 id="getBoundingClientRect获取的高度问题"><a href="#getBoundingClientRect获取的高度问题" class="headerlink" title="getBoundingClientRect获取的高度问题"></a>getBoundingClientRect获取的高度问题</h3><p>getBoundingClientRect拿到的top值只是距离窗口顶部的距离，如果有scroll，先拿到距离文档最高出的距离，需要将<code>rect.top + window.pageYOffset || document.documentElement.scrollTop</code></p>
+<h3 id="前端登录RSA加密流程"><a href="#前端登录RSA加密流程" class="headerlink" title="前端登录RSA加密流程"></a>前端登录RSA加密流程</h3><p>流程是这样的：</p>
+<ul>
+<li>请求后端，拿到一个publicKey和一个标识字符串</li>
+<li>前端使用插件，利用publicKey对密码进行RSA加密</li>
+<li>使用加密后的密码和标识字符串请求登录接口</li>
+<li>标识字符串的作用是后台通过这个标识使用对应的privateKey对加密字符串进行解密</li>
+</ul>
+<p>RSA为什么能安全：加密后的字符串，必须通过privateKey去解密，就算抓包的时候请求抓到publicKey，那也只是加密所使用的key，并不能解密。所以抓包抓到的加密字符串没有privateKey是无法加密的，privateKey保存在后台，解密工作在后台进行</p>
+<p>伪代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">JsEncrypt</span> <span class="keyword">from</span> <span class="string">&#x27;jsencrypt&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> jse = <span class="keyword">new</span> <span class="title class_">JsEncrypt</span>();</span><br><span class="line"><span class="comment">// publicKey是请求后台获取的</span></span><br><span class="line">jse.<span class="title function_">setPublicKey</span>(publicKey);</span><br><span class="line"><span class="keyword">let</span> encodePassword = jse.<span class="title function_">encrypt</span>(password);</span><br><span class="line">client.<span class="property">request</span>.<span class="title function_">post</span>(<span class="string">&#x27;/login&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">username</span>: username,</span><br><span class="line">    <span class="attr">password</span>: encodePassword,</span><br><span class="line">    <span class="attr">key</span>: key <span class="comment">// 标识字符串，后台使用对应的密钥进行解密</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>已经通过RSA加密的内容进行解密（一般不会这么做，privateKey是不能暴露出来的）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">JsEncrypt</span> <span class="keyword">from</span> <span class="string">&#x27;jsencrypt&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> jse = <span class="keyword">new</span> <span class="title class_">JsEncrypt</span>();</span><br><span class="line">jse.<span class="title function_">setPrivateKey</span>(privateKey);</span><br><span class="line"><span class="keyword">let</span> decodePassword = jse.<span class="title function_">decrypt</span>(encodePassword);</span><br></pre></td></tr></table></figure>
+
+<p>这样就完成一次RSA登录流程</p>
+<h3 id="offsetTop的相对偏移问题"><a href="#offsetTop的相对偏移问题" class="headerlink" title="offsetTop的相对偏移问题"></a>offsetTop的相对偏移问题</h3><p>offsetTop是元素到offsetParent顶部的距离，offsetParent是距离元素最近的一个具有定位的祖宗元素（relative，absolute，fixed），若祖宗都不符合条件，offsetParent为body</p>
+<h3 id="使用ajax的方式下载文件"><a href="#使用ajax的方式下载文件" class="headerlink" title="使用ajax的方式下载文件"></a>使用ajax的方式下载文件</h3><p>一直使用的url下载方式只能为get【使用window.location.open或建立一个假的a标签或使用iframe加载路径】，而且并不是一个ajax请求，返回的是一个文件流，带有后端文件名称的文件。但这种方式有个问题，就是不知道后端能够下载文件的时机。假如这个文件是一个后端动态生成的excel文件，那么距离生成会有一段时间，传统的url下载方式并不知道后端什么时候才能下载</p>
+<p>以下为使用ajax的方式下载文件，配合blob二进制格式，以axios为例的伪代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">downFile</span>(<span class="params">url, parameter</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">url</span>: url,</span><br><span class="line">        <span class="attr">params</span>: parameter,</span><br><span class="line">        <span class="attr">method</span>:<span class="string">&#x27;get&#x27;</span> ,</span><br><span class="line">        <span class="attr">responseType</span>: <span class="string">&#x27;blob&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里的fileName完全自定义，但如果想获取文件本来的名字就需要改接口</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">handleExportXls</span>(<span class="params">fileName</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> url = <span class="string">&#x27;/download&#x27;</span>;</span><br><span class="line">    <span class="keyword">let</span> param = &#123; <span class="attr">id</span>: <span class="number">10001</span> &#125;;</span><br><span class="line">    <span class="title function_">downFile</span>(url, param).<span class="title function_">then</span>(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!data) &#123;</span><br><span class="line">            <span class="title function_">alert</span>(<span class="string">&quot;文件下载失败&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable language_">window</span>.<span class="property">navigator</span>.<span class="property">msSaveBlob</span> !== <span class="string">&#x27;undefined&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable language_">window</span>.<span class="property">navigator</span>.<span class="title function_">msSaveBlob</span>(<span class="keyword">new</span> <span class="title class_">Blob</span>([data]), fileName + <span class="string">&#x27;.xls&#x27;</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> url = <span class="variable language_">window</span>.<span class="property">URL</span>.<span class="title function_">createObjectURL</span>(<span class="keyword">new</span> <span class="title class_">Blob</span>([data]))</span><br><span class="line">            <span class="keyword">let</span> link = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">            link.<span class="property">style</span>.<span class="property">display</span> = <span class="string">&#x27;none&#x27;</span></span><br><span class="line">            link.<span class="property">href</span> = url</span><br><span class="line">            link.<span class="title function_">setAttribute</span>(<span class="string">&#x27;download&#x27;</span>, fileName + <span class="string">&#x27;.xls&#x27;</span>)</span><br><span class="line">            <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(link)</span><br><span class="line">            link.<span class="title function_">click</span>()</span><br><span class="line">            <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">removeChild</span>(link); <span class="comment">//下载完成移除元素</span></span><br><span class="line">            <span class="variable language_">window</span>.<span class="property">URL</span>.<span class="title function_">revokeObjectURL</span>(url); <span class="comment">//释放掉blob对象</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以在不跳转的情况下，下载ajax请求的二进制文件</p>
+<p>但这时的文件名是需要前端定义的，如何知道后端的这个文件是什么名称？可以通过后端的配合，设置响应头一个属性，前端取响应头的属性然后赋值即可</p>
+<p>例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.$axios(&#123;</span><br><span class="line">   <span class="attr">method</span>: params.<span class="property">method</span>,</span><br><span class="line">   <span class="attr">url</span>: params.<span class="property">url</span>,</span><br><span class="line">   <span class="attr">data</span>: params.<span class="property">data</span>,</span><br><span class="line">   <span class="attr">responseType</span>: <span class="string">&#x27;blob&#x27;</span> <span class="comment">// 指明返回格式,</span></span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="comment">// 这里尤其需要注意, &#x27;\ufeff&#x27; 用于解决乱码问题, blob可以解决数据量大导致网络失败.</span></span><br><span class="line">   <span class="keyword">const</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([<span class="string">&#x27;\ufeff&#x27;</span> + res.<span class="property">data</span>], &#123; <span class="attr">type</span>: <span class="string">&#x27;text/csv;charset=utf-8&#x27;</span> &#125;)</span><br><span class="line">   <span class="keyword">const</span> url = <span class="variable language_">window</span>.<span class="property">URL</span>.<span class="title function_">createObjectURL</span>(blob)</span><br><span class="line">   <span class="comment">// 通过创建a标签实现</span></span><br><span class="line">   <span class="keyword">const</span> link = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">   link.<span class="property">href</span> = url</span><br><span class="line">   <span class="comment">// 对下载的文件命名</span></span><br><span class="line">   link.<span class="property">download</span> = <span class="built_in">decodeURI</span>(res.<span class="property">headers</span>[<span class="string">&#x27;content-disposition&#x27;</span>].<span class="title function_">split</span>(<span class="string">&#x27;=&#x27;</span>)[<span class="number">1</span>]) || <span class="string">&#x27;发货单导出数据表.csv&#x27;</span></span><br><span class="line">   <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(link)</span><br><span class="line">   link.<span class="title function_">click</span>()</span><br><span class="line">   <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">removeChild</span>(link)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>注意<code>content-disposition</code>这个属性能在请求调试里看到，但如果res.headers怎么都取不到的话，需要在服务器端配置一个属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Expose-Headers: Content-Disposition</span><br></pre></td></tr></table></figure>
+
+<p>参考：<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/37897523/axios-get-access-to-response-header-fields">https://stackoverflow.com/questions/37897523/axios-get-access-to-response-header-fields</a></p>
+<p>In case of CORS requests, browsers can only access the following response headers by default:</p>
+<ul>
+<li>Cache-Control</li>
+<li>Content-Language</li>
+<li>Content-Type</li>
+<li>Expires</li>
+<li>Last-Modified</li>
+<li>Pragma</li>
+</ul>
+<p>If you would like your client app to be able to access other headers, you need to set the <code>Access-Control-Expose-Headers</code> header on the server:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Expose-Headers: Access-Token, Uid</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="获取布局信息的操作时，会强制队列刷新"><a href="#获取布局信息的操作时，会强制队列刷新" class="headerlink" title="获取布局信息的操作时，会强制队列刷新"></a>获取布局信息的操作时，会强制队列刷新</h3><p>比如当你访问以下属性或者使用以下方法：</p>
+<ul>
+<li>offsetTop、offsetLeft、offsetWidth、offsetHeight</li>
+<li>scrollTop、scrollLeft、scrollWidth、scrollHeight</li>
+<li>clientTop、clientLeft、clientWidth、clientHeight</li>
+<li>getComputedStyle()</li>
+<li>getBoundingClientRect</li>
+</ul>
+<p>以上属性和方法都需要返回最新的布局信息，因此浏览器不得不清空队列，触发回流重绘来返回正确的值。因此，我们在修改样式的时候，最好避免使用上面列出的属性，他们都会刷新渲染队列。如果要使用它们，最好将值缓存起来。</p>
+<p>但强制清空队列也有好处，可以解决display:none转场的transition失效问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">el.<span class="property">style</span>.<span class="property">display</span> = <span class="string">&#x27;block&#x27;</span>;</span><br><span class="line">el.<span class="property">offsetHeight</span>;</span><br><span class="line">el.<span class="property">style</span>.<span class="property">transform</span> = <span class="string">&#x27;translate3d(100px, 0, 0)&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>假如元素设置了transition，且display为none，如果不使用<code>el.offsetHeight</code>这句强制刷新队列，那么转场的动画就会失效</p>
+<h3 id="混合开发时web端和原生端的请求的不同"><a href="#混合开发时web端和原生端的请求的不同" class="headerlink" title="混合开发时web端和原生端的请求的不同"></a>混合开发时web端和原生端的请求的不同</h3><blockquote>
+<p>web端请求</p>
+</blockquote>
+<ul>
+<li>web端发送请求是基于XMLHttpRequest或fetch</li>
+<li>浏览器同源政策CORS安全限制，需要后端设置请求头或设置服务器代理转发</li>
+<li>不够安全，无法网络优化，原生端无法对请求进行监控或加密</li>
+</ul>
+<blockquote>
+<p>原生端请求，web端利用JSBridge调起原生端请求</p>
+</blockquote>
+<ul>
+<li>没有浏览器跨域限制</li>
+<li>安全加密，签名校验</li>
+<li>弱网优化，流量优化</li>
+<li>原生端可以对请求进行压缩</li>
+<li>甚至可以将http请求替换成rpc（远程过程调用）这种节省流量的方法，利用私有协议请求数据（底层变了）</li>
+</ul>
+<h3 id="混合开发的JSBridge实现原理"><a href="#混合开发的JSBridge实现原理" class="headerlink" title="混合开发的JSBridge实现原理"></a>混合开发的JSBridge实现原理</h3><p>web端调用原生端方法：</p>
+<ul>
+<li>拦截URL Schema，可使用alert等，原生端会对其进行拦截</li>
+<li>原生端注入JSAPI，注入一个全局对象，web端可以直接调用</li>
+</ul>
+<p>原生端调用web端方法：</p>
+<ul>
+<li>web端定义一个全局对象，原生端直接执行js字符串代码</li>
+</ul>
+<p>带有回调的原理：</p>
+<ul>
+<li>web端发起时，利用JSBridge调用原生端方法，原生端又执行web端的js字符串代码，进行两次跨端的操作，是需要两边都约定好协议和全局对象</li>
+<li>原生端发起原理与上面相同</li>
+<li>由于代码繁琐或有坑，一般采用开源里比较成熟的JSBridge，会带有封装好的webview和JSAPI</li>
+</ul>
+<h3 id="SSO单点登录方案"><a href="#SSO单点登录方案" class="headerlink" title="SSO单点登录方案"></a>SSO单点登录方案</h3><p>SSO单点登录有两种方案，一种是Domain相同的，一种是Domain不相同的</p>
+<p>Domain相同的SSO接入非常简单，逻辑大多是后台实现，就是在response的时候进入setCookie操作，同时指定Domain，例如<code>.bilibili.com</code>，这样所有是这个Domain都能够共享cookie</p>
+<p>另一种是Domain不相同的接入。加入不同的网页的端的Domain都不相同，这时候分别需要他们的后台进行SSO接入，具体就是放出一个接口，这个接口在被请求成功的时候会对对应的前台页面的Domain下写入cookie，为了确保这样，通常都是不同端的前台和后台使用代理请求，确保在同一个域里。然后从SSO里调用这些后台的接口，后台就会对对应的前台写入cookie</p>
+<h3 id="关于window-open-的使用事项"><a href="#关于window-open-的使用事项" class="headerlink" title="关于window.open()的使用事项"></a>关于window.open()的使用事项</h3><p>window.open()可以指定内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newWin = <span class="variable language_">window</span>.<span class="title function_">open</span>();</span><br><span class="line"><span class="keyword">if</span> (!newWin) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line">newWin.<span class="property">document</span>.<span class="title function_">write</span>(item.<span class="property">content</span>);</span><br><span class="line">newWin.<span class="property">document</span>.<span class="property">body</span>.<span class="property">style</span>.<span class="property">width</span> = <span class="string">&#x27;1000px&#x27;</span>;</span><br><span class="line">newWin.<span class="property">document</span>.<span class="property">body</span>.<span class="property">style</span>.<span class="property">margin</span> = <span class="string">&#x27;0 auto&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span> (item.<span class="property">title</span> === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  item.<span class="property">title</span> = <span class="string">&#x27;标题&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">newWin.<span class="property">document</span>.<span class="property">title</span> = item.<span class="property">title</span>;</span><br></pre></td></tr></table></figure>
+
+<p>然后，发现window.open()拦截是有条件的。一般通过用户的点击事件触发的在新标签页中打开链接，浏览器是不会拦截的，因为这种形式打开新窗口浏览器会认为是用户自己需要的。</p>
+<p>在我的项目中，是需要在ajax异步请求成功后需要在新窗口中打开返回的url地址，使用window.open()会被拦截，因为在异步队列里进行弹窗，浏览器认为该操作不是用户主动触发的，所以会拦截。</p>
+<p>ajax请求由异步改为同步。(async:false)   (测试有效)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">  <span class="attr">async</span>: <span class="literal">false</span>, <span class="comment">// 该值为必须的</span></span><br><span class="line">  <span class="attr">url</span>: <span class="string">&quot;请求地址&quot;</span>,</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;post&quot;</span>,</span><br><span class="line">  <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(data),</span><br><span class="line">        result = data.<span class="property">result</span>;</span><br><span class="line">    <span class="keyword">if</span> (result == <span class="string">&quot;0&quot;</span>) &#123;</span><br><span class="line">      <span class="variable language_">window</span>.<span class="title function_">open</span>(<span class="string">&quot;新的页面&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      …… <span class="comment">//相关处理</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="递归遍历父元素找到对应的DOM元素"><a href="#递归遍历父元素找到对应的DOM元素" class="headerlink" title="递归遍历父元素找到对应的DOM元素"></a>递归遍历父元素找到对应的DOM元素</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">findAncestor</span> (el, cls) &#123;</span><br><span class="line">  <span class="keyword">while</span> ((el = el.<span class="property">parentElement</span>) &amp;&amp; !el.<span class="property">classList</span>.<span class="title function_">contains</span>(cls));</span><br><span class="line">  <span class="keyword">return</span> el;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装node-sass被墙解决方法"><a href="#安装node-sass被墙解决方法" class="headerlink" title="安装node-sass被墙解决方法"></a>安装node-sass被墙解决方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i node-sass --sass_binary_site=https://npm.taobao.org/mirrors/node-sass/</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="找到树中指定id的所有父节点-或包括自己"><a href="#找到树中指定id的所有父节点-或包括自己" class="headerlink" title="找到树中指定id的所有父节点(或包括自己)"></a>找到树中指定id的所有父节点(或包括自己)</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> treeData = [&#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">children</span>: [&#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">children</span>: [&#123;</span><br><span class="line">      <span class="attr">id</span>: <span class="number">3</span>,</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      <span class="attr">id</span>: <span class="number">4</span>,</span><br><span class="line">    &#125;],</span><br><span class="line">  &#125;],</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="number">5</span>,</span><br><span class="line">  <span class="attr">children</span>: [&#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="number">6</span>,</span><br><span class="line">  &#125;],</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> relateNodes = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">getRelateNodes</span> = (<span class="params">his = [], targetId = <span class="literal">null</span>, tree = []</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> tree) &#123;</span><br><span class="line">    <span class="keyword">const</span> children = item.<span class="property">children</span> || []</span><br><span class="line">    <span class="keyword">if</span> (item.<span class="property">id</span> === targetId) &#123;</span><br><span class="line">      <span class="comment">// 如果只要返回父元素们，就写成relateNodes = his</span></span><br><span class="line">      relateNodes = [...his, item]</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (children.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> history = [...his]</span><br><span class="line">      history.<span class="title function_">push</span>(item)</span><br><span class="line">      <span class="comment">// 终止递归的条件</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="title function_">getRelateNodes</span>(history, targetId, children)) &#123;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 要查找的对象里存在的id</span></span><br><span class="line"><span class="keyword">const</span> id = <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">getRelateNodes</span>([], id, treeData)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回各个父元素的对象合集，可用于修改数据，做像树组件的展开等数据变更</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(relateNodes)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="遍历树把该层属于第几层树的属性写进去"><a href="#遍历树把该层属于第几层树的属性写进去" class="headerlink" title="遍历树把该层属于第几层树的属性写进去"></a>遍历树把该层属于第几层树的属性写进去</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">const</span> treeData = [&#123;</span><br><span class="line">   <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">   <span class="attr">children</span>: [&#123;</span><br><span class="line">     <span class="attr">id</span>: <span class="number">2</span>,</span><br><span class="line">     <span class="attr">children</span>: [&#123;</span><br><span class="line">       <span class="attr">id</span>: <span class="number">3</span>,</span><br><span class="line">     &#125;, &#123;</span><br><span class="line">       <span class="attr">id</span>: <span class="number">4</span>,</span><br><span class="line">     &#125;],</span><br><span class="line">   &#125;],</span><br><span class="line"> &#125;, &#123;</span><br><span class="line">   <span class="attr">id</span>: <span class="number">5</span>,</span><br><span class="line">   <span class="attr">children</span>: [&#123;</span><br><span class="line">     <span class="attr">id</span>: <span class="number">6</span>,</span><br><span class="line">   &#125;],</span><br><span class="line"> &#125;];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第几层递归</span></span><br><span class="line"> <span class="keyword">let</span> level = <span class="number">0</span></span><br><span class="line"> <span class="keyword">const</span> <span class="title function_">fn</span> = (<span class="params">arr = [], level</span>) =&gt; &#123;</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.<span class="property">length</span>; i++) &#123;</span><br><span class="line">     <span class="keyword">const</span> item = arr[i]</span><br><span class="line">     item.<span class="property">__level</span> = level</span><br><span class="line">     <span class="keyword">if</span> (!item.<span class="property">children</span>) item.<span class="property">children</span> = []</span><br><span class="line">     <span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(item.<span class="property">children</span>) &amp;&amp; item.<span class="property">children</span>.<span class="property">length</span>) &#123;</span><br><span class="line">       <span class="title function_">fn</span>(item.<span class="property">children</span>, level + <span class="number">1</span>)</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="title function_">fn</span>(treeData, level)</span><br><span class="line"></span><br><span class="line"> <span class="variable language_">console</span>.<span class="title function_">log</span>(treeData)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="scrollTo实现"><a href="#scrollTo实现" class="headerlink" title="scrollTo实现"></a>scrollTo实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">easeInOutQuad</span>(<span class="params">t, b, c, d</span>) &#123;</span><br><span class="line">  t /= d / <span class="number">2</span></span><br><span class="line">  <span class="keyword">if</span> (t &lt; <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> c / <span class="number">2</span> * t * t + b</span><br><span class="line">  &#125;</span><br><span class="line">  t--</span><br><span class="line">  <span class="keyword">return</span> -c / <span class="number">2</span> * (t * (t - <span class="number">2</span>) - <span class="number">1</span>) + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> requestAnimFrame = (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">window</span>.<span class="property">requestAnimationFrame</span> || <span class="variable language_">window</span>.<span class="property">webkitRequestAnimationFrame</span> || <span class="variable language_">window</span>.<span class="property">mozRequestAnimationFrame</span> || <span class="keyword">function</span>(<span class="params">callback</span>) &#123; <span class="variable language_">window</span>.<span class="built_in">setTimeout</span>(callback, <span class="number">1000</span> / <span class="number">60</span>) &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">move</span>(<span class="params">$el, amount</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> ($el) &#123;</span><br><span class="line">    $el.<span class="property">scrollTop</span> = amount</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="property">scrollTop</span> = amount</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="property">parentNode</span>.<span class="property">scrollTop</span> = amount</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="property">scrollTop</span> = amount</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">position</span>(<span class="params">$el</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> ($el) &#123;</span><br><span class="line">    <span class="keyword">return</span> $el.<span class="property">scrollTop</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="property">scrollTop</span> || <span class="variable language_">document</span>.<span class="property">body</span>.<span class="property">parentNode</span>.<span class="property">scrollTop</span> || <span class="variable language_">document</span>.<span class="property">body</span>.<span class="property">scrollTop</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">scrollTo</span>(<span class="params">$el, to, duration, callback</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> start = <span class="title function_">position</span>($el)</span><br><span class="line">  <span class="keyword">const</span> change = to - start</span><br><span class="line">  <span class="keyword">const</span> increment = <span class="number">20</span></span><br><span class="line">  <span class="keyword">let</span> currentTime = <span class="number">0</span></span><br><span class="line">  duration = (duration != <span class="literal">null</span>) ? <span class="number">500</span> : duration</span><br><span class="line">  <span class="keyword">let</span> animateScroll = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    currentTime += increment</span><br><span class="line">    <span class="keyword">const</span> val = <span class="title function_">easeInOutQuad</span>(currentTime, start, change, duration)</span><br><span class="line">    <span class="title function_">move</span>($el, val)</span><br><span class="line">    <span class="keyword">if</span> (currentTime &lt; duration) &#123;</span><br><span class="line">      <span class="title function_">requestAnimFrame</span>(animateScroll)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (callback &amp;&amp; <span class="keyword">typeof</span> (callback) === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">        <span class="title function_">callback</span>()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">animateScroll</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="根据数组对象的某个字段去重"><a href="#根据数组对象的某个字段去重" class="headerlink" title="根据数组对象的某个字段去重"></a>根据数组对象的某个字段去重</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">uniqueArrayByObjectKey</span>(<span class="params">arr, key</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line">  <span class="keyword">return</span> arr.<span class="title function_">filter</span>(<span class="function"><span class="params">item</span> =&gt;</span> !res.<span class="title function_">has</span>(item[key]) &amp;&amp; res.<span class="title function_">set</span>(item[key], <span class="number">1</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="简单数组去重"><a href="#简单数组去重" class="headerlink" title="简单数组去重"></a>简单数组去重</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">uniqueArray</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Array</span>.<span class="title function_">from</span>(<span class="keyword">new</span> <span class="title class_">Set</span>(arr))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="多语言某些在中间需要替换语言"><a href="#多语言某些在中间需要替换语言" class="headerlink" title="多语言某些在中间需要替换语言"></a>多语言某些在中间需要替换语言</h3><p>例如：<br>LANG &#x3D; “The quantity of selected products:XXX; Subtotal:XXX”</p>
+<p>replacement &#x3D; [1, 10]</p>
+<p>transformI18n(LANG, replacement)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">transformI18n</span>(<span class="params">key, replacement</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="title class_">Array</span>.<span class="title function_">isArray</span>(replacement)) &#123;</span><br><span class="line">    replacement = [replacement]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> regex = <span class="regexp">/(XXX)+/gi</span></span><br><span class="line">  <span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line">  <span class="keyword">return</span> i18n.<span class="title function_">t</span>(key).<span class="title function_">replace</span>(regex, <span class="function">() =&gt;</span> replacement[count++])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/27/%E5%BE%AE%E4%BF%A1%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" rel="next" title="微信工作经验总结">
+                <i class="fa fa-chevron-left"></i> 微信工作经验总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/26/Vue%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93%EF%BC%883%EF%BC%89/" rel="prev" title="Vue工作经验总结（3）">
+                Vue工作经验总结（3） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://puu.sh/uoJbK/033c9ae781.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sellenite" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS%E6%8B%BF%E5%88%B0%E5%9B%BE%E7%89%87%E5%AE%9E%E9%99%85%E5%AE%BD%E9%AB%98%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">JS拿到图片实际宽高方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8formData%E4%BC%A0%E9%80%81%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">关于使用formData传送的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E7%A9%BAinput%E6%96%87%E4%BB%B6%E7%9A%84%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">清空input文件的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-in%E5%BE%AA%E7%8E%AF%E6%97%B6%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%95%B0%E5%80%BC%E4%BD%9C%E4%B8%BA%E9%94%AE%E5%80%BC%E9%81%8D%E5%8E%86%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">for-in循环时，使用数值作为键值遍历的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack%E6%89%93%E5%8C%85%E4%BD%93%E7%A7%AF%E8%BF%87%E5%A4%A7%EF%BC%8C%E4%BD%BF%E7%94%A8cdn%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="nav-number">5.</span> <span class="nav-text">webpack打包体积过大，使用cdn引入依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A8%A1%E6%9D%BF%E6%8D%A2%E8%A1%8C%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">6.</span> <span class="nav-text">字符串模板换行的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#url%E5%AD%98%E5%9C%A8%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">7.</span> <span class="nav-text">url存在特殊字符的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getBoundingClientRect%E8%8E%B7%E5%8F%96%E7%9A%84%E9%AB%98%E5%BA%A6%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">getBoundingClientRect获取的高度问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E7%99%BB%E5%BD%95RSA%E5%8A%A0%E5%AF%86%E6%B5%81%E7%A8%8B"><span class="nav-number">9.</span> <span class="nav-text">前端登录RSA加密流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#offsetTop%E7%9A%84%E7%9B%B8%E5%AF%B9%E5%81%8F%E7%A7%BB%E9%97%AE%E9%A2%98"><span class="nav-number">10.</span> <span class="nav-text">offsetTop的相对偏移问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8ajax%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6"><span class="nav-number">11.</span> <span class="nav-text">使用ajax的方式下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%B8%83%E5%B1%80%E4%BF%A1%E6%81%AF%E7%9A%84%E6%93%8D%E4%BD%9C%E6%97%B6%EF%BC%8C%E4%BC%9A%E5%BC%BA%E5%88%B6%E9%98%9F%E5%88%97%E5%88%B7%E6%96%B0"><span class="nav-number">12.</span> <span class="nav-text">获取布局信息的操作时，会强制队列刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91%E6%97%B6web%E7%AB%AF%E5%92%8C%E5%8E%9F%E7%94%9F%E7%AB%AF%E7%9A%84%E8%AF%B7%E6%B1%82%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">13.</span> <span class="nav-text">混合开发时web端和原生端的请求的不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91%E7%9A%84JSBridge%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">14.</span> <span class="nav-text">混合开发的JSBridge实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSO%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E6%96%B9%E6%A1%88"><span class="nav-number">15.</span> <span class="nav-text">SSO单点登录方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Ewindow-open-%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BA%8B%E9%A1%B9"><span class="nav-number">16.</span> <span class="nav-text">关于window.open()的使用事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%88%B6%E5%85%83%E7%B4%A0%E6%89%BE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84DOM%E5%85%83%E7%B4%A0"><span class="nav-number">17.</span> <span class="nav-text">递归遍历父元素找到对应的DOM元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85node-sass%E8%A2%AB%E5%A2%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">18.</span> <span class="nav-text">安装node-sass被墙解决方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E5%88%B0%E6%A0%91%E4%B8%AD%E6%8C%87%E5%AE%9Aid%E7%9A%84%E6%89%80%E6%9C%89%E7%88%B6%E8%8A%82%E7%82%B9-%E6%88%96%E5%8C%85%E6%8B%AC%E8%87%AA%E5%B7%B1"><span class="nav-number">19.</span> <span class="nav-text">找到树中指定id的所有父节点(或包括自己)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%8D%E5%8E%86%E6%A0%91%E6%8A%8A%E8%AF%A5%E5%B1%82%E5%B1%9E%E4%BA%8E%E7%AC%AC%E5%87%A0%E5%B1%82%E6%A0%91%E7%9A%84%E5%B1%9E%E6%80%A7%E5%86%99%E8%BF%9B%E5%8E%BB"><span class="nav-number">20.</span> <span class="nav-text">遍历树把该层属于第几层树的属性写进去</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scrollTo%E5%AE%9E%E7%8E%B0"><span class="nav-number">21.</span> <span class="nav-text">scrollTo实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9F%90%E4%B8%AA%E5%AD%97%E6%AE%B5%E5%8E%BB%E9%87%8D"><span class="nav-number">22.</span> <span class="nav-text">根据数组对象的某个字段去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D"><span class="nav-number">23.</span> <span class="nav-text">简单数组去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%9F%90%E4%BA%9B%E5%9C%A8%E4%B8%AD%E9%97%B4%E9%9C%80%E8%A6%81%E6%9B%BF%E6%8D%A2%E8%AF%AD%E8%A8%80"><span class="nav-number">24.</span> <span class="nav-text">多语言某些在中间需要替换语言</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sellenite</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "8a77bfe2a58a49a7934da4f4ff1ca715",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
